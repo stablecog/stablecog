@@ -170,13 +170,13 @@
 	});
 </script>
 
-<form on:submit|preventDefault={onSubmit} class="md:hidden w-full flex flex-row items-stretch">
+<form on:submit|preventDefault={onSubmit} class="flex w-full flex-row items-stretch md:hidden">
 	<div
-		class="flex-1 flex gap-2 flex-row items-center transition duration-150 transform {isJustCreatedVoiceoverForAnim
+		class="flex flex-1 transform flex-row items-center gap-2 transition duration-150 {isJustCreatedVoiceoverForAnim
 			? 'scale-97'
 			: 'scale-100'}"
 	>
-		<div class="flex-1 flex relative group">
+		<div class="group relative flex flex-1">
 			<textarea
 				{disabled}
 				on:focus={() => (isPromptBarFocused = true)}
@@ -193,14 +193,14 @@
 				enterkeyhint="enter"
 				rows="3"
 				style="transition: height 0.1s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), padding 0.2s cubic-bezier(0.4, 0, 0.2, 1)"
-				class="w-full text-base bg-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] pr-20 md:pr-26 lg:pr-17 hide-scrollbar
-							scroll-smooth resize-none transition relative pl-2.5 md:pl-5 py-1.75 md:py-4.5 rounded-lg md:rounded-xl
-							enabled:focus:ring-2 focus:ring-c-primary/30 ring-0 ring-c-primary/20 placeholder:text-c-on-bg/50
-							not-touch:enabled:hover:ring-2 text-c-on-bg not-touch:enabled:group-hover:ring-2"
+				class="hide-scrollbar relative w-full resize-none scroll-smooth rounded-lg bg-c-bg-secondary py-1.75 pl-2.5
+							pr-20 text-base text-c-on-bg shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] ring-0 ring-c-primary/20 transition placeholder:text-c-on-bg/50 focus:ring-c-primary/30
+							enabled:focus:ring-2 not-touch:enabled:hover:ring-2 not-touch:enabled:group-hover:ring-2 md:rounded-xl md:py-4
+							md:pl-5 md:pr-26 lg:pr-17"
 			/>
-			<div class="flex h-full flex-col absolute right-11 top-0">
+			<div class="absolute right-11 top-0 flex h-full flex-col">
 				<ClearButton class="" show={showClearPromptInputButton} onClick={clearPrompt} />
-				<div class="flex font-medium flex-col items-end text-xs z-50 pr-2 pb-1">
+				<div class="z-50 flex flex-col items-end pb-1 pr-2 text-xs font-medium">
 					<p class="text-c-on-bg/75">
 						{($voiceoverPrompt || '').length.toLocaleString($locale)}
 					</p>
@@ -215,11 +215,11 @@
 					loading={$maxOngoingVoiceoversCountReached}
 					disabled={doesntHaveEnoughCredits || disabled}
 					withSpinner
-					class="w-full h-full rounded-r-lg md:rounded-r-xl rounded-l-none absolute right-0 top-0"
+					class="absolute right-0 top-0 h-full w-full rounded-l-none rounded-r-lg md:rounded-r-xl"
 					noPadding
 					label={$LL.Home.GenerateButton()}
 				>
-					<IconWand class="w-7 h-7 md:w-8 md:h-8" />
+					<IconWand class="h-7 w-7 md:h-8 md:w-8" />
 				</Button>
 				<CreditCostBadge {creditCost} />
 				{#if doesntHaveEnoughCredits && $userSummary && $sessionStore?.user.id}
@@ -236,23 +236,27 @@
 		noPadding
 		paddingClassForHoverEffect="px-1"
 		onClick={() => toggleSettingsSheet()}
-		class="px-3 py-2 -mr-2"
+		class="-mr-2 px-3 py-2"
 		hoverFrom="bottom"
 		name={isSettingsSheetOpen
 			? $LL.Generate.HideSettingsButton()
 			: $LL.Generate.ShowSettingsButton()}
 	>
 		<Morpher morphed={$windowWidth < mdBreakpoint && isSettingsSheetOpen}>
-			<div slot="0" class="w-8 h-8">
+			<div slot="0" class="h-8 w-8">
 				<IconSettings
-					class="transition not-touch:group-hover:text-c-primary
-						w-full h-full {$windowWidth < mdBreakpoint && isSettingsSheetOpen ? 'rotate-180' : 'rotate-0'}"
+					class="h-full w-full
+						transition not-touch:group-hover:text-c-primary {$windowWidth < mdBreakpoint && isSettingsSheetOpen
+						? 'rotate-180'
+						: 'rotate-0'}"
 				/>
 			</div>
-			<div slot="1" class="w-8 h-8">
+			<div slot="1" class="h-8 w-8">
 				<IconChevronDown
-					class="transition transform not-touch:group-hover:text-c-primary
-						w-full h-full {$windowWidth < mdBreakpoint && !isSettingsSheetOpen ? '-rotate-180' : 'rotate-0'}"
+					class="h-full w-full transform
+						transition not-touch:group-hover:text-c-primary {$windowWidth < mdBreakpoint && !isSettingsSheetOpen
+						? '-rotate-180'
+						: 'rotate-0'}"
 				/>
 			</div>
 		</Morpher>
@@ -260,26 +264,26 @@
 </form>
 <form
 	on:submit|preventDefault={onSubmit}
-	class="hidden md:flex w-full max-h-full flex-row md:flex-col rounded-lg md:rounded-2xl
-	overflow-hidden relative md:shadow-lg md:shadow-c-shadow/[var(--o-shadow-strong)] bg-c-bg-secondary transition focus-within:ring-c-primary/30
-	ring-0 ring-c-primary/20 {!disabled
-		? 'not-touch:enabled:hover:ring-2 text-c-on-bg not-touch:hover:ring-2 focus-within:ring-2'
+	class="relative hidden max-h-full w-full flex-row overflow-hidden rounded-lg bg-c-bg-secondary
+	ring-0 ring-c-primary/20 transition focus-within:ring-c-primary/30 md:flex md:flex-col md:rounded-2xl
+	md:shadow-lg md:shadow-c-shadow/[var(--o-shadow-strong)] {!disabled
+		? 'text-c-on-bg focus-within:ring-2 not-touch:hover:ring-2 not-touch:enabled:hover:ring-2'
 		: ''}"
 >
-	<div class="w-full flex-1 min-h-0 flex flex-col relative">
+	<div class="relative flex min-h-0 w-full flex-1 flex-col">
 		<textarea
 			{disabled}
 			bind:value={$voiceoverPrompt}
 			bind:this={promptInputElementMd}
 			placeholder={$LL.Voiceover.PromptBar.PromptInput.Placeholder()}
 			on:keypress={onKeyPress}
-			class="hidden md:block w-full h-full bg-c-bg-secondary rounded-t-lg md:rounded-t-2xl resize-none pl-5 pr-13 py-4
-			relative text-base md:text-lg pb-6 placeholder:text-c-on-bg/50"
+			class="relative hidden h-full w-full resize-none rounded-t-lg bg-c-bg-secondary py-4 pb-6 pl-5 pr-13
+			text-base placeholder:text-c-on-bg/50 md:block md:rounded-t-2xl md:text-lg"
 			rows="7"
 			maxlength={maxVoiceoverCharacterCount}
 		/>
 		<div
-			class="w-full block absolute left-0 bottom-0 h-4 bg-gradient-to-t from-c-bg-secondary to-c-bg-secondary/0 pointer-events-none"
+			class="pointer-events-none absolute bottom-0 left-0 block h-4 w-full bg-gradient-to-t from-c-bg-secondary to-c-bg-secondary/0"
 		/>
 		<div class="absolute right-0 top-0 h-15">
 			<ClearButton
@@ -295,14 +299,14 @@
 		on:keydown={() => null}
 		role="button"
 		tabindex="0"
-		class="w-full rounded-tr-none rounded-b-2xl flex flex-row
-		justify-end items-center px-3 pt-2 pb-4 bg-c-bg-secondary cursor-text"
+		class="flex w-full cursor-text flex-row items-center
+		justify-end rounded-b-2xl rounded-tr-none bg-c-bg-secondary px-3 pb-4 pt-2"
 	>
 		<div
 			bind:this={buttonContainer}
-			class="flex flex-row justify-end items-center gap-4 cursor-auto"
+			class="flex cursor-auto flex-row items-center justify-end gap-4"
 		>
-			<div class="flex flex-col items-end justify-center font-medium text-right text-sm">
+			<div class="flex flex-col items-end justify-center text-right text-sm font-medium">
 				<p class="text-c-on-bg/75">
 					{($voiceoverPrompt || '').length.toLocaleString($locale)}<span class="text-c-on-bg/50"
 						><span class="px-[0.25ch]">/</span>{maxVoiceoverCharacterCount.toLocaleString(
@@ -310,15 +314,15 @@
 						)}</span
 					>
 				</p>
-				<div class="flex flex-row justify-end items-center text-c-on-bg/75 gap-0.25">
-					<IconToken class="w-4 h-4 -ml-0.25 flex-shrink-0" />
+				<div class="flex flex-row items-center justify-end gap-0.25 text-c-on-bg/75">
+					<IconToken class="-ml-0.25 h-4 w-4 flex-shrink-0" />
 					<p class="mt-0.5">
 						{creditCost.toLocaleString($locale)}
 					</p>
 				</div>
 			</div>
 			<div
-				class="relative flex justify-end transition duration-150 transform {isJustCreatedVoiceoverForAnim
+				class="relative flex transform justify-end transition duration-150 {isJustCreatedVoiceoverForAnim
 					? 'scale-93'
 					: 'scale-100'}"
 			>
@@ -330,7 +334,7 @@
 					fadeOnDisabled={doesntHaveEnoughCredits || disabled}
 					loading={$maxOngoingVoiceoversCountReached}
 					disabled={doesntHaveEnoughCredits || disabled}
-					class="pointer-events-auto px-8 py-3.5 rounded-xl"
+					class="pointer-events-auto rounded-xl px-8 py-3.5"
 				>
 					{$LL.Voiceover.PromptBar.GenerateButton()}
 				</Button>

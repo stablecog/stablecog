@@ -62,7 +62,7 @@
 <SidebarWrapper {rounding} {noWrapper} hasGradient>
 	<div
 		bind:this={settingsContainer}
-		class="w-full h-full flex flex-col overflow-auto pt-4 md:pt-5 pb-[calc(4rem+env(safe-area-inset-bottom))] md:pb-20 gap-7"
+		class="flex h-full w-full flex-col gap-7 overflow-auto pb-[calc(4rem+env(safe-area-inset-bottom))] pt-4 md:pb-20 md:pt-5"
 	>
 		{#if $generateMode !== 'inpainting'}
 			<SettingsPanelItem
@@ -186,41 +186,41 @@
 				</div>
 			</WithTooltip>
 		</SettingsPanelItem>
-		<div class="w-full flex flex-col ring-2 ring-c-bg-secondary">
+		<div class="flex w-full flex-col ring-2 ring-c-bg-secondary">
 			<button
-				class="w-full group font-medium text-c-on-bg/75 px-4 py-4.5 flex justify-start transition {$advancedModeApp
+				class="group flex w-full justify-start px-4 py-4 font-medium text-c-on-bg/75 transition {$advancedModeApp
 					? 'bg-c-bg-secondary'
 					: 'bg-c-bg'}
-					items-center gap-3 overflow-hidden relative z-0"
+					relative z-0 items-center gap-3 overflow-hidden"
 				on:click={() => advancedModeApp.set(!$advancedModeApp)}
 			>
-				<div class="w-full h-full absolute left-0 top-0 overflow-hidden z-0">
-					<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">
+				<div class="absolute left-0 top-0 z-0 h-full w-full overflow-hidden">
+					<div class="absolute left-0 top-0 flex h-full w-[200%] items-center justify-center">
 						<div
-							class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full opacity-0
-							bg-c-primary/10 not-touch:group-hover:translate-x-[-45%] not-touch:group-hover:opacity-100"
+							class="aspect-square w-full origin-left -translate-x-full transform rounded-full bg-c-primary/10 opacity-0
+							transition not-touch:group-hover:translate-x-[-45%] not-touch:group-hover:opacity-100"
 						/>
 					</div>
 				</div>
 				<div
-					class="flex-1 max-w-full min-w-0 flex items-center justify-start gap-3 overflow-hidden"
+					class="flex min-w-0 max-w-full flex-1 items-center justify-start gap-3 overflow-hidden"
 				>
 					<IconChevronDown
-						class="w-5 h-5 transform transition flex-shrink-0 text-c-on-bg/75
+						class="h-5 w-5 flex-shrink-0 transform text-c-on-bg/75 transition
 						not-touch:group-hover:text-c-primary {$advancedModeApp ? 'rotate-180' : ''}"
 					/>
 					<p
-						class="flex-1 break-words min-w-0 overflow-hidden overflow-ellipsis text-left text-c-on-bg/75
-						not-touch:group-hover:text-c-primary transition"
+						class="min-w-0 flex-1 overflow-hidden overflow-ellipsis break-words text-left text-c-on-bg/75
+						transition not-touch:group-hover:text-c-primary"
 					>
 						{$LL.Shared.AdvancedSettingsButton()}
 					</p>
 				</div>
-				<div class="flex-shrink-0 flex items-center justify-end gap-1.5">
+				<div class="flex flex-shrink-0 items-center justify-end gap-1.5">
 					{#if $generationGuidanceScale < guidanceScaleLowThreshold || $generationGuidanceScale > guidanceScaleHighThreshold}
 						<div transition:scale={{ duration: 100, easing: quadOut, opacity: 0, start: 0.5 }}>
 							<IconWarningOutline
-								class="flex-shrink-0 w-5 h-5 text-c-on-bg/50 transition 
+								class="h-5 w-5 flex-shrink-0 text-c-on-bg/50 transition 
 								not-touch:group-hover:text-c-primary"
 							/>
 						</div>
@@ -228,7 +228,7 @@
 					{#if $generationSeed !== null && $generationSeed !== undefined}
 						<div transition:scale={{ duration: 100, easing: quadOut, opacity: 0, start: 0.5 }}>
 							<IconSeed
-								class="flex-shrink-0 w-5 h-5 text-c-on-bg/50 transition 
+								class="h-5 w-5 flex-shrink-0 text-c-on-bg/50 transition 
 								not-touch:group-hover:text-c-primary"
 							/>
 						</div>
@@ -238,9 +238,9 @@
 			{#if $advancedModeApp}
 				<div
 					transition:expandCollapse={{ duration: 200, easing: quadOut }}
-					class="w-full flex flex-col"
+					class="flex w-full flex-col"
 				>
-					<div class="w-full pt-4 pb-6 flex flex-col gap-7">
+					<div class="flex w-full flex-col gap-7 pb-6 pt-4">
 						<SettingsPanelItem
 							title={$LL.Home.GuidanceScaleSlider.Title()}
 							iconType="guidance-scale"
@@ -258,15 +258,15 @@
 							{#if $generationGuidanceScale < guidanceScaleLowThreshold || $generationGuidanceScale > guidanceScaleHighThreshold}
 								<div
 									transition:expandCollapse={{ duration: 150 }}
-									class="w-full flex flex-col justify-start"
+									class="flex w-full flex-col justify-start"
 								>
-									<div class="w-full flex flex-col justify-start pt-3">
+									<div class="flex w-full flex-col justify-start pt-3">
 										<div
-											class="w-full flex items-center justify-start px-3 py-2 text-sm
-											bg-c-secondary/10 rounded-lg text-c-secondary gap-2"
+											class="flex w-full items-center justify-start gap-2 rounded-lg bg-c-secondary/10
+											px-3 py-2 text-sm text-c-secondary"
 										>
-											<IconWarningOutline class="w-5 h-5 -ml-0.5 flex-shrink-0" />
-											<p class="flex-shrink min-w-0">
+											<IconWarningOutline class="-ml-0.5 h-5 w-5 flex-shrink-0" />
+											<p class="min-w-0 flex-shrink">
 												{$generationGuidanceScale < guidanceScaleLowThreshold
 													? $LL.Home.GuidanceScaleSlider.Error.TooLow()
 													: $LL.Home.GuidanceScaleSlider.Error.TooHigh()}

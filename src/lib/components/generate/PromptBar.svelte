@@ -245,17 +245,17 @@
 	});
 </script>
 
-<div style={styles} class="w-full flex justify-center {classes}">
+<div style={styles} class="flex w-full justify-center {classes}">
 	<form
 		on:submit|preventDefault={onPromptFormSubmitted}
-		class="w-full max-w-7xl flex flex-row items-center"
+		class="flex w-full max-w-7xl flex-row items-center"
 	>
 		<div
-			class="flex-1 flex gap-2 flex-row items-center transition duration-150 transform {isJustCreatedGenerationForAnim
+			class="flex flex-1 transform flex-row items-center gap-2 transition duration-150 {isJustCreatedGenerationForAnim
 				? 'scale-97 md:scale-98 xl:scale-98.5'
 				: 'scale-100'}"
 		>
-			<div class="flex-1 flex relative group">
+			<div class="group relative flex flex-1">
 				<textarea
 					on:focus={() => (isPromptBarFocused = true)}
 					on:blur={() => (isPromptBarFocused = false)}
@@ -282,13 +282,13 @@
 					enterkeyhint="go"
 					rows="1"
 					style="transition: height 0.1s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), padding 0.2s cubic-bezier(0.4, 0, 0.2, 1)"
-					class="w-full text-base bg-c-bg-secondary shadow-lg pr-20 md:pr-26 lg:pr-17 hide-scrollbar shadow-c-shadow/[var(--o-shadow-normal)]
-							scroll-smooth resize-none transition relative pl-3 md:pl-5 py-3 md:py-4.5 rounded-lg md:rounded-xl
-							focus:ring-2 focus:ring-c-primary/40 ring-0 ring-c-primary/20 placeholder:text-c-on-bg/50
-							not-touch:enabled:hover:ring-2 text-c-on-bg not-touch:group-hover:ring-2"
+					class="hide-scrollbar relative w-full resize-none scroll-smooth rounded-lg bg-c-bg-secondary py-3 pl-3
+							pr-20 text-base text-c-on-bg shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] ring-0 ring-c-primary/20 transition placeholder:text-c-on-bg/50 focus:ring-2
+							focus:ring-c-primary/40 not-touch:enabled:hover:ring-2 not-touch:group-hover:ring-2 md:rounded-xl md:py-4
+							md:pl-5 md:pr-26 lg:pr-17"
 				/>
 				<ClearButton
-					class="absolute right-11 md:right-13 top-0 lg:right-0"
+					class="absolute right-11 top-0 md:right-13 lg:right-0"
 					show={showClearPromptInputButton}
 					onClick={clearPrompt}
 				/>
@@ -300,11 +300,11 @@
 						waiting={$maxOngoingGenerationsCountReached}
 						withSpinner
 						fadeOnDisabled={isCheckCompleted}
-						class="w-full h-full rounded-r-lg md:rounded-r-xl rounded-l-none absolute right-0 top-0"
+						class="absolute right-0 top-0 h-full w-full rounded-l-none rounded-r-lg md:rounded-r-xl"
 						noPadding
 						label={$LL.Home.GenerateButton()}
 					>
-						<IconWand class="w-7 h-7 md:w-8 md:h-8" />
+						<IconWand class="h-7 w-7 md:h-8 md:w-8" />
 					</Button>
 					{#if doesntHaveEnoughCredits && $userSummary && $sessionStore?.user.id}
 						<InsufficientCreditsBadge
@@ -314,7 +314,7 @@
 					{/if}
 				</div>
 			</div>
-			<div class="w-auto relative hidden lg:block">
+			<div class="relative hidden w-auto lg:block">
 				<Button
 					disabled={!isCheckCompleted ||
 						(doesntHaveEnoughCredits && $sessionStore?.user.id !== undefined)}
@@ -323,7 +323,7 @@
 					withSpinner
 					noPadding
 					fadeOnDisabled={isCheckCompleted}
-					class="w-full flex flex-col relative py-4.5 px-6 xl:px-8"
+					class="relative flex w-full flex-col px-6 py-4 xl:px-8"
 				>
 					{$LL.Home.GenerateButton()}
 				</Button>
@@ -340,25 +340,27 @@
 			noPadding
 			paddingClassForHoverEffect="px-1"
 			onClick={() => toggleSettingsSheet()}
-			class="h-full md:hidden px-3 py-2"
+			class="h-full px-3 py-2 md:hidden"
 			hoverFrom="bottom"
 			name={isGenerationSettingsSheetOpen
 				? $LL.Generate.HideSettingsButton()
 				: $LL.Generate.ShowSettingsButton()}
 		>
 			<Morpher morphed={$windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen}>
-				<div slot="0" class="w-8 h-8">
+				<div slot="0" class="h-8 w-8">
 					<IconSettings
-						class="transition not-touch:group-hover:text-c-primary
-						w-full h-full {$windowWidth < mdBreakpoint && isGenerationSettingsSheetOpen
+						class="h-full w-full
+						transition not-touch:group-hover:text-c-primary {$windowWidth < mdBreakpoint &&
+						isGenerationSettingsSheetOpen
 							? 'rotate-180'
 							: 'rotate-0'}"
 					/>
 				</div>
-				<div slot="1" class="w-8 h-8">
+				<div slot="1" class="h-8 w-8">
 					<IconChevronDown
-						class="transition transform not-touch:group-hover:text-c-primary
-						w-full h-full {$windowWidth < mdBreakpoint && !isGenerationSettingsSheetOpen
+						class="h-full w-full transform
+						transition not-touch:group-hover:text-c-primary {$windowWidth < mdBreakpoint &&
+						!isGenerationSettingsSheetOpen
 							? '-rotate-180'
 							: 'rotate-0'}"
 					/>

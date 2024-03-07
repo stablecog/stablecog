@@ -426,8 +426,8 @@
 					</div>
 				</div>
 				<div
-					class="relative z-0 order-first flex w-full min-w-0 flex-1
-					flex-col pb-[calc(env(safe-area-inset-bottom)+10.5rem)] md:pb-0 md:pt-26 lg:pb-8"
+					class="md:pt-25 relative z-0 order-first flex w-full min-w-0
+					flex-1 flex-col pb-[calc(env(safe-area-inset-bottom)+10.5rem)] md:pb-0 lg:pb-8"
 				>
 					<div class="flex w-full min-w-0 flex-1 flex-col items-center justify-center">
 						{#if $sessionStore?.user.id && $userSummary && $userSummary.total_remaining_credits < lowOnCreditsThreshold}

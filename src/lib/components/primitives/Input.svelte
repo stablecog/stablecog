@@ -50,7 +50,7 @@
 	}
 </script>
 
-<div class="flex-1 min-w-0 flex flex-row relative {classes}">
+<div class="relative flex min-w-0 flex-1 flex-row {classes}">
 	{#if type === 'email'}
 		<input
 			bind:value
@@ -76,12 +76,12 @@
 				? 'pr-20 md:pr-27'
 				: hasClearButton || iconForButton
 					? 'pr-10 md:pr-16'
-					: 'pr-5'} pt-6.5 pb-2.5 {rounding ? rounding : 'rounded-xl'} transition
-      shadow-lg {shadow === 'strongest'
+					: 'pr-5'} pt-5.75 pb-2.25 {rounding ? rounding : 'rounded-xl'} shadow-lg
+      transition {shadow === 'strongest'
 				? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
 				: shadow === 'strong'
 					? 'shadow-c-shadow/[var(--o-shadow-strong)'
-					: 'shadow-c-shadow/[var(--o-shadow-normal)]'} focus:ring-2 ring-0 {bg === 'bg-secondary'
+					: 'shadow-c-shadow/[var(--o-shadow-normal)]'} ring-0 focus:ring-2 {bg === 'bg-secondary'
 				? 'ring-c-primary/20 focus:ring-c-primary/30'
 				: 'ring-c-primary/20 focus:ring-c-primary/35'}  
       placeholder:text-c-on-bg/50 not-touch:enabled:hover:ring-2 not-touch:enabled:group-hover:ring-2"
@@ -111,12 +111,12 @@
 				? 'pr-20 md:pr-27'
 				: hasClearButton || iconForButton
 					? 'pr-10 md:pr-16'
-					: 'pr-5'} pt-6.5 pb-2.5 {rounding ? rounding : 'rounded-xl'} transition
-      shadow-lg {shadow === 'strongest'
+					: 'pr-5'} pt-5.75 pb-2.25 {rounding ? rounding : 'rounded-xl'} shadow-lg
+      transition {shadow === 'strongest'
 				? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
 				: shadow === 'strong'
 					? 'shadow-c-shadow/[var(--o-shadow-strong)'
-					: 'shadow-c-shadow/[var(--o-shadow-normal)]'} focus:ring-2 ring-0 {bg === 'bg-secondary'
+					: 'shadow-c-shadow/[var(--o-shadow-normal)]'} ring-0 focus:ring-2 {bg === 'bg-secondary'
 				? 'ring-c-primary/20 focus:ring-c-primary/30'
 				: 'ring-c-primary/20 focus:ring-c-primary/35'} 
       placeholder:text-c-on-bg/50 not-touch:enabled:hover:ring-2 not-touch:enabled:group-hover:ring-2"
@@ -146,12 +146,12 @@
 				? 'pr-20 md:pr-27'
 				: hasClearButton || iconForButton
 					? 'pr-10 md:pr-16'
-					: 'pr-5'} pt-6.5 pb-2.5 {rounding ? rounding : 'rounded-xl'} transition
-      shadow-lg {shadow === 'strongest'
+					: 'pr-5'} pt-5.75 pb-2.25 {rounding ? rounding : 'rounded-xl'} shadow-lg
+      transition {shadow === 'strongest'
 				? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
 				: shadow === 'strong'
 					? 'shadow-c-shadow/[var(--o-shadow-strong)'
-					: 'shadow-c-shadow/[var(--o-shadow-normal)]'} focus:ring-2 ring-0 {bg === 'bg-secondary'
+					: 'shadow-c-shadow/[var(--o-shadow-normal)]'} ring-0 focus:ring-2 {bg === 'bg-secondary'
 				? 'ring-c-primary/20 focus:ring-c-primary/30'
 				: 'ring-c-primary/20 focus:ring-c-primary/35'}  
       placeholder:text-c-on-bg/50 not-touch:enabled:hover:ring-2 not-touch:enabled:group-hover:ring-2"
@@ -181,35 +181,35 @@
 				? 'pr-22 md:pr-27'
 				: hasClearButton || iconForButton
 					? 'pr-10 md:pr-16'
-					: 'pr-5'} pt-6.5 pb-2.5 {rounding ? rounding : 'rounded-xl'} transition
-      shadow-lg {shadow === 'strongest'
+					: 'pr-5'} pt-5.75 pb-2.25 {rounding ? rounding : 'rounded-xl'} shadow-lg
+      transition {shadow === 'strongest'
 				? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
 				: shadow === 'strong'
 					? 'shadow-c-shadow/[var(--o-shadow-strong)'
-					: 'shadow-c-shadow/[var(--o-shadow-normal)]'} focus:ring-2 ring-0 {bg === 'bg-secondary'
+					: 'shadow-c-shadow/[var(--o-shadow-normal)]'} ring-0 focus:ring-2 {bg === 'bg-secondary'
 				? 'ring-c-primary/20 focus:ring-c-primary/30'
 				: 'ring-c-primary/20 focus:ring-c-primary/35'}  
       placeholder:text-c-on-bg/50 not-touch:enabled:hover:ring-2 not-touch:enabled:group-hover:ring-2"
 		/>
 	{/if}
 	<label
-		class="{hasIcon ? 'pl-12 pr-5' : 'px-5'} input-label absolute transition-all duration-150
-		text-c-on-bg/75 peer-placeholder-shown:text-c-on-bg/50 peer-focus:text-c-on-bg/75
-		transform top-4 -translate-y-1/2 pointer-events-none text-xs peer-placeholder-shown:text-base peer-focus:text-xs
-		peer-placeholder-shown:top-1/2 peer-focus:top-4"
+		class="{hasIcon ? 'pl-12 pr-5' : 'px-5'} input-label pointer-events-none absolute top-4
+		-translate-y-1/2 transform text-xs
+		text-c-on-bg/75 transition-all duration-150 peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-c-on-bg/50 peer-focus:top-4
+		peer-focus:text-xs peer-focus:text-c-on-bg/75"
 		for={title}
 	>
 		{title}
 	</label>
 	<div
-		class="absolute left-4 top-1/2 transform transition -translate-y-1/2 w-5 h-5 icon text-c-on-bg/75
-		peer-placeholder-shown:text-c-on-bg/50 peer-focus:text-c-on-bg/75 pointer-events-none"
+		class="icon pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 transform text-c-on-bg/75
+		transition peer-placeholder-shown:text-c-on-bg/50 peer-focus:text-c-on-bg/75"
 	>
 		<slot name="icon" />
 	</div>
 	{#if hasClearButton || iconForButton}
 		<div
-			class="h-full absolute right-0 top-0 flex items-stretch {!showClearButton &&
+			class="absolute right-0 top-0 flex h-full items-stretch {!showClearButton &&
 				'pointer-events-none'}"
 		>
 			<ClearButton
@@ -230,10 +230,10 @@
 					label={iconForButtonLabel}
 					noRounding
 					noPadding
-					class="py-2 px-3 md:p-3 rounded-r-xl pointer-events-auto"
+					class="pointer-events-auto rounded-r-xl px-3 py-2 md:p-3"
 					size="sm"
 				>
-					<svelte:component this={iconForButton} strokeWidth={2} class="w-6 h-6 md:w-7 md:h-7" />
+					<svelte:component this={iconForButton} strokeWidth={2} class="h-6 w-6 md:h-7 md:w-7" />
 				</Button>
 			{/if}
 		</div>

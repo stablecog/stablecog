@@ -412,12 +412,12 @@
 			? 'ring-c-primary'
 			: 'ring-c-bg-tertiary'}
 	>
-		<div class="relative self-stretch flex items-center">
+		<div class="relative flex items-center self-stretch">
 			{#if generation.selected_output.image_url}
 				{#key generation.selected_output.id}
 					<SrcsetProvider src={backgroundImageUrl} cardType={modalType} let:sizes let:srcset>
 						<img
-							class="w-full h-full absolute left-0 top-0 transform scale-125 blur-xl translate-3d-0"
+							class="translate-3d-0 absolute left-0 top-0 h-full w-full scale-125 transform blur-xl"
 							{sizes}
 							src={generation.selected_output.image_url}
 							{srcset}
@@ -428,16 +428,16 @@
 					</SrcsetProvider>
 				{/key}
 			{/if}
-			<div class="w-full h-full absolute left-0 top-0 bg-c-bg/50" />
+			<div class="absolute left-0 top-0 h-full w-full bg-c-bg/50" />
 			<div
 				style={$windowWidth >= lgBreakpoint
 					? `width: ${imageContainerWidth}px; height: ${imageContainerHeight}px;`
 					: ''}
-				class="w-full lg:h-full relative"
+				class="relative w-full lg:h-full"
 			>
 				{#if generation.selected_output.image_url.includes('placeholder')}
 					<svg
-						class="w-full h-auto text-c-bg-secondary"
+						class="h-auto w-full text-c-bg-secondary"
 						width={generation.width}
 						height={generation.height}
 						viewBox="0 0 {generation.width} {generation.height}"
@@ -446,8 +446,8 @@
 					>
 						<rect width={generation.width} height={generation.height} fill="currentColor" />
 					</svg>
-					<div class="w-full h-full absolute left-0 top-0 p-5 flex items-center justify-center">
-						<IconNoImage class="w-16 h-16 text-c-on-bg/50" />
+					<div class="absolute left-0 top-0 flex h-full w-full items-center justify-center p-5">
+						<IconNoImage class="h-16 w-16 text-c-on-bg/50" />
 					</div>
 				{:else}
 					{#key selectedOutputId}
@@ -472,7 +472,7 @@
 					{/key}
 					{#if modalType === 'admin-gallery' && generation.init_image_url}
 						<div
-							class="absolute -top-px -left-px pl-1.75 pt-1.75 pr-2 pb-2 rounded-br-lg bg-c-bg-secondary"
+							class="absolute -left-px -top-px rounded-br-lg bg-c-bg-secondary pb-2 pl-1.75 pr-2 pt-1.75"
 						>
 							<IconGalleryFilled class="text-c-danger" />
 						</div>
@@ -480,10 +480,10 @@
 					{#if $upscales && $upscales.length > 0 && upscaleFromStore?.status === 'failed'}
 						<div
 							transition:fly={{ duration: 200, easing: quadOut, y: -50 }}
-							class="w-full absolute left-0 top-0 flex items-center justify-center p-3 pointer-events-none"
+							class="pointer-events-none absolute left-0 top-0 flex w-full items-center justify-center p-3"
 						>
 							<p
-								class="text-center font-medium text-xs md:text-sm shadow-lg shadow-c-shadow/[var(--o-shadow-stronger)] bg-c-bg-secondary px-4 py-3 rounded-xl"
+								class="rounded-xl bg-c-bg-secondary px-4 py-3 text-center text-xs font-medium shadow-lg shadow-c-shadow/[var(--o-shadow-stronger)] md:text-sm"
 							>
 								{upscaleFromStore?.error ?? $LL.Error.SomethingWentWrong()}
 							</p>
@@ -506,15 +506,15 @@
 				{#if modalType === 'admin-gallery'}
 					<button
 						on:click={() => onSelect()}
-						class="absolute right-2 top-2 p-1 bg-c-bg-secondary rounded-full group
-							before:w-full before:h-full
-							before:min-w-[56px] before:min-h-[56px]
-							before:absolute before:-top-2 before:-right-2 z-20"
+						class="group absolute right-2 top-2 z-20 rounded-full bg-c-bg-secondary
+							p-1 before:absolute
+							before:-right-2 before:-top-2
+							before:h-full before:min-h-[56px] before:w-full before:min-w-[56px]"
 					>
 						<ButtonHoverEffect noPadding fullRounding color="primary-strong" />
-						<div class="w-6 h-6 border-3 rounded-full p-0.75 transition border-c-primary">
+						<div class="h-6 w-6 rounded-full border-3 border-c-primary p-0.75 transition">
 							<div
-								class="w-full h-full rounded-full bg-c-primary transition {$adminGallerySelectedOutputIds.includes(
+								class="h-full w-full rounded-full bg-c-primary transition {$adminGallerySelectedOutputIds.includes(
 									generation.selected_output.id
 								)
 									? 'scale-100 opacity-100'
@@ -524,13 +524,13 @@
 					</button>
 				{/if}
 			</div>
-			<div class="w-full h-full overflow-hidden z-0 absolute left-0 top-0 pointer-events-none">
+			<div class="pointer-events-none absolute left-0 top-0 z-0 h-full w-full overflow-hidden">
 				{#if onLeftButtonClicked || onRightButtonClicked}
 					<SideButton
 						name="Go Left"
 						hasAnimation={false}
 						iconClass="w-6 h-6"
-						class="flex md:hidden absolute w-1/6 left-0 top-1/2 transform -translate-y-1/2 h-full pointer-events-auto"
+						class="pointer-events-auto absolute left-0 top-1/2 flex h-full w-1/6 -translate-y-1/2 transform md:hidden"
 						wrapperClass="w-full h-full relative flex items-center rounded-xl justify-start pl-1.5"
 						side="left"
 						bind:element={buttonLeftMobile}
@@ -540,7 +540,7 @@
 						name="Go Right"
 						hasAnimation={false}
 						iconClass="w-6 h-6"
-						class="flex md:hidden absolute w-1/6 right-0 top-1/2 transform -translate-y-1/2 h-full pointer-events-auto"
+						class="pointer-events-auto absolute right-0 top-1/2 flex h-full w-1/6 -translate-y-1/2 transform md:hidden"
 						wrapperClass="w-full h-full relative flex items-center rounded-xl justify-end pr-1.5"
 						side="right"
 						bind:element={buttonRightMobile}
@@ -548,7 +548,7 @@
 					/>
 				{/if}
 				{#if (modalType === 'history' && $userGalleryCurrentView !== 'likes') || modalType === 'generate'}
-					<div class="absolute right-1.5 top-1.5 pointer-events-auto z-10">
+					<div class="pointer-events-auto absolute right-1.5 top-1.5 z-10">
 						<FavoriteButton {generation} {modalType} />
 					</div>
 				{/if}
@@ -559,16 +559,16 @@
 			style={$windowWidth >= lgBreakpoint
 				? `width: ${sidebarWidth}px; height: ${imageContainerHeight}px; min-height: ${modalMinHeight}px;`
 				: ``}
-			class="w-full shadow-generation-sidebar shadow-c-shadow/[var(--o-shadow-stronger)] flex
-				flex-col items-start justify-start bg-c-bg-secondary lg:border-l-2 border-c-bg-tertiary relative"
+			class="relative flex w-full flex-col
+				items-start justify-start border-c-bg-tertiary bg-c-bg-secondary shadow-generation-sidebar shadow-c-shadow/[var(--o-shadow-stronger)] lg:border-l-2"
 		>
 			<ScrollAreaWithChevron bind:scrollContainer={sidebarScrollContainer}>
-				<div class="w-full flex flex-col items-start justify-start">
-					<div class="w-full flex flex-col gap-4 md:gap-5 px-5 py-4 md:px-7 md:py-5">
+				<div class="flex w-full flex-col items-start justify-start">
+					<div class="flex w-full flex-col gap-4 px-5 py-4 md:gap-5 md:px-7 md:py-5">
 						{#if (modalType === 'generate' || (modalType === 'history' && $userGalleryCurrentView !== 'likes')) && !generation.selected_output.image_url.includes('placeholder')}
-							<div class="w-full flex flex-col pt-1.5">
+							<div class="flex w-full flex-col pt-1.5">
 								{#if !generation.selected_output.upscaled_image_url || upscaleBeingProcessed}
-									<div class="w-full relative">
+									<div class="relative w-full">
 										<Button
 											onClick={onUpscaleClicked}
 											loading={upscaleBeingProcessed}
@@ -580,7 +580,7 @@
 											size="sm"
 										>
 											<div class="flex items-center gap-2">
-												<IconUpscale class="w-5 h-5" />
+												<IconUpscale class="h-5 w-5" />
 												<p>{$LL.GenerationFullscreen.UpscaleButton()}</p>
 											</div>
 										</Button>
@@ -628,11 +628,11 @@
 								</div> -->
 							</div>
 						{/if}
-						<div class="w-full flex justify-start items-center mt-1">
+						<div class="mt-1 flex w-full items-center justify-start">
 							<UsernameButton username={generation.user.username} email={generation.user.email} />
 						</div>
 						<!-- Prompt and Negative Prompt -->
-						<div class="w-full break-words flex flex-col items-start gap-3">
+						<div class="flex w-full flex-col items-start gap-3 break-words">
 							<p class="w-full leading-normal">{generation.prompt.text}</p>
 							{#if generation.negative_prompt}
 								{#key generation.id}
@@ -640,7 +640,7 @@
 								{/key}
 							{/if}
 							{#if generation.selected_output.created_at !== undefined || generation.created_at !== undefined}
-								<p class="text-sm text-c-on-bg/75 -mt-1">
+								<p class="-mt-1 text-sm text-c-on-bg/75">
 									{getRelativeDate({
 										date: generation.selected_output.created_at || generation.created_at,
 										locale: $locale,
@@ -676,7 +676,7 @@
 					{/if}
 					<Divider />
 					<ParamsSection
-						class="flex flex-col px-5 py-4 md:px-7 md:py-5 lg:pb-8 gap-6"
+						class="flex flex-col gap-6 px-5 py-4 md:px-7 md:py-5 lg:pb-8"
 						currentImageWidth={upscaledTabValue === 'upscaled' && upscaledImageWidth
 							? upscaledImageWidth
 							: generation.width}
@@ -711,7 +711,7 @@
 	{#if onLeftButtonClicked || onRightButtonClicked}
 		<SideButton
 			name="Go Left"
-			class="hidden md:flex absolute left-0 top-1/2 transform -translate-y-1/2 w-20 h-56"
+			class="absolute left-0 top-1/2 hidden h-56 w-20 -translate-y-1/2 transform md:flex"
 			side="left"
 			bind:element={buttonLeft}
 			onClick={onLeftButtonClicked}
@@ -728,7 +728,7 @@
 		/>
 		<SideButton
 			name="Go Right"
-			class="hidden md:flex absolute right-0 top-1/2 transform -translate-y-1/2 w-20 h-56"
+			class="absolute right-0 top-1/2 hidden h-56 w-20 -translate-y-1/2 transform md:flex"
 			side="right"
 			bind:element={buttonRight}
 			onClick={onRightButtonClicked}

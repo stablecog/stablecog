@@ -36,75 +36,75 @@
 		data-sveltekit-preload-data={prefetch && (target === '_self' || target === undefined)
 			? 'hover'
 			: 'off'}
-		class="touch-manipulation relative flex items-center justify-center text-center
-			shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] font-bold gap-2
-			overflow-hidden z-0 group {noPadding
+		class="group relative z-0 flex touch-manipulation items-center
+			justify-center gap-2 overflow-hidden text-center
+			font-bold shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] {noPadding
 			? 'p-0'
 			: size === 'xs'
-			? 'px-3.5 py-3'
+				? 'px-3.5 py-3'
+				: size === 'sm'
+					? 'px-3.5 py-3'
+					: 'px-3.5 py-4'} {size === 'xs'
+			? 'rounded-lg2 text-sm'
 			: size === 'sm'
-			? 'px-3.5 py-3'
-			: 'px-3.5 py-4.5'} {size === 'xs'
-			? 'text-sm rounded-lg2'
-			: size === 'sm'
-			? 'text-sm rounded-lg2'
-			: 'text-base rounded-xl'} {provider === 'google'
+				? 'rounded-lg2 text-sm'
+				: 'rounded-xl text-base'} {provider === 'google'
 			? 'text-black'
 			: provider === 'discord'
-			? 'text-white'
-			: 'text-c-on-primary'} {loading
+				? 'text-white'
+				: 'text-c-on-primary'} {loading
 			? provider === 'google'
 				? 'bg-indigo-200'
 				: provider === 'discord'
-				? 'bg-[#4854d7]'
-				: 'bg-c-secondary'
+					? 'bg-[#4854d7]'
+					: 'bg-c-secondary'
 			: provider === 'google'
-			? 'bg-white'
-			: provider === 'discord'
-			? 'bg-[#5865F2]'
-			: 'bg-c-primary'} {classes}"
+				? 'bg-white'
+				: provider === 'discord'
+					? 'bg-[#5865F2]'
+					: 'bg-c-primary'} {classes}"
 	>
 		<div
 			style="width: {buttonSize}px; height: {buttonSize}px;"
-			class="absolute left-1/2 top-1/2 transform -translate-y-1/2 -translate-x-1/2 items-center justify-center
-			hidden not-touch:flex"
+			class="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 transform items-center
+			justify-center not-touch:flex"
 		>
 			<div
-				class="absolute w-full h-full rounded-full transition transform left-0 -translate-x-full
+				class="absolute left-0 h-full w-full -translate-x-full transform rounded-full transition
 				{provider === 'google'
 					? 'bg-indigo-200'
 					: provider === 'discord'
-					? 'bg-[#4854d7]'
-					: 'bg-c-secondary'} not-touch:group-enabled:group-hover:translate-x-0"
+						? 'bg-[#4854d7]'
+						: 'bg-c-secondary'} not-touch:group-enabled:group-hover:translate-x-0"
 			/>
 		</div>
-		<div class="w-full relative">
+		<div class="relative w-full">
 			{#if withSpinner}
-				<div class="max-w-full flex items-center justify-between gap-2">
-					<IconOAuthProvider {provider} class="w-7 h-7 flex-shrink-0" />
-					<div class="flex-1 min-w-0 px-1">
+				<div class="flex max-w-full items-center justify-between gap-2">
+					<IconOAuthProvider {provider} class="-my-1 h-7 w-7 flex-shrink-0" />
+					<div class="min-w-0 flex-1 px-1">
 						<slot />
 					</div>
-					<div class="w-7 h-7 flex-shrink-0" />
+					<div class="-my-1 h-7 w-7 flex-shrink-0" />
 				</div>
 				<div
-					class="w-full h-full absolute left-0 top-0 pointer-events-none flex justify-center items-center"
+					class="pointer-events-none absolute left-0 top-0 flex h-full w-full items-center justify-center"
 				>
 					<div
-						class="{size === 'sm' ? 'w-6 h-6' : 'w-7 h-7'} transition transform {loading
+						class="-my-1 {size === 'sm' ? 'h-6 w-6' : 'h-7 w-7'} transform transition {loading
 							? 'scale-100'
 							: 'scale-0'}"
 					>
-						<IconAnimatedSpinner class="w-full h-full" {loading} />
+						<IconAnimatedSpinner class="h-full w-full" {loading} />
 					</div>
 				</div>
 			{:else}
-				<div class="max-w-full flex items-center justify-between gap-2">
-					<IconOAuthProvider {provider} class="w-7 h-7 flex-shrink-0" />
-					<div class="flex-1 min-w-0 px-1">
+				<div class="flex max-w-full items-center justify-between gap-2">
+					<IconOAuthProvider {provider} class="-my-1 h-7 w-7 flex-shrink-0" />
+					<div class="min-w-0 flex-1 px-1">
 						<slot />
 					</div>
-					<div class="w-7 h-7 flex-shrink-0" />
+					<div class="-my-1 h-7 w-7 flex-shrink-0" />
 				</div>
 			{/if}
 		</div>
@@ -115,81 +115,81 @@
 		bind:clientHeight={height}
 		on:click={onClick}
 		disabled={disabled || loading}
-		class="touch-manipulation relative flex items-center justify-center text-center
-			shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] font-bold gap-2
-			overflow-hidden z-0 group {noPadding
+		class="group relative z-0 flex touch-manipulation items-center
+			justify-center gap-2 overflow-hidden text-center
+			font-bold shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] {noPadding
 			? 'p-0'
 			: size === 'xs'
-			? 'px-3.5 py-3'
+				? 'px-3.5 py-3'
+				: size === 'sm'
+					? 'px-3.5 py-3'
+					: 'px-3.5 py-4'} {size === 'xs'
+			? 'rounded-lg2 text-sm'
 			: size === 'sm'
-			? 'px-3.5 py-3'
-			: 'px-3.5 py-4.5'} {size === 'xs'
-			? 'text-sm rounded-lg2'
-			: size === 'sm'
-			? 'text-sm rounded-lg2'
-			: 'text-base rounded-xl'} {provider === 'google'
+				? 'rounded-lg2 text-sm'
+				: 'rounded-xl text-base'} {provider === 'google'
 			? 'text-black'
 			: provider === 'discord'
-			? 'text-white'
-			: 'text-c-on-primary'} {loading
+				? 'text-white'
+				: 'text-c-on-primary'} {loading
 			? provider === 'google'
 				? 'bg-indigo-200'
 				: provider === 'discord'
-				? 'bg-[#4854d7]'
-				: 'bg-c-secondary'
+					? 'bg-[#4854d7]'
+					: 'bg-c-secondary'
 			: provider === 'google'
-			? 'bg-white'
-			: provider === 'discord'
-			? 'bg-[#5865F2]'
-			: 'bg-c-primary'} {classes}"
+				? 'bg-white'
+				: provider === 'discord'
+					? 'bg-[#5865F2]'
+					: 'bg-c-primary'} {classes}"
 	>
 		<div
 			style="width: {buttonSize}px; height: {buttonSize}px;"
-			class="absolute left-1/2 top-1/2 transform -translate-y-1/2 -translate-x-1/2 items-center justify-center
-			hidden not-touch:flex"
+			class="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 transform items-center
+			justify-center not-touch:flex"
 		>
 			<div
-				class="absolute w-full h-full rounded-full transition transform left-0 -translate-x-full
+				class="absolute left-0 h-full w-full -translate-x-full transform rounded-full transition
 				{provider === 'google'
 					? 'bg-indigo-200'
 					: provider === 'discord'
-					? 'bg-[#4854d7]'
-					: 'bg-c-secondary'} not-touch:group-enabled:group-hover:translate-x-0"
+						? 'bg-[#4854d7]'
+						: 'bg-c-secondary'} not-touch:group-enabled:group-hover:translate-x-0"
 			/>
 		</div>
-		<div class="w-full relative">
+		<div class="relative w-full">
 			{#if withSpinner}
 				<div
-					class="transform relative transition {loading
+					class="relative transform transition {loading
 						? 'scale-0 opacity-0'
 						: 'scale-100 opacity-100'}"
 				>
-					<div class="max-w-full flex items-center justify-between gap-2">
-						<IconOAuthProvider {provider} class="w-7 h-7 flex-shrink-0" />
-						<div class="flex-1 min-w-0 px-1">
+					<div class="flex max-w-full items-center justify-between gap-2">
+						<IconOAuthProvider {provider} class="-my-1 h-7 w-7 flex-shrink-0" />
+						<div class="min-w-0 flex-1 px-1">
 							<slot />
 						</div>
-						<div class="w-7 h-7 flex-shrink-0" />
+						<div class="-my-1 h-7 w-7 flex-shrink-0" />
 					</div>
 				</div>
 				<div
-					class="w-full h-full absolute left-0 top-0 pointer-events-none flex justify-center items-center"
+					class="pointer-events-none absolute left-0 top-0 flex h-full w-full items-center justify-center"
 				>
 					<div
-						class="{size === 'sm' ? 'w-6 h-6' : 'w-7 h-7'} transition transform {loading
+						class="-my-1 {size === 'sm' ? 'h-6 w-6' : 'h-7 w-7'} transform transition {loading
 							? 'scale-100'
 							: 'scale-0'}"
 					>
-						<IconAnimatedSpinner class="w-full h-full" {loading} />
+						<IconAnimatedSpinner class="h-full w-full" {loading} />
 					</div>
 				</div>
 			{:else}
-				<div class="max-w-full flex items-center justify-between gap-2">
-					<IconOAuthProvider {provider} class="w-7 h-7 flex-shrink-0" />
-					<div class="flex-1 min-w-0 px-1">
+				<div class="flex max-w-full items-center justify-between gap-2">
+					<IconOAuthProvider {provider} class="-my-1 h-7 w-7 flex-shrink-0" />
+					<div class="min-w-0 flex-1 px-1">
 						<slot />
 					</div>
-					<div class="w-7 h-7 flex-shrink-0" />
+					<div class="-my-1 h-7 w-7 flex-shrink-0" />
 				</div>
 			{/if}
 		</div>
