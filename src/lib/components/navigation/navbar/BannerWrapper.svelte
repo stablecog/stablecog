@@ -36,8 +36,8 @@
 		}}
 	>
 		<div class="flex items-center justify-center gap-2">
-			<IconCart class="w-6 h-6 flex-shrink-0" />
-			<p class="flex-shrink min-w-0 overflow-hidden overflow-ellipsis">
+			<IconCart class="h-6 w-6 flex-shrink-0" />
+			<p class="min-w-0 flex-shrink overflow-hidden overflow-ellipsis">
 				{$LL.Pricing.Discounts.FirstMonth30OffParagraph()}
 			</p>
 		</div>

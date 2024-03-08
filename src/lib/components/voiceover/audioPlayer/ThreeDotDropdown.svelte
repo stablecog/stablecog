@@ -34,8 +34,8 @@
 	use:trigger
 	aria-label="More Options"
 	class="{size === 'lg'
-		? 'w-12 h-12'
-		: 'w-10 h-10'} flex items-center justify-center group/iconbutton relative"
+		? 'h-12 w-12'
+		: 'h-10 w-10'} group/iconbutton relative flex items-center justify-center"
 >
 	<ButtonHoverEffect
 		groupClass="not-touch:group-hover/iconbutton:translate-x-0 not-touch:group-hover/iconbutton:translate-y-0 not-touch:group-hover/iconbutton:opacity-100"
@@ -46,13 +46,13 @@
 	<Morpher morphed={$open}>
 		<IconThreeDots
 			slot="0"
-			class="w-6 h-6 text-c-on-bg/50 not-touch:group-hover/iconbutton:text-c-primary transition transform {$open
+			class="h-6 w-6 transform text-c-on-bg/50 transition not-touch:group-hover/iconbutton:text-c-primary {$open
 				? 'rotate-90'
 				: ''}"
 		/>
 		<IconCancel
 			slot="1"
-			class="w-6 h-6 text-c-on-bg/50 not-touch:group-hover/iconbutton:text-c-primary transition transform {$open
+			class="h-6 w-6 transform text-c-on-bg/50 transition not-touch:group-hover/iconbutton:text-c-primary {$open
 				? 'rotate-90'
 				: ''}"
 		/>
@@ -66,7 +66,7 @@
 			duration: 150,
 			easing: quadOut
 		}}
-		class="bg-c-bg-secondary ring-2 ring-c-bg-tertiary shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] rounded-md flex"
+		class="flex rounded-md bg-c-bg-secondary shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-tertiary"
 		{...$content}
 		use:content
 	>

@@ -44,25 +44,25 @@
 	article_published_time={metadata.date}
 />
 
-<div class="w-full flex flex-col items-center pb-12">
-	<article class="w-full flex flex-wrap max-w-3xl px-5 md:px-12 pt-4 md:pt-8 pb-8 blog">
+<div class="flex w-full flex-col items-center pb-12">
+	<article class="blog flex w-full max-w-3xl flex-wrap px-5 pb-8 pt-4 md:px-12 md:pt-8">
 		<svelte:component this={content} />
 	</article>
 	{#if sidebarItem?.children}
-		<div class="w-full max-w-3xl px-5 md:px-12 pb-8 overflow-hidden">
-			<h2 class="font-bold text-[1.6rem] leading-[1.35]">
+		<div class="w-full max-w-3xl overflow-hidden px-5 pb-8 md:px-12">
+			<h2 class="text-[1.6rem] font-bold leading-[1.35]">
 				{allChildrenAreEndpoints ? $LL.Guide.EndpointsTitle() : $LL.Guide.ChaptersTitle()}
 			</h2>
-			<ul class="w-[calc(100%+1rem)] -mx-2 -mb-1 flex flex-row flex-wrap mt-3">
+			<ul class="-mx-2 -mb-1 mt-3 flex w-[calc(100%+1rem)] flex-row flex-wrap">
 				{#each sidebarItem.children.filter((c) => !rootPathnames.includes(c.pathname)) as child}
-					<li class="w-full md:w-1/2 p-2">
+					<li class="w-full p-2 md:w-1/2">
 						<ChapterButton item={child} />
 					</li>
 				{/each}
 			</ul>
 		</div>
 	{/if}
-	<div class="w-full flex flex-wrap max-w-3xl px-5 md:px-12 gap-3 mt-2">
+	<div class="mt-2 flex w-full max-w-3xl flex-wrap gap-3 px-5 md:px-12">
 		{#if prev}
 			<NextOrPrevButton item={prev} type="prev" />
 		{/if}

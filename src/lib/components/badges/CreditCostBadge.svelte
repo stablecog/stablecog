@@ -5,12 +5,12 @@
 </script>
 
 <div
-	class="ring-1 ring-c-bg/15 rounded-bl bg-c-bg/10 pointer-events-none
-    text-xs flex flex-row justify-end px-1
-	  items-center font-semibold text-c-bg absolute right-0 top-0"
+	class="pointer-events-none absolute right-0 top-0 flex
+    flex-row items-center justify-end rounded-bl bg-c-bg/10
+	  px-1 text-xs font-semibold text-c-bg ring-1 ring-c-bg/15"
 >
-	<IconToken class="w-3.5 h-3.5 -ml-1 -mr-0.25" />
-	<p class="text-right mt-0.25">
+	<IconToken class="-ml-1 -mr-0.25 h-3.5 w-3.5" />
+	<p class="mt-0.25 text-right">
 		{creditCost.toLocaleString($locale)}
 	</p>
 </div>

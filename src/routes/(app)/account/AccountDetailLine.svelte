@@ -3,8 +3,8 @@
 	export let id: string | undefined = undefined;
 </script>
 
-<div class="w-full h-2px bg-c-bg-secondary" />
-<div {id} class="w-full flex flex-wrap items-center justify-between gap-4 py-5 px-4 md:px-5">
-	<p class="text-c-on-bg/75 px-1">{title}</p>
+<div class="h-2px w-full bg-c-bg-secondary" />
+<div {id} class="flex w-full flex-wrap items-center justify-between gap-4 px-4 py-5 md:px-5">
+	<p class="px-1 text-c-on-bg/75">{title}</p>
 	<slot />
 </div>

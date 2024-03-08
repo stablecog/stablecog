@@ -58,7 +58,7 @@
 	style={$navbarStickyType === 'relative' || $navbarStickyType === undefined
 		? ''
 		: 'position: fixed; top: 0; left: 0;'}
-	class="w-full flex flex-col z-60 transform transition rounded-b-xl {$notAtTheVeryTop &&
+	class="z-60 flex w-full transform flex-col rounded-b-xl transition {$notAtTheVeryTop &&
 	$navbarStickyType === 'auto-hiding' &&
 	$scrollDirection === 'down'
 		? '-translate-y-[calc(100%+2px)]'
@@ -69,23 +69,23 @@
 	{#if showBanner}
 		<BannerWrapper canShow={$userSummary && $userSummary.purchase_count > 0 ? false : true} />
 	{/if}
-	<div class="w-full flex flex-row items-center justify-between relative z-0">
+	<div class="relative z-0 flex w-full flex-row items-center justify-between">
 		<PageLoadProgressBar />
-		<div class="flex flex-1 md:flex-none xl:flex-1 self-stretch min-w-0">
+		<div class="flex min-w-0 flex-1 self-stretch md:flex-none xl:flex-1">
 			<button
 				aria-label="Toggle Drawer"
 				on:click={() => isDrawerOpen.set(!$isDrawerOpen)}
-				class="flex-shrink-0 relative self-stretch p-0.5 group overflow-hidden md:hidden {routesWithoutDrawer.includes(
+				class="group relative flex-shrink-0 self-stretch overflow-hidden p-0.5 md:hidden {routesWithoutDrawer.includes(
 					$page.url.pathname
 				)
 					? 'hidden'
 					: ''}"
 			>
-				<div class="h-full flex items-center justify-center px-2.5 py-3 relative overflow-hidden">
+				<div class="relative flex h-full items-center justify-center overflow-hidden px-2.5 py-3">
 					<ButtonHoverEffect hoverFrom="left" size="md" color="primary-strong" />
 					<IconSidebar
-						class="w-8 h-8 transition text-c-on-bg not-touch:group-hover:text-c-primary 
-						transform {$isDrawerOpen ? 'rotate-90' : ''}"
+						class="h-8 w-8 transform text-c-on-bg transition 
+						not-touch:group-hover:text-c-primary {$isDrawerOpen ? 'rotate-90' : ''}"
 					/>
 				</div>
 			</button>
@@ -93,22 +93,22 @@
 				class="{routesWithoutDrawer.includes($page.url.pathname) ? 'flex' : 'hidden'} md:flex"
 			/>
 			{#if $dirTree && $dirTree.length > 0}
-				<div class="pr-2 h-full flex-shrink min-w-0 md:hidden">
+				<div class="h-full min-w-0 flex-shrink pr-2 md:hidden">
 					<div
-						class="w-full h-full overflow-x-auto items-center text-sm font-medium text-c-on-bg/75 pr-2"
+						class="h-full w-full items-center overflow-x-auto pr-2 text-sm font-medium text-c-on-bg/75"
 					>
-						<div class="flex items-center justify-start h-full">
+						<div class="flex h-full items-center justify-start">
 							{#each $dirTree as treeItem, index}
 								<a
-									class="px-2 h-full flex items-center whitespace-nowrap relative group"
+									class="group relative flex h-full items-center whitespace-nowrap px-2"
 									href={treeItem.href}
 								>
 									<ButtonHoverEffect size="sm" />
-									<p class="not-touch:group-hover:text-c-primary transition">{treeItem.title}</p>
+									<p class="transition not-touch:group-hover:text-c-primary">{treeItem.title}</p>
 								</a>
 								{#if index !== $dirTree.length - 1}
 									<IconChevronDown
-										class="w-4 h-4 flex-shrink-0 transform -rotate-90 text-c-on-bg/50"
+										class="h-4 w-4 flex-shrink-0 -rotate-90 transform text-c-on-bg/50"
 									/>
 								{/if}
 							{/each}
@@ -117,10 +117,10 @@
 				</div>
 			{/if}
 		</div>
-		<div class="hidden md:flex md:max-w-[19rem] lg:max-w-[45rem] xl:max-w-[45rem] md:ml-2 xl:ml-0">
+		<div class="hidden md:ml-2 md:flex md:max-w-[19rem] lg:max-w-[45rem] xl:ml-0 xl:max-w-[45rem]">
 			<NavigationTabBar />
 		</div>
-		<div class="flex md:flex-1 flex-wrap items-center justify-end relative">
+		<div class="relative flex flex-wrap items-center justify-end md:flex-1">
 			<IconButton
 				class="py-2"
 				href={socialAppUrls.discord}
@@ -130,7 +130,7 @@
 			>
 				<IconSc
 					type="discord"
-					class="w-7.5 h-7.5 relative transition transform {$page.url.pathname === '/' &&
+					class="relative h-7.5 w-7.5 transform transition {$page.url.pathname === '/' &&
 					$themeApp === 'light' &&
 					!$notAtTheVeryTop
 						? 'text-c-bg'
@@ -143,7 +143,7 @@
 				{#if $sessionStore?.user.email && $userSummary}
 					<div
 						use:clickoutside={{ callback: closeAccountMenu }}
-						class="flex flex-col items-end relative"
+						class="relative flex flex-col items-end"
 					>
 						<div class="py-3.5">
 							<IconButton
@@ -151,7 +151,7 @@
 								$themeApp === 'light' &&
 								!$notAtTheVeryTop
 									? 'ring-c-bg/25'
-									: 'ring-c-on-bg/25'} rounded-full flex items-center justify-center shadow-c-shadow/[var(--o-shadow-strong)]"
+									: 'ring-c-on-bg/25'} flex items-center justify-center rounded-full shadow-c-shadow/[var(--o-shadow-strong)]"
 								noPadding
 								name="Account"
 								onClick={() => {
@@ -163,7 +163,7 @@
 							>
 								<Avatar
 									text={$userSummary.username}
-									class="w-9 h-9 overflow-hidden rounded-full transition duration-250 transform relative
+									class="relative h-9 w-9 transform overflow-hidden rounded-full transition duration-250
 									{$page.url.pathname === '/' && $themeApp === 'light' && !$notAtTheVeryTop
 										? 'not-touch:group-hover/iconbutton:ring-c-bg'
 										: 'not-touch:group-hover/iconbutton:ring-c-on-bg'} {isAccountMenuOpen

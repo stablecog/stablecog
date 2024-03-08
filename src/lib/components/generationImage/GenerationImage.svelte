@@ -176,7 +176,7 @@
 
 {#if generation.selected_output.image_url.includes('placeholder')}
 	<svg
-		class="w-full h-full object-cover absolute left-0 top-0 text-c-bg-secondary"
+		class="absolute left-0 top-0 h-full w-full object-cover text-c-bg-secondary"
 		width={generation.width}
 		height={generation.height}
 		viewBox="0 0 {generation.width} {generation.height}"
@@ -185,13 +185,13 @@
 	>
 		<rect width={generation.width} height={generation.height} fill="currentColor" />
 	</svg>
-	<div class="w-full h-full absolute left-0 top-0 p-5 flex items-center justify-center">
-		<IconNoImage class="w-10 h-10 text-c-on-bg/50" />
+	<div class="absolute left-0 top-0 flex h-full w-full items-center justify-center p-5">
+		<IconNoImage class="h-10 w-10 text-c-on-bg/50" />
 	</div>
 {:else}
 	<SrcsetProvider src={srcHighest} {cardType} let:sizes let:srcset>
 		<div
-			class="w-full h-full absolute left-0 top-0 transition duration-350 {cardType === 'generate'
+			class="absolute left-0 top-0 h-full w-full transition duration-350 {cardType === 'generate'
 				? 'not-touch:group-hover:scale-105'
 				: 'not-touch:group-hover:scale-105 md:not-touch:group-hover:scale-103'}
 			{overlayShouldShow ? (cardType === 'generate' ? 'scale-105' : 'scale-105 md:scale-103') : ''}"
@@ -199,9 +199,9 @@
 			<img
 				on:load={onImageLoaded}
 				loading="lazy"
-				class="w-full h-full object-cover absolute left-0 top-0 {didLoadBefore
-					? 'transition-[transform] ease-[ease-out] duration-[0.2s]'
-					: 'transition-[transform,opacity] ease-[ease-out,ease-in] duration-[0.2s,0.2s]'} 
+				class="absolute left-0 top-0 h-full w-full object-cover {didLoadBefore
+					? 'transition-[transform] duration-[0.2s] ease-[ease-out]'
+					: 'transition-[transform,opacity] duration-[0.2s,0.2s] ease-[ease-out,ease-in]'} 
 				transform {isImageLoaded ? 'opacity-100' : 'opacity-0'} {isInGallerySelectedIds
 					? 'scale-110'
 					: 'scale-100'}"
@@ -226,9 +226,9 @@
 <!-- Top Barrier -->
 {#if cardType !== 'stage' && cardType !== 'generate' && cardType !== 'gallery' && cardType !== 'user-profile' && !generation.selected_output.is_deleted && !(cardType === 'history' && $userGalleryCurrentView === 'likes')}
 	<div
-		class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b
-		from-c-barrier/90 via-c-barrier/60 to-c-barrier/0
-		flex justify-between transition items-start
+		class="absolute left-0 top-0 flex h-24 w-full
+		items-start justify-between bg-gradient-to-b
+		from-c-barrier/90 via-c-barrier/60 to-c-barrier/0 transition
 		not-touch:group-focus-within:opacity-100 not-touch:group-hover:opacity-100
 			{isGalleryEditActive || overlayShouldShow ? 'opacity-100' : 'opacity-0'}"
 	/>
@@ -236,8 +236,8 @@
 <!-- Bottom Barrier -->
 {#if showPromptOnHover && cardType !== 'generate' && !generation.selected_output.is_deleted && !isGalleryEditActive}
 	<div
-		class="absolute bottom-0 left-0 w-full h-full max-h-[12rem] bg-gradient-to-t
-		transition from-c-barrier/90 via-c-barrier/60 to-c-barrier/0
+		class="absolute bottom-0 left-0 h-full max-h-[12rem] w-full bg-gradient-to-t
+		from-c-barrier/90 via-c-barrier/60 to-c-barrier/0 transition
 		not-touch:group-focus-within:opacity-100 not-touch:group-hover:opacity-100
 			{overlayShouldShow ? 'opacity-100' : 'opacity-0'}"
 	/>
@@ -245,7 +245,7 @@
 {#if cardType !== 'gallery' && cardType !== 'admin-gallery' && isRecentlyUpdated}
 	<!-- Ping animation for newly created -->
 	<IconPulsing
-		class="absolute w-5 h-5 {cardType === 'generate' ? '-left-0.5 -top-0.5' : 'left-0 top-0'}"
+		class="absolute h-5 w-5 {cardType === 'generate' ? '-left-0.5 -top-0.5' : 'left-0 top-0'}"
 	/>
 {/if}
 {#if !generation.selected_output.is_deleted && !isGalleryEditActive}
@@ -254,13 +254,13 @@
 		href={imageClickHref}
 		data-sveltekit-preload-data="hover"
 		on:click={onImageClick}
-		class="w-full h-full absolute left-0 top-0 flex flex-col justify-end items-end overflow-hidden pt-16"
+		class="absolute left-0 top-0 flex h-full w-full flex-col items-end justify-end overflow-hidden pt-16"
 	>
 		{#if cardType !== 'generate' && showPromptOnHover}
 			<p
-				class="w-full text-sm min-h-0 max-h-[max(4rem,min(35%,5.3rem))] list-fade px-2 md:px-3 py-2 md:py-2.5
-				font-medium leading-normal transition text-c-on-bg transform pointer-events-none
-					not-touch:group-focus-within:translate-y-0 not-touch:group-hover:translate-y-0
+				class="list-fade pointer-events-none max-h-[max(4rem,min(35%,5.3rem))] min-h-0 w-full transform px-2 py-2 text-sm
+				font-medium leading-normal text-c-on-bg transition not-touch:group-focus-within:translate-y-0 not-touch:group-hover:translate-y-0
+					md:px-3 md:py-2.5
 					{overlayShouldShow ? 'translate-y-0' : 'translate-y-full'}"
 			>
 				{generation.prompt.text}
@@ -279,7 +279,7 @@
 		) &&
 		!(cardType === 'history' && $userGalleryCurrentView === 'likes')}
 	<div
-		class="w-full absolute left-0 top-0 pointer-events-none flex items-start {showLeftContainer
+		class="pointer-events-none absolute left-0 top-0 flex w-full items-start {showLeftContainer
 			? 'justify-between'
 			: 'justify-end'} transition
 			not-touch:group-focus-within:translate-y-0 not-touch:group-hover:translate-y-0
@@ -288,7 +288,7 @@
 		{#if showLeftContainer}
 			<div bind:this={leftButtonContainer} class="pointer-events-none relative">
 				<IconButton
-					class="p-2px pointer-events-auto"
+					class="pointer-events-auto p-2px"
 					name="Select"
 					onClick={() => {
 						if (cardType === 'admin-gallery' && !$isAdminGalleryEditActive) {
@@ -303,9 +303,9 @@
 						});
 					}}
 				>
-					<div class="rounded-full border-3 border-c-primary w-6 h-6 transition p-0.75">
+					<div class="h-6 w-6 rounded-full border-3 border-c-primary p-0.75 transition">
 						<div
-							class="w-full h-full rounded-full bg-c-primary transform transition {isInGallerySelectedIds
+							class="h-full w-full transform rounded-full bg-c-primary transition {isInGallerySelectedIds
 								? 'scale-100 opacity-100'
 								: 'scale-0 opacity-0'}"
 						/>
@@ -316,8 +316,8 @@
 		{#if !isGalleryEditActive && !generation.selected_output.is_deleted}
 			<div
 				bind:this={rightButtonContainer}
-				class="flex flex-row flex-wrap items-center px-1.5 pt-1.5
-				justify-end transition transform pointer-events-none gap-1.5"
+				class="pointer-events-none flex transform flex-row flex-wrap items-center
+				justify-end gap-1.5 px-1.5 pt-1.5 transition"
 			>
 				{#if cardType !== 'admin-gallery'}
 					<CopyButton
@@ -373,12 +373,12 @@
 	{@const isUserProfileAndImageHidden =
 		cardType === 'user-profile' && generation.selected_output.is_public === false}
 	<div
-		class="w-full h-full absolute left-0 top-0 bg-c-barrier/85 z-10 {isUserProfileAndImageHidden
+		class="absolute left-0 top-0 z-10 h-full w-full bg-c-barrier/85 {isUserProfileAndImageHidden
 			? 'pointer-events-none'
 			: ''}"
 	/>
 	<div
-		class="w-full h-full absolute left-0 top-0 flex items-center justify-center p-1 z-20 {isUserProfileAndImageHidden
+		class="absolute left-0 top-0 z-20 flex h-full w-full items-center justify-center p-1 {isUserProfileAndImageHidden
 			? 'pointer-events-none'
 			: ''}"
 	>
@@ -395,7 +395,7 @@
 {/if}
 {#if cardType === 'admin-gallery' && generation.init_image_url}
 	<!-- Admin gallery init image indicator -->
-	<div class="absolute -top-px -right-px pr-1 pt-1 pl-1.5 pb-1.5 rounded-bl-lg bg-c-bg-secondary">
+	<div class="absolute -right-px -top-px rounded-bl-lg bg-c-bg-secondary pb-1.5 pl-1.5 pr-1 pt-1">
 		<IconGalleryFilled class="text-c-danger" />
 	</div>
 {/if}
@@ -407,6 +407,6 @@
 				$userGalleryCurrentView === 'favorites' &&
 				!generation.selected_output.is_favorited)}
 		on:click={_onSelectButtonClicked}
-		class="w-full h-full absolute left-0 top-0 flex flex-col justify-start items-start z-30"
+		class="absolute left-0 top-0 z-30 flex h-full w-full flex-col items-start justify-start"
 	/>
 {/if}

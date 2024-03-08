@@ -13,7 +13,7 @@
 			: '0.1s'} cubic-bezier(0.4, 0, 0.2, 1);"
 		class="relative transform {!morphed
 			? 'scale-100 opacity-100'
-			: 'scale-50 opacity-0 pointer-events-none'}"
+			: 'pointer-events-none scale-50 opacity-0'}"
 	>
 		<div class="transition-none">
 			<slot name="0" />
@@ -25,9 +25,9 @@
 			: '0.1s cubic-bezier(0.4, 0, 0.2, 1)'}, opacity {morphed
 			? '0.25s'
 			: '0.1s'} cubic-bezier(0.4, 0, 0.2, 1);"
-		class="w-full h-full absolute transform left-0 top-0 flex items-center justify-center {morphed
-			? 'scale-100 opacity-100 ease-bounce-out duration-250'
-			: 'scale-50 opacity-0 pointer-events-none duratiton-150'}"
+		class="absolute left-0 top-0 flex h-full w-full transform items-center justify-center {morphed
+			? 'scale-100 opacity-100 duration-250 ease-bounce-out'
+			: 'duratiton-150 pointer-events-none scale-50 opacity-0'}"
 	>
 		<div class="transition-none">
 			<slot name="1" />

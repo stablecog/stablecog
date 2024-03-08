@@ -17,24 +17,24 @@
 	href="/{username}"
 	data-sveltekit-preload-data="hover"
 	on:click={() => activeGeneration.set(undefined)}
-	class="max-w-full flex justify-start items-center gap-2.5 bg-c-bg-secondary
-    rounded-full pl-1.5 py-1.5 pr-4 -ml-0.5 ring-2 ring-c-bg-tertiary shadow-lg
-    shadow-c-shadow/[var(--o-shadow-strong)] relative group overflow-hidden z-0 {classes}"
+	class="group relative z-0 -ml-0.5 flex max-w-full
+    items-center justify-start gap-2.5 overflow-hidden rounded-full bg-c-bg-secondary py-1.5 pl-1.5
+    pr-4 shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-tertiary {classes}"
 >
 	<ButtonHoverEffect color="bg-tertiary" hoverFrom="left" noPadding />
 	<Avatar
 		text={username}
-		class="w-7 h-7 relative ring-2 ring-c-on-bg/25 rounded-full flex-shrink-0
-			shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] items-center"
+		class="relative h-7 w-7 flex-shrink-0 items-center rounded-full shadow-lg
+			shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-on-bg/25"
 	/>
 	<p
-		class="flex-shrink min-w-0 font-medium text-c-on-bg not-touch:group-hover:text-c-primary
-			transition overflow-hidden overflow-ellipsis relative whitespace-nowrap"
+		class="relative min-w-0 flex-shrink overflow-hidden overflow-ellipsis
+			whitespace-nowrap font-medium text-c-on-bg transition not-touch:group-hover:text-c-primary"
 	>
-		<span class="text-c-on-bg/50 not-touch:group-hover:text-c-primary/50 transition font-normal"
+		<span class="font-normal text-c-on-bg/50 transition not-touch:group-hover:text-c-primary/50"
 			>@</span
 		>{username}{#if email && useEmail}<span
-				class="text-c-on-bg/75 not-touch:group-hover:text-c-primary/75 transition text-sm"
+				class="text-sm text-c-on-bg/75 transition not-touch:group-hover:text-c-primary/75"
 				>&nbsp;({email})</span
 			>{/if}
 	</p>

@@ -88,10 +88,10 @@
 				data.currency === 'eur'
 					? STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
 							PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION
-					  ].prices[PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_MO].currencies.eur.amount
+						].prices[PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_MO].currencies.eur.amount
 					: STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
 							PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION
-					  ].prices[PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_MO].currencies.usd.amount,
+						].prices[PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_MO].currencies.usd.amount,
 			features: [
 				{
 					paragraph: $LL.Pricing.Features.MonthlyImages({
@@ -174,10 +174,10 @@
 				data.currency === 'eur'
 					? STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
 							PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
-					  ].prices[PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_MO].currencies.eur.amount
+						].prices[PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_MO].currencies.eur.amount
 					: STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
 							PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
-					  ].prices[PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_MO].currencies.usd.amount,
+						].prices[PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_MO].currencies.usd.amount,
 			features: [
 				{
 					paragraph: $LL.Pricing.Features.MonthlyImages({
@@ -219,10 +219,10 @@
 				data.currency === 'eur'
 					? STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[PUBLIC_STRIPE_PRODUCT_ID_MEDIUM_PACK].prices[
 							PUBLIC_STRIPE_PRICE_ID_MEDIUM_PACK
-					  ].currencies.eur.amount
+						].currencies.eur.amount
 					: STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[PUBLIC_STRIPE_PRODUCT_ID_MEDIUM_PACK].prices[
 							PUBLIC_STRIPE_PRICE_ID_MEDIUM_PACK
-					  ].currencies.usd.amount,
+						].currencies.usd.amount,
 			features: [
 				{
 					paragraph: $LL.Pricing.Features.Images({
@@ -250,10 +250,10 @@
 				data.currency === 'eur'
 					? STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[PUBLIC_STRIPE_PRODUCT_ID_LARGE_PACK].prices[
 							PUBLIC_STRIPE_PRICE_ID_LARGE_PACK
-					  ].currencies.eur.amount
+						].currencies.eur.amount
 					: STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[PUBLIC_STRIPE_PRODUCT_ID_LARGE_PACK].prices[
 							PUBLIC_STRIPE_PRICE_ID_LARGE_PACK
-					  ].currencies.usd.amount,
+						].currencies.usd.amount,
 			features: [
 				{
 					paragraph: $LL.Pricing.Features.Images({
@@ -281,10 +281,10 @@
 				data.currency === 'eur'
 					? STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[PUBLIC_STRIPE_PRODUCT_ID_MEGA_PACK].prices[
 							PUBLIC_STRIPE_PRICE_ID_MEGA_PACK
-					  ].currencies.eur.amount
+						].currencies.eur.amount
 					: STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[PUBLIC_STRIPE_PRODUCT_ID_MEGA_PACK].prices[
 							PUBLIC_STRIPE_PRICE_ID_MEGA_PACK
-					  ].currencies.usd.amount,
+						].currencies.usd.amount,
 			features: [
 				{
 					paragraph: $LL.Pricing.Features.Images({
@@ -434,14 +434,14 @@
 />
 
 <PageWrapper>
-	<div class="w-full flex flex-col items-center justify-start my-auto">
-		<section id="plans" class="w-full flex flex-col items-center justify-start">
-			<h1 class="text-center font-bold text-4xl">{$LL.Pricing.PlansTitle()}</h1>
-			<p class="max-w-xl mt-3 text-center leading-relaxed text-c-on-bg/75">
+	<div class="my-auto flex w-full flex-col items-center justify-start">
+		<section id="plans" class="flex w-full flex-col items-center justify-start">
+			<h1 class="text-center text-4xl font-bold">{$LL.Pricing.PlansTitle()}</h1>
+			<p class="mt-3 max-w-xl text-center leading-relaxed text-c-on-bg/75">
 				{$LL.Pricing.PlansParagraph()}
 			</p>
 			<div
-				class="w-full max-w-7xl flex flex-wrap justify-center items-stretch mt-5 lg:px-5 xl:px-0"
+				class="mt-5 flex w-full max-w-7xl flex-wrap items-stretch justify-center lg:px-5 xl:px-0"
 			>
 				{#each subscriptionCards as card}
 					{@const subscribedProductId = subscriptionCards.find(
@@ -473,8 +473,8 @@
 						discountBadgeText={isFirstPurchase30Off && card.id === 'plan-free'
 							? $LL.Pricing.FreeForeverTitle()
 							: isFirstPurchase30Off
-							? $LL.Pricing.Discounts.FirstMonth30OffParagraph()
-							: undefined}
+								? $LL.Pricing.Discounts.FirstMonth30OffParagraph()
+								: undefined}
 						discountRate={card.discountRate}
 						discountBadgeType={card.id === 'plan-free' ? 'on-bg' : 'primary'}
 						features={card.features}
@@ -486,10 +486,10 @@
 									type={isSubscribed && card.id !== 'plan-free'
 										? 'success'
 										: isSubscribed && card.id === 'plan-free'
-										? 'bg-secondary'
-										: isDowngrade
-										? 'bg-secondary'
-										: 'primary'}
+											? 'bg-secondary'
+											: isDowngrade
+												? 'bg-secondary'
+												: 'primary'}
 									noBorder={!isDowngrade}
 									disabled={isSubscribed}
 									loading={(card.priceIdMo === selectedPriceId &&
@@ -498,7 +498,7 @@
 									href={isDowngrade && card.priceIdMo
 										? `/account/subscription/downgrade?price_id=${
 												card.priceIdMo
-										  }&from=${encodeURIComponent($page.url.pathname)}`
+											}&from=${encodeURIComponent($page.url.pathname)}`
 										: undefined}
 									onClick={() =>
 										!isDowngrade && card.priceIdMo
@@ -506,10 +506,10 @@
 													priceId: card.priceIdMo,
 													currency: card.currency,
 													promotionCodeId: card.promotionCodeId
-											  })
+												})
 											: isDowngrade && card.id === 'plan-free'
-											? createCustomerPortalSessionAndRedirect(accessToken)
-											: null}
+												? createCustomerPortalSessionAndRedirect(accessToken)
+												: null}
 									class="w-full"
 								>
 									<p
@@ -539,15 +539,15 @@
 					</PlanCard>
 				{/each}
 			</div>
-			<div class="w-full h-[1vh]" />
+			<div class="h-[1vh] w-full" />
 		</section>
 		{#if $userSummary?.product_id && $sessionStore?.user.id !== undefined}
-			<section id="credit-packs" class="w-full flex flex-col items-center justify-start pt-12">
-				<h2 class="text-center font-bold text-4xl">{$LL.Pricing.CreditPacksTitle()}</h2>
-				<p class="max-w-xl mt-3 text-center leading-relaxed text-c-on-bg/75">
+			<section id="credit-packs" class="flex w-full flex-col items-center justify-start pt-12">
+				<h2 class="text-center text-4xl font-bold">{$LL.Pricing.CreditPacksTitle()}</h2>
+				<p class="mt-3 max-w-xl text-center leading-relaxed text-c-on-bg/75">
 					{$LL.Pricing.CreditPacksParagraph()}
 				</p>
-				<div class="w-full max-w-7xl flex flex-wrap justify-center mt-5">
+				<div class="mt-5 flex w-full max-w-7xl flex-wrap justify-center">
 					{#each creditPackCards as card}
 						<PlanCard
 							id={card.id}
@@ -577,16 +577,16 @@
 						</PlanCard>
 					{/each}
 				</div>
-				<div class="w-full h-[1vh]" />
+				<div class="h-[1vh] w-full" />
 			</section>
 		{/if}
-		<div class="w-[calc(100%+1rem)] -mx-2 flex justify-center mt-5 md:mt-10">
-			<div class="w-full max-w-5xl rounded-full h-2px bg-c-bg-secondary" />
+		<div class="-mx-2 mt-5 flex w-[calc(100%+1rem)] justify-center md:mt-10">
+			<div class="h-2px w-full max-w-5xl rounded-full bg-c-bg-secondary" />
 		</div>
-		<section id="faq" class="w-full flex flex-col items-center pt-5">
-			<div class="max-w-5xl flex flex-wrap items-start justify-start">
+		<section id="faq" class="flex w-full flex-col items-center pt-5">
+			<div class="flex max-w-5xl flex-wrap items-start justify-start">
 				{#each faqItems as item}
-					<div id={item.id} class="w-full md:w-1/2 px-0 md:px-5 py-4">
+					<div id={item.id} class="w-full px-0 py-4 md:w-1/2 md:px-5">
 						<h5 class="font-semibold">{item.question}</h5>
 						{#if item.isHTML}
 							<p class="mt-1 text-c-on-bg/75">{@html item.answer}</p>
@@ -597,8 +597,8 @@
 				{/each}
 			</div>
 		</section>
-		<div class="w-[calc(100%+1rem)] -mx-2 flex justify-center mt-5 md:mt-6">
-			<div class="w-full max-w-5xl rounded-full h-2px bg-c-bg-secondary" />
+		<div class="-mx-2 mt-5 flex w-[calc(100%+1rem)] justify-center md:mt-6">
+			<div class="h-2px w-full max-w-5xl rounded-full bg-c-bg-secondary" />
 		</div>
 	</div>
 </PageWrapper>

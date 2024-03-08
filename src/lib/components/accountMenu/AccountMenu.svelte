@@ -57,7 +57,7 @@
 	/>
 	<div
 		style="height: {menuPages[currentPage].height ? `${menuPages[currentPage].height}px` : 'auto'}"
-		class="w-full flex flex-col relative transition-all duration-150"
+		class="relative flex w-full flex-col transition-all duration-150"
 	>
 		<AccountPage
 			bind:height={menuPages['account'].height}

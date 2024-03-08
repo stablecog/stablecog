@@ -31,30 +31,30 @@
 />
 
 <PageWrapper>
-	<div class="w-full flex flex-col items-center justify-start my-auto">
-		<section id="legal" class="w-full flex flex-col items-center justify-start text-center">
+	<div class="my-auto flex w-full flex-col items-center justify-start">
+		<section id="legal" class="flex w-full flex-col items-center justify-start text-center">
 			<Logo class="w-16" />
-			<h1 class="text-4xl font-bold max-w-sm mt-5">{$LL.Legal.PageTitle()}</h1>
+			<h1 class="mt-5 max-w-sm text-4xl font-bold">{$LL.Legal.PageTitle()}</h1>
 			<p class="mt-4 max-w-sm text-c-on-bg/75">{$LL.Legal.PageParagraph()}</p>
 			<div
-				class="w-full max-w-7xl items-start justify-center flex flex-row flex-wrap gap-4 md:gap-5 mt-8"
+				class="mt-8 flex w-full max-w-7xl flex-row flex-wrap items-start justify-center gap-4 md:gap-5"
 			>
 				{#each docs as doc}
 					<a
 						href={doc.href}
 						data-sveltekit-preload-data="hover"
-						class="w-full max-w-sm flex flex-col items-center justify-center px-6 py-6 bg-c-bg-secondary ring-2 ring-c-bg-tertiary relative z-0 overflow-hidden
-						rounded-xl shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] transition group
-						not-touch:hover:ring-4 not-touch:hover:shadow-xl
-						not-touch:hover:shadow-c-shadow/[var(--o-shadow-strong)] not-touch:hover:-translate-y-1.5"
+						class="group relative z-0 flex w-full max-w-sm flex-col items-center justify-center overflow-hidden rounded-xl bg-c-bg-secondary px-6 py-6
+						shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] ring-2 ring-c-bg-tertiary transition
+						not-touch:hover:-translate-y-1.5 not-touch:hover:shadow-xl
+						not-touch:hover:shadow-c-shadow/[var(--o-shadow-strong)] not-touch:hover:ring-4"
 					>
-						<h1 class="text-xl font-bold max-w-full">
+						<h1 class="max-w-full text-xl font-bold">
 							{doc.title}
 						</h1>
 					</a>
 				{/each}
 			</div>
-			<div class="w-full h-[2vh]" />
+			<div class="h-[2vh] w-full" />
 		</section>
 	</div>
 </PageWrapper>

@@ -17,14 +17,14 @@
 	for="want-email-checkbox"
 	class="{padding} w-full rounded-xl {bg === 'primary'
 		? 'bg-c-bg'
-		: 'bg-c-bg-secondary ring-c-bg-tertiary ring-0 not-touch:hover:ring-2'} flex justify-start text-c-on-bg/75
-  items-center gap-3.75 cursor-pointer transition group relative {classes}"
+		: 'bg-c-bg-secondary ring-0 ring-c-bg-tertiary not-touch:hover:ring-2'} group relative flex
+  cursor-pointer items-center justify-start gap-3.75 text-c-on-bg/75 transition {classes}"
 >
 	{#if bg === 'primary'}
 		<ButtonHoverEffect hoverFrom="left" color="bg-secondary" />
 	{/if}
 	<Checkbox {checked} name="want-email-checkbox" />
-	<p class="w-full text-sm select-none relative">
+	<p class="relative w-full select-none text-sm">
 		{$LL.SignUp.WantsEmailCheckbox.Paragraph()}{#if !oneLine}
 			<br class="hidden md:block" />
 		{/if}

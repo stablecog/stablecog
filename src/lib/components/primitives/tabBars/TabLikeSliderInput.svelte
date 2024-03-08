@@ -17,11 +17,11 @@
 
 <TabBarWrapper class={classes}>
 	{#if hasTitle}
-		<div class="self-stretch flex text-c-on-bg/50">
+		<div class="flex self-stretch text-c-on-bg/50">
 			<slot name="title" />
 		</div>
-		<div class="w-2px mr-px -ml-px self-stretch">
-			<div class="w-full h-full bg-c-bg-secondary transition" />
+		<div class="-ml-px mr-px w-2px self-stretch">
+			<div class="h-full w-full bg-c-bg-secondary transition" />
 		</div>
 	{/if}
 	<SliderInputWithNumerator

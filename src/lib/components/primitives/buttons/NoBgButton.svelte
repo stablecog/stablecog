@@ -28,14 +28,14 @@
 		data-sveltekit-preload-data={prefetch && (target === '_self' || target === undefined)
 			? 'hover'
 			: 'off'}
-		class="touch-manipulation max-w-full relative overflow-hidden z-0 {noPadding
+		class="relative z-0 max-w-full touch-manipulation overflow-hidden {noPadding
 			? ''
-			: 'px-4 py-3.5'} font-semibold transition pointer-events-auto
-		flex items-center gap-1.5 group {size === 'sm'
+			: 'px-4 py-3.5'} group pointer-events-auto flex
+		items-center gap-1.5 font-semibold transition {size === 'sm'
 			? 'rounded-md'
 			: size === 'md'
-			? 'rounded-lg'
-			: 'rounded-xl'} {size === 'sm' ? 'text-sm' : 'text-base'} {classes}"
+				? 'rounded-lg'
+				: 'rounded-xl'} {size === 'sm' ? 'text-sm' : 'text-base'} {classes}"
 	>
 		{#if !loading}
 			<ButtonHoverEffect
@@ -47,21 +47,21 @@
 		{/if}
 		{#if withSpinner}
 			<div
-				class="transform relative transition {loading
+				class="relative transform transition {loading
 					? 'scale-0 opacity-0'
 					: 'scale-100 opacity-100'}"
 			>
 				<slot />
 			</div>
 			<div
-				class="w-full h-full absolute left-0 top-0 pointer-events-none flex justify-center items-center"
+				class="pointer-events-none absolute left-0 top-0 flex h-full w-full items-center justify-center"
 			>
 				<div
-					class="{size === 'sm' ? 'w-6 h-6' : 'w-7 h-7'} transition transform {loading
+					class="{size === 'sm' ? 'h-6 w-6' : 'h-7 w-7'} transform transition {loading
 						? 'scale-100'
 						: 'scale-0'}"
 				>
-					<IconAnimatedSpinner class="w-full h-full" {loading} />
+					<IconAnimatedSpinner class="h-full w-full" {loading} />
 				</div>
 			</div>
 		{:else}
@@ -76,35 +76,35 @@
 		on:click={onClick}
 		aria-label={name}
 		disabled={disabled || loading}
-		class="touch-manipulation max-w-full relative overflow-hidden z-0 {noPadding
+		class="relative z-0 max-w-full touch-manipulation overflow-hidden {noPadding
 			? ''
-			: 'px-4 py-3.5'} font-semibold transition pointer-events-auto
-			flex items-center gap-1.5 group {size === 'sm'
+			: 'px-4 py-3.5'} group pointer-events-auto flex
+			items-center gap-1.5 font-semibold transition {size === 'sm'
 			? 'rounded-md'
 			: size === 'md'
-			? 'rounded-lg'
-			: 'rounded-xl'} {size === 'sm' ? 'text-sm' : 'text-base'} {classes}"
+				? 'rounded-lg'
+				: 'rounded-xl'} {size === 'sm' ? 'text-sm' : 'text-base'} {classes}"
 	>
 		{#if !loading}
 			<ButtonHoverEffect paddingClass={paddingClassForHoverEffect} {noPadding} {hoverFrom} {size} />
 		{/if}
 		{#if withSpinner}
 			<div
-				class="transform relative transition {loading
+				class="relative transform transition {loading
 					? 'scale-0 opacity-0'
 					: 'scale-100 opacity-100'}"
 			>
 				<slot />
 			</div>
 			<div
-				class="w-full h-full absolute left-0 top-0 pointer-events-none flex justify-center items-center"
+				class="pointer-events-none absolute left-0 top-0 flex h-full w-full items-center justify-center"
 			>
 				<div
-					class="{size === 'sm' ? 'w-6 h-6' : 'w-7 h-7'} transition transform {loading
+					class="{size === 'sm' ? 'h-6 w-6' : 'h-7 w-7'} transform transition {loading
 						? 'scale-100'
 						: 'scale-0'}"
 				>
-					<IconAnimatedSpinner class="w-full h-full" {loading} />
+					<IconAnimatedSpinner class="h-full w-full" {loading} />
 				</div>
 			</div>
 		{:else}
@@ -117,35 +117,35 @@
 		on:click={onClick}
 		aria-label={name}
 		disabled={disabled || loading}
-		class="touch-manipulation max-w-full relative overflow-hidden z-0 {noPadding
+		class="relative z-0 max-w-full touch-manipulation overflow-hidden {noPadding
 			? ''
-			: 'px-4 py-3.5'} font-semibold transition pointer-events-auto
-		flex items-center gap-1.5 group {size === 'sm'
+			: 'px-4 py-3.5'} group pointer-events-auto flex
+		items-center gap-1.5 font-semibold transition {size === 'sm'
 			? 'rounded-md'
 			: size === 'md'
-			? 'rounded-lg'
-			: 'rounded-xl'} {size === 'sm' ? 'text-sm' : 'text-base'} {classes}"
+				? 'rounded-lg'
+				: 'rounded-xl'} {size === 'sm' ? 'text-sm' : 'text-base'} {classes}"
 	>
 		{#if !loading}
 			<ButtonHoverEffect paddingClass={paddingClassForHoverEffect} {noPadding} {hoverFrom} {size} />
 		{/if}
 		{#if withSpinner}
 			<div
-				class="transform relative transition {loading
+				class="relative transform transition {loading
 					? 'scale-0 opacity-0'
 					: 'scale-100 opacity-100'}"
 			>
 				<slot />
 			</div>
 			<div
-				class="w-full h-full absolute left-0 top-0 pointer-events-none flex justify-center items-center"
+				class="pointer-events-none absolute left-0 top-0 flex h-full w-full items-center justify-center"
 			>
 				<div
-					class="{size === 'sm' ? 'w-6 h-6' : 'w-7 h-7'} transition transform {loading
+					class="{size === 'sm' ? 'h-6 w-6' : 'h-7 w-7'} transform transition {loading
 						? 'scale-100'
 						: 'scale-0'}"
 				>
-					<IconAnimatedSpinner class="w-full h-full" {loading} />
+					<IconAnimatedSpinner class="h-full w-full" {loading} />
 				</div>
 			</div>
 		{:else}

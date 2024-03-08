@@ -23,7 +23,7 @@
 
 <SrcsetProvider src={backgroundImageUrl} {cardType} let:sizes let:srcset>
 	<img
-		class="w-full transform transition h-auto lg:h-full lg:object-contain absolute lg:left-0 lg:top-0"
+		class="absolute h-auto w-full transform transition lg:left-0 lg:top-0 lg:h-full lg:object-contain"
 		{sizes}
 		src={backgroundImageUrl}
 		{srcset}
@@ -33,7 +33,7 @@
 	/>
 </SrcsetProvider>
 <img
-	class="w-full relative transition ease-out h-auto lg:h-full lg:object-contain lg:absolute lg:left-0 lg:top-0 {naturalWidth &&
+	class="relative h-auto w-full transition ease-out lg:absolute lg:left-0 lg:top-0 lg:h-full lg:object-contain {naturalWidth &&
 	naturalHeight
 		? 'opacity-100'
 		: 'opacity-0'}"
@@ -56,9 +56,9 @@
 	{#if loadingWithDelay}
 		<div
 			transition:scale={{ start: 0, opacity: 0, duration: 250, easing: quadOut }}
-			class="p-1 bg-c-barrier/75 rounded-full absolute left-1 top-1 pointer-events-none"
+			class="pointer-events-none absolute left-1 top-1 rounded-full bg-c-barrier/75 p-1"
 		>
-			<IconAnimatedSpinner class="w-4 h-4 text-c-on-bg" loading={true} />
+			<IconAnimatedSpinner class="h-4 w-4 text-c-on-bg" loading={true} />
 		</div>
 	{/if}
 </DelayedValueProvider>

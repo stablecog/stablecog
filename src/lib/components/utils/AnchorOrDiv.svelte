@@ -52,7 +52,7 @@
 		tabindex="0"
 		on:keydown={() => null}
 		on:click={onClick}
-		class="{classes} hover:cursor-pointer touch-manipulation"
+		class="{classes} touch-manipulation hover:cursor-pointer"
 	>
 		<slot />
 	</div>

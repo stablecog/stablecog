@@ -33,11 +33,11 @@
 	on:svelte-copy:error={(e) => console.log(e)}
 	{disabled}
 	type="button"
-	class="touch-manipulation transition group/copybutton
-	rounded-full bg-c-bg relative overflow-hidden z-0 p-2.5
-	before:w-full before:h-full before:absolute before:left-0 before:top-0
-	before:-translate-x-full before:not-touch:hover/copybutton:translate-x-0
-	before:rounded-full before:transition before:transform {copied
+	class="group/copybutton relative z-0
+	touch-manipulation overflow-hidden rounded-full bg-c-bg p-2.5 transition
+	before:absolute before:left-0 before:top-0 before:h-full before:w-full
+	before:-translate-x-full before:transform
+	before:rounded-full before:transition before:not-touch:hover/copybutton:translate-x-0 {copied
 		? 'before:bg-c-bg'
 		: 'before:bg-c-primary'} {classes}"
 	aria-label="Copy to Clipboard"
@@ -45,12 +45,12 @@
 	<IconCopy
 		class="transform {copied
 			? 'scale-0 opacity-0'
-			: 'scale-100 opacity-100'} w-7 h-7 transition text-c-on-bg
+			: 'scale-100 opacity-100'} h-7 w-7 text-c-on-bg transition
 						not-touch:group-hover/copybutton:text-c-on-primary"
 	/>
 	<IconTick
-		class="transform absolute left-2.5 top-2.5 w-7 h-7 {!copied
+		class="absolute left-2.5 top-2.5 h-7 w-7 transform {!copied
 			? 'scale-0 opacity-0'
-			: 'scale-175 opacity-100'} transition text-c-success"
+			: 'scale-175 opacity-100'} text-c-success transition"
 	/>
 </button>

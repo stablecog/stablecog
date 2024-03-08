@@ -16,14 +16,14 @@
 </script>
 
 <div
-	class="w-full mt-4 md:w-1/2 {size === 'wider'
+	class="mt-4 w-full md:w-1/2 {size === 'wider'
 		? ''
 		: 'lg:w-1/3'} flex flex-col justify-start p-1.5"
 >
-	<h3 class="w-full text-lg font-semibold px-1">{title}</h3>
+	<h3 class="w-full px-1 text-lg font-semibold">{title}</h3>
 	<img
 		loading="lazy"
-		class="w-full h-auto mt-2 rounded-lg ring-2 bg-c-bg-tertiary ring-c-bg-tertiary"
+		class="mt-2 h-auto w-full rounded-lg bg-c-bg-tertiary ring-2 ring-c-bg-tertiary"
 		{sizes}
 		src={_src}
 		{srcset}

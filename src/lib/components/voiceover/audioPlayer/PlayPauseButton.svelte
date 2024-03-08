@@ -32,9 +32,9 @@
 	on:click={onClick}
 	{disabled}
 	aria-label={isPaused ? $LL.Voiceover.PlayButton() : $LL.Voiceover.PauseButton()}
-	class="touch-manipulation relative rounded-lg group/play-button {size === 'lg'
-		? 'w-12 h-12'
-		: 'w-10 h-10'}"
+	class="group/play-button relative touch-manipulation rounded-lg {size === 'lg'
+		? 'h-12 w-12'
+		: 'h-10 w-10'}"
 >
 	<ButtonHoverEffect
 		groupClass="not-touch:group-hover/play-button:translate-x-0 not-touch:group-hover/play-button:translate-y-0 not-touch:group-hover/play-button:opacity-100"
@@ -45,18 +45,18 @@
 	<div class="p-2">
 		{#if isPaused}
 			<IconPlay
-				class="w-full h-full transition text-c-on-bg not-touch:group-hover/play-button:text-c-primary"
+				class="h-full w-full text-c-on-bg transition not-touch:group-hover/play-button:text-c-primary"
 			/>
 		{:else}
-			<Morpher class="w-full h-full" morphed={!isPaused && !isPlaying && hasBeenLoadingForAWhile}>
+			<Morpher class="h-full w-full" morphed={!isPaused && !isPlaying && hasBeenLoadingForAWhile}>
 				<div slot="0">
 					<IconPause
-						class="w-full h-full transition text-c-on-bg not-touch:group-hover/play-button:text-c-primary"
+						class="h-full w-full text-c-on-bg transition not-touch:group-hover/play-button:text-c-primary"
 					/>
 				</div>
-				<div class="w-full h-full" slot="1">
+				<div class="h-full w-full" slot="1">
 					<IconAnimatedSpinner
-						class="w-full h-full not-touch:group-hover/play-button:text-c-primary"
+						class="h-full w-full not-touch:group-hover/play-button:text-c-primary"
 						loading={!isPaused && !isPlaying && hasBeenLoadingForAWhile}
 					/>
 				</div>

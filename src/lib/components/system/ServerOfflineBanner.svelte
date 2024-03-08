@@ -5,11 +5,11 @@
 </script>
 
 <div transition:expandCollapse={{ duration: 300 }} class="relative">
-	<div class="pb-7 flex flex-col items-center">
+	<div class="flex flex-col items-center pb-7">
 		<div
-			class="py-4 px-4 text-xs md:text-sm gap-3 flex items-center justify-start max-w-[34rem] rounded-xl bg-c-danger/8 text-c-danger"
+			class="flex max-w-[34rem] items-center justify-start gap-3 rounded-xl bg-c-danger/8 px-4 py-4 text-xs text-c-danger md:text-sm"
 		>
-			<IconWarning class="w-6 h-6" />
+			<IconWarning class="h-6 w-6" />
 			<p class="flex-1">
 				{$LL.Error.ServerSeemsOffline()}
 			</p>

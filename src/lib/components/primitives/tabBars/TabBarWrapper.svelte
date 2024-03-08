@@ -8,14 +8,14 @@
 
 <div
 	class="{type === 'bottom'
-		? 'rounded-t-xl self-stretch shadow-navbar shadow-c-shadow/[var(--o-shadow-stronger)]'
+		? 'self-stretch rounded-t-xl shadow-navbar shadow-c-shadow/[var(--o-shadow-stronger)]'
 		: 'rounded-xl shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]'} {dontScale
 		? 'text-sm'
 		: 'text-sm'} {outline === 'primary-strong'
 		? 'ring-c-primary/30'
 		: outline === 'primary'
-		? 'ring-c-primary/15'
-		: 'ring-c-bg-secondary'} ring-2 flex items-stretch bg-c-bg transition relative {classes}"
+			? 'ring-c-primary/15'
+			: 'ring-c-bg-secondary'} relative flex items-stretch bg-c-bg ring-2 transition {classes}"
 >
 	<slot />
 </div>

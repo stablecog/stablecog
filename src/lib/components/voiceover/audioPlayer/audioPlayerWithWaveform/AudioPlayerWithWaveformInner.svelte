@@ -42,8 +42,8 @@
 		output.status === 'server-processing'
 			? 'being-created'
 			: output.status === 'succeeded'
-			? 'created'
-			: 'idle';
+				? 'created'
+				: 'idle';
 
 	$: progress =
 		(duration === 0 || duration) && (currentTime === 0 || currentTime) ? currentTime / duration : 0;
@@ -136,36 +136,36 @@
 	});
 </script>
 
-<div class="w-full flex flex-col px-4 md:px-5">
-	<div class="w-full -ml-1 pt-3 md:pt-4 pb-1.5 md:pb-3 flex items-center gap-3 md:gap-4">
+<div class="flex w-full flex-col px-4 md:px-5">
+	<div class="-ml-1 flex w-full items-center gap-3 pb-1.5 pt-3 md:gap-4 md:pb-3 md:pt-4">
 		<div
-			class="flex-shrink-0 rounded-md ring-2 ring-c-bg-tertiary bg-c-bg-tertiary overflow-hidden
-			flex items-center justify-start relative z-0"
+			class="relative z-0 flex flex-shrink-0 items-center justify-start
+			overflow-hidden rounded-md bg-c-bg-tertiary ring-2 ring-c-bg-tertiary"
 		>
 			<div
-				class="w-8 h-8 md:w-9 md:h-9 flex-shrink-0 ring-2 ring-c-bg-tertiary shadow-lg
-				shadow-c-shadow/[var(--o-shadow-strong)] overflow-hidden relative z-0"
+				class="relative z-0 h-8 w-8 flex-shrink-0 overflow-hidden shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]
+				ring-2 ring-c-bg-tertiary md:h-9 md:w-9"
 			>
 				<IconSpeaker
-					class="w-full h-full"
+					class="h-full w-full"
 					type={output.voiceover.speaker.id}
 					sizes="(min-width: 768px) 36px, 32px"
 				/>
 			</div>
 			<p
-				class="flex-shrink min-w-0 overflow-hidden overflow-ellipsis font-medium px-2.5 md:px-3.5 py-0.5 md:py-1 h-full"
+				class="h-full min-w-0 flex-shrink overflow-hidden overflow-ellipsis px-2.5 py-0.5 font-medium md:px-3.5 md:py-1"
 			>
 				{$voiceoverSpeakerIdToDisplayName[output.voiceover.speaker.id]}
 			</p>
 		</div>
 		<p
-			class="flex-shrink min-w-0 text-c-on-bg max-w-full whitespace-nowrap overflow-hidden overflow-ellipsis"
+			class="min-w-0 max-w-full flex-shrink overflow-hidden overflow-ellipsis whitespace-nowrap text-c-on-bg"
 		>
 			{output.voiceover.prompt.text}
 		</p>
 	</div>
-	<div class="w-full flex items-center justify-center">
-		<div class="flex items-center -ml-3">
+	<div class="flex w-full items-center justify-center">
+		<div class="-ml-3 flex items-center">
 			<PlayPauseButton
 				bind:element={playButton}
 				onClick={() => togglePlay({ audioElement })}
@@ -186,24 +186,24 @@
 		<div class="flex-1" />
 		<p class="text-c-on-bg/75">
 			{currentTime ? currentTimestamp : timestampPlaceholder}<span
-				class="text-c-on-bg/35 px-[0.5ch]">/</span
+				class="px-[0.5ch] text-c-on-bg/35">/</span
 			>{duration ? totalTimestamp : timestampPlaceholder}
 		</p>
 	</div>
 </div>
-<div class="w-full flex-1 flex relative overflow-hidden pt-2">
-	<div class="w-full h-full relative">
+<div class="relative flex w-full flex-1 overflow-hidden pt-2">
+	<div class="relative h-full w-full">
 		<div
 			bind:clientWidth={waveformContainerWidth}
 			bind:clientHeight={waveformContainerHeight}
-			class="w-full h-full"
+			class="h-full w-full"
 		>
 			{#if waveformContainerWidth && waveformContainerHeight}
-				<div class="w-full h-0" bind:this={waveformContainer} />
+				<div class="h-0 w-full" bind:this={waveformContainer} />
 			{/if}
 		</div>
-		<div class="w-full h-full flex items-center z-10 absolute left-0 bottom-0">
-			<div class="w-full h-full flex flex-col overflow-hidden relative opacity-100">
+		<div class="absolute bottom-0 left-0 z-10 flex h-full w-full items-center">
+			<div class="relative flex h-full w-full flex-col overflow-hidden opacity-100">
 				<SliderForWaveform
 					min={0}
 					max={Math.floor(duration * 1000)}

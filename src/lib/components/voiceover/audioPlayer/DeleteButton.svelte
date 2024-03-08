@@ -10,9 +10,9 @@
 
 <button
 	on:click={onDeleteClicked}
-	class="touch-manipulation relative rounded-lg group/download-button {size === 'lg'
-		? 'w-12 h-12'
-		: 'w-10 h-10'}"
+	class="group/download-button relative touch-manipulation rounded-lg {size === 'lg'
+		? 'h-12 w-12'
+		: 'h-10 w-10'}"
 	aria-label={$LL.Shared.DownloadButton()}
 >
 	<ButtonHoverEffect
@@ -23,7 +23,7 @@
 	/>
 	<div class="p-2">
 		<IconTrashcan
-			class="w-full h-full transition {faded
+			class="h-full w-full transition {faded
 				? 'text-c-danger/50'
 				: 'text-c-danger'} not-touch:group-hover/download-button:text-c-danger"
 		/>

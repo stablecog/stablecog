@@ -39,13 +39,13 @@
 			data-sveltekit-preload-data={prefetch && (target === '_self' || target === undefined)
 				? 'hover'
 				: 'off'}
-			class="touch-manipulation group/iconbutton rounded-full {classes}"
+			class="group/iconbutton touch-manipulation rounded-full {classes}"
 			aria-label={name}
 		>
-			<div class="rounded-full relative z-0 overflow-hidden {noPadding ? '' : 'p-2'}">
+			<div class="relative z-0 overflow-hidden rounded-full {noPadding ? '' : 'p-2'}">
 				{#if !(withSpinner && loading)}
 					<div
-						class="w-full h-full ease-out transition transform {type === 'on-primary'
+						class="h-full w-full transform transition ease-out {type === 'on-primary'
 							? 'bg-c-on-primary/15'
 							: type === 'secondary'
 								? 'bg-c-secondary/25'
@@ -55,16 +55,16 @@
 					/>
 				{/if}
 				<div class="relative">
-					<div class="transition {withSpinner && loading ? 'opacity-0 scale-50' : ''}">
+					<div class="transition {withSpinner && loading ? 'scale-50 opacity-0' : ''}">
 						<slot />
 					</div>
 					{#if withSpinner}
 						<div
-							class="w-full h-full absolute transform transition pointer-events-none {loading
-								? 'opacity-100 scale-100'
+							class="pointer-events-none absolute h-full w-full transform transition {loading
+								? 'scale-100 opacity-100'
 								: ''}"
 						>
-							<IconAnimatedSpinner class="w-full h-full" {loading} />
+							<IconAnimatedSpinner class="h-full w-full" {loading} />
 						</div>
 					{/if}
 				</div>
@@ -77,13 +77,13 @@
 			type="button"
 			disabled={disabled || loading}
 			on:click={onClick}
-			class="touch-manipulation group/iconbutton rounded-full {classes}"
+			class="group/iconbutton touch-manipulation rounded-full {classes}"
 			aria-label={name}
 		>
-			<div class="rounded-full relative z-0 overflow-hidden {noPadding ? '' : 'p-2'}">
+			<div class="relative z-0 overflow-hidden rounded-full {noPadding ? '' : 'p-2'}">
 				{#if !(withSpinner && loading)}
 					<div
-						class="w-full h-full ease-out transition transform {type === 'on-primary'
+						class="h-full w-full transform transition ease-out {type === 'on-primary'
 							? 'bg-c-on-primary/15'
 							: type === 'secondary'
 								? 'bg-c-secondary/25'
@@ -93,16 +93,16 @@
 					/>
 				{/if}
 				<div class="relative">
-					<div class="transition {withSpinner && loading ? 'opacity-0 scale-50' : ''}">
+					<div class="transition {withSpinner && loading ? 'scale-50 opacity-0' : ''}">
 						<slot />
 					</div>
 					{#if withSpinner}
 						<div
-							class="w-full h-full absolute left-0 top-0 transform transition pointer-events-none {loading
-								? 'opacity-100 scale-100'
-								: 'opacity-0 scale-0'}"
+							class="pointer-events-none absolute left-0 top-0 h-full w-full transform transition {loading
+								? 'scale-100 opacity-100'
+								: 'scale-0 opacity-0'}"
 						>
-							<IconAnimatedSpinner class="w-full h-full" {loading} />
+							<IconAnimatedSpinner class="h-full w-full" {loading} />
 						</div>
 					{/if}
 				</div>

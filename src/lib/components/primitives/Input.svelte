@@ -193,11 +193,9 @@
 		/>
 	{/if}
 	<label
-		class="{hasIcon
-			? 'pl-12 pr-5'
-			: 'px-5'} input-label top-4.25 peer-focus:top-4.25 pointer-events-none
-		absolute -translate-y-1/2 transform
-		text-xs text-c-on-bg/75 transition-all duration-150 peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-c-on-bg/50
+		class="{hasIcon ? 'pl-12 pr-5' : 'px-5'} input-label pointer-events-none absolute top-4.25
+		-translate-y-1/2 transform text-xs
+		text-c-on-bg/75 transition-all duration-150 peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-c-on-bg/50 peer-focus:top-4.25
 		peer-focus:text-xs peer-focus:text-c-on-bg/75"
 		for={title}
 	>

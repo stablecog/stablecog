@@ -37,34 +37,34 @@
 
 <button
 	on:click={onClick}
-	class="touch-manipulation w-1/2 md:w-full flex flex-col p-1 md:px-[calc(0.5rem+1px)] md:py-[calc(0.5rem-3px)] group"
+	class="group flex w-1/2 touch-manipulation flex-col p-1 md:w-full md:px-[calc(0.5rem+1px)] md:py-[calc(0.5rem-3px)]"
 >
 	<div
-		class="w-full flex flex-col text-left items-start justify-start transition
-    	rounded-lg bg-c-bg-tertiary overflow-hidden z-0 relative border-3 border-c-bg-tertiary {isSelected
+		class="relative z-0 flex w-full flex-col items-start justify-start
+    	overflow-hidden rounded-lg border-3 border-c-bg-tertiary bg-c-bg-tertiary text-left transition {isSelected
 			? 'ring-2'
 			: 'ring-0'} ring-c-primary not-touch:group-hover:ring-2"
 	>
-		<div class="w-full flex flex-col items-start justify-start px-1.75 pt-1 pb-2.5">
-			<div class="max-w-full flex items-center justify-start gap-2">
+		<div class="flex w-full flex-col items-start justify-start px-1.75 pb-2.5 pt-1">
+			<div class="flex max-w-full items-center justify-start gap-2">
 				<p
-					class="flex-shrink min-w-0 bg-c-bg-tertiary text-base whitespace-nowrap overflow-hidden overflow-ellipsis
-					font-medium rounded-tr-lg"
+					class="min-w-0 flex-shrink overflow-hidden overflow-ellipsis whitespace-nowrap rounded-tr-lg bg-c-bg-tertiary
+					text-base font-medium"
 				>
 					{modelName}
 				</p>
 				{#if isNew}
 					<div
-						class="pl-1 pr-1.5 py-0.25 items-center font-medium flex text-xs
-						bg-c-secondary/10 rounded text-c-secondary gap-0.75 mb-0.75"
+						class="mb-0.75 flex items-center gap-0.75 rounded bg-c-secondary/10 py-0.25
+						pl-1 pr-1.5 text-xs font-medium text-c-secondary"
 					>
-						<IconNewAlt class="w-3 h-3" />
+						<IconNewAlt class="h-3 w-3" />
 						<p class="mt-0.25">{$LL.Shared.NewTitle()}</p>
 					</div>
 				{/if}
 			</div>
 			<p
-				class="max-w-full text-xs leading-none text-c-on-bg/60 font-medium mt-0.75 flex-shrink min-w-0 whitespace-nowrap overflow-hidden overflow-ellipsis"
+				class="mt-0.75 min-w-0 max-w-full flex-shrink overflow-hidden overflow-ellipsis whitespace-nowrap text-xs font-medium leading-none text-c-on-bg/60"
 			>
 				{aspectRatioToImageSize[$generationAspectRatio][modelId]?.width ??
 					aspectRatioToImageSize[$generationAspectRatio].default.width} ×
@@ -74,7 +74,7 @@
 		</div>
 		<img
 			loading="lazy"
-			class="w-full h-auto bg-c-bg-tertiary rounded-md"
+			class="h-auto w-full rounded-md bg-c-bg-tertiary"
 			{src}
 			{srcset}
 			{sizes}

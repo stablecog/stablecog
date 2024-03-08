@@ -7,34 +7,34 @@
 	import { sessionStore } from '$ts/constants/supabase';
 </script>
 
-<section id="start-creating" class="w-full flex justify-center pt-16 lg:pt-8 xl:pt-4 pb-8 md:pb-16">
-	<div class="w-full max-w-7xl flex flex-col items-center px-3 md:px-8">
+<section id="start-creating" class="flex w-full justify-center pb-8 pt-16 md:pb-16 lg:pt-8 xl:pt-4">
+	<div class="flex w-full max-w-7xl flex-col items-center px-3 md:px-8">
 		<div class="flex flex-col items-center px-3 md:px-6">
 			<h2
-				class="max-w-[19rem] md:max-w-[22rem] lg:max-w-[36rem] font-semibold text-3xl md:text-4xl lg:text-5xl
-        flex-1 leading-tight lg:leading-tight text-center"
+				class="max-w-[19rem] flex-1 text-center text-3xl font-semibold leading-tight md:max-w-[22rem]
+        md:text-4xl lg:max-w-[36rem] lg:text-5xl lg:leading-tight"
 			>
 				{$LL.Landing.StartCreating.Title()}
 			</h2>
 			<p
-				class="max-w-[22rem] lg:max-w-[36rem] leading-relaxed md:text-lg lg:text-xl mt-2 text-center text-c-on-bg/75"
+				class="mt-2 max-w-[22rem] text-center leading-relaxed text-c-on-bg/75 md:text-lg lg:max-w-[36rem] lg:text-xl"
 			>
 				{$LL.Landing.StartCreating.Paragraph()}
 			</p>
 			<Button
 				href={$sessionStore?.user.id && $userSummary ? '/generate' : '/generate?smo=true'}
-				class="mt-6 w-full max-w-[16rem] px-6 md:px-8 py-4"
+				class="mt-6 w-full max-w-[16rem] px-6 py-4 md:px-8"
 				noPadding
 			>
 				{$LL.Landing.StartCreatingButton()}
 			</Button>
 		</div>
 		<div
-			class="w-full rounded-lg md:rounded-xl lg:rounded-2xl ring-2 ring-c-bg-secondary
-			shadow-2xl shadow-c-shadow/[var(--o-shadow-strong)] overflow-hidden z-0 relative mt-8 md:mt-10"
+			class="relative z-0 mt-8 w-full overflow-hidden rounded-lg
+			shadow-2xl shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-secondary md:mt-10 md:rounded-xl lg:rounded-2xl"
 		>
 			<LazyImage
-				class="w-full h-auto transform scale-100.2"
+				class="h-auto w-full scale-100.2 transform"
 				src={$themeApp === 'light' ? '/landing/app-light-1920.webp' : '/landing/app-dark-1920.webp'}
 				srcset="
         {$themeApp === 'light'

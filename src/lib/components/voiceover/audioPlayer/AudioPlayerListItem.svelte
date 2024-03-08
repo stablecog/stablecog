@@ -63,8 +63,8 @@
 	$: totalTimestamp = duration
 		? convertSecondsToTimestamp(duration)
 		: output.audio_duration
-		? convertSecondsToTimestamp(output.audio_duration)
-		: undefined;
+			? convertSecondsToTimestamp(output.audio_duration)
+			: undefined;
 	$: currentTimestamp = currentTime ? convertSecondsToTimestamp(currentTime) : undefined;
 
 	$: [currentTime], onCurrentTimeChanged();
@@ -195,36 +195,36 @@
 	tabindex="0"
 	role="button"
 	class="{inHorizontal ? 'h-full' : ''} w-full bg-c-bg-secondary {noLayoutChange
-		? 'flex flex-col items-start px-3 pt-1.5 pb-1 rounded-xl'
-		: 'flex flex-row md:flex-col items-center md:items-start px-1 py-1 md:px-3 md:pt-1.5 md:pb-1 rounded-lg md:rounded-xl'}
-		shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]
-		overflow-hidden relative z-0 group/audio-player-list-item cursor-default {classes}"
+		? 'flex flex-col items-start rounded-xl px-3 pb-1 pt-1.5'
+		: 'flex flex-row items-center rounded-lg px-1 py-1 md:flex-col md:items-start md:rounded-xl md:px-3 md:pb-1 md:pt-1.5'}
+		group/audio-player-list-item relative
+		z-0 cursor-default overflow-hidden shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] {classes}"
 >
 	<div
 		class="{noLayoutChange
 			? 'w-full pb-1'
-			: 'md:w-full pl-0.5 md:pl-0 pr-1 md:pr-0 md:pb-1'} flex justify-between items-center gap-2"
+			: 'pl-0.5 pr-1 md:w-full md:pb-1 md:pl-0 md:pr-0'} flex items-center justify-between gap-2"
 	>
-		<div class="flex-shrink min-w-0 w-full flex justify-start items-center py-0.5">
+		<div class="flex w-full min-w-0 flex-shrink items-center justify-start py-0.5">
 			<div
-				class="rounded-md bg-c-bg-tertiary overflow-hidden
-					flex items-center justify-start relative z-0 ring-2 ring-c-bg-tertiary"
+				class="relative z-0 flex
+					items-center justify-start overflow-hidden rounded-md bg-c-bg-tertiary ring-2 ring-c-bg-tertiary"
 			>
 				<div
 					class="{noLayoutChange
-						? 'w-7 h-7'
-						: 'w-10 h-10 md:w-7 md:h-7'} flex-shrink-0 shadow-lg overflow-hidden relative z-0"
+						? 'h-7 w-7'
+						: 'h-10 w-10 md:h-7 md:w-7'} relative z-0 flex-shrink-0 overflow-hidden shadow-lg"
 				>
 					<IconSpeaker
-						class="w-full h-full"
+						class="h-full w-full"
 						type={output.voiceover.speaker.id}
 						sizes={noLayoutChange ? '28px' : '(min-width: 768px) 28px, 40px'}
 					/>
 				</div>
 				<p
-					class="{noLayoutChange ? 'block' : 'hidden md:block'} text-c-on-bg flex-shrink min-w-0
-					whitespace-nowrap overflow-hidden overflow-ellipsis text-sm font-medium
-					px-2.5 py-1 h-full"
+					class="{noLayoutChange ? 'block' : 'hidden md:block'} h-full min-w-0 flex-shrink
+					overflow-hidden overflow-ellipsis whitespace-nowrap px-2.5 py-1
+					text-sm font-medium text-c-on-bg"
 				>
 					{$voiceoverSpeakerIdToDisplayName[output.voiceover.speaker.id]}
 				</p>
@@ -236,7 +236,7 @@
 	</div>
 	{#if !noLayoutChange}
 		<p
-			class="hidden lg:block xl:hidden text-sm text-c-on-bg py-1 max-w-full whitespace-nowrap overflow-hidden overflow-ellipsis"
+			class="hidden max-w-full overflow-hidden overflow-ellipsis whitespace-nowrap py-1 text-sm text-c-on-bg lg:block xl:hidden"
 		>
 			{output.voiceover.prompt.text}
 		</p>
@@ -244,7 +244,7 @@
 	<div
 		class="{inHorizontal ? 'h-full' : ''} {noLayoutChange
 			? 'w-full'
-			: 'md:w-full'} flex-1 min-w-0 flex items-center justify-center"
+			: 'md:w-full'} flex min-w-0 flex-1 items-center justify-center"
 	>
 		<audio
 			src={output.audio_file_url}
@@ -284,25 +284,25 @@
 			{/if}
 		</div>
 		<div
-			class="flex-1 min-w-0 flex flex-col {noLayoutChange
+			class="flex min-w-0 flex-1 flex-col {noLayoutChange
 				? 'pl-2 pr-0.5'
-				: '-mb-2.5 md:mb-0 pl-1 md:pl-2 pr-0.5'}"
+				: '-mb-2.5 pl-1 pr-0.5 md:mb-0 md:pl-2'}"
 		>
 			<p
 				class="{noLayoutChange
 					? 'block py-1'
-					: 'lg:hidden xl:block md:py-1'} text-xs md:text-sm text-c-on-bg max-w-full
-				whitespace-nowrap overflow-hidden overflow-ellipsis"
+					: 'md:py-1 lg:hidden xl:block'} max-w-full overflow-hidden overflow-ellipsis whitespace-nowrap
+				text-xs text-c-on-bg md:text-sm"
 			>
 				{output.voiceover.prompt.text}
 			</p>
 			<div
-				class="w-full flex items-center {noLayoutChange
+				class="flex w-full items-center {noLayoutChange
 					? '-mt-1'
 					: '-mt-1.5 md:-mt-1 lg:mt-0 xl:-mt-1'}"
 			>
-				<div class="flex-1 self-stretch h-8">
-					<div class="w-full h-full flex items-center relative">
+				<div class="h-8 flex-1 self-stretch">
+					<div class="relative flex h-full w-full items-center">
 						<Slider
 							{buffered}
 							disabled={isOutputLoadingOrFailed}
@@ -332,18 +332,18 @@
 	</div>
 	{#if !noLayoutChange}
 		<div
-			class="w-auto md:w-full flex md:hidden lg:flex items-center justify-between xl:hidden lg:pb-0.5"
+			class="flex w-auto items-center justify-between md:hidden md:w-full lg:flex lg:pb-0.5 xl:hidden"
 		>
-			<div class="-mr-0.5 lg:mr-0 lg:-ml-2 flex items-center">
+			<div class="-mr-0.5 flex items-center lg:-ml-2 lg:mr-0">
 				<ThreeDotDropdown {output} {hasDeleteButton} onDeleteClicked={openDeleteModal} />
 			</div>
 			<div
-				class="order-first lg:order-last flex-shrink min-w-0 pl-2 lg:pl-3 text-xs text-c-on-bg/50 text-right"
+				class="order-first min-w-0 flex-shrink pl-2 text-right text-xs text-c-on-bg/50 lg:order-last lg:pl-3"
 			>
-				<p class="px-0.25 flex-shrink min-w-0 overflow-hidden overflow-ellipsis">
+				<p class="min-w-0 flex-shrink overflow-hidden overflow-ellipsis px-0.25">
 					{currentTime && currentTimestamp ? currentTimestamp : timestampPlaceholder}
 				</p>
-				<p class="px-0.25 flex-shrink min-w-0 overflow-hidden overflow-ellipsis">
+				<p class="min-w-0 flex-shrink overflow-hidden overflow-ellipsis px-0.25">
 					{(duration || output.audio_duration) && totalTimestamp
 						? totalTimestamp
 						: timestampPlaceholder}
@@ -355,23 +355,23 @@
 	{#if isOutputLoadingOrFailed}
 		<div
 			transition:fade={{ duration: 200, easing: quadOut }}
-			class="w-full h-full absolute left-0 top-0 flex items-center justify-center {output.voiceover
+			class="absolute left-0 top-0 flex h-full w-full items-center justify-center {output.voiceover
 				.status === 'failed'
 				? 'bg-c-bg-secondary'
 				: 'bg-c-bg-secondary/90'}"
 		>
 			{#if output.voiceover.status === 'failed'}
-				<IconSadFaceOutline class="w-7 h-7 md:w-8 md:h-8 text-c-on-bg-faded" />
+				<IconSadFaceOutline class="h-7 w-7 text-c-on-bg-faded md:h-8 md:w-8" />
 			{:else}
 				<Morpher
 					morphed={output.status === 'to-be-submitted' || output.status === 'server-received'}
 				>
 					<IconAnimatedSpinner
 						slot="0"
-						class="w-7 h-7 md:w-8 md:h-8 text-c-on-bg-faded"
+						class="h-7 w-7 text-c-on-bg-faded md:h-8 md:w-8"
 						loading={true}
 					/>
-					<IconHourglassAnimated slot="1" class="w-7 h-7 md:w-8 md:h-8 text-c-on-bg-faded" />
+					<IconHourglassAnimated slot="1" class="h-7 w-7 text-c-on-bg-faded md:h-8 md:w-8" />
 				</Morpher>
 			{/if}
 		</div>
@@ -379,10 +379,10 @@
 	{#if output.is_deleted}
 		<div
 			transition:fade={{ duration: 200, easing: quadOut }}
-			class="w-full h-full absolute left-0 top-0 bg-c-bg-secondary/90 flex items-center justify-center"
+			class="absolute left-0 top-0 flex h-full w-full items-center justify-center bg-c-bg-secondary/90"
 		>
 			<div transition:scale={{ duration: 200, opacity: 0, start: 0, easing: quadOut }}>
-				<IconTrashcan class="w-6 h-6 md:w-8 md:h-8 text-c-danger" />
+				<IconTrashcan class="h-6 w-6 text-c-danger md:h-8 md:w-8" />
 			</div>
 		</div>
 	{/if}
@@ -399,23 +399,23 @@
 					isDeleteModalOpen = false;
 				}
 			}}
-			class="max-w-full my-auto"
+			class="my-auto max-w-full"
 		>
 			<div
-				class="w-full flex flex-col max-w-md bg-c-bg ring-2 ring-c-bg-secondary rounded-xl p-5 md:p-6 shadow-2xl shadow-c-shadow/[var(--o-shadow-stronger)]"
+				class="flex w-full max-w-md flex-col rounded-xl bg-c-bg p-5 shadow-2xl shadow-c-shadow/[var(--o-shadow-stronger)] ring-2 ring-c-bg-secondary md:p-6"
 			>
-				<h1 class="font-bold text-xl -mt-1">
+				<h1 class="-mt-1 text-xl font-bold">
 					{$LL.Shared.BatchEditBar.ConfirmationModal.Delete.Title({
 						selectedCount: itemsToBeDeletedCount
 					})}
 				</h1>
-				<p class="mt-3 text-c-on-bg/75 leading-relaxed">
+				<p class="mt-3 leading-relaxed text-c-on-bg/75">
 					{$LL.Shared.BatchEditBar.ConfirmationModal.Delete.Paragraph({
 						selectedCount: itemsToBeDeletedCount
 					})}
 				</p>
-				<div class="w-full flex flex-wrap justify-end items-stretch mt-6 gap-2">
-					<div class="w-full justify-end flex flex-wrap items-stretch -mr-2 -mb-1.5">
+				<div class="mt-6 flex w-full flex-wrap items-stretch justify-end gap-2">
+					<div class="-mb-1.5 -mr-2 flex w-full flex-wrap items-stretch justify-end">
 						<Button
 							disabled={actionStatus === 'loading'}
 							onClick={closeDeleteModal}

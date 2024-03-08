@@ -30,7 +30,7 @@
 	$: tokensQuery = browser
 		? createQuery(['user_apps'], () =>
 				getUserTokens({ access_token: $sessionStore?.access_token || '', type: 'client' })
-		  )
+			)
 		: undefined;
 
 	$: deleteTokenMutation = browser
@@ -44,7 +44,7 @@
 						resetModal();
 					}
 				}
-		  )
+			)
 		: undefined;
 
 	$: dateFormatter = new Intl.DateTimeFormat($locale, {
@@ -77,94 +77,94 @@
 	image_url="{canonicalUrl}/previews/account-{previewImageVersion}.png"
 />
 
-<div class="w-full flex justify-center pt-4 md:pt-6 pb-6 md:pb-8 md:px-3">
-	<div class="w-full max-w-4xl flex flex-col">
-		<p class="leading-relaxed mb-4 md:mb-6 px-5">
+<div class="flex w-full justify-center pb-6 pt-4 md:px-3 md:pb-8 md:pt-6">
+	<div class="flex w-full max-w-4xl flex-col">
+		<p class="mb-4 px-5 leading-relaxed md:mb-6">
 			{$LL.Account.Apps.PageParagraph()}
 		</p>
 		<div class="w-full px-3">
 			<AccountPageCard>
 				{#if $tokensQuery?.isError}
-					<div class="w-full flex flex-col items-center justify-center py-8 px-5 md:px-12">
-						<IconSadFaceOutline class="w-10 h-10 text-c-on-bg/50" />
-						<p class="text-c-on-surface-secondary text-c-on-bg/50 mt-2 text-center">
+					<div class="flex w-full flex-col items-center justify-center px-5 py-8 md:px-12">
+						<IconSadFaceOutline class="h-10 w-10 text-c-on-bg/50" />
+						<p class="text-c-on-surface-secondary mt-2 text-center text-c-on-bg/50">
 							{$LL.Error.SomethingWentWrong()}
 						</p>
 					</div>
 				{:else if $tokensQuery === undefined || $tokensQuery.data === undefined || $tokensQuery?.isInitialLoading}
-					<div class="w-full flex flex-col items-center justify-center py-8 px-5 md:px-12">
-						<IconAnimatedSpinner class="w-10 h-10 text-c-on-bg/50" />
-						<p class="text-c-on-surface-secondary text-c-on-bg/50 mt-2 text-center">
+					<div class="flex w-full flex-col items-center justify-center px-5 py-8 md:px-12">
+						<IconAnimatedSpinner class="h-10 w-10 text-c-on-bg/50" />
+						<p class="text-c-on-surface-secondary mt-2 text-center text-c-on-bg/50">
 							{$LL.Shared.LoadingTitle()}
 						</p>
 					</div>
 				{:else if $tokensQuery.data.length === 0}
-					<div class="w-full flex flex-col items-center justify-center py-8 px-5 md:px-12">
-						<IconGrid class="w-10 h-10 text-c-on-bg/50" />
-						<p class="text-c-on-surface-secondary text-c-on-bg/50 mt-2 text-center">
+					<div class="flex w-full flex-col items-center justify-center px-5 py-8 md:px-12">
+						<IconGrid class="h-10 w-10 text-c-on-bg/50" />
+						<p class="text-c-on-surface-secondary mt-2 text-center text-c-on-bg/50">
 							{$LL.Account.Apps.NoAppsYet()}
 						</p>
 					</div>
 				{:else}
-					<div class="w-full flex flex-col text-sm md:text-base min-w-[36rem]">
-						<div class="w-full flex items-center font-semibold border-b-2 border-c-bg-secondary">
-							<div class="flex-1 flex items-center min-w-0">
-								<p class="flex-1 px-4 py-3.5 w-1/4">
+					<div class="flex w-full min-w-[36rem] flex-col text-sm md:text-base">
+						<div class="flex w-full items-center border-b-2 border-c-bg-secondary font-semibold">
+							<div class="flex min-w-0 flex-1 items-center">
+								<p class="w-1/4 flex-1 px-4 py-3.5">
 									{$LL.Account.APIKeys.KeyTable.NameTitle()}
 								</p>
-								<p class="flex-1 px-4 py-3.5 w-1/4">
+								<p class="w-1/4 flex-1 px-4 py-3.5">
 									{$LL.Account.Apps.KeyTable.ConnectedAtTitle()}
 								</p>
-								<p class="flex-1 px-4 py-3.5 w-1/4">
+								<p class="w-1/4 flex-1 px-4 py-3.5">
 									{$LL.Account.APIKeys.KeyTable.LastUsedTitle()}
 								</p>
-								<p class="flex-1 px-4 py-3.5 w-1/4">
+								<p class="w-1/4 flex-1 px-4 py-3.5">
 									{$LL.Account.APIKeys.KeyTable.UsageTitle()}
 								</p>
 							</div>
-							<div class="w-12 h-10 flex-shrink-0" />
+							<div class="h-10 w-12 flex-shrink-0" />
 						</div>
 						{#each $tokensQuery.data as token, index (token.id)}
 							<div
 								transition:expandCollapse={{ duration: 200, easing: quadOut }}
-								class="w-full flex flex-col justify-start items-start overflow-hidden"
+								class="flex w-full flex-col items-start justify-start overflow-hidden"
 							>
 								<div
-									class="w-full flex items-center text-c-on-bg/75 {index !==
+									class="flex w-full items-center text-c-on-bg/75 {index !==
 									$tokensQuery.data.length - 1
 										? 'border-b-2'
 										: ''} border-c-bg-secondary"
 								>
-									<div class="flex-1 flex items-center min-w-0">
-										<div class="flex-1 px-4 py-3.5 w-1/4 flex items-center gap-1.5 md:gap-2">
+									<div class="flex min-w-0 flex-1 items-center">
+										<div class="flex w-1/4 flex-1 items-center gap-1.5 px-4 py-3.5 md:gap-2">
 											<IconSc
-												class="w-5 h-5 md:w-6 md:h-6 flex-shrink-0"
+												class="h-5 w-5 flex-shrink-0 md:h-6 md:w-6"
 												type={getAppFromAppId(token.auth_client_id, $LL)?.icon || 'unknown'}
 											/>
-											<p class="flex-shrink min-w-0">
+											<p class="min-w-0 flex-shrink">
 												{getAppFromAppId(token.auth_client_id, $LL)?.localizedName ||
 													$LL.Shared.UnknownTitle()}
 											</p>
 										</div>
-										<p class="flex-1 px-4 py-3.5 w-1/4 text-c-on-bg/50">
+										<p class="w-1/4 flex-1 px-4 py-3.5 text-c-on-bg/50">
 											{dateFormatter.format(new Date(token.created_at))}
 										</p>
-										<p class="flex-1 px-4 py-3.5 w-1/4 text-c-on-bg/50">
+										<p class="w-1/4 flex-1 px-4 py-3.5 text-c-on-bg/50">
 											{token.last_used_at
 												? getRelativeDate({ date: token.last_used_at, locale: $locale })
 												: $LL.Account.APIKeys.KeyTable.LastUsedNeverDescription()}
 										</p>
-										<p class="flex-1 px-4 py-3.5 w-1/4 text-c-on-bg/50">
+										<p class="w-1/4 flex-1 px-4 py-3.5 text-c-on-bg/50">
 											{numberFormatter.format(token.uses)}
 										</p>
 									</div>
-									<div class="px-1 flex items-center justify-center">
+									<div class="flex items-center justify-center px-1">
 										<IconButton
 											name={$LL.Account.APIKeys.DeleteKeyButton()}
 											onClick={() => openModal({ type: 'delete', id: token.id })}
 										>
 											<IconTrashcan
-												class="w-6 h-6 transition text-c-on-bg/75 group-hover/iconbutton:text-c-primary"
+												class="h-6 w-6 text-c-on-bg/75 transition group-hover/iconbutton:text-c-primary"
 											/>
 										</IconButton>
 									</div>
@@ -184,29 +184,29 @@
 			use:clickoutside={{
 				callback: () => ($deleteTokenMutation?.isLoading ? null : resetModal())
 			}}
-			class="max-w-full my-auto"
+			class="my-auto max-w-full"
 		>
 			<div
-				class="w-full max-w-lg bg-c-bg ring-2 ring-c-bg-secondary rounded-xl p-5 md:p-6
-				shadow-2xl shadow-c-shadow/[var(--o-shadow-stronger)]"
+				class="w-full max-w-lg rounded-xl bg-c-bg p-5 shadow-2xl shadow-c-shadow/[var(--o-shadow-stronger)] ring-2
+				ring-c-bg-secondary md:p-6"
 			>
-				<div class="w-full flex flex-row flex-wrap items-center gap-3">
-					<h1 class="font-bold text-xl -mt-1 text-c-danger">
+				<div class="flex w-full flex-row flex-wrap items-center gap-3">
+					<h1 class="-mt-1 text-xl font-bold text-c-danger">
 						{$LL.Account.Apps.AppModal.Delete.Title()}
 					</h1>
 					{#if $tokensQuery?.data?.find((i) => i.id === tokenToDelete)}
 						<div
-							class="max-w-full flex -mt-1 items-center justify-start gap-1.5 bg-c-danger/15 text-c-danger
-								rounded-md px-2.5 py-1 text-sm font-medium"
+							class="-mt-1 flex max-w-full items-center justify-start gap-1.5 rounded-md bg-c-danger/15
+								px-2.5 py-1 text-sm font-medium text-c-danger"
 						>
 							<IconSc
 								type={getAppFromAppId(
 									$tokensQuery?.data?.find((i) => i.id === tokenToDelete)?.auth_client_id,
 									$LL
 								)?.icon || 'unknown'}
-								class="w-4 h-4 -ml-0.5 flex-shrink-0"
+								class="-ml-0.5 h-4 w-4 flex-shrink-0"
 							/>
-							<p class="flex-shrink min-w-0 overflow-hidden overflow-ellipsis">
+							<p class="min-w-0 flex-shrink overflow-hidden overflow-ellipsis">
 								{getAppFromAppId(
 									$tokensQuery?.data?.find((i) => i.id === tokenToDelete)?.auth_client_id,
 									$LL
@@ -215,16 +215,16 @@
 						</div>
 					{/if}
 				</div>
-				<p class="mt-3 text-c-on-bg/75 leading-relaxed">
+				<p class="mt-3 leading-relaxed text-c-on-bg/75">
 					{$LL.Account.Apps.AppModal.Delete.Paragraph()}
 				</p>
 				<form
-					class="flex-1 min-w-0"
+					class="min-w-0 flex-1"
 					on:submit|preventDefault={() => {
 						$deleteTokenMutation?.mutate({ id: tokenToDelete || '' });
 					}}
 				>
-					<div class="w-full flex flex-wrap justify-end items-stretch mt-6 gap-2">
+					<div class="mt-6 flex w-full flex-wrap items-stretch justify-end gap-2">
 						<Button
 							disabled={$deleteTokenMutation?.isLoading}
 							onClick={resetModal}
@@ -246,7 +246,7 @@
 					</div>
 				</form>
 			</div>
-			<div class="w-full h-[5vh] pointer-events-none" />
+			<div class="pointer-events-none h-[5vh] w-full" />
 		</div>
 	</ModalWrapper>
 {/if}

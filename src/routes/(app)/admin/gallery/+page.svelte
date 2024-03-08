@@ -224,10 +224,10 @@
 
 <GalleryLikePageWrapper>
 	{#if !$sessionStore?.user.id}
-		<div class="w-full flex-1 max-w-5xl flex justify-center px-2 py-4 md:py-2">
+		<div class="flex w-full max-w-5xl flex-1 justify-center px-2 py-4 md:py-2">
 			<div class="my-auto flex flex-col">
 				<SignInCard redirectTo="/history" />
-				<div class="w-full h-[1vh]" />
+				<div class="h-[1vh] w-full" />
 			</div>
 		</div>
 	{:else}
@@ -237,19 +237,19 @@
 				totalOutputs !== undefined ? totalOutputs.toLocaleString($locale) : '...'
 			})`}
 		>
-			<div slot="view" class="w-full flex justify-end">
+			<div slot="view" class="flex w-full justify-end">
 				<TabLikeDropdown
-					class="flex-1 min-w-0 md:max-w-[15rem]"
+					class="min-w-0 flex-1 md:max-w-[15rem]"
 					name="Filter"
 					items={adminGalleryFilters}
 					bind:value={$adminGalleryCurrentFilter}
 				>
-					<div slot="title" class="p-3.5 flex items-center justify-center">
-						<IconFunnel class="w-6 h-6 text-c-on-bg/35" />
+					<div slot="title" class="flex items-center justify-center p-3.5">
+						<IconFunnel class="h-6 w-6 text-c-on-bg/35" />
 					</div>
 				</TabLikeDropdown>
 			</div>
-			<div slot="search-and-filter" class="w-full relative z-40">
+			<div slot="search-and-filter" class="relative z-40 w-full">
 				<SearchAndFilterBar
 					type="admin-gallery"
 					bind:searchString={$adminGallerySearchString}
@@ -263,7 +263,7 @@
 		<!-- Edit bar -->
 		{#if $isAdminGalleryEditActive}
 			<div
-				class="w-full max-w-3xl px-1 sticky top-1 z-30 {$isAdminGalleryEditActive
+				class="sticky top-1 z-30 w-full max-w-3xl px-1 {$isAdminGalleryEditActive
 					? 'mt-3'
 					: 'mt-0'}"
 			>
@@ -273,24 +273,24 @@
 		<GalleryLikeGridWrapper>
 			{#if allUserGenerationFullOutputsQuery === undefined || $allUserGenerationFullOutputsQuery === undefined || $allUserGenerationFullOutputsQuery.isInitialLoading}
 				<div
-					class="w-full flex flex-col text-c-on-bg/60 flex-1 py-6 px-4 justify-center items-center text-center"
+					class="flex w-full flex-1 flex-col items-center justify-center px-4 py-6 text-center text-c-on-bg/60"
 				>
-					<IconAnimatedSpinner class="w-12 h-12" />
+					<IconAnimatedSpinner class="h-12 w-12" />
 					<p class="mt-2 opacity-0">{$LL.Gallery.SearchingTitle()}</p>
 					<div class="h-[2vh]" />
 				</div>
 			{:else if $allUserGenerationFullOutputsQuery?.data?.pages?.length === 1 && $allUserGenerationFullOutputsQuery.data.pages[0].outputs.length === 0}
-				<div class="w-full flex-1 flex flex-col items-center py-8 px-5">
-					<div class="flex flex-col my-auto items-center gap-2 text-c-on-bg/50 text-center">
-						<IconTick class="w-16 h-16" />
+				<div class="flex w-full flex-1 flex-col items-center px-5 py-8">
+					<div class="my-auto flex flex-col items-center gap-2 text-center text-c-on-bg/50">
+						<IconTick class="h-16 w-16" />
 						<p>{$LL.Admin.Gallery.NoGenerationsToReview()}</p>
 						<div class="h-[1vh]" />
 					</div>
 				</div>
 			{:else if $allUserGenerationFullOutputsQuery.isError}
-				<div class="w-full flex-1 flex flex-col items-center py-8 px-5">
-					<div class="flex flex-col my-auto items-center gap-2">
-						<IconSadFace class="w-16 h-16 text-c-on-bg/50" />
+				<div class="flex w-full flex-1 flex-col items-center px-5 py-8">
+					<div class="my-auto flex flex-col items-center gap-2">
+						<IconSadFace class="h-16 w-16 text-c-on-bg/50" />
 						<p class="text-c-on-bg/50">{$LL.Error.SomethingWentWrong()}</p>
 					</div>
 				</div>

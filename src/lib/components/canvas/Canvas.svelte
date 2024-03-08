@@ -57,6 +57,6 @@
 	});
 </script>
 
-<div class="w-full h-full relative">
-	<div id="canvas-container" class="w-full h-full bg-c-bg ring-2 ring-c-bg-secondary z-10" />
+<div class="relative h-full w-full">
+	<div id="canvas-container" class="z-10 h-full w-full bg-c-bg ring-2 ring-c-bg-secondary" />
 </div>

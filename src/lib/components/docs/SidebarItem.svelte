@@ -34,11 +34,11 @@
 	}
 </script>
 
-<ListOrDiv as={isRoot ? 'div' : 'li'} class="w-full flex flex-col justify-start {classes}">
+<ListOrDiv as={isRoot ? 'div' : 'li'} class="flex w-full flex-col justify-start {classes}">
 	{#if !isRoot}
-		<div class="w-full flex relative">
+		<div class="relative flex w-full">
 			<a
-				class="w-full text-lg md:text-base flex items-center gap-4 px-4 py-3.5 md:py-2.5 group relative rounded-lg overflow-hidden z-0"
+				class="group relative z-0 flex w-full items-center gap-4 overflow-hidden rounded-lg px-4 py-3.5 text-lg md:py-2.5 md:text-base"
 				href={sidebarItem.pathname}
 				on:click={() => {
 					toggle();
@@ -51,8 +51,8 @@
 						? sidebarItem.http_method === 'POST'
 							? 'secondary'
 							: sidebarItem.http_method === 'GET'
-							? 'success'
-							: 'primary'
+								? 'success'
+								: 'primary'
 						: 'on-bg'}
 					hoverFrom="left"
 					size="md"
@@ -61,32 +61,32 @@
 					paddingClass="px-1.5 py-2px"
 				/>
 				<p
-					class="flex-1 min-w-0 w-0 relative break-words transition-all overflow-hidden {isSelected
+					class="relative w-0 min-w-0 flex-1 overflow-hidden break-words transition-all {isSelected
 						? sidebarItem.http_method === 'POST'
 							? 'text-c-secondary'
 							: sidebarItem.http_method === 'GET'
-							? 'text-c-success'
-							: 'text-c-primary'
+								? 'text-c-success'
+								: 'text-c-primary'
 						: ''} {isSelected
 						? 'font-semibold'
 						: level === 0 || level === 1
-						? 'text-c-on-bg font-medium'
-						: 'text-c-on-bg/75 font-normal'} relative"
+							? 'font-medium text-c-on-bg'
+							: 'font-normal text-c-on-bg/75'} relative"
 				>
 					{sidebarItem.title}
 				</p>
-				<div class="flex flex-shrink-0 items-center justify-end relative gap-3">
+				<div class="relative flex flex-shrink-0 items-center justify-end gap-3">
 					{#if sidebarItem.http_method}
 						<MethodBadge size="sm" method={sidebarItem.http_method} />
 					{/if}
 					{#if sidebarItem.children}
 						<IconChevronDown
-							class="w-5.5 h-5.5 md:w-4 md:h-4 transform transition {$page.url.pathname ===
+							class="h-5.5 w-5.5 transform transition md:h-4 md:w-4 {$page.url.pathname ===
 							sidebarItem.pathname
 								? 'text-c-primary'
 								: level > 1
-								? 'text-c-on-bg/75'
-								: 'text-c-on-bg'} {isOpen ? 'rotate-0' : '-rotate-90 group-hover:translate-x-1'}"
+									? 'text-c-on-bg/75'
+									: 'text-c-on-bg'} {isOpen ? 'rotate-0' : '-rotate-90 group-hover:translate-x-1'}"
 						/>
 					{/if}
 				</div>
@@ -95,7 +95,7 @@
 				<button
 					aria-label="{isOpen ? 'Collapse ' : 'Expand '} + {sidebarItem.title}"
 					on:click={() => (isOpen = !isOpen)}
-					class="w-12 md:w-10 h-full absolute right-1 top-0 z-10 group"
+					class="group absolute right-1 top-0 z-10 h-full w-12 md:w-10"
 				>
 					<ButtonHoverEffect size="sm" color={isSelected ? 'primary' : 'on-bg'} hoverFrom="left" />
 				</button>
@@ -105,14 +105,14 @@
 	{#if (isRoot || isOpen) && sidebarItem.children}
 		<div
 			transition:expandCollapse={{ duration: 200 }}
-			class="w-full flex flex-row {!isRoot ? 'pl-3' : ''}"
+			class="flex w-full flex-row {!isRoot ? 'pl-3' : ''}"
 		>
 			{#if !isRoot}
-				<div class="h-full w-2px rounded-full py-1.5 mr-1.5">
+				<div class="mr-1.5 h-full w-2px rounded-full py-1.5">
 					<div class="h-full w-full bg-c-bg-secondary" />
 				</div>
 			{/if}
-			<ul class="flex-1 flex flex-col">
+			<ul class="flex flex-1 flex-col">
 				{#each sidebarItem.children as child}
 					<svelte:self sidebarItem={child} isRoot={false} level={level + 1} />
 				{/each}

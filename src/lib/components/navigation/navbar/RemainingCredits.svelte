@@ -27,7 +27,7 @@
 					}, nowIntervalDuration);
 				}
 				if ($userSummary?.refetch && isOpen) $userSummary.refetch();
-		  }
+			}
 		: undefined;
 
 	$: numberFormatter = new Intl.NumberFormat($locale, {
@@ -72,30 +72,30 @@
 			($userSummary.more_free_credits_at !== undefined &&
 				$userSummary.more_free_credits_at_credit_amount !== undefined)}
 	>
-		<div slot="tooltip" class="max-w-full flex flex-col text-sm break-words">
-			<p class="font-bold flex-shrink min-w-0">
+		<div slot="tooltip" class="flex max-w-full flex-col break-words text-sm">
+			<p class="min-w-0 flex-shrink font-bold">
 				{$userSummary.renews_at
 					? $LL.UpcomingCredits.MorePaidPlanCreditsTooltip.Title()
 					: $LL.UpcomingCredits.MoreFreeCreditsTooltip.Title()}
 			</p>
-			<p class="mt-0.5 flex-shrink min-w-0 text-c-on-bg/75 font-medium">
+			<p class="mt-0.5 min-w-0 flex-shrink font-medium text-c-on-bg/75">
 				{$userSummary.renews_at
 					? $LL.UpcomingCredits.MorePaidPlanCreditsTooltip.Paragraph()
 					: $LL.UpcomingCredits.MoreFreeCreditsTooltip.Paragraph()}
 			</p>
 			<div
-				class="text-left font-bold flex justify-start items-center flex-wrap
-					rounded-md pt-1.25 pb-0.25 text-c-primary gap-2"
+				class="flex flex-wrap items-center justify-start gap-2 rounded-md
+					pb-0.25 pt-1.25 text-left font-bold text-c-primary"
 			>
-				<div class="max-w-full flex justify-center items-center flex-shrink min-w-0">
-					<IconToken class="w-4.5 h-4.5 -ml-0.75 flex-shrink-0" />
-					<p class="text-lg flex-shrink min-w-0 -mb-0.5">
+				<div class="flex min-w-0 max-w-full flex-shrink items-center justify-center">
+					<IconToken class="-ml-0.75 h-4.5 w-4.5 flex-shrink-0" />
+					<p class="-mb-0.5 min-w-0 flex-shrink text-lg">
 						{numberFormatter.format(
 							$userSummary.renews_at_credit_amount ??
 								$userSummary.more_free_credits_at_credit_amount ??
 								0
 						)}&nbsp;&nbsp;<span
-							class="bg-c-primary/10 px-1.75 py-1 font-medium rounded-md text-sm align-middle"
+							class="rounded-md bg-c-primary/10 px-1.75 py-1 align-middle text-sm font-medium"
 							>{relativeDate}</span
 						>
 					</p>
@@ -107,7 +107,7 @@
 			{...triggerStoreValue}
 			tabindex="0"
 			role="button"
-			class="flex-col items-end mr-3.5 md:mr-4 cursor-default rounded {$isNoCreditsInfoRoute
+			class="mr-3.5 cursor-default flex-col items-end rounded md:mr-4 {$isNoCreditsInfoRoute
 				? 'hidden md:flex'
 				: 'flex'} {$page.url.pathname === '/' && $themeApp === 'light' && !$notAtTheVeryTop
 				? 'text-c-bg'
@@ -122,14 +122,14 @@
 			>
 				{$LL.Account.RemainingTitle()}
 			</p>
-			<div class="flex items-center -mt-0.25 gap-0.25">
+			<div class="-mt-0.25 flex items-center gap-0.25">
 				<div
-					class="transition duration-1000 flex-shrink-0"
+					class="flex-shrink-0 transition duration-1000"
 					style="transform: rotate({creditsChangedCounter * 180}deg)"
 				>
-					<IconToken class="w-4 h-4 -ml-0.25" />
+					<IconToken class="-ml-0.25 h-4 w-4" />
 				</div>
-				<div class="text-sm font-bold mt-0.25 flex overflow-hidden relative z-0 numerator-fade">
+				<div class="numerator-fade relative z-0 mt-0.25 flex overflow-hidden text-sm font-bold">
 					{#each totalRemainingCreditsString.split('') as character, index (character + index)}
 						<p
 							class="leading-6"

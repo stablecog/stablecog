@@ -76,10 +76,10 @@
 </script>
 
 <div
-	class="max-w-full flex flex-col md:flex-row justify-between md:items-center items-start rounded-xl md:rounded-2xl bg-c-primary/10 ring-2 ring-c-primary/20 {classes}"
+	class="flex max-w-full flex-col items-start justify-between rounded-xl bg-c-primary/10 ring-2 ring-c-primary/20 md:flex-row md:items-center md:rounded-2xl {classes}"
 >
-	<div class="flex flex-1 flex-col px-4 py-4 max-w-lg">
-		<p class="font-bold text-base md:text-lg text-c-primary -mt-0.5 md:-mt-1">
+	<div class="flex max-w-lg flex-1 flex-col px-4 py-4">
+		<p class="-mt-0.5 text-base font-bold text-c-primary md:-mt-1 md:text-lg">
 			{$LL.LowOnCreditsCard.Title({ remainingCredits: $userSummary?.total_remaining_credits })}
 		</p>
 		{#if !$userSummary?.product_id && $userSummary?.more_credits_at && $userSummary?.more_credits_at_credit_amount}
@@ -87,12 +87,12 @@
 				{$LL.LowOnCreditsCard.FreeWithMoreOnTheWay.Paragraph()}
 			</p>
 			<div
-				class="text-left font-bold flex justify-start items-center flex-wrap
-					rounded-md pt-1.25 pb-0.25 text-c-primary gap-2"
+				class="flex flex-wrap items-center justify-start gap-2 rounded-md
+					pb-0.25 pt-1.25 text-left font-bold text-c-primary"
 			>
-				<div class="max-w-full flex justify-center items-center flex-shrink min-w-0">
-					<IconToken class="w-4.5 h-4.5 -ml-0.75 flex-shrink-0" />
-					<p class="text-lg flex-shrink min-w-0 -mb-0.5">
+				<div class="flex min-w-0 max-w-full flex-shrink items-center justify-center">
+					<IconToken class="-ml-0.75 h-4.5 w-4.5 flex-shrink-0" />
+					<p class="-mb-0.5 min-w-0 flex-shrink text-lg">
 						{numberFormatter.format(
 							$userSummary.renews_at_credit_amount ??
 								$userSummary.more_free_credits_at_credit_amount ??
@@ -101,13 +101,13 @@
 					</p>
 				</div>
 				<p
-					class="max-w-full bg-c-primary/10 px-1.75 py-0.25 rounded-md font-medium text-sm flex-shrink min-w-0"
+					class="min-w-0 max-w-full flex-shrink rounded-md bg-c-primary/10 px-1.75 py-0.25 text-sm font-medium"
 				>
 					{relativeDate}
 				</p>
 			</div>
 		{:else}
-			<p class="mt-1 leading-relaxed text-sm md:text-base">
+			<p class="mt-1 text-sm leading-relaxed md:text-base">
 				{#if !$userSummary?.product_id}
 					{$LL.LowOnCreditsCard.FreeParagraph()}
 				{:else if $userSummary?.product_id === STRIPE_HIGHEST_PRODUCT_ID_SUBSCRIPTIONS}
@@ -119,7 +119,7 @@
 		{/if}
 	</div>
 	<div
-		class="w-full md:w-auto flex justify-start items-center md:flex-col md:items-stretch gap-2 flex-wrap -mt-4 md:mt-0 p-3.5 md:p-3"
+		class="-mt-4 flex w-full flex-wrap items-center justify-start gap-2 p-3.5 md:mt-0 md:w-auto md:flex-col md:items-stretch md:p-3"
 	>
 		{#if !$userSummary?.product_id}
 			<Button onClick={() => logEvent('subscribe')} size="sm" href="/pricing#plans"

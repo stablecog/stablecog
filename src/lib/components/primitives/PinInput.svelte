@@ -28,7 +28,7 @@
 	role="textbox"
 	{...$root}
 	use:root
-	class="w-full flex items-center gap-[6px] cursor-text group {classes}"
+	class="group flex w-full cursor-text items-center gap-[6px] {classes}"
 >
 	{#each Array.from({ length }) as _, index}
 		<input
@@ -39,13 +39,13 @@
 				if (onInput) onInput();
 			}}
 			style="width: {(1 / length) * 100}%"
-			class="bg-c-bg-secondary text-c-on-bg rounded-xl text-center text-lg font-semibold py-4
+			class="rounded-xl bg-c-bg-secondary py-4 text-center text-lg font-semibold text-c-on-bg
       {$_valueStr || index === 0
 				? 'focus:ring-2 not-touch:enabled:hover:ring-2'
 				: ''} {!$_valueStr && index === 0
 				? 'not-touch:group-hover:enabled:ring-2'
-				: ''} ring-0 transition ring-c-primary/20 focus:ring-c-primary/30
-      placeholder:text-c-on-bg/30"
+				: ''} ring-0 ring-c-primary/20 transition placeholder:text-c-on-bg/30
+      focus:ring-c-primary/30"
 			{...$input()}
 			use:input
 		/>

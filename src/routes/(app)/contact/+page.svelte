@@ -16,19 +16,19 @@
 />
 
 <PageWrapper>
-	<div class="w-full flex flex-col items-center justify-start my-auto">
-		<section id="support" class="w-full flex flex-col items-center justify-start">
+	<div class="my-auto flex w-full flex-col items-center justify-start">
+		<section id="support" class="flex w-full flex-col items-center justify-start">
 			<Logo class="w-16" />
-			<h1 class="text-center font-bold text-4xl mt-5">{$LL.Contact.PageTitle()}</h1>
-			<p class="max-w-lg mt-4 text-center leading-relaxed text-c-on-bg/75">
+			<h1 class="mt-5 text-center text-4xl font-bold">{$LL.Contact.PageTitle()}</h1>
+			<p class="mt-4 max-w-lg text-center leading-relaxed text-c-on-bg/75">
 				{$LL.Contact.PageParagraph()}
 			</p>
 			<div
-				class="rounded-xl p-2 bg-c-bg ring-2 ring-c-bg-secondary mt-6 shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]"
+				class="mt-6 rounded-xl bg-c-bg p-2 shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-secondary"
 			>
 				<ScBar noBlog noGuide emailFirst color="normal" size="md" />
 			</div>
-			<div class="w-full h-[2vh]" />
+			<div class="h-[2vh] w-full" />
 		</section>
 	</div>
 </PageWrapper>

@@ -7,28 +7,28 @@
 </script>
 
 <div
-	class="w-full flex-1 flex flex-col bg-c-bg {borderSize === 'none'
+	class="flex w-full flex-1 flex-col bg-c-bg {borderSize === 'none'
 		? ''
 		: rounding === 'top'
-		? borderSize === 'sm'
-			? 'rounded-t-xl'
-			: 'rounded-t-2xl'
-		: rounding === 'bottom'
-		? borderSize === 'sm'
-			? 'rounded-b-xl'
-			: 'rounded-b-2xl'
-		: borderSize === 'sm'
-		? 'rounded-xl'
-		: 'rounded-2xl'} {noWrapper
+			? borderSize === 'sm'
+				? 'rounded-t-xl'
+				: 'rounded-t-2xl'
+			: rounding === 'bottom'
+				? borderSize === 'sm'
+					? 'rounded-b-xl'
+					: 'rounded-b-2xl'
+				: borderSize === 'sm'
+					? 'rounded-xl'
+					: 'rounded-2xl'} {noWrapper
 		? ''
-		: 'ring-2 ring-c-bg-secondary shadow-xl shadow-c-shadow/[var(--o-shadow-stronger)]'} 
-		{horizontal ? 'items-center' : ''} z-0 overflow-hidden relative"
+		: 'shadow-xl shadow-c-shadow/[var(--o-shadow-stronger)] ring-2 ring-c-bg-secondary'} 
+		{horizontal ? 'items-center' : ''} relative z-0 overflow-hidden"
 >
 	<slot />
 	{#if hasGradient}
 		<div
-			class="w-full h-12 absolute -bottom-1 left-0 pointer-events-none
-				bg-gradient-to-t from-c-bg to-c-bg/0 translate-3d-0"
+			class="translate-3d-0 pointer-events-none absolute -bottom-1 left-0 h-12
+				w-full bg-gradient-to-t from-c-bg to-c-bg/0"
 		/>
 	{/if}
 </div>

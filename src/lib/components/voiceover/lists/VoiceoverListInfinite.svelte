@@ -61,8 +61,8 @@
 		(horizontal
 			? itemWidth
 			: $windowWidth >= 1024 && $windowWidth < 1280
-			? listItemHeightLg
-			: itemHeight) + gap;
+				? listItemHeightLg
+				: itemHeight) + gap;
 	$: estimatedItemCountInAWindow =
 		estimatedItemSize && listScrollContainerSize
 			? listScrollContainerSize / estimatedItemSize
@@ -77,8 +77,8 @@
 			? $listVirtualizer.scrollOffset >= $listVirtualizer.getTotalSize() - listScrollContainerWidth
 			: false
 		: $listVirtualizer && listScrollContainerHeight
-		? $listVirtualizer.scrollOffset >= $listVirtualizer.getTotalSize() - listScrollContainerHeight
-		: false;
+			? $listVirtualizer.scrollOffset >= $listVirtualizer.getTotalSize() - listScrollContainerHeight
+			: false;
 
 	const overscanMultiplierForNextPage = 0.5;
 
@@ -159,9 +159,9 @@
 
 {#if $query.isInitialLoading}
 	<div
-		class="w-full h-full flex-1 flex flex-col text-c-on-bg/60 md:py-6 px-4 justify-center items-center text-center"
+		class="flex h-full w-full flex-1 flex-col items-center justify-center px-4 text-center text-c-on-bg/60 md:py-6"
 	>
-		<IconAnimatedSpinner class="w-7 h-7 md:w-12 md:h-12" />
+		<IconAnimatedSpinner class="h-7 w-7 md:h-12 md:w-12" />
 		<p class="mt-2 opacity-0 {horizontal ? 'hidden' : ''}">{$LL.Gallery.SearchingTitle()}</p>
 	</div>
 {:else if $query.isSuccess && outputs !== undefined && outputs.length === 0}
@@ -204,12 +204,12 @@
 		</div>
 		{#if horizontal}
 			<div
-				class="absolute left-0 top-0 w-12 h-full bg-gradient-to-r from-c-bg to-c-bg/0 transition
-				duration-100 pointer-events-none {listAtStart ? 'opacity-0' : 'opacity-100'}"
+				class="pointer-events-none absolute left-0 top-0 h-full w-12 bg-gradient-to-r from-c-bg to-c-bg/0
+				transition duration-100 {listAtStart ? 'opacity-0' : 'opacity-100'}"
 			/>
 			<div
-				class="absolute right-0 top-0 w-12 h-full bg-gradient-to-l from-c-bg to-c-bg/0 transition
-				duration-100 pointer-events-none {listAtEnd ? 'opacity-0' : 'opacity-100'}"
+				class="pointer-events-none absolute right-0 top-0 h-full w-12 bg-gradient-to-l from-c-bg to-c-bg/0
+				transition duration-100 {listAtEnd ? 'opacity-0' : 'opacity-100'}"
 			/>
 		{/if}
 	{/if}

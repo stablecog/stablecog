@@ -51,14 +51,14 @@
 <TabBarWrapper class={classes}>
 	{#if type === 'text'}
 		{#if hasTitle}
-			<div class="self-stretch flex text-c-on-bg/50">
+			<div class="flex self-stretch text-c-on-bg/50">
 				<slot name="title" />
 			</div>
-			<div class="w-2px mr-px -ml-px self-stretch">
-				<div class="w-full h-full bg-c-bg-secondary" />
+			<div class="-ml-px mr-px w-2px self-stretch">
+				<div class="h-full w-full bg-c-bg-secondary" />
 			</div>
 		{/if}
-		<div class="flex-1 min-w-0 flex relative {hasTitle ? 'rounded-r-xl' : 'rounded-xl'} group">
+		<div class="relative flex min-w-0 flex-1 {hasTitle ? 'rounded-r-xl' : 'rounded-xl'} group">
 			<input
 				aria-label={name}
 				{disabled}
@@ -78,8 +78,8 @@
 				{placeholder}
 				type="text"
 				{inputmode}
-				class="touch-manipulation group/input text-base w-full text-c-on-bg self-stretch overflow-ellipsis ring-0 transition
-				ring-c-primary/25 focus:ring-c-primary/50 focus:ring-2
+				class="group/input w-full touch-manipulation self-stretch overflow-ellipsis text-base text-c-on-bg ring-0 ring-c-primary/25
+				transition focus:ring-2 focus:ring-c-primary/50
 					{icon ? 'pl-12' : 'pl-4'} py-3.5 {hasTitle
 					? 'rounded-r-xl'
 					: 'rounded-xl'} bg-transparent placeholder:text-c-on-bg/50
@@ -90,21 +90,21 @@
 			{#if icon}
 				<svelte:component
 					this={icon}
-					class="w-5.5 h-5.5 flex-shrink-0 text-c-on-bg not-touch:group-hover:text-c-primary peer-focus:text-c-primary
-					absolute left-4 top-1/2 transform -translate-y-1/2 transition pointer-events-none"
+					class="pointer-events-none absolute left-4 top-1/2 h-5.5 w-5.5
+					flex-shrink-0 -translate-y-1/2 transform text-c-on-bg transition peer-focus:text-c-primary not-touch:group-hover:text-c-primary"
 				/>
 			{/if}
 		</div>
 	{:else}
 		{#if hasTitle}
-			<div class="self-stretch flex text-c-on-bg/50">
+			<div class="flex self-stretch text-c-on-bg/50">
 				<slot name="title" />
 			</div>
-			<div class="w-2px mr-px -ml-px self-stretch">
-				<div class="w-full h-full bg-c-bg-secondary" />
+			<div class="-ml-px mr-px w-2px self-stretch">
+				<div class="h-full w-full bg-c-bg-secondary" />
 			</div>
 		{/if}
-		<div class="flex-1 min-w-0 flex relative {hasTitle ? 'rounded-r-xl' : 'rounded-xl'} group">
+		<div class="relative flex min-w-0 flex-1 {hasTitle ? 'rounded-r-xl' : 'rounded-xl'} group">
 			<input
 				{disabled}
 				bind:this={inputElement}
@@ -124,8 +124,10 @@
 				type="number"
 				inputmode="numeric"
 				pattern="[0-9]*"
-				class="touch-manipulation text-base w-full text-c-on-bg self-stretch overflow-ellipsis ring-0 transition ring-c-primary/25 focus:ring-c-primary/50 focus:ring-2
-					pl-4 py-3.5 {hasTitle ? 'rounded-r-xl' : 'rounded-xl'} bg-transparent placeholder:text-c-on-bg/50
+				class="w-full touch-manipulation self-stretch overflow-ellipsis py-3.5 pl-4 text-base text-c-on-bg ring-0 ring-c-primary/25 transition
+					focus:ring-2 focus:ring-c-primary/50 {hasTitle
+					? 'rounded-r-xl'
+					: 'rounded-xl'} bg-transparent placeholder:text-c-on-bg/50
 					not-touch:hover:ring-2 not-touch:group-hover:ring-2
 					{showClearInputButton ? 'pr-10 md:pr-12' : 'pr-4'}"
 			/>

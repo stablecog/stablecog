@@ -18,31 +18,33 @@
 	export let discountRate: number | undefined = undefined;
 </script>
 
-<div {id} class="w-full sm:max-w-sm md:w-1/2 xl:w-1/4 px-3 py-4 flex items-stretch">
+<div {id} class="flex w-full items-stretch px-3 py-4 sm:max-w-sm md:w-1/2 xl:w-1/4">
 	<div
-		class="w-full flex flex-col bg-c-bg shadow-xl shadow-c-shadow/[var(--o-shadow-strong)]
-		p-4 md:p-5 rounded-2xl md:rounded-3xl ring-2 {isSelected ? 'ring-c-success' : ringClass} relative"
+		class="flex w-full flex-col rounded-2xl bg-c-bg p-4
+		shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] ring-2 md:rounded-3xl md:p-5 {isSelected
+			? 'ring-c-success'
+			: ringClass} relative"
 	>
 		{#if badgeText && badgeClasses}
 			<div
-				class="absolute -right-2.5 -top-3 rounded-full px-3.5 py-1.5 text-xs text-right
+				class="absolute -right-2.5 -top-3 rounded-full px-3.5 py-1.5 text-right text-xs
 				font-bold {isSelected ? 'bg-c-success text-c-on-primary' : badgeClasses}"
 			>
 				{badgeText}
 			</div>
 		{/if}
-		<h3 class="w-full text-c-on-bg text-center font-semibold text-xl md:-mt-1.5 py-0.5 gap-2">
+		<h3 class="w-full gap-2 py-0.5 text-center text-xl font-semibold text-c-on-bg md:-mt-1.5">
 			{planTitle}
 		</h3>
 		<div
-			class="w-[100%+2rem] md:w-[100%+2.5rem] -mx-4 md:-mx-5 text-center bg-c-bg-secondary
-			text-c-on-bg mt-4 {discountBadgeText ? 'py-4' : 'py-3'} flex flex-col items-center"
+			class="-mx-4 mt-4 w-[100%+2rem] bg-c-bg-secondary text-center text-c-on-bg
+			md:-mx-5 md:w-[100%+2.5rem] {discountBadgeText ? 'py-4' : 'py-3'} flex flex-col items-center"
 		>
-			<h4 class="max-w-full flex flex-wrap justify-center items-start px-2 font-semibold">
+			<h4 class="flex max-w-full flex-wrap items-start justify-center px-2 font-semibold">
 				{#if discountBadgeText}
 					{#if discountRate !== undefined}<span class="text-xl font-medium text-c-on-bg/50"
 							>{currencySymbol}</span
-						><span class="text-3xl text-c-on-bg/50 line-through pr-0.4ch">
+						><span class="pr-0.4ch text-3xl text-c-on-bg/50 line-through">
 							{currencyAmount.toLocaleString($locale)}
 						</span>
 					{/if}<span class="text-xl font-medium">{currencySymbol}</span><span class="text-3xl">
@@ -56,32 +58,32 @@
 						{currencyAmount.toLocaleString($locale)}
 					</span>
 				{/if}
-				<span class="self-end mb-0.75 text-c-on-bg/60 font-medium">{$LL.Pricing.SlashMonth()}</span>
+				<span class="mb-0.75 self-end font-medium text-c-on-bg/60">{$LL.Pricing.SlashMonth()}</span>
 			</h4>
 			{#if discountBadgeText}
-				<div class="max-w-full px-2 mt-2 pb-1">
+				<div class="mt-2 max-w-full px-2 pb-1">
 					<p
 						class="max-w-full rounded-full {discountBadgeType === 'on-bg'
-							? 'bg-c-on-bg/10 ring-c-on-bg/20 text-c-on-bg'
-							: 'bg-c-primary/15 ring-c-primary/25 text-c-primary'} ring-1 text-sm font-medium px-2.5 py-0.5"
+							? 'bg-c-on-bg/10 text-c-on-bg ring-c-on-bg/20'
+							: 'bg-c-primary/15 text-c-primary ring-c-primary/25'} px-2.5 py-0.5 text-sm font-medium ring-1"
 					>
 						{discountBadgeText}
 					</p>
 				</div>
 			{/if}
 		</div>
-		<ul class="w-full py-6 flex flex-col gap-2.5 px-1 flex-1">
+		<ul class="flex w-full flex-1 flex-col gap-2.5 px-1 py-6">
 			{#each features as feature}
 				<li class="flex items-start gap-3">
 					{#if feature.icon}
 						<svelte:component
 							this={feature.icon}
-							class="w-5 h-5 text-c-on-bg/80 mt-1.5px flex-shrink-0"
+							class="mt-1.5px h-5 w-5 flex-shrink-0 text-c-on-bg/80"
 						/>
 					{:else}
-						<IconTickOnly class="w-5 h-5 text-c-success mt-1.5px flex-shrink-0" />
+						<IconTickOnly class="mt-1.5px h-5 w-5 flex-shrink-0 text-c-success" />
 					{/if}
-					<span class="flex-shrink min-w-0">{feature.paragraph}</span>
+					<span class="min-w-0 flex-shrink">{feature.paragraph}</span>
 				</li>
 			{/each}
 		</ul>

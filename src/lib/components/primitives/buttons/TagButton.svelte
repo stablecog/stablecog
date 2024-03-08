@@ -12,36 +12,36 @@
 
 <button
 	on:click|preventDefault={onClick}
-	class="touch-manipulation group rounded-md font-medium relative overflow-hidden ring-1.5 {color ===
+	class="group relative touch-manipulation overflow-hidden rounded-md font-medium ring-1.5 {color ===
 	'secondary'
 		? 'ring-c-secondary/25'
 		: 'ring-c-primary/25'}"
 >
-	<div class="w-full h-full absolute bg-c-bg" />
+	<div class="absolute h-full w-full bg-c-bg" />
 	<div
-		class="px-2 py-1 gap-1.5 flex items-center flex-row {color === 'secondary'
-			? 'text-c-secondary bg-c-secondary/10'
-			: 'text-c-primary bg-c-primary/10'} text-sm transition relative"
+		class="flex flex-row items-center gap-1.5 px-2 py-1 {color === 'secondary'
+			? 'bg-c-secondary/10 text-c-secondary'
+			: 'bg-c-primary/10 text-c-primary'} relative text-sm transition"
 	>
 		<ButtonHoverEffect size="xs" noPadding {color} hoverFrom="left" />
 		{#if icon}
 			<svelte:component
 				this={icon}
-				class="w-4 h-4 flex-shrink-0 md:-ml-0.5 {color === 'secondary'
+				class="h-4 w-4 flex-shrink-0 md:-ml-0.5 {color === 'secondary'
 					? 'text-c-secondary'
 					: 'text-c-primary'}"
 			/>
 		{/if}
 		<p
-			class="flex-1 min-w-0 {hasMaxWidth
+			class="min-w-0 flex-1 {hasMaxWidth
 				? 'max-w-[9rem]'
-				: 'max-w-full'} md:max-w-full whitespace-nowrap overflow-hidden overflow-ellipsis"
+				: 'max-w-full'} overflow-hidden overflow-ellipsis whitespace-nowrap md:max-w-full"
 		>
 			{text}
 		</p>
 		{#if hasCancelIcon}
 			<IconCancel
-				class="w-4 h-4 flex-shrink-0 -ml-0.5 -mr-1 {color === 'secondary'
+				class="-ml-0.5 -mr-1 h-4 w-4 flex-shrink-0 {color === 'secondary'
 					? 'text-c-secondary'
 					: 'text-c-primary'}"
 			/>

@@ -62,7 +62,7 @@
 	style={$windowWidth >= lgBreakpoint
 		? `max-width: ${mainContainerWidth}px; max-height: ${mainContainerHeight}px`
 		: ''}
-	class="relative w-full lg:h-full px-1.5 pt-1 pb-32 md:p-20 lg:p-0 flex lg:items-center justify-center z-10 my-auto lg:overflow-hidden"
+	class="relative z-10 my-auto flex w-full justify-center px-1.5 pb-32 pt-1 md:p-20 lg:h-full lg:items-center lg:overflow-hidden lg:p-0"
 >
 	<div
 		use:clickoutside={{
@@ -80,11 +80,11 @@
 		class="{generationAspectRatio >= 1.5
 			? 'max-w-2xl'
 			: generationAspectRatio >= 1
-			? 'max-w-xl'
-			: generationAspectRatio >= 2 / 3
-			? 'max-w-lg'
-			: 'max-w-md'} w-full lg:w-auto flex flex-col my-auto lg:flex-row bg-c-bg-secondary items-center shadow-generation-modal
-			shadow-c-shadow/[var(--o-shadow-stronger)] rounded-xl ring-2 {ringClass} overflow-hidden z-0 relative"
+				? 'max-w-xl'
+				: generationAspectRatio >= 2 / 3
+					? 'max-w-lg'
+					: 'max-w-md'} my-auto flex w-full flex-col items-center rounded-xl bg-c-bg-secondary shadow-generation-modal shadow-c-shadow/[var(--o-shadow-stronger)]
+			ring-2 lg:w-auto lg:flex-row {ringClass} relative z-0 overflow-hidden"
 	>
 		<slot {imageContainerWidth} {imageContainerHeight} {modalMinHeight} />
 	</div>

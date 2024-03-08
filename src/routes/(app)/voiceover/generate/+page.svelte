@@ -95,7 +95,7 @@
 						if (!lastPage.next) return undefined;
 						return lastPage.next;
 					}
-			  })
+				})
 			: undefined;
 
 	$: pinnedFullOutputs = [...$voiceovers]
@@ -176,11 +176,11 @@
 />
 
 <VoiceoverSettingsProvider serverData={data}>
-	<div class="w-full h-full flex flex-col overflow-hidden relative z-0">
+	<div class="relative z-0 flex h-full w-full flex-col overflow-hidden">
 		<div
-			class="w-full h-full flex flex-row overflow-hidden pt-1 md:pt-2 md:px-4 pb-[calc(env(safe-area-inset-bottom)+10.5rem)] md:pb-[calc(env(safe-area-inset-bottom)+1rem)] gap-4"
+			class="flex h-full w-full flex-row gap-4 overflow-hidden pb-[calc(env(safe-area-inset-bottom)+10.5rem)] pt-1 md:px-4 md:pb-[calc(env(safe-area-inset-bottom)+1rem)] md:pt-2"
 		>
-			<div class="hidden lg:flex min-w-[2.75rem] flex-col items-start h-full relative">
+			<div class="relative hidden h-full min-w-[2.75rem] flex-col items-start lg:flex">
 				{#if !$isLeftSidebarHiddenApp}
 					<div
 						transition:fly={{
@@ -188,7 +188,7 @@
 							x: $windowWidth > xlBreakpoint ? -200 : -100,
 							easing: quadOut
 						}}
-						class="h-full flex w-36 xl:w-72 relative z-10"
+						class="relative z-10 flex h-full w-36 xl:w-72"
 					>
 						<SidebarWrapper hasGradient>
 							<AutoSize bind:element={listScrollContainerLg} let:clientHeight>
@@ -226,17 +226,17 @@
 					}}
 				/>
 			</div>
-			<div class="flex flex-col items-center flex-1 min-w-0 h-full">
+			<div class="flex h-full min-w-0 flex-1 flex-col items-center">
 				{#if $windowWidth < mdBreakpoint && isSettingsSheetOpen}
 					<div
 						transition:fade={{ duration: 200, easing: quadOut }}
-						class="fixed w-full h-full left-0 top-0 bg-c-barrier/70 z-40"
+						class="fixed left-0 top-0 z-40 h-full w-full bg-c-barrier/70"
 					/>
 				{/if}
 				<div use:clickoutside={{ callback: closeSettingsSheet }} class="w-full">
 					<div
-						class="w-full z-50 md:z-40 flex flex-col rounded-2xl md:overflow-visible md:rounded-none
-						bg-c-bg absolute bottom-0 left-0 md:bg-transparent md:relative"
+						class="absolute bottom-0 left-0 z-50 flex w-full flex-col rounded-2xl
+						bg-c-bg md:relative md:z-40 md:overflow-visible md:rounded-none md:bg-transparent"
 					>
 						<VoiceoverSettingsSheet
 							{promptBarEstimatedHeightRem}
@@ -248,9 +248,9 @@
 						/>
 						<div
 							bind:clientHeight={horizontalListHeight}
-							class="w-full h-17 flex flex-col overflow-hidden relative z-40 md:hidden rounded-t-2xl
-							bg-c-bg transform transition duration-300 {isSettingsSheetOpen
-								? 'translate-y-full pointer-events-none opacity-0'
+							class="relative z-40 flex h-17 w-full transform flex-col overflow-hidden rounded-t-2xl
+							bg-c-bg transition duration-300 md:hidden {isSettingsSheetOpen
+								? 'pointer-events-none translate-y-full opacity-0'
 								: 'pointer-events-auto'}"
 						>
 							<AutoSize hideScroll={true} bind:element={listScrollContainer} let:clientWidth>
@@ -281,10 +281,10 @@
 						</div>
 						<div
 							bind:clientHeight={promptBarHeight}
-							class="w-full bg-c-bg md:bg-transparent
-							pb-[calc(env(safe-area-inset-bottom)+0.75rem)] md:pb-3.75 z-40"
+							class="z-40 w-full bg-c-bg
+							pb-[calc(env(safe-area-inset-bottom)+0.75rem)] md:bg-transparent md:pb-3.75"
 						>
-							<div class="w-full flex flex-col md:max-h-[15vh] md:min-h-[12rem] px-2 md:px-0">
+							<div class="flex w-full flex-col px-2 md:max-h-[15vh] md:min-h-[12rem] md:px-0">
 								<VoiceoverPromptBar
 									disabled={true}
 									{openSignInModal}
@@ -298,33 +298,33 @@
 				{#if $sessionStore?.user.id && $userSummary && $userSummary.total_remaining_credits < lowOnCreditsThreshold}
 					<div
 						transition:expandCollapse={{ duration: 200 }}
-						class="w-full flex flex-col justify-start items-center order-first md:order-last"
+						class="order-first flex w-full flex-col items-center justify-start md:order-last"
 					>
-						<div class="w-full px-2.5 md:px-2px pb-2.5 md:pb-4">
+						<div class="w-full px-2.5 pb-2.5 md:px-2px md:pb-4">
 							<LowOnCreditsCard />
 						</div>
 					</div>
 				{/if}
 				<div
-					class="w-full flex flex-col justify-start flex-1 my-auto min-h-0 relative z-30 md:z-40 order-first md:order-last"
+					class="relative z-30 order-first my-auto flex min-h-0 w-full flex-1 flex-col justify-start md:z-40 md:order-last"
 				>
-					<div class="w-full flex-1 min-h-0 flex flex-col justify-start px-2 pb-4 md:p-0 my-auto">
+					<div class="my-auto flex min-h-0 w-full flex-1 flex-col justify-start px-2 pb-4 md:p-0">
 						<div
-							class="flex-shrink min-h-0 w-full my-auto flex flex-col items-center relative pt-4 md:pt-8 pb-[calc(1vh+1rem)] md:pb-[calc(3vh+1rem)]"
+							class="relative my-auto flex min-h-0 w-full flex-shrink flex-col items-center pb-[calc(1vh+1rem)] pt-4 md:pb-[calc(3vh+1rem)] md:pt-8"
 						>
-							<p class="text-center px-5 opacity-75 font-medium md:text-lg max-w-md">
+							<p class="max-w-md px-5 text-center font-medium opacity-75 md:text-lg">
 								{$LL.Shared.FeatureNoLongerAvailableParagraph()}
 							</p>
 							<div
-								class="max-w-full flex-shrink min-h-0 w-[min(33%,12rem)] max-h-full flex items-center justify-center mt-8"
+								class="mt-8 flex max-h-full min-h-0 w-[min(33%,12rem)] max-w-full flex-shrink items-center justify-center"
 							>
-								<IllustrationDeprecated class="opacity-75 max-w-full max-h-full w-auto h-auto" />
+								<IllustrationDeprecated class="h-auto max-h-full w-auto max-w-full opacity-75" />
 							</div>
 							<!-- <AudioPlayerWithWaveform voiceover={$voiceovers[0]} /> -->
 						</div>
 					</div>
-					<div class="w-full hidden md:block lg:hidden pt-4">
-						<div class="h-30 flex flex-col">
+					<div class="hidden w-full pt-4 md:block lg:hidden">
+						<div class="flex h-30 flex-col">
 							<SidebarWrapper>
 								<AutoSize hideScroll={true} bind:element={listScrollContainerMd} let:clientWidth>
 									{#if !$sessionStore?.user.id || !$userSummary}
@@ -354,7 +354,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="h-full w-72 hidden md:flex">
+			<div class="hidden h-full w-72 md:flex">
 				<VoiceoverSettingsPanel {isCheckCompleted} />
 			</div>
 		</div>

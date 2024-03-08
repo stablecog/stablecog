@@ -11,8 +11,8 @@
 <a
 	data-sveltekit-preload-data="hover"
 	href={item.pathname}
-	class="w-full md:w-auto md:flex-1 max-w-full overflow-hidden gap-4 px-4 py-3 flex group justify-between items-center
-  rounded-xl ring-2 ring-c-bg-secondary group relative bg-c-bg shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] {type ===
+	class="group group relative flex w-full max-w-full items-center justify-between gap-4 overflow-hidden rounded-xl bg-c-bg
+  px-4 py-3 shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] ring-2 ring-c-bg-secondary md:w-auto md:flex-1 {type ===
 	'next'
 		? 'text-left'
 		: 'text-right'}"
@@ -24,22 +24,22 @@
 	/>
 	{#if type === 'prev'}
 		<IconArrowRight
-			class="transform rotate-180 w-5 h-5 text-c-on-bg/50 transition not-touch:group-hover:-translate-x-1.5
+			class="h-5 w-5 rotate-180 transform text-c-on-bg/50 transition not-touch:group-hover:-translate-x-1.5
 			not-touch:group-hover:text-c-primary"
 		/>
 	{/if}
 	<div
-		class="flex-1 overflow-hidden flex flex-col z-0 relative {type === 'next'
+		class="relative z-0 flex flex-1 flex-col overflow-hidden {type === 'next'
 			? 'items-start'
 			: 'items-end'}"
 	>
 		<p
-			class="max-w-full font-normal overflow-hidden overflow-ellipsis whitespace-nowrap text-sm text-c-on-bg/60"
+			class="max-w-full overflow-hidden overflow-ellipsis whitespace-nowrap text-sm font-normal text-c-on-bg/60"
 		>
 			{type === 'next' ? $LL.Guide.NextTitle() : $LL.Guide.PreviousTitle()}
 		</p>
 		<p
-			class="max-w-full font-semibold overflow-hidden overflow-ellipsis whitespace-nowrap mt-0.5
+			class="mt-0.5 max-w-full overflow-hidden overflow-ellipsis whitespace-nowrap font-semibold
 			text-c-on-bg transition not-touch:group-hover:text-c-primary"
 		>
 			{item.title}
@@ -47,7 +47,7 @@
 	</div>
 	{#if type === 'next'}
 		<IconArrowRight
-			class="w-5 h-5 text-c-on-bg/50 transition not-touch:group-hover:translate-x-1.5 
+			class="h-5 w-5 text-c-on-bg/50 transition not-touch:group-hover:translate-x-1.5 
 			not-touch:group-hover:text-c-primary"
 		/>
 	{/if}

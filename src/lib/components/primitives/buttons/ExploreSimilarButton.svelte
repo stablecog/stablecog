@@ -53,14 +53,14 @@
 	href={exploreSimilarUrl}
 	data-sveltekit-preload-data="hover"
 	on:click={onClick}
-	class="touch-manipulation transition group/explorebutton p-2.5 rounded-full bg-c-bg relative overflow-hidden z-0
-	before:w-full before:h-full before:absolute before:left-0 before:top-0
-	before:-translate-x-full before:not-touch:hover:translate-x-0
-	before:rounded-full before:transition before:transform before:bg-c-primary {classes}"
+	class="group/explorebutton relative z-0 touch-manipulation overflow-hidden rounded-full bg-c-bg p-2.5 transition
+	before:absolute before:left-0 before:top-0 before:h-full before:w-full
+	before:-translate-x-full before:transform
+	before:rounded-full before:bg-c-primary before:transition before:not-touch:hover:translate-x-0 {classes}"
 	aria-label="Explore Similar"
 >
 	<IconImageSearch
-		class="w-7 h-7 transition text-c-on-bg relative
+		class="relative h-7 w-7 text-c-on-bg transition
 			not-touch:group-hover/explorebutton:text-c-on-primary"
 	/>
 </a>

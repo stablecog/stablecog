@@ -41,7 +41,7 @@
 		transition:fade={{ duration: 250, easing: quadOut }}
 		use:portal={'body'}
 		style="height: 100vh; height: 100svh"
-		class="w-full md:hidden md:pointer-events-none fixed left-0 top-0 bg-c-barrier/80 z-100"
+		class="fixed left-0 top-0 z-100 w-full bg-c-barrier/80 md:pointer-events-none md:hidden"
 	/>
 {/if}
 <nav
@@ -50,32 +50,32 @@
 	}}
 	style={$windowHeight ? `height: ${$windowHeight}px` : 'height: 100vh; height: 100svh'}
 	use:portal={'body'}
-	class="fixed md:hidden md:pointer-events-none w-[85%] bg-c-bg rounded-r-3xl border-2 border-c-bg-secondary left-0 top-0 z-[101]
-			shadow-drawer {$isDrawerOpen
+	class="fixed left-0 top-0 z-[101] w-[85%] rounded-r-3xl border-2 border-c-bg-secondary bg-c-bg shadow-drawer md:pointer-events-none
+			md:hidden {$isDrawerOpen
 		? 'shadow-c-shadow/[var(--o-shadow-stronger)]'
 		: 'shadow-c-shadow/0'} transition duration-300 {$isDrawerOpen
 		? '-translate-x-2px'
 		: 'pointer-events-none -translate-x-[calc(100%+2px)]'} flex flex-col justify-start overflow-hidden"
 >
-	<div class="w-full flex flex-row justify-between gap-5 items-stretch">
+	<div class="flex w-full flex-row items-stretch justify-between gap-5">
 		<LogoButton onClick={closeDrawer} />
 		<button
 			aria-label="Close Drawer"
 			on:click={() => isDrawerOpen.set(false)}
-			class="w-14 py-4 flex items-center justify-center group overflow-hidden relative z-0"
+			class="group relative z-0 flex w-14 items-center justify-center overflow-hidden py-4"
 		>
 			<ButtonHoverEffect size="md" noRounding noPadding hoverFrom="right" />
-			<IconCancel class="text-c-on-bg/25 w-7 h-7 transition not-touch:group-hover:text-c-primary" />
+			<IconCancel class="h-7 w-7 text-c-on-bg/25 transition not-touch:group-hover:text-c-primary" />
 		</button>
 	</div>
-	<div class="w-full h-2px bg-c-bg-secondary" />
+	<div class="h-2px w-full bg-c-bg-secondary" />
 	<slot name="header" />
-	<div class="w-full flex flex-col flex-1 overflow-hidden">
+	<div class="flex w-full flex-1 flex-col overflow-hidden">
 		{#if hasCustomContent}
 			<slot />
 		{:else}
 			<ScrollAreaWithChevron fadeColor="bg" class="pb-20">
-				<ul class="w-full flex flex-col">
+				<ul class="flex w-full flex-col">
 					{#each $routesDrawer as route, index}
 						{@const isSelected = route.strictMatch
 							? $page.url.pathname === route.href
@@ -85,8 +85,8 @@
 								href={route.href}
 								on:click={closeDrawer}
 								data-sveltekit-preload-data="hover"
-								class="w-full flex items-center justify-start text-lg px-1.5 py-2px {index === 0 &&
-									'pt-1.5'} relative group font-semibold"
+								class="flex w-full items-center justify-start px-1.5 py-2px text-lg {index === 0 &&
+									'pt-1.5'} group relative font-semibold"
 							>
 								<ButtonHoverEffect
 									size="md"
@@ -95,23 +95,23 @@
 									paddingClass="px-1.5 py-2px {index === 0 && 'pt-1.5'}"
 								/>
 								<div
-									class="w-full flex items-center justify-start px-4 py-3.5 gap-3 rounded-lg {isSelected
+									class="flex w-full items-center justify-start gap-3 rounded-lg px-4 py-3.5 {isSelected
 										? 'bg-c-primary/10 text-c-primary'
 										: ''}"
 								>
 									<IconNavbarRoute
 										type={route.icon}
-										class="not-touch:group-hover:text-c-primary transition flex-shrink-0"
+										class="flex-shrink-0 transition not-touch:group-hover:text-c-primary"
 									/>
 									<p
-										class="break-words flex flex-col overflow-hidden
-										not-touch:group-hover:text-c-primary transition flex-shrink"
+										class="flex flex-shrink flex-col overflow-hidden
+										break-words transition not-touch:group-hover:text-c-primary"
 									>
 										{route.name}
 									</p>
 									{#if route.href === '/voiceover/generate'}
 										<IconNew
-											class="w-6 h-6 flex-shrink-0 transform scale-100 text-c-primary -ml-1.5"
+											class="-ml-1.5 h-6 w-6 flex-shrink-0 scale-100 transform text-c-primary"
 										/>
 									{/if}
 								</div>
@@ -123,7 +123,7 @@
 		{/if}
 	</div>
 	<div
-		class="w-full px-4 pt-2 pb-[calc(env(safe-area-inset-bottom)+0.6rem)] border-t-2 border-c-bg-secondary"
+		class="w-full border-t-2 border-c-bg-secondary px-4 pb-[calc(env(safe-area-inset-bottom)+0.6rem)] pt-2"
 	>
 		<ScBar noGuide noBlog />
 	</div>

@@ -1,3 +1,3 @@
-<div class="w-full flex-1 flex flex-col items-center px-1 md:pt-3 md:pb-6">
+<div class="flex w-full flex-1 flex-col items-center px-1 md:pb-6 md:pt-3">
 	<slot />
 </div>

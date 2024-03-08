@@ -43,7 +43,7 @@
 						width: image_width,
 						height: image_height
 					}
-			  ]
+				]
 			: undefined
 	}}
 	twitter={image_url
@@ -52,6 +52,6 @@
 				title: title,
 				description: description,
 				image: image_url
-		  }
+			}
 		: undefined}
 />

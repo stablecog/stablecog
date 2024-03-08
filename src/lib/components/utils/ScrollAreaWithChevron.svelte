@@ -40,7 +40,7 @@
 	};
 </script>
 
-<div class="w-full flex flex-col flex-1 min-h-0 relative">
+<div class="relative flex min-h-0 w-full flex-1 flex-col">
 	<div
 		bind:clientHeight
 		on:scroll={() => {
@@ -49,7 +49,7 @@
 			if (onScroll) onScroll();
 		}}
 		bind:this={scrollContainer}
-		class="{classes} overflow-auto flex-1 min-h-0"
+		class="{classes} min-h-0 flex-1 overflow-auto"
 	>
 		<slot />
 	</div>
@@ -59,11 +59,11 @@
 			class="{fadeColor === 'bg-secondary'
 				? 'w-full bg-gradient-to-t from-c-bg-secondary to-c-bg-secondary/0'
 				: fadeColor === 'bg'
-				? 'w-full bg-gradient-to-t from-c-bg to-c-bg/0'
-				: ''} absolute left-1/2 transform -translate-x-1/2 bottom-0 flex justify-center items-end px-2 pb-1 pt-6 z-50
-      	pointer-events-none"
+					? 'w-full bg-gradient-to-t from-c-bg to-c-bg/0'
+					: ''} pointer-events-none absolute bottom-0 left-1/2 z-50 flex -translate-x-1/2 transform items-end justify-center px-2 pb-1
+      	pt-6"
 		>
-			<IconChevronDown strokeWidth={2} class="w-6 h-6 text-c-on-bg/75 transition" />
+			<IconChevronDown strokeWidth={2} class="h-6 w-6 text-c-on-bg/75 transition" />
 		</div>
 	{/if}
 </div>

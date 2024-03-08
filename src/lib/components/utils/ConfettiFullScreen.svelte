@@ -11,7 +11,7 @@
 
 <div
 	use:portal={'body'}
-	class="fixed -bottom-16 left-0 h-[calc(100vh+4rem)] w-screen flex justify-center items-end overflow-hidden pointer-events-none"
+	class="pointer-events-none fixed -bottom-16 left-0 flex h-[calc(100vh+4rem)] w-screen items-end justify-center overflow-hidden"
 >
 	<Confetti
 		y={[0, 10]}

@@ -60,22 +60,22 @@
 	bind:this={element}
 	on:click={downloadImage}
 	disabled={downloadStatus === 'downloading'}
-	class="touch-manipulation transition group/downloadbutton rounded-full bg-c-bg relative overflow-hidden z-0 p-2.5
-	before:w-full before:h-full before:absolute before:left-0 before:top-0
-	before:-translate-x-full before:not-touch:hover:translate-x-0
-	before:rounded-full before:transition before:transform before:bg-c-primary {classes}"
+	class="group/downloadbutton relative z-0 touch-manipulation overflow-hidden rounded-full bg-c-bg p-2.5 transition
+	before:absolute before:left-0 before:top-0 before:h-full before:w-full
+	before:-translate-x-full before:transform
+	before:rounded-full before:bg-c-primary before:transition before:not-touch:hover:translate-x-0 {classes}"
 	aria-label="Download Image"
 >
-	<Morpher morphed={downloadStatus === 'downloading'} class="w-7 h-7">
+	<Morpher morphed={downloadStatus === 'downloading'} class="h-7 w-7">
 		<IconDownload
 			slot="0"
-			class="w-7 h-7 transition text-c-on-bg relative
+			class="relative h-7 w-7 text-c-on-bg transition
 				not-touch:group-hover/downloadbutton:text-c-on-primary"
 		/>
 		<IconAnimatedSpinner
 			slot="1"
 			loading={downloadStatus === 'downloading'}
-			class="w-7 h-7 text-c-on-bg relative
+			class="relative h-7 w-7 text-c-on-bg
 				not-touch:group-hover/downloadbutton:text-c-on-primary"
 		/>
 	</Morpher>

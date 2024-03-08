@@ -39,7 +39,7 @@
 			<button
 				aria-label="Toggle Code Block"
 				disabled={keyObject.children === undefined}
-				class="h-8 w-8 mr-1 group relative flex items-center justify-center {keyObject.children ===
+				class="group relative mr-1 flex h-8 w-8 items-center justify-center {keyObject.children ===
 				undefined
 					? 'opacity-0'
 					: ''}"
@@ -52,7 +52,7 @@
 					hoverFrom={keyObject.isOpen ? 'bottom' : 'top'}
 				/>
 				<IconChevronDown
-					class="w-4.5 h-4.5 transition text-c-on-bg/50 not-touch:group-hover:text-c-on-bg transform {keyObject.isOpen
+					class="h-4.5 w-4.5 transform text-c-on-bg/50 transition not-touch:group-hover:text-c-on-bg {keyObject.isOpen
 						? 'rotate-0'
 						: '-rotate-90'}"
 				/>
@@ -63,15 +63,15 @@
 				{/if}{keyObject.isArray
 					? '['
 					: keyObject.isObject
-					? '{'
-					: ''}{#if keyObject.children !== undefined && !keyObject.isOpen}<span
+						? '{'
+						: ''}{#if keyObject.children !== undefined && !keyObject.isOpen}<span
 						class="text-c-on-bg/50">···</span
 					>{keyObject.children !== undefined && !keyObject.isOpen
 						? keyObject.isArray
 							? ']'
 							: keyObject.isObject
-							? '}'
-							: ''
+								? '}'
+								: ''
 						: ''}{keyObject.children !== undefined &&
 					!keyObject.isOpen &&
 					keyObject.hasNextKey &&
@@ -82,8 +82,8 @@
 						class={keyObject.isNumber || keyObject.isBoolean
 							? 'text-c-primary'
 							: keyObject.isString
-							? 'text-c-success'
-							: 'text-c-on-bg'}
+								? 'text-c-success'
+								: 'text-c-on-bg'}
 						>{#if keyObject.children === undefined}
 							{keyObject.isString ? '"' : ''}{keyObject.value}{keyObject.isString
 								? '"'
@@ -106,8 +106,8 @@
 						? keyObject.isArray
 							? ']'
 							: keyObject.isObject
-							? '}'
-							: ''
+								? '}'
+								: ''
 						: ''}{keyObject.children !== undefined && keyObject.hasNextKey && keyObject.isOpen
 						? ','
 						: ''}

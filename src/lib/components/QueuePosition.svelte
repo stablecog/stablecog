@@ -15,14 +15,14 @@
 </script>
 
 <div
-	class="w-full h-full flex flex-col items-center px-5 py-3 absolute left-0 top-0
-	transform transition duration-150 {show
+	class="absolute left-0 top-0 flex h-full w-full transform flex-col items-center px-5
+	py-3 transition duration-150 {show
 		? 'scale-100 opacity-100'
-		: 'scale-75 opacity-0 pointer-events-none'}"
+		: 'pointer-events-none scale-75 opacity-0'}"
 >
 	<div
-		class="my-auto max-w-full flex flex-col items-center justify-center {hasBg
-			? `bg-c-barrier/75 rounded-xl px-3 ${hasButton ? 'pt-2.5 pb-3' : 'py-2'}`
+		class="my-auto flex max-w-full flex-col items-center justify-center {hasBg
+			? `rounded-xl bg-c-barrier/75 px-3 ${hasButton ? 'pb-3 pt-2.5' : 'py-2'}`
 			: ''}"
 	>
 		<p
@@ -32,12 +32,12 @@
 		>
 			{$LL.Generate.QueueTitle()}
 		</p>
-		<div class="max-w-full flex items-center justify-center -mt-0.25 gap-1.5">
+		<div class="-mt-0.25 flex max-w-full items-center justify-center gap-1.5">
 			<IconQueue
-				class="w-5 h-5 -ml-0.5 flex-shrink-0 {hasBg ? 'text-c-on-bg' : 'text-c-on-bg/75'}"
+				class="-ml-0.5 h-5 w-5 flex-shrink-0 {hasBg ? 'text-c-on-bg' : 'text-c-on-bg/75'}"
 			/>
 			<p
-				class="flex-shrink min-w-0 text-center text-lg font-medium mt-0.5 {hasBg
+				class="mt-0.5 min-w-0 flex-shrink text-center text-lg font-medium {hasBg
 					? 'text-c-on-bg'
 					: 'text-c-on-bg/75'}"
 			>
@@ -45,7 +45,7 @@
 			</p>
 		</div>
 		{#if hasButton}
-			<div class="w-full flex items-center justify-center pt-2.5">
+			<div class="flex w-full items-center justify-center pt-2.5">
 				<a
 					on:click={() => {
 						logSkipTheQueueButtonClicked({
@@ -59,16 +59,16 @@
 					href="/pricing#plan-starter"
 					target="_blank"
 					class="max-w-full text-center text-sm font-semibold {show ? 'pointer-events-auto' : ''}
-          rounded-lg px-2.5 py-2 shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] overflow-hidden z-0 relative group/button
+          group/button relative z-0 overflow-hidden rounded-lg px-2.5 py-2 shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]
           {hasBg
 						? 'bg-c-primary text-c-on-primary'
-						: 'bg-c-bg-secondary text-c-primary ring-c-primary/50 ring-1.5'}"
+						: 'bg-c-bg-secondary text-c-primary ring-1.5 ring-c-primary/50'}"
 				>
 					<div
-						class="w-full h-full bg-c-bg-secondary absolute left-0 top-0 transition -translate-x-full
+						class="absolute left-0 top-0 h-full w-full -translate-x-full bg-c-bg-secondary transition
 						not-touch:group-hover/button:translate-x-0"
 					>
-						<div class="w-full h-full {hasBg ? 'bg-c-secondary' : 'bg-c-primary/15'}" />
+						<div class="h-full w-full {hasBg ? 'bg-c-secondary' : 'bg-c-primary/15'}" />
 					</div>
 					<p class="relative max-w-full">
 						{$LL.Generate.SkipTheQueueButton()}

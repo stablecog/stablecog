@@ -127,27 +127,27 @@
 	$: now = generation ? Date.now() : Date.now();
 </script>
 
-<div class="w-full flex justify-center pt-2 md:pt-6 pb-8 md:px-5 lg:px-8 xl:px-12 2xl:px-16">
+<div class="flex w-full justify-center pb-8 pt-2 md:px-5 md:pt-6 lg:px-8 xl:px-12 2xl:px-16">
 	<div
-		class="w-full flex flex-col lg:flex-row
-    justify-center items-center lg:items-start gap-4 relative"
+		class="relative flex w-full flex-col
+    items-center justify-center gap-4 lg:flex-row lg:items-start"
 	>
 		{#key output.id}
 			<div
 				style="top: {$navbarHeight ? $navbarHeight + 24 : 96}px"
-				class="flex-shrink min-w-0 flex justify-start items-start px-2 lg:sticky"
+				class="flex min-w-0 flex-shrink items-start justify-start px-2 lg:sticky"
 			>
 				<div
-					class="flex ring-2 ring-c-bg-secondary rounded-2xl shadow-xl
-					shadow-c-shadow/[var(--o-shadow-stronger)] relative overflow-hidden bg-c-bg-secondary"
+					class="relative flex overflow-hidden rounded-2xl bg-c-bg-secondary
+					shadow-xl shadow-c-shadow/[var(--o-shadow-stronger)] ring-2 ring-c-bg-secondary"
 				>
 					<ImagePlaceholder
 						width={currentImageWidth}
 						height={currentImageHeight}
-						class="max-h-[calc(100vh-100px)] md:max-h-[calc(100vh-130px)] max-w-full w-auto h-auto"
+						class="h-auto max-h-[calc(100vh-100px)] w-auto max-w-full md:max-h-[calc(100vh-130px)]"
 					/>
 					<img
-						class="absolute left-0 top-0 w-full h-full filter blur-xl transform scale-102"
+						class="absolute left-0 top-0 h-full w-full scale-102 transform blur-xl filter"
 						src={getImgProxySrc({
 							src: currentImageUrl,
 							preset: '64w'
@@ -158,7 +158,7 @@
 					/>
 					<img
 						bind:naturalWidth={imageNaturalWidth}
-						class="absolute left-0 top-0 w-full h-full transition ease-in {imageNaturalWidth
+						class="absolute left-0 top-0 h-full w-full transition ease-in {imageNaturalWidth
 							? 'opacity-100'
 							: 'opacity-0'}"
 						{sizes}
@@ -171,8 +171,8 @@
 				</div>
 			</div>
 		{/key}
-		<div class="w-full flex flex-shrink-0 flex-col gap-4 max-w-xl lg:max-w-md items-start px-5">
-			<div class="w-full flex justify-center lg:justify-start lg:-ml-6 lg:-mt-2">
+		<div class="flex w-full max-w-xl flex-shrink-0 flex-col items-start gap-4 px-5 lg:max-w-md">
+			<div class="flex w-full justify-center lg:-ml-6 lg:-mt-2 lg:justify-start">
 				<NoBgButton
 					href={modalType === 'user-profile' ? `/${generation.user.username}` : '/gallery'}
 					prefetch={true}
@@ -180,10 +180,10 @@
 				>
 					<div class="flex items-center justify-center gap-2.5 px-2 py-1">
 						<IconBack
-							class="w-6 h-6 transform transition text-c-on-bg/50 group-hover:-translate-x-1
+							class="h-6 w-6 transform text-c-on-bg/50 transition group-hover:-translate-x-1
 							not-touch:group-hover:text-c-primary"
 						/>
-						<p class="transition text-c-on-bg/50 not-touch:group-hover:text-c-primary">
+						<p class="text-c-on-bg/50 transition not-touch:group-hover:text-c-primary">
 							{modalType === 'user-profile'
 								? $LL.Shared.BackToProfile()
 								: $LL.Shared.BackToGalleryButton()}
@@ -192,13 +192,13 @@
 				</NoBgButton>
 			</div>
 			<UsernameButton username={output.generation.user.username} class="-mt-3" />
-			<div class="w-full flex flex-col items-start gap-3 mt-1">
-				<div class="w-full flex flex-col gap-2">
-					<p class="w-full font-semibold text-3xl">{$LL.Home.PromptInput.Title()}</p>
+			<div class="mt-1 flex w-full flex-col items-start gap-3">
+				<div class="flex w-full flex-col gap-2">
+					<p class="w-full text-3xl font-semibold">{$LL.Home.PromptInput.Title()}</p>
 					<h1 class="w-full leading-normal">{output.generation.prompt.text}</h1>
 				</div>
 				{#if output.generation.negative_prompt}
-					<div class="max-w-full flex items-start text-c-danger gap-2">
+					<div class="flex max-w-full items-start gap-2 text-c-danger">
 						<WithTooltip
 							title={$LL.Home.NegativePromptInput.Title()}
 							paragraph={$LL.Home.NegativePromptInput.Paragraph()}
@@ -206,16 +206,16 @@
 							let:triggerStoreValue
 						>
 							<div tabindex="-1" use:trigger {...triggerStoreValue} class="cursor-default">
-								<IconChatBubbleCancel class="w-5 h-5" />
+								<IconChatBubbleCancel class="h-5 w-5" />
 							</div>
 						</WithTooltip>
-						<h2 class="flex-shrink min-w-0 leading-normal -mt-0.75">
+						<h2 class="-mt-0.75 min-w-0 flex-shrink leading-normal">
 							{output.generation.negative_prompt.text}
 						</h2>
 					</div>
 				{/if}
 				{#if generation.selected_output.created_at !== undefined || generation.created_at !== undefined}
-					<p class="text-sm text-c-on-bg/75 -mt-1">
+					<p class="-mt-1 text-sm text-c-on-bg/75">
 						{getRelativeDate({
 							date: generation.selected_output.created_at || generation.created_at,
 							locale: $locale,
@@ -238,7 +238,7 @@
 				bind:buttonObjectsWithState
 			/>
 			<ParamsSection
-				class="flex flex-col gap-6 mt-2"
+				class="mt-2 flex flex-col gap-6"
 				{currentImageWidth}
 				{currentImageHeight}
 				{generation}

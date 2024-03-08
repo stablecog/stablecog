@@ -11,35 +11,35 @@
 </script>
 
 <div
-	class="transition-all h-full overflow-hidden rounded-r-xl {classes} {!show
+	class="h-full overflow-hidden rounded-r-xl transition-all {classes} {!show
 		? 'pointer-events-none'
 		: ''} {type === 'sm' ? 'w-10 md:w-12' : 'w-10 md:w-14'}"
 >
 	<button
 		on:click|preventDefault={onClick}
-		class="touch-manipulation w-full h-full relative z-0 rounded-r-xl overflow-hidden flex items-center justify-center group/clearbutton
-			transition {show ? 'focus:translate-x-0 translate-x-0 opacity-100' : 'translate-x-full opacity-0'}"
+		class="group/clearbutton relative z-0 flex h-full w-full touch-manipulation items-center justify-center overflow-hidden rounded-r-xl
+			transition {show ? 'translate-x-0 opacity-100 focus:translate-x-0' : 'translate-x-full opacity-0'}"
 		disabled={!show || disabled}
 		type="button"
 		aria-label="Clear"
 	>
 		<div
-			class="w-full h-full absolute left-0 top-0 pointer-events-none overflow-hidden {type === 'sm'
+			class="pointer-events-none absolute left-0 top-0 h-full w-full overflow-hidden {type === 'sm'
 				? 'p-1'
 				: 'p-0.75 md:p-1'}"
 		>
-			<div class="w-full h-full {roundingClass} relative z-0 overflow-hidden">
+			<div class="h-full w-full {roundingClass} relative z-0 overflow-hidden">
 				<div
-					class="w-full h-full origin-left {roundingClass} transition transform -translate-x-full
-						bg-c-primary/25 group-focus/clearbutton:translate-x-0
+					class="h-full w-full origin-left {roundingClass} -translate-x-full transform bg-c-primary/25
+						transition group-focus/clearbutton:translate-x-0
 						group-active/clearbutton:translate-x-0 not-touch:group-hover/clearbutton:translate-x-0"
 				/>
 			</div>
 		</div>
 		<IconCancel
 			class="{type === 'sm'
-				? 'w-6 h-6'
-				: 'w-6 h-6 md:w-7 md:h-7'} transition text-c-on-bg/25 group-focus/clearbutton:text-c-primary
+				? 'h-6 w-6'
+				: 'h-6 w-6 md:h-7 md:w-7'} text-c-on-bg/25 transition group-focus/clearbutton:text-c-primary
 				group-active/clearbutton:text-c-primary not-touch:group-hover/clearbutton:text-c-primary"
 		/>
 	</button>

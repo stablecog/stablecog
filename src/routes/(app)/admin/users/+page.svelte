@@ -318,22 +318,22 @@
 />
 
 <PageWrapper noPadding class="z-10">
-	<div class="w-full flex justify-center py-2.5 relative">
+	<div class="relative flex w-full justify-center py-2.5">
 		<div
-			class="max-w-[calc(100%+1.75rem)] -mx-3.5 flex flex-col bg-c-bg ring-2 ring-c-bg-secondary rounded-2xl shadow-lg
-			shadow-c-shadow/[var(--o-shadow-normal)]"
+			class="-mx-3.5 flex max-w-[calc(100%+1.75rem)] flex-col rounded-2xl bg-c-bg shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] ring-2
+			ring-c-bg-secondary"
 		>
-			<div class="flex flex-wrap gap-3 md:gap-8 p-3">
+			<div class="flex flex-wrap gap-3 p-3 md:gap-8">
 				{#each totalCounts ?? Array(4)
 						.fill(1)
 						.map((i) => ({ product_id: '----', count: '----' })) as item}
-					<div class="flex gap-3 items-center">
+					<div class="flex items-center gap-3">
 						<ProductIdBadge
 							productId={item.product_id}
 							loading={item.product_id === '----'}
 							size="md"
 						/>
-						<p class="font-bold text-xl pr-4 text-c-primary">
+						<p class="pr-4 text-xl font-bold text-c-primary">
 							{item.count}
 						</p>
 					</div>
@@ -343,13 +343,13 @@
 	</div>
 	<div
 		style="top: {$navbarHeight}px"
-		class="w-[calc(100%+1.75rem)] -mx-3.5 py-2 flex justify-center sticky z-40 transition {scrollDirection ===
+		class="sticky z-40 -mx-3.5 flex w-[calc(100%+1.75rem)] justify-center py-2 transition {scrollDirection ===
 		'up'
 			? 'translate-y-0 opacity-100'
-			: '-translate-y-22 pointer-events-none opacity-0'}"
+			: 'pointer-events-none -translate-y-22 opacity-0'}"
 	>
-		<div class="w-full flex max-w-2xl gap-2">
-			<div class="flex-1 min-w-0 rounded-xl">
+		<div class="flex w-full max-w-2xl gap-2">
+			<div class="min-w-0 flex-1 rounded-xl">
 				<Input
 					bind:inputElement={usersInput}
 					enterkeyhint="search"
@@ -363,7 +363,7 @@
 					bg="bg-secondary"
 					shadow={!atTheTop ? 'strongest' : 'normal'}
 				>
-					<IconSearch slot="icon" class="w-full h-full" />
+					<IconSearch slot="icon" class="h-full w-full" />
 				</Input>
 			</div>
 			<div
@@ -381,12 +381,12 @@
 		</div>
 	</div>
 	<div
-		class="w-[calc(100%+1.75rem)] -mx-3.5 flex flex-col items-center my-auto gap-8 z-0 mt-2 pb-2"
+		class="z-0 -mx-3.5 my-auto mt-2 flex w-[calc(100%+1.75rem)] flex-col items-center gap-8 pb-2"
 	>
-		<div class="w-full md:max-w-4xl flex flex-col items-center justify-center gap-2">
+		<div class="flex w-full flex-col items-center justify-center gap-2 md:max-w-4xl">
 			{#if !$allUsersQuery || $allUsersQuery.isInitialLoading}
 				<div
-					class="w-full flex flex-col text-c-on-bg/50 flex-1 py-6 px-4 justify-center items-center text-center"
+					class="flex w-full flex-1 flex-col items-center justify-center px-4 py-6 text-center text-c-on-bg/50"
 				>
 					<div
 						in:scale={{
@@ -395,9 +395,9 @@
 							opacity: 0,
 							start: 0.5
 						}}
-						class="w-12 h-12"
+						class="h-12 w-12"
 					>
-						<IconAnimatedSpinner class="w-full h-full" />
+						<IconAnimatedSpinner class="h-full w-full" />
 					</div>
 					<p class="mt-2 opacity-0">
 						{$LL.Shared.SearchingTitle()}
@@ -405,13 +405,13 @@
 					<div class="h-[2vh]" />
 				</div>
 			{:else if !$allUsersQuery.data || $allUsersQuery.isError}
-				<p class="text-c-on-bg/50 py-6.5">{$allUsersQuery.error}</p>
+				<p class="py-6.5 text-c-on-bg/50">{$allUsersQuery.error}</p>
 			{:else if $allUsersQuery.data.pages.length === 1 && (!$allUsersQuery.data.pages[0].users || $allUsersQuery.data.pages[0].users.length === 0)}
 				<div
-					class="w-full flex flex-col text-c-on-bg/50 flex-1 py-6 px-4 justify-center items-center text-center"
+					class="flex w-full flex-1 flex-col items-center justify-center px-4 py-6 text-center text-c-on-bg/50"
 				>
-					<div class="w-12 h-12">
-						<IconSearch class="w-full h-full" />
+					<div class="h-12 w-12">
+						<IconSearch class="h-full w-full" />
 					</div>
 					<p class="mt-2">
 						{$LL.Shared.NoResultsFoundTitle()}
@@ -424,23 +424,23 @@
 						{@const isUserDropdownOpen = isDropdownOpen?.[user.id].isOpen}
 						{@const userDropdownState = isDropdownOpen?.[user.id].state || 'main'}
 						<div
-							class="w-full max-w-2xl flex flex-col
-							bg-c-bg-secondary rounded-xl shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] p-3 md:p-4"
+							class="flex w-full max-w-2xl flex-col
+							rounded-xl bg-c-bg-secondary p-3 shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] md:p-4"
 						>
 							{#if user.banned_at}
-								<div class="w-full flex items-center flex-wrap gap-2">
+								<div class="flex w-full flex-wrap items-center gap-2">
 									<div
-										class="font-bold bg-c-danger/15 text-c-danger rounded-md flex items-center gap-2 px-2 py-1 text-sm"
+										class="flex items-center gap-2 rounded-md bg-c-danger/15 px-2 py-1 text-sm font-bold text-c-danger"
 									>
-										<IconWarning class="w-4 h-4 flex-shrink-0 -ml-0.5" />
-										<p class="flex-1 min-w-0 overflow-hidden overflow-ellipsis">
+										<IconWarning class="-ml-0.5 h-4 w-4 flex-shrink-0" />
+										<p class="min-w-0 flex-1 overflow-hidden overflow-ellipsis">
 											{$LL.Admin.Users.BannedTitle()}
 										</p>
 									</div>
 									<div class="flex items-center">
-										<div class="max-w-full flex flex-wrap text-xxs gap-3">
+										<div class="flex max-w-full flex-wrap gap-3 text-xxs">
 											<div class="flex flex-col px-1.5">
-												<p class="text-c-on-bg/75 font-semibold">
+												<p class="font-semibold text-c-on-bg/75">
 													{$LL.Admin.Users.BannedAtTitle()}
 												</p>
 												<p class="mt-1 text-c-on-bg/50">
@@ -448,7 +448,7 @@
 												</p>
 											</div>
 											<div class="flex flex-col px-1.5">
-												<p class="text-c-on-bg/75 font-semibold">
+												<p class="font-semibold text-c-on-bg/75">
 													{user.data_deleted_at
 														? $LL.Admin.Users.DataDeletedAtTitle()
 														: $LL.Admin.Users.WillBeDeletedTitle()}
@@ -465,19 +465,19 @@
 										</div>
 									</div>
 								</div>
-								<div class="w-full h-2px rounded-full bg-c-on-bg/5 mt-4 mb-3" />
+								<div class="mb-3 mt-4 h-2px w-full rounded-full bg-c-on-bg/5" />
 							{/if}
-							<div class="w-full flex flex-row items-center justify-between gap-5">
-								<div class="flex-1 flex flex-col items-start justify-center">
-									<div class="max-w-full flex flex-col items-start">
+							<div class="flex w-full flex-row items-center justify-between gap-5">
+								<div class="flex flex-1 flex-col items-start justify-center">
+									<div class="flex max-w-full flex-col items-start">
 										<button
 											bind:this={isDropdownOpen[user.id].buttonElement}
-											class="max-w-full flex flex-col items-start justify-start transition rounded
+											class="flex max-w-full flex-col items-start justify-start rounded transition
 											not-touch:hover:bg-c-primary/15 not-touch:hover:text-c-primary"
 											on:click|stopPropagation|capture={() => toggleUserDropdown(user.id)}
 										>
 											<p
-												class="text-left max-w-full overflow-hidden text-sm font-semibold px-1.5 py-0.5 -mt-0.5 break-all"
+												class="-mt-0.5 max-w-full overflow-hidden break-all px-1.5 py-0.5 text-left text-sm font-semibold"
 											>
 												{user.email}
 											</p>
@@ -486,11 +486,11 @@
 											href="/{user.username}"
 											data-sveltekit-preload-data="hover"
 											target="_blank"
-											class="text-left max-w-full overflow-hidden text-sm font-medium px-1.5 py-0.5 break-all text-c-on-bg/60
-											transition rounded not-touch:hover:bg-c-primary/15 not-touch:hover:text-c-primary group"
+											class="group max-w-full overflow-hidden break-all rounded px-1.5 py-0.5 text-left text-sm
+											font-medium text-c-on-bg/60 transition not-touch:hover:bg-c-primary/15 not-touch:hover:text-c-primary"
 										>
 											<span
-												class="text-c-on-bg/30 font-normal not-touch:group-hover:text-c-primary/50 transition"
+												class="font-normal text-c-on-bg/30 transition not-touch:group-hover:text-c-primary/50"
 												>@</span
 											>{user.username}
 										</a>
@@ -506,14 +506,14 @@
 												>
 													<DropdownWrapper
 														alignment="left-0 top-0"
-														class="w-64 max-w-[80vw] mt-1.5"
+														class="mt-1.5 w-64 max-w-[80vw]"
 													>
 														{#if userDropdownState === 'ban-user' || userDropdownState === 'unban-user' || userDropdownState === 'ban-domain' || userDropdownState === 'unban-domain'}
 															<ScrollAreaWithChevron
-																class="w-full flex flex-col justify-start max-h-[min(50vh,16rem)] relative"
+																class="relative flex max-h-[min(50vh,16rem)] w-full flex-col justify-start"
 															>
-																<div class="px-2 py-2 flex flex-col gap-2">
-																	<p class="px-2 pt-1 pb-2 text-xs text-c-on-bg/50 leading-normal">
+																<div class="flex flex-col gap-2 px-2 py-2">
+																	<p class="px-2 pb-2 pt-1 text-xs leading-normal text-c-on-bg/50">
 																		{@html $LL.Admin.Users.ConfirmAction.ConfirmActionParagraph({
 																			confirmActionText: `<span class="text-c-danger">${$LL.Admin.Users.ConfirmAction.ConfirmActionReferenceText()}</span>`
 																		})}
@@ -537,16 +537,16 @@
 																				});
 																			}
 																		}}
-																		class="w-full flex flex-col gap-2"
+																		class="flex w-full flex-col gap-2"
 																	>
 																		{#if userDropdownState === 'ban-user'}
-																			<div class="w-full flex items-center justify-start pb-1">
+																			<div class="flex w-full items-center justify-start pb-1">
 																				<button
 																					type="button"
 																					on:click={() => {
 																						deleteData = !deleteData;
 																					}}
-																					class="flex items-center justify-start gap-2 group rounded-full overflow-hidden relative
+																					class="group relative flex items-center justify-start gap-2 overflow-hidden rounded-full
 																					p-1 pr-3"
 																				>
 																					<ButtonHoverEffect noPadding color="on-bg" />
@@ -554,7 +554,7 @@
 																					<p
 																						class="shrink transition {deleteData === true
 																							? 'text-c-danger'
-																							: 'text-c-on-bg'} whitespace-nowrap min-w-0 overflow-hidden overflow-ellipsis font-semibold"
+																							: 'text-c-on-bg'} min-w-0 overflow-hidden overflow-ellipsis whitespace-nowrap font-semibold"
 																					>
 																						{$LL.Admin.Users.DeleteDataButton()}
 																					</p>
@@ -588,9 +588,9 @@
 															</ScrollAreaWithChevron>
 														{:else if userDropdownState === 'gift-credits' && $creditOptions && $creditOptions.data && $creditOptions.data.length > 0}
 															<ScrollAreaWithChevron
-																class="w-full flex flex-col justify-start max-h-[min(50vh,16rem)] relative"
+																class="relative flex max-h-[min(50vh,16rem)] w-full flex-col justify-start"
 															>
-																<div class="w-full bg-c-bg-secondary flex flex-col justify-start">
+																<div class="flex w-full flex-col justify-start bg-c-bg-secondary">
 																	{#each $creditOptions.data.sort((a, b) => b.amount - a.amount) as creditOption}
 																		<DropdownItem
 																			onClick={() => {
@@ -608,24 +608,24 @@
 																				giftCredits(user.id, creditOption.id);
 																			}}
 																		>
-																			<div class="w-full flex justify-between items-center gap-5">
+																			<div class="flex w-full items-center justify-between gap-5">
 																				{#if creditToAdd && creditToAdd.user_id === user.id && creditToAdd.credit_type_id === creditOption.id}
 																					<p
-																						class="w-full text-c-on-bg transition text-sm text-center font-bold
+																						class="w-full text-center text-sm font-bold text-c-on-bg transition
 																						not-touch:group-hover:text-c-primary"
 																					>
 																						{$LL.Shared.ConfirmQuestionMarkButton()}
 																					</p>
 																				{:else}
 																					<p
-																						class="flex-shrink min-w-0
-																					 text-c-on-bg transition text-sm text-left font-medium text-c-on-bg/60
+																						class="min-w-0 flex-shrink
+																					 text-left text-sm font-medium text-c-on-bg text-c-on-bg/60 transition
 																					 not-touch:group-hover:text-c-primary"
 																					>
 																						{creditOption.name}
 																					</p>
 																					<p
-																						class="text-c-on-bg transition text-sm text-right font-bold
+																						class="text-right text-sm font-bold text-c-on-bg transition
 																						not-touch:group-hover:text-c-primary"
 																					>
 																						{creditOption.amount.toLocaleString($locale)}
@@ -637,7 +637,7 @@
 																</div>
 															</ScrollAreaWithChevron>
 														{:else}
-															<div class="w-full bg-c-bg-secondary flex flex-col justify-start">
+															<div class="flex w-full flex-col justify-start bg-c-bg-secondary">
 																<DropdownItem
 																	onClick={() => changeUserDropdownState(user.id, 'gift-credits')}
 																>
@@ -653,12 +653,12 @@
 																			? changeUserDropdownState(user.id, 'unban-user')
 																			: changeUserDropdownState(user.id, 'ban-user')}
 																>
-																	<div class="max-w-full flex items-center gap-2">
+																	<div class="flex max-w-full items-center gap-2">
 																		<IconWarning
-																			class="w-5 h-5 text-c-danger transition flex-shrink-0 not-touch:group-hover:text-c-primary"
+																			class="h-5 w-5 flex-shrink-0 text-c-danger transition not-touch:group-hover:text-c-primary"
 																		/>
 																		<p
-																			class="flex-1 min-w-0 overflow-hidden overflow-ellipsis text-left text-c-danger
+																			class="min-w-0 flex-1 overflow-hidden overflow-ellipsis text-left text-c-danger
 																			transition not-touch:group-hover:text-c-primary"
 																		>
 																			{user.banned_at
@@ -673,12 +673,12 @@
 																			? changeUserDropdownState(user.id, 'unban-domain')
 																			: changeUserDropdownState(user.id, 'ban-domain')}
 																>
-																	<div class="max-w-full flex items-center gap-2">
+																	<div class="flex max-w-full items-center gap-2">
 																		<IconWarning
-																			class="w-5 h-5 text-c-danger transition flex-shrink-0 not-touch:group-hover:text-c-primary"
+																			class="h-5 w-5 flex-shrink-0 text-c-danger transition not-touch:group-hover:text-c-primary"
 																		/>
 																		<p
-																			class="flex-1 min-w-0 overflow-hidden overflow-ellipsis text-left text-c-danger
+																			class="min-w-0 flex-1 overflow-hidden overflow-ellipsis text-left text-c-danger
 																			transition not-touch:group-hover:text-c-primary"
 																		>
 																			{user.banned_at
@@ -695,13 +695,13 @@
 										</div>
 									</div>
 									<p
-										class="max-w-full text-xxs text-c-on-bg/50 bg-c-on-bg/5 rounded-md px-2 py-1 mt-1 break-all"
+										class="mt-1 max-w-full break-all rounded-md bg-c-on-bg/5 px-2 py-1 text-xxs text-c-on-bg/50"
 									>
 										{user.id}
 									</p>
-									<div class="max-w-full flex flex-wrap text-xxs mt-2.5 gap-3">
+									<div class="mt-2.5 flex max-w-full flex-wrap gap-3 text-xxs">
 										<div class="flex flex-col px-1.5">
-											<p class="text-c-on-bg/75 font-semibold">
+											<p class="font-semibold text-c-on-bg/75">
 												{$LL.Account.Meta.AccountCreationTitle()}
 											</p>
 											<p class="mt-1 text-c-on-bg/50">
@@ -709,7 +709,7 @@
 											</p>
 										</div>
 										<div class="flex flex-col px-1.5">
-											<p class="text-c-on-bg/75 font-semibold">
+											<p class="font-semibold text-c-on-bg/75">
 												{$LL.Account.Meta.LastSeenTitle()}
 											</p>
 											<p class="mt-1 text-c-on-bg/50">
@@ -718,56 +718,56 @@
 										</div>
 									</div>
 								</div>
-								<div class="flex-1 flex flex-col items-end justify-center">
+								<div class="flex flex-1 flex-col items-end justify-center">
 									<ProductIdBadge class="max-w-full" productId={user.product_id} size="sm" />
 									<a
 										rel="noreferrer"
 										href="https://dashboard.stripe.com/customers/{user.stripe_customer_id}"
 										target="_blank"
-										class="max-w-full text-xs text-c-on-bg/50 bg-c-on-bg/5 rounded-lg px-2.5
-										py-1.5 mt-2.5 transition ring-0 ring-c-primary/20
-										not-touch:hover:text-c-primary not-touch:hover:bg-c-primary/10 not-touch:hover:ring-2"
+										class="mt-2.5 max-w-full rounded-lg bg-c-on-bg/5 px-2.5 py-1.5
+										text-xs text-c-on-bg/50 ring-0 ring-c-primary/20 transition
+										not-touch:hover:bg-c-primary/10 not-touch:hover:text-c-primary not-touch:hover:ring-2"
 									>
 										{user.stripe_customer_id}
 									</a>
 								</div>
 							</div>
 							{#if user.credits}
-								<div class="w-full mt-3.5 text-xxs md:text-xs">
-									<div class="w-full flex items-center py-1.5 bg-c-on-bg/6 rounded-t-md gap-3">
-										<p class="max-w-full break-all w-1/4 px-2 text-c-on-bg/75 font-semibold">
+								<div class="mt-3.5 w-full text-xxs md:text-xs">
+									<div class="flex w-full items-center gap-3 rounded-t-md bg-c-on-bg/6 py-1.5">
+										<p class="w-1/4 max-w-full break-all px-2 font-semibold text-c-on-bg/75">
 											{$LL.Shared.Credits.CreditsTable.CreditTypeTitle()}
 										</p>
-										<p class="max-w-full break-all w-1/4 px-2 text-c-on-bg/75 font-semibold">
+										<p class="w-1/4 max-w-full break-all px-2 font-semibold text-c-on-bg/75">
 											{$LL.Shared.Credits.CreditsTable.RemainingCreditsTitle()}
 										</p>
-										<p class="max-w-full break-all w-1/4 px-2 text-c-on-bg/75 font-semibold">
+										<p class="w-1/4 max-w-full break-all px-2 font-semibold text-c-on-bg/75">
 											{$LL.Shared.Credits.CreditsTable.ExpiryTitle()}
 										</p>
-										<p class="max-w-full break-all w-1/4 px-2 text-c-on-bg/75 font-semibold">
+										<p class="w-1/4 max-w-full break-all px-2 font-semibold text-c-on-bg/75">
 											{$LL.Shared.Credits.CreditsTable.LastReplenish()}
 										</p>
 									</div>
 									{#each user.credits as credit, index}
 										<div
-											class="w-full flex items-center py-1.5 {(index + 1) % 2 === 0
+											class="flex w-full items-center py-1.5 {(index + 1) % 2 === 0
 												? 'bg-c-on-bg/6'
 												: 'bg-c-on-bg/3'} {index === user.credits.length - 1
 												? 'rounded-b-md'
 												: ''} gap-3"
 										>
-											<p class="max-w-full break-all w-1/4 px-2 text-c-on-bg/50">
+											<p class="w-1/4 max-w-full break-all px-2 text-c-on-bg/50">
 												{credit.credit_type.stripe_product_id || credit.credit_type.name === 'Free'
 													? getTitleFromProductId($LL, credit.credit_type.stripe_product_id)
 													: credit.credit_type.name}
 											</p>
-											<p class="max-w-full break-all w-1/4 px-2 text-c-on-bg/50">
+											<p class="w-1/4 max-w-full break-all px-2 text-c-on-bg/50">
 												{credit.remaining_amount.toLocaleString($locale)}
 											</p>
-											<p class="max-w-full break-all w-1/4 px-2 text-c-on-bg/50">
+											<p class="w-1/4 max-w-full break-all px-2 text-c-on-bg/50">
 												{getRelativeDate({ date: credit.expires_at, locale: $locale })}
 											</p>
-											<p class="max-w-full break-all w-1/4 px-2 text-c-on-bg/50">
+											<p class="w-1/4 max-w-full break-all px-2 text-c-on-bg/50">
 												{credit.replenished_at
 													? getRelativeDate({ date: credit.replenished_at, locale: $locale })
 													: ''}
@@ -787,7 +787,7 @@
 					>
 						<div
 							bind:this={bottomDiv}
-							class="w-full flex flex-row items-center justify-center mt-6"
+							class="mt-6 flex w-full flex-row items-center justify-center"
 						>
 							<Button
 								withSpinner

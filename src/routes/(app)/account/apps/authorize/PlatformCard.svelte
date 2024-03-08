@@ -11,19 +11,19 @@
 </script>
 
 <div
-	class="w-64 max-w-full transition duration-300 transform {side === 'start' && status === 'success'
-		? 'translate-y-4 md:translate-y-0 md:translate-x-4'
+	class="w-64 max-w-full transform transition duration-300 {side === 'start' && status === 'success'
+		? 'translate-y-4 md:translate-x-4 md:translate-y-0'
 		: side === 'end' && status === 'success'
-		? '-translate-y-4 md:translate-y-0 md:-translate-x-4'
-		: ''} {status === 'success'
-		? 'ring-c-success ring-3'
-		: 'ring-c-bg-tertiary ring-2'} bg-c-bg-secondary rounded-xl shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]
-		flex flex-col items-center justify-center gap-2 text-center overflow-hidden z-0 relative px-6 pt-3.5 pb-4 md:pt-5 md:pb-6"
+			? '-translate-y-4 md:-translate-x-4 md:translate-y-0'
+			: ''} {status === 'success'
+		? 'ring-3 ring-c-success'
+		: 'ring-2 ring-c-bg-tertiary'} relative z-0 flex flex-col
+		items-center justify-center gap-2 overflow-hidden rounded-xl bg-c-bg-secondary px-6 pb-4 pt-3.5 text-center shadow-xl shadow-c-shadow/[var(--o-shadow-normal)] md:pb-6 md:pt-5"
 >
-	<IconSc type={icon} class="w-16 h-16 md:w-20 md:h-20 flex-shrink-0 transition duration-300" />
+	<IconSc type={icon} class="h-16 w-16 flex-shrink-0 transition duration-300 md:h-20 md:w-20" />
 	<p
-		class="w-full -mt-0.5 md:mt-0 font-semibold whitespace-nowrap overflow-hidden
-    overflow-ellipsis text-xl md:text-2xl"
+		class="-mt-0.5 w-full overflow-hidden overflow-ellipsis whitespace-nowrap text-xl
+    font-semibold md:mt-0 md:text-2xl"
 	>
 		{platform}
 	</p>

@@ -37,17 +37,17 @@
 	bind:this={element}
 	on:click={_onClick}
 	disabled={onClick === undefined}
-	class="z-10 group p-0.5 md:p-1 rounded-xl touch-manipulation max-h-full {classes}"
+	class="group z-10 max-h-full touch-manipulation rounded-xl p-0.5 md:p-1 {classes}"
 >
 	<div class={wrapperClass}>
 		{#if onClick}
 			<ButtonHoverEffect hoverFrom={side === 'left' ? 'right' : 'left'} />
 		{/if}
-		<div class="max-w-full flex flex-col items-center">
+		<div class="flex max-w-full flex-col items-center">
 			{#if count !== undefined}
 				<div
-					class="w-12 h-12 overflow-hidden flex items-center justify-center z-0 relative -mt-18
-					rounded-md bg-c-bg-tertiary ring-1.5 shadow-lg shadow-c-shadow/[var(--o-shadow-strongest)] {isGenerationSelected
+					class="relative z-0 -mt-18 flex h-12 w-12 items-center justify-center overflow-hidden
+					rounded-md bg-c-bg-tertiary shadow-lg shadow-c-shadow/[var(--o-shadow-strongest)] ring-1.5 {isGenerationSelected
 						? 'ring-c-primary'
 						: 'ring-c-bg-tertiary'}"
 				>
@@ -61,23 +61,23 @@
 								width={generation.width}
 								height={generation.height}
 								alt={generation.prompt.text}
-								class="w-full h-full object-cover"
+								class="h-full w-full object-cover"
 							/>
 						{/key}
 					{/if}
 				</div>
 				<p
-					class="max-w-full transition duration-100 relative z-[1] {onClick
+					class="relative z-[1] max-w-full transition duration-100 {onClick
 						? 'not-touch:group-hover:text-c-primary'
-						: ''} group-disabled:opacity-15 overflow-hidden overflow-ellipsis
-						text-center text-xs font-semibold py-1 mt-2 mb-2 px-3"
+						: ''} mb-2 mt-2 overflow-hidden
+						overflow-ellipsis px-3 py-1 text-center text-xs font-semibold group-disabled:opacity-15"
 				>
 					{count}
 				</p>
 			{/if}
 			<IconChevronDown
 				strokeWidth={3}
-				class="{iconClass} text-c-on-bg transition duration-100 transform {isRecentlyClicked &&
+				class="{iconClass} transform text-c-on-bg transition duration-100 {isRecentlyClicked &&
 				hasAnimation
 					? side === 'left'
 						? '-translate-x-1.5'

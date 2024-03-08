@@ -19,9 +19,9 @@
 	export let username: string | undefined;
 </script>
 
-<button use:trigger {...$trigger} class="flex-shrink min-w-0 flex items-center gap-2">
-	<p class="text-xl font-semibold flex-shrink min-w-0 overflow-hidden overflow-ellipsis">
-		<span class="text-c-on-bg/50 font-normal">@</span>{username}
+<button use:trigger {...$trigger} class="flex min-w-0 flex-shrink items-center gap-2">
+	<p class="min-w-0 flex-shrink overflow-hidden overflow-ellipsis text-xl font-semibold">
+		<span class="font-normal text-c-on-bg/50">@</span>{username}
 	</p>
-	<IconPen class="w-4 h-4 text-c-on-bg/50 flex-shrink-0" />
+	<IconPen class="h-4 w-4 flex-shrink-0 text-c-on-bg/50" />
 </button>

@@ -6,7 +6,7 @@
 	let classes = '';
 </script>
 
-<div class="w-full flex {classes}">
+<div class="flex w-full {classes}">
 	{#each [...Array(cols).keys()] as columnIndex}
 		<div style="width: {100 / cols}%" class="flex flex-col">
 			{#each items.filter((_, index) => index % cols === columnIndex) as item}

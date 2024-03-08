@@ -13,32 +13,32 @@
 	let isRootOpen = false;
 </script>
 
-<Collapsible.Root bind:open={isRootOpen} class="w-full flex flex-col items-start {classes}">
+<Collapsible.Root bind:open={isRootOpen} class="flex w-full flex-col items-start {classes}">
 	<Collapsible.Trigger
-		class="max-w-full flex gap-1 items-center group border-2 border-c-bg-secondary 
-		not-touch:hover:border-c-primary/25 transition px-3 py-1.5 rounded-lg group 
-		relative overflow-hidden z-0"
+		class="group group relative z-0 flex max-w-full items-center 
+		gap-1 overflow-hidden rounded-lg border-2 border-c-bg-secondary px-3 
+		py-1.5 transition not-touch:hover:border-c-primary/25"
 	>
 		<ButtonHoverEffect noPadding noRounding hoverFrom="left" />
 		<IconChevronDown
 			class="{color === 'tertiary'
 				? 'text-c-tertiary'
-				: 'text-c-on-bg/75'} transform transition -ml-1 w-5 h-5 not-touch:group-hover:text-c-primary {isRootOpen
+				: 'text-c-on-bg/75'} -ml-1 h-5 w-5 transform transition not-touch:group-hover:text-c-primary {isRootOpen
 				? 'rotate-0'
 				: '-rotate-90'}"
 		/>
 		<p
 			class="{color === 'tertiary'
 				? 'text-c-tertiary'
-				: 'text-c-on-bg/75'} flex-1 min-w-0 overflow-hidden text-left
-				not-touch:group-hover:text-c-primary font-medium"
+				: 'text-c-on-bg/75'} min-w-0 flex-1 overflow-hidden text-left
+				font-medium not-touch:group-hover:text-c-primary"
 		>
 			{titleExpanded !== undefined && isRootOpen ? titleExpanded : title}
 		</p>
 	</Collapsible.Trigger>
-	<Collapsible.Content class="w-full flex items-stretch gap-4 pt-2" transition={true}>
-		<div class="bg-c-bg-secondary rounded-full w-2px" />
-		<div class="flex-1 min-w-0 overflow-hidden {yPadding ? 'py-3' : ''}">
+	<Collapsible.Content class="flex w-full items-stretch gap-4 pt-2" transition={true}>
+		<div class="w-2px rounded-full bg-c-bg-secondary" />
+		<div class="min-w-0 flex-1 overflow-hidden {yPadding ? 'py-3' : ''}">
 			<slot />
 		</div>
 	</Collapsible.Content>

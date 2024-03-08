@@ -24,7 +24,7 @@
 	$: boundByHeight =
 		$windowWidth && $windowHeight
 			? ($windowWidth - paddingPx * 2) / ($windowHeight - paddingPx * 2) >
-			  Number(width) / Number(height)
+				Number(width) / Number(height)
 			: false;
 
 	let isFullscreen = false;
@@ -60,15 +60,15 @@
 {#if href}
 	<div class="w-full {classes}">
 		<a
-			class="w-full group focus-visible:shadow-none"
+			class="group w-full focus-visible:shadow-none"
 			{href}
 			target="_blank"
 			rel="noopener noreferrer"
 		>
 			<img
 				loading="lazy"
-				class="w-full bg-c-bg-tertiary h-auto rounded-lg transition ring-2 ring-c-bg-tertiary
-        group-hover:ring-c-primary/75 group-focus:ring-c-primary/75 shadow-xl shadow-c-shadow/[var(--o-shadow-strong)"
+				class="shadow-c-shadow/[var(--o-shadow-strong) h-auto w-full rounded-lg bg-c-bg-tertiary shadow-xl ring-2
+        ring-c-bg-tertiary transition group-hover:ring-c-primary/75 group-focus:ring-c-primary/75"
 				{sizes}
 				src={_src}
 				{srcset}
@@ -81,14 +81,14 @@
 {:else}
 	<div class="w-full {classes}">
 		<div
-			class="bg-c-bg-tertiary ring-2 ring-c-bg-tertiary overflow-hidden relative z-0
-			rounded-lg not-touch:hover:cursor-zoom-in shadow-xl shadow-c-shadow/[var(--o-shadow-strong) group/docimage"
+			class="shadow-c-shadow/[var(--o-shadow-strong) group/docimage relative z-0 overflow-hidden rounded-lg
+			bg-c-bg-tertiary shadow-xl ring-2 ring-c-bg-tertiary not-touch:hover:cursor-zoom-in"
 		>
 			<img
 				on:click={() => toggleFullscreen()}
 				on:keydown={() => null}
 				loading="lazy"
-				class="w-full h-auto transition duration-500 ease-out transform not-touch:group-hover/docimage:scale-102"
+				class="h-auto w-full transform transition duration-500 ease-out not-touch:group-hover/docimage:scale-102"
 				{sizes}
 				src={_src}
 				{srcset}
@@ -105,13 +105,13 @@
 		on:click={() => toggleFullscreen()}
 		on:keydown={() => null}
 		use:portal={'body'}
-		class="fixed left-0 top-0 w-full h-full bg-c-barrier/90 flex items-center justify-center z-[9999] px-2 py-16 md:p-4
-		overflow-auto md:overflow-hidden not-touch:hover:cursor-zoom-out"
+		class="fixed left-0 top-0 z-[9999] flex h-full w-full items-center justify-center overflow-auto bg-c-barrier/90 px-2 py-16
+		not-touch:hover:cursor-zoom-out md:overflow-hidden md:p-4"
 	>
 		<img
-			class="w-full h-auto {boundByHeight ? 'md:h-full md:w-auto' : 'md:w-full md:h-auto'}
-			bg-c-bg-tertiary rounded-lg ring-2 ring-c-bg-tertiary
-      shadow-xl shadow-c-shadow/[var(--o-shadow-strong) my-auto"
+			class="h-auto w-full {boundByHeight ? 'md:h-full md:w-auto' : 'md:h-auto md:w-full'}
+			shadow-c-shadow/[var(--o-shadow-strong) my-auto rounded-lg bg-c-bg-tertiary
+      shadow-xl ring-2 ring-c-bg-tertiary"
 			src={highestSrc}
 			{alt}
 			{width}

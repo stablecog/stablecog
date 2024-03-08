@@ -3,28 +3,28 @@
 	export let titleSecondary: string | undefined = undefined;
 </script>
 
-<div class="w-full max-w-3xl flex flex-col items-center justify-start px-1 pt-2">
+<div class="flex w-full max-w-3xl flex-col items-center justify-start px-1 pt-2">
 	<div
-		class="w-full flex flex-col md:flex-row gap-4 md:gap-5 items-start md:items-center justify-start md:justify-between"
+		class="flex w-full flex-col items-start justify-start gap-4 md:flex-row md:items-center md:justify-between md:gap-5"
 	>
-		<div class="max-w-full flex flex-shrink min-w-0 gap-2 items-center px-2.5 md:px-2.5 md:py-2.5">
+		<div class="flex min-w-0 max-w-full flex-shrink items-center gap-2 px-2.5 md:px-2.5 md:py-2.5">
 			<p
-				class="font-bold text-2.5xl flex-shrink min-w-0
-          whitespace-nowrap overflow-hidden overflow-ellipsis"
+				class="min-w-0 flex-shrink overflow-hidden overflow-ellipsis
+          whitespace-nowrap text-2.5xl font-bold"
 			>
 				{title}
 			</p>
 			{#if titleSecondary}
-				<p class="text-sm md:text-base text-c-on-bg/50 font-semibold">
+				<p class="text-sm font-semibold text-c-on-bg/50 md:text-base">
 					{titleSecondary}
 				</p>
 			{/if}
 		</div>
-		<div class="w-full md:w-auto flex flex-1 items-center justify-end z-50">
+		<div class="z-50 flex w-full flex-1 items-center justify-end md:w-auto">
 			<slot name="view" />
 		</div>
 	</div>
-	<div class="w-full flex mt-3">
+	<div class="mt-3 flex w-full">
 		<slot name="search-and-filter" />
 	</div>
 </div>

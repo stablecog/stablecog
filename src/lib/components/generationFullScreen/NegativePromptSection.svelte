@@ -28,7 +28,7 @@
 	});
 </script>
 
-<div class="w-full flex items-start text-c-danger gap-1">
+<div class="flex w-full items-start gap-1 text-c-danger">
 	<WithTooltip
 		title={$LL.Home.NegativePromptInput.Title()}
 		paragraph={$LL.Home.NegativePromptInput.Paragraph()}
@@ -37,42 +37,42 @@
 		color="bg-tertiary"
 	>
 		<div tabindex="-1" use:trigger {...triggerStoreValue} class="cursor-default">
-			<IconChatBubbleCancel class="w-5 h-5" />
+			<IconChatBubbleCancel class="h-5 w-5" />
 		</div>
 	</WithTooltip>
 	<div
-		class="flex flex-1 min-w-0 justify-start
-		relative overflow-hidden -mt-0.75"
+		class="relative -mt-0.75 flex min-w-0
+		flex-1 justify-start overflow-hidden"
 	>
 		<p
 			bind:this={element}
-			class="w-full flex-shrink leading-normal overflow-hidden opacity-0 pointer-events-none
-			overflow-ellipsis absolute whitespace-nowrap left-0 top-0 px-1"
+			class="pointer-events-none absolute left-0 top-0 w-full flex-shrink
+			overflow-hidden overflow-ellipsis whitespace-nowrap px-1 leading-normal opacity-0"
 		>
 			{negativePrompt}
 		</p>
 		{#if isOverflowing && !isOpen}
 			<button
 				on:click={() => (isOpen = true)}
-				class="px-1 flex-1 min-w-0 flex items-start justify-start relative rounded group/button overflow-hidden"
+				class="group/button relative flex min-w-0 flex-1 items-start justify-start overflow-hidden rounded px-1"
 			>
 				<div
-					class="w-full h-full absolute left-0 top-0 bg-c-danger/15 rounded
-					-translate-y-full transition opacity-0
-					not-touch:group-hover/button:translate-y-0 not-touch:group-hover/button:opacity-100
-					group-focus-visible/button:translate-y-0 group-focus-visible/button:opacity-100"
+					class="absolute left-0 top-0 h-full w-full -translate-y-full rounded
+					bg-c-danger/15 opacity-0 transition
+					group-focus-visible/button:translate-y-0 group-focus-visible/button:opacity-100
+					not-touch:group-hover/button:translate-y-0 not-touch:group-hover/button:opacity-100"
 				/>
 				<p
-					class="flex-shrink min-w-0 leading-normal overflow-hidden overflow-ellipsis whitespace-nowrap"
+					class="min-w-0 flex-shrink overflow-hidden overflow-ellipsis whitespace-nowrap leading-normal"
 				>
 					{negativePrompt}
 				</p>
-				<div class="flex-shrink-0 flex items-center justify-center w-6 h-6">
-					<IconChevronDown class="w-5 h-5" />
+				<div class="flex h-6 w-6 flex-shrink-0 items-center justify-center">
+					<IconChevronDown class="h-5 w-5" />
 				</div>
 			</button>
 		{:else}
-			<p class="px-1 flex-shrink min-w-0 leading-normal">
+			<p class="min-w-0 flex-shrink px-1 leading-normal">
 				{negativePrompt}
 			</p>
 		{/if}

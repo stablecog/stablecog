@@ -33,14 +33,14 @@
 	$: showSidebarChevron =
 		$windowWidth >= lgBreakpoint && progressPercent !== undefined && distanceToBottom !== undefined
 			? progressPercent < hideChevronTopDistancePercent &&
-			  distanceToBottom > hideChevronBottomPadding
+				distanceToBottom > hideChevronBottomPadding
 			: false;
 </script>
 
 {#if showSidebarChevron}
 	<div
 		transition:fly={{ duration: 200, easing: quadOut, y: 50, opacity: 0 }}
-		class="absolute left-1/2 transform -translate-x-1/2 bottom-0 flex justify-center items-end z-50"
+		class="absolute bottom-0 left-1/2 z-50 flex -translate-x-1/2 transform items-end justify-center"
 	>
 		<IconButton
 			name="Scroll to Sidebar Bottom"
@@ -54,7 +54,7 @@
 			}}
 		>
 			<IconChevronDown
-				class="w-7 h-7 text-c-on-bg/75 transition not-touch:group-hover/iconbutton:text-c-primary"
+				class="h-7 w-7 text-c-on-bg/75 transition not-touch:group-hover/iconbutton:text-c-primary"
 			/>
 		</IconButton>
 	</div>

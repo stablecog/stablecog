@@ -37,14 +37,14 @@
 	}
 </script>
 
-<div bind:clientWidth={containerWidth} class="w-full overflow-hidden z-0 relative">
-	<div class="w-full overflow-hidden z-0 relative {showChevron ? 'list-fade' : ''}">
+<div bind:clientWidth={containerWidth} class="relative z-0 w-full overflow-hidden">
+	<div class="relative z-0 w-full overflow-hidden {showChevron ? 'list-fade' : ''}">
 		<div
 			on:scroll={onScroll}
-			class="w-full flex flex-row justify-start items-center overflow-x-scroll hide-scrollbar"
+			class="hide-scrollbar flex w-full flex-row items-center justify-start overflow-x-scroll"
 		>
-			<div bind:clientWidth={innerContainerWidth} class="px-1 flex justify-start items-center">
-				<div class="flex justify-start items-center relative">
+			<div bind:clientWidth={innerContainerWidth} class="flex items-center justify-start px-1">
+				<div class="relative flex items-center justify-start">
 					{#each items as item, index}
 						{@const isSelected = item.strictMatch
 							? $page.url.pathname === item.href
@@ -53,14 +53,14 @@
 							bind:clientWidth={elements[index].width}
 							href={item.href}
 							data-sveltekit-preload-data="hover"
-							class="whitespace-nowrap px-4 md:px-5 pt-2 pb-4 text-base md:text-lg transition font-medium relative group"
+							class="group relative whitespace-nowrap px-4 pb-4 pt-2 text-base font-medium transition md:px-5 md:text-lg"
 						>
 							<ButtonHoverEffect paddingClass="pb-2" size="md" color="on-bg-faded" />
 							{#if iconSet}
 								<svelte:component
 									this={iconSet}
 									type={item.icon}
-									class="w-4 h-4 flex-shrink-0 transition {isSelected
+									class="h-4 w-4 flex-shrink-0 transition {isSelected
 										? 'text-c-on-bg'
 										: 'text-c-on-bg/60'}"
 								/>
@@ -72,13 +72,13 @@
 					{/each}
 					<div
 						style="width: {selectedElementWidth}px; transform: translateX({selectedElementTranslateX}px)"
-						class="absolute left-0 bottom-0 rounded-t-full h-5px bg-c-on-bg transition-all pointer-events-none"
+						class="pointer-events-none absolute bottom-0 left-0 h-5px rounded-t-full bg-c-on-bg transition-all"
 					/>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="w-full h-2px rounded-full bg-c-bg-secondary" />
+	<div class="h-2px w-full rounded-full bg-c-bg-secondary" />
 </div>
 
 <style>

@@ -21,8 +21,8 @@
 <div class="bg-c-bg {size === 'sm' ? 'rounded' : 'rounded-md'} {classes}">
 	<p
 		class="block {getColorClasses(method)} font-mono {size === 'sm'
-			? 'text-xs rounded px-1.5 py-0.75'
-			: 'text-sm rounded-md px-2.5 py-1.5'} ring-1.5 font-semibold"
+			? 'rounded px-1.5 py-0.75 text-xs'
+			: 'rounded-md px-2.5 py-1.5 text-sm'} font-semibold ring-1.5"
 	>
 		{method}
 	</p>

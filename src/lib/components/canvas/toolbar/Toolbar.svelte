@@ -67,7 +67,7 @@
 	$: selectedIndex = tools.findIndex((tool) => tool.value === $selectedTool);
 </script>
 
-<div class="max-w-full flex flex-wrap items-center justify-center gap-2">
+<div class="flex max-w-full flex-wrap items-center justify-center gap-2">
 	<ToolbarSectionWrapper>
 		<div {...$root} use:root class="flex flex-row items-center justify-start" aria-label="Toolbar">
 			<div
@@ -75,14 +75,14 @@
 				class="{sizeClass} {paddingClass} absolute left-0 top-0 transition"
 			>
 				<div
-					class="w-full h-full rounded-md bg-c-on-bg shadow-md shadow-c-shadow/[var(--o-shadow-strong)]"
+					class="h-full w-full rounded-md bg-c-on-bg shadow-md shadow-c-shadow/[var(--o-shadow-strong)]"
 				/>
 			</div>
 			{#each tools as tool}
 				<button
 					{...$item(tool.value)}
 					use:item
-					class="{sizeClass} p-2 flex items-center justify-center group relative"
+					class="{sizeClass} group relative flex items-center justify-center p-2"
 					id={tool.value}
 					aria-label={tool.name}
 				>
@@ -90,7 +90,7 @@
 					<svelte:component
 						this={tool.icon}
 						data-selected={$selectedTool === tool.value ? true : undefined}
-						class="w-full h-full group-data-[state=checked]:text-c-bg transition"
+						class="h-full w-full transition group-data-[state=checked]:text-c-bg"
 					/>
 				</button>
 			{/each}
@@ -98,16 +98,16 @@
 		</div>
 	</ToolbarSectionWrapper>
 
-	<ToolbarSectionWrapper class="px-4.5 gap-3">
-		<div class="w-2 h-2 ring-2 ring-c-on-bg rounded-full" />
+	<ToolbarSectionWrapper class="gap-3 px-4.5">
+		<div class="h-2 w-2 rounded-full ring-2 ring-c-on-bg" />
 		<SliderInput
-			class="w-32 h-11"
+			class="h-11 w-32"
 			name="Brush Size"
 			size="sm"
 			bind:value={brushSize}
 			{...brushConfig}
 		/>
-		<div class="w-3.5 h-3.5 ring-2 ring-c-on-bg rounded-full" />
+		<div class="h-3.5 w-3.5 rounded-full ring-2 ring-c-on-bg" />
 	</ToolbarSectionWrapper>
 
 	<ToolbarSectionWrapper>

@@ -73,25 +73,25 @@
 	});
 </script>
 
-<Tabs.Root class="w-full tabs font-mono {classes}" bind:value>
-	<div bind:this={innerElement} class="w-full flex flex-col-reverse">
+<Tabs.Root class="tabs w-full font-mono {classes}" bind:value>
+	<div bind:this={innerElement} class="flex w-full flex-col-reverse">
 		<slot />
 		<Tabs.List
-			class="w-full overflow-hidden flex flex-wrap items-center justify-between ring-2 ring-c-bg-tertiary bg-c-bg rounded-t-[0.6rem] relative z-10"
+			class="relative z-10 flex w-full flex-wrap items-center justify-between overflow-hidden rounded-t-[0.6rem] bg-c-bg ring-2 ring-c-bg-tertiary"
 		>
-			<div class="flex-1 min-w-0 overflow-auto flex justify-start pr-8">
-				<div class="flex justify-start items-center relative">
+			<div class="flex min-w-0 flex-1 justify-start overflow-auto pr-8">
+				<div class="relative flex items-center justify-start">
 					<div
 						style="transform: translateX({selectedElementTranslateX !== undefined
 							? selectedElementTranslateX
 							: 0}px); width: {selectedElementWidth + 'px'}"
-						class="absolute left-0 bottom-0 transition-all h-4px rounded-t-full bg-c-primary pointer-events-none"
+						class="pointer-events-none absolute bottom-0 left-0 h-4px rounded-t-full bg-c-primary transition-all"
 					/>
 					{#each values as val, index}
 						<div bind:clientWidth={widths[index]}>
 							<Tabs.Trigger
-								class="px-4 py-3 transition font-medium group relative flex items-center 
-								justify-center"
+								class="group relative flex items-center justify-center px-4 py-3 font-medium 
+								transition"
 								value={val}
 							>
 								<ButtonHoverEffect

@@ -145,9 +145,9 @@
 	}
 </script>
 
-<div class="w-full flex flex-col items-center">
-	<form on:submit|preventDefault={search} class="w-full flex gap-1.5">
-		<div class="flex-1 min-w-0 flex">
+<div class="flex w-full flex-col items-center">
+	<form on:submit|preventDefault={search} class="flex w-full gap-1.5">
+		<div class="flex min-w-0 flex-1">
 			<Input
 				onFocus={() => (searchInputIsFocused = true)}
 				onBlur={() => (searchInputIsFocused = false)}
@@ -166,11 +166,11 @@
 				iconForButton={IconSearch}
 				iconForButtonLabel={$LL.Gallery.SearchInput.Title()}
 			>
-				<IconSearch slot="icon" class="w-full h-full" />
+				<IconSearch slot="icon" class="h-full w-full" />
 			</Input>
 		</div>
 		<SubtleButton
-			class="py-2 px-3 md:p-3"
+			class="px-3 py-2 md:p-3"
 			noPadding
 			label={isFiltersOpen ? 'Collapse Filters' : 'Expand Filters'}
 			shadow={inputShadow}
@@ -178,16 +178,16 @@
 			onClick={toggleFiltersPanel}
 		>
 			<Morpher morphed={isFiltersOpen}>
-				<div slot="0" class="w-6 h-6 md:w-7 md:h-7">
+				<div slot="0" class="h-6 w-6 md:h-7 md:w-7">
 					<IconFilter
-						class="w-full h-full text-c-on-bg transition transform {isFiltersOpen
+						class="h-full w-full transform text-c-on-bg transition {isFiltersOpen
 							? 'rotate-90'
 							: 'rotate-0'} not-touch:group-hover:text-c-primary"
 					/>
 				</div>
-				<div slot="1" class="w-6 h-6 md:w-7 md:h-7">
+				<div slot="1" class="h-6 w-6 md:h-7 md:w-7">
 					<IconChevronDown
-						class="w-full h-full text-c-on-bg transition transform {isFiltersOpen
+						class="h-full w-full transform text-c-on-bg transition {isFiltersOpen
 							? 'rotate-180'
 							: 'rotate-90'} not-touch:group-hover:text-c-primary"
 					/>
@@ -196,10 +196,10 @@
 		</SubtleButton>
 	</form>
 	{#if isFiltersOpen}
-		<div class="w-full flex flex-col pt-3">
+		<div class="flex w-full flex-col pt-3">
 			<div
 				in:fly={{ duration: 150, easing: quadOut, y: -12, opacity: 0 }}
-				class="w-full flex flex-col md:flex-row justify-center items-center px-0.5 gap-3"
+				class="flex w-full flex-col items-center justify-center gap-3 px-0.5 md:flex-row"
 			>
 				<TabLikeFilterDropdown
 					class="w-full md:w-1/3"
@@ -234,7 +234,7 @@
 		</div>
 	{/if}
 	{#if hasAnyFilter}
-		<div class="w-full flex justify-center px-0.5 mt-0.5">
+		<div class="mt-0.5 flex w-full justify-center px-0.5">
 			<div class="flex flex-wrap justify-start gap-2 pt-3">
 				{#if hasAnyFilter}
 					<TagButton

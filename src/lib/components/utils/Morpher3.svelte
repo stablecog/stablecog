@@ -11,9 +11,9 @@
 			: '0.1s cubic-bezier(0.4, 0, 0.2, 1)'}, opacity {state === 0
 			? '0.25s'
 			: '0.1s'} cubic-bezier(0.4, 0, 0.2, 1);"
-		class="transition relative transform {state === 0
+		class="relative transform transition {state === 0
 			? 'scale-100 opacity-100'
-			: 'scale-50 opacity-0 pointer-events-none'}"
+			: 'pointer-events-none scale-50 opacity-0'}"
 	>
 		<div class="transition-none">
 			<slot name="0" />
@@ -25,10 +25,10 @@
 			: '0.1s cubic-bezier(0.4, 0, 0.2, 1)'}, opacity {state === 1
 			? '0.25s'
 			: '0.1s'} cubic-bezier(0.4, 0, 0.2, 1);"
-		class="w-full h-full absolute transform left-0 top-0 flex items-center justify-center {state ===
+		class="absolute left-0 top-0 flex h-full w-full transform items-center justify-center {state ===
 		1
 			? 'scale-100 opacity-100'
-			: 'scale-50 opacity-0 pointer-events-none'}"
+			: 'pointer-events-none scale-50 opacity-0'}"
 	>
 		<div class="transition-none">
 			<slot name="1" />
@@ -40,10 +40,10 @@
 			: '0.1s cubic-bezier(0.4, 0, 0.2, 1)'}, opacity {state === 2
 			? '0.25s'
 			: '0.1s'} cubic-bezier(0.4, 0, 0.2, 1);"
-		class="w-full h-full absolute transform left-0 top-0 flex items-center justify-center {state ===
+		class="absolute left-0 top-0 flex h-full w-full transform items-center justify-center {state ===
 		2
 			? 'scale-100 opacity-100'
-			: 'scale-50 opacity-0 pointer-events-none'}"
+			: 'pointer-events-none scale-50 opacity-0'}"
 	>
 		<div class="transition-none">
 			<slot name="2" />

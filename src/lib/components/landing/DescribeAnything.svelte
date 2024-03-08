@@ -18,21 +18,21 @@
 
 <section
 	id="describe-anything"
-	class="w-full lg:h-[calc(100svh-env(safe-area-inset-bottom)-10rem)] lg:min-h-[40rem]
-		flex flex-col lg:flex-row items-center justify-between"
+	class="flex w-full flex-col
+		items-center justify-between lg:h-[calc(100svh-env(safe-area-inset-bottom)-10rem)] lg:min-h-[40rem] lg:flex-row"
 >
 	<div
-		class="flex-1 min-h-0 w-full lg:h-full flex flex-col lg:flex-row
-			lg:items-center lg:justify-center justify-start items-center relative"
+		class="relative flex min-h-0 w-full flex-1 flex-col items-center
+			justify-start lg:h-full lg:flex-row lg:items-center lg:justify-center"
 	>
 		<div
-			class="min-w-0 w-full h-auto lg:flex-1 lg:h-full relative flex justify-end lg:pr-0
-				order-2 lg:order-1"
+			class="relative order-2 flex h-auto w-full min-w-0 justify-end lg:order-1 lg:h-full
+				lg:flex-1 lg:pr-0"
 		>
 			<div
-				class="h-full relative pr-[6%] -ml-[6%] md:pr-[6%] md:-ml-[6%] lg:pr-0 lg:ml-0 overflow-hidden flex justify-end"
+				class="relative -ml-[6%] flex h-full justify-end overflow-hidden pr-[6%] md:-ml-[6%] md:pr-[6%] lg:ml-0 lg:pr-0"
 			>
-				<div class="aspect-[5/4] h-full relative">
+				<div class="relative aspect-[5/4] h-full">
 					<ImageWithOutlineAndPlaceholder
 						style="
               -webkit-mask-image: url('{mask}');
@@ -44,7 +44,7 @@
               mask-position: right center;
               -webkit-mask-position: right center;
             "
-						class="w-full h-full"
+						class="h-full w-full"
 						srcset="
               /landing/cat/cat-512.webp 512w,
               /landing/cat/cat-768.webp 768w,
@@ -65,31 +65,31 @@
 				</div>
 			</div>
 			<div
-				class="absolute right-0 bottom-[15%] md:bottom-[20%] lg:bottom-[20%] w-full py-2 px-3 md:pl-8 md:pr-12 lg:pl-4 lg:pr-1 flex justify-end"
+				class="absolute bottom-[15%] right-0 flex w-full justify-end px-3 py-2 md:bottom-[20%] md:pl-8 md:pr-12 lg:bottom-[20%] lg:pl-4 lg:pr-1"
 			>
 				<p
-					class="px-4 font-medium py-3 rounded-lg md:rounded-xl bg-c-bg-secondary text-xs
-					md:text-base lg:text-lg lg:px-5 ring-2 ring-c-bg-tertiary shadow-xl
-					shadow-c-shadow/[var(--o-shadow-stronger)]"
+					class="rounded-lg bg-c-bg-secondary px-4 py-3 text-xs font-medium shadow-xl
+					shadow-c-shadow/[var(--o-shadow-stronger)] ring-2 ring-c-bg-tertiary md:rounded-xl md:text-base lg:px-5
+					lg:text-lg"
 				>
 					{$LL.Landing.Describe.Prompt()}
 				</p>
 			</div>
 		</div>
 		<div
-			class="px-6 pt-6 pb-8 lg:pt-12 lg:pb-20 lg:w-2/5 xl:w-1/2 order-1 lg:order-2
-				lg:pl-10 lg:pr-12 xl:pl-16 flex flex-col items-center lg:items-start"
+			class="order-1 flex flex-col items-center px-6 pb-8 pt-6 lg:order-2 lg:w-2/5
+				lg:items-start lg:pb-20 lg:pl-10 lg:pr-12 lg:pt-12 xl:w-1/2 xl:pl-16"
 		>
 			<div class="flex flex-col items-center lg:items-start">
 				<h2
-					class="max-w-[19rem] md:max-w-[22rem] lg:max-w-[28rem] font-semibold text-3xl md:text-4xl
-						lg:text-5xl flex-1 leading-tight lg:leading-tight text-center lg:text-left"
+					class="max-w-[19rem] flex-1 text-center text-3xl font-semibold leading-tight
+						md:max-w-[22rem] md:text-4xl lg:max-w-[28rem] lg:text-left lg:text-5xl lg:leading-tight"
 				>
 					{$LL.Landing.Describe.Title()}
 				</h2>
 				<p
-					class="max-w-[22rem] lg:max-w-[28rem] leading-relaxed md:text-lg lg:text-xl mt-2
-					text-center lg:text-left text-c-on-bg/75"
+					class="mt-2 max-w-[22rem] text-center leading-relaxed text-c-on-bg/75 md:text-lg
+					lg:max-w-[28rem] lg:text-left lg:text-xl"
 				>
 					{$LL.Landing.Describe.Paragraph()}
 				</p>
@@ -97,11 +97,11 @@
 					href={$sessionStore?.user.id && $userSummary
 						? `/generate?p=${encodeURIComponent(
 								$LL.Landing.Describe.Prompt()
-						  )}&mi=22b0857d-7edc-4d00-9cd9-45aa509db093`
+							)}&mi=22b0857d-7edc-4d00-9cd9-45aa509db093`
 						: `/generate?p=${encodeURIComponent(
 								$LL.Landing.Describe.Prompt()
-						  )}&smo=true&mi=22b0857d-7edc-4d00-9cd9-45aa509db093`}
-					class="mt-6 w-full hidden md:block max-w-[15rem] px-6 md:px-8 py-4"
+							)}&smo=true&mi=22b0857d-7edc-4d00-9cd9-45aa509db093`}
+					class="mt-6 hidden w-full max-w-[15rem] px-6 py-4 md:block md:px-8"
 					noPadding
 				>
 					{$LL.Landing.TryItNowButton()}

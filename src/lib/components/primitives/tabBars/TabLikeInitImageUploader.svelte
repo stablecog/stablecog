@@ -84,25 +84,25 @@
 <svelte:window on:keydown={onKeyDown} />
 
 <TabBarWrapper class={classes}>
-	<div class="self-stretch flex text-c-on-bg/50">
+	<div class="flex self-stretch text-c-on-bg/50">
 		<slot name="title" />
 	</div>
-	<div class="w-2px -ml-px self-stretch">
-		<div class="w-full h-full bg-c-bg-secondary" />
+	<div class="-ml-px w-2px self-stretch">
+		<div class="h-full w-full bg-c-bg-secondary" />
 	</div>
-	<div class="flex-1 min-w-0 flex relative rounded-r-xl group">
+	<div class="group relative flex min-w-0 flex-1 rounded-r-xl">
 		{#if $generationInitImageFilesState === 'idle' || $generationInitImageFilesState === 'error'}
-			<div class="w-full h-full absolute left-0 top-0 overflow-hidden z-0 rounded-r-xl">
-				<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">
+			<div class="absolute left-0 top-0 z-0 h-full w-full overflow-hidden rounded-r-xl">
+				<div class="absolute left-0 top-0 flex h-full w-[200%] items-center justify-center">
 					<div
-						class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full opacity-0
-							bg-c-primary/10 not-touch:group-hover:translate-x-[-45%] not-touch:group-hover:opacity-100"
+						class="aspect-square w-full origin-left -translate-x-full transform rounded-full bg-c-primary/10 opacity-0
+							transition not-touch:group-hover:translate-x-[-45%] not-touch:group-hover:opacity-100"
 					/>
 				</div>
 			</div>
 		{/if}
 		{#if $generationInitImageSrc && $generationInitImageWidth && $generationInitImageHeight}
-			<div class="w-full flex items-center relative">
+			<div class="relative flex w-full items-center">
 				<div class="p-1">
 					<div
 						role="button"
@@ -111,8 +111,8 @@
 						on:click|stopPropagation={openImageModal}
 						on:keydown={() => null}
 						style="background-image: url({$generationInitImageSrc});"
-						class="bg-c-bg-secondary ml-px w-10.5 h-10.5 bg-cover bg-center rounded transition ring-2 ring-c-bg-secondary
-						shadow-md shadow-c-shadow/[var(--o-shadow-strongest)] hover:cursor-pointer
+						class="ml-px h-10.5 w-10.5 rounded bg-c-bg-secondary bg-cover bg-center shadow-md shadow-c-shadow/[var(--o-shadow-strongest)] ring-2
+						ring-c-bg-secondary transition hover:cursor-pointer
 						not-touch:hover:ring-c-primary/75"
 					/>
 				</div>
@@ -126,7 +126,7 @@
 							fileInput?.click();
 						}}
 						on:keydown={() => null}
-						class="flex-1 flex items-center self-stretch px-3 text-xs text-c-danger/75 relative cursor-pointer"
+						class="relative flex flex-1 cursor-pointer items-center self-stretch px-3 text-xs text-c-danger/75"
 					>
 						{$LL.Error.TryAnotherImage()}
 					</div>
@@ -138,7 +138,7 @@
 						step={initImageStrengthStep}
 						numeratorFormatter={(value) => `${value * 100}%`}
 						disabled={false}
-						class="pl-2 pr-4 gap-3"
+						class="gap-3 pl-2 pr-4"
 						bind:value={$generationInitImageStrength}
 					/>
 				{/if}
@@ -146,11 +146,11 @@
 		{/if}
 		<label
 			for="file-input"
-			class="flex items-center hover:cursor-pointer relative {$generationInitImageSrc &&
+			class="relative flex items-center hover:cursor-pointer {$generationInitImageSrc &&
 			$generationInitImageWidth &&
 			$generationInitImageHeight
-				? 'opacity-0 w-0 h-0 overflow-hidden pointer-events-none'
-				: 'opacity-100 w-full h-full'}"
+				? 'pointer-events-none h-0 w-0 overflow-hidden opacity-0'
+				: 'h-full w-full opacity-100'}"
 		>
 			<input
 				bind:this={fileInput}
@@ -160,15 +160,15 @@
 				accept="image/png, image/jpeg, image/webp"
 				bind:files={$generationInitImageFiles}
 				{disabled}
-				class="w-0 h-0 opacity-0"
+				class="h-0 w-0 opacity-0"
 			/>
 			<div
-				class="max-w-full flex items-center justify-start pl-3.5 pr-4 py-3.25 md:py-3.5 gap-2 transition
-				not-touch:group-hover:text-c-primary"
+				class="flex max-w-full items-center justify-start gap-2 py-3.25 pl-3.5 pr-4 transition not-touch:group-hover:text-c-primary
+				md:py-3.5"
 			>
-				<IconDropzone class="w-5 h-5 shrink-0" />
+				<IconDropzone class="h-5 w-5 shrink-0" />
 				<p
-					class="text-base font-medium min-w-0 flex-1 overflow-hidden overflow-ellipsis whitespace-nowrap"
+					class="min-w-0 flex-1 overflow-hidden overflow-ellipsis whitespace-nowrap text-base font-medium"
 				>
 					{$LL.Home.ImageInput.Title()}
 				</p>
@@ -177,7 +177,7 @@
 				<button
 					on:click={openSignInModal}
 					type="button"
-					class="w-full h-full absolute left-0 top-0"
+					class="absolute left-0 top-0 h-full w-full"
 				/>
 			{/if}
 		</label>
@@ -187,7 +187,7 @@
 {#if isImageModalOpen && $generationInitImageSrc && $generationInitImageWidth && $generationInitImageHeight}
 	<div
 		use:portal={'body'}
-		class="w-full h-full bg-c-barrier/80 fixed left-0 top-0 px-3 z-[10001]"
+		class="fixed left-0 top-0 z-[10001] h-full w-full bg-c-barrier/80 px-3"
 	/>
 	<div
 		use:portal={'body'}
@@ -195,50 +195,50 @@
 			scrollY = e.currentTarget.scrollTop;
 		}}
 		style="max-height: 100vh; max-height: {$windowHeight ? `${$windowHeight}px` : '100svh'};"
-		class="w-full h-full flex flex-col items-center fixed left-0 top-0 pb-20 md:p-16 z-[10002] overflow-auto"
+		class="fixed left-0 top-0 z-[10002] flex h-full w-full flex-col items-center overflow-auto pb-20 md:p-16"
 	>
-		<div class="w-full flex-1 md:h-full flex flex-col items-center md:min-h-[20rem]">
-			<div class="w-full flex-1 md:max-w-full md:h-full flex flex-col items-center">
+		<div class="flex w-full flex-1 flex-col items-center md:h-full md:min-h-[20rem]">
+			<div class="flex w-full flex-1 flex-col items-center md:h-full md:max-w-full">
 				<div
-					class="w-full sticky top-0 z-10 flex items-center justify-start md:hidden px-1 pt-1 pb-2"
+					class="sticky top-0 z-10 flex w-full items-center justify-start px-1 pb-2 pt-1 md:hidden"
 				>
 					<div
-						class="flex items-center justify-center transition duration-150 rounded-full {scrollY &&
+						class="flex items-center justify-center rounded-full transition duration-150 {scrollY &&
 						scrollY > 5
 							? 'bg-c-bg-secondary/75'
 							: 'bg-c-bg-secondary/0'}"
 					>
 						<IconButton name="Close" onClick={closeImageModal}>
 							<IconCancel
-								class="w-9 h-9 transition not-touch:group-hover/iconbutton:text-c-primary"
+								class="h-9 w-9 transition not-touch:group-hover/iconbutton:text-c-primary"
 							/>
 						</IconButton>
 					</div>
 				</div>
-				<div class="max-w-5xl flex-1 flex justify-center md:h-full w-full my-auto px-2.5">
+				<div class="my-auto flex w-full max-w-5xl flex-1 justify-center px-2.5 md:h-full">
 					<div
 						use:clickoutside={{ callback: closeImageModal }}
 						style="aspect-ratio: {$generationInitImageWidth / $generationInitImageHeight}"
-						class="w-full max-w-lg md:w-auto md:max-w-full md:max-h-full relative my-auto"
+						class="relative my-auto w-full max-w-lg md:max-h-full md:w-auto md:max-w-full"
 					>
-						<div class="absolute w-full flex flex-wrap justify-end items-center p-3 gap-3">
+						<div class="absolute flex w-full flex-wrap items-center justify-end gap-3 p-3">
 							<SubtleButton
 								class="shadow-lg shadow-c-shadow/[var(--o-shadow-stronger)]"
 								onClick={() => fileInput?.click()}
 							>
-								<IconRefresh class="w-7 h-7" />
+								<IconRefresh class="h-7 w-7" />
 							</SubtleButton>
 							<SubtleButton
 								class="shadow-lg shadow-c-shadow/[var(--o-shadow-stronger)]"
 								onClick={removeInitImage}
 							>
-								<IconTrashcan class="w-7 h-7 text-c-danger" />
+								<IconTrashcan class="h-7 w-7 text-c-danger" />
 							</SubtleButton>
 						</div>
 						<img
 							width={$generationInitImageWidth}
 							height={$generationInitImageHeight}
-							class="w-full h-auto bg-c-bg-secondary ring-4 ring-c-bg-secondary rounded-xl shadow-generation-modal shadow-c-shadow/[var(--o-shadow-stronger)]"
+							class="h-auto w-full rounded-xl bg-c-bg-secondary shadow-generation-modal shadow-c-shadow/[var(--o-shadow-stronger)] ring-4 ring-c-bg-secondary"
 							src={$generationInitImageSrc}
 							alt="Init"
 						/>

@@ -37,26 +37,26 @@
 </script>
 
 <div
-	class="w-full h-full flex flex-col relative bg-c-bg-secondary transition overflow-hidden
-		z-0 {cardType === 'generate'
+	class="relative z-0 flex h-full w-full flex-col overflow-hidden bg-c-bg-secondary
+		transition {cardType === 'generate'
 		? output.image_url &&
-		  !output.is_deleted &&
-		  output.status !== 'failed' &&
-		  output.status !== 'failed-nsfw' &&
-		  output.status !== 'failed-nsfw-prompt'
-			? 'border-2 rounded-lg hover:border-c-primary'
-			: 'border-2 rounded-lg'
-		: 'border-2 rounded-xl'} {isSelected
+			!output.is_deleted &&
+			output.status !== 'failed' &&
+			output.status !== 'failed-nsfw' &&
+			output.status !== 'failed-nsfw-prompt'
+			? 'rounded-lg border-2 hover:border-c-primary'
+			: 'rounded-lg border-2'
+		: 'rounded-xl border-2'} {isSelected
 		? 'border-c-primary'
 		: 'border-c-bg-secondary'} {isHoverable ? 'hover:border-c-primary/75' : ''}"
 >
-	<div class="w-full flex-1 overflow-hidden z-0 relative group">
+	<div class="group relative z-0 w-full flex-1 overflow-hidden">
 		{#if output.generation.outputs !== undefined}
 			{#if output.status !== 'failed' && output.status !== 'failed-nsfw' && output.status !== 'failed-nsfw-prompt'}
 				{#if output.status !== undefined && output.status !== 'succeeded' && output.animation !== undefined}
 					<div
 						out:fade={{ duration: 3000, easing: quadIn }}
-						class="w-full h-full absolute left-0 top-0"
+						class="absolute left-0 top-0 h-full w-full"
 					>
 						<GenerationAnimation animation={output.animation} />
 					</div>
@@ -77,7 +77,7 @@
 			{:else}
 				<div
 					in:fade={{ duration: 200, easing: quadOut }}
-					class="w-full h-full flex items-center bg-c-bg-secondary justify-center relative p-2"
+					class="relative flex h-full w-full items-center justify-center bg-c-bg-secondary p-2"
 				>
 					{#if cardType === 'generate'}
 						{@const sizeClasses =
@@ -92,12 +92,12 @@
 							<IconSadFaceOutline class="{sizeClasses} text-c-on-bg/50" />
 						{/if}
 					{:else}
-						<p class="text-sm text-c-on-bg/50 px-5 py-3 text-center leading-relaxed">
+						<p class="px-5 py-3 text-center text-sm leading-relaxed text-c-on-bg/50">
 							{output.status === 'failed-nsfw'
 								? $LL.Error.ImageWasNSFW()
 								: output.status === 'failed-nsfw-prompt'
-								? $LL.Error.PromptWasNSFW()
-								: $LL.Error.SomethingWentWrong()}
+									? $LL.Error.PromptWasNSFW()
+									: $LL.Error.SomethingWentWrong()}
 						</p>
 					{/if}
 				</div>
@@ -105,23 +105,23 @@
 		{/if}
 	</div>
 	{#if cardType === 'gallery' || cardType === 'admin-gallery'}
-		<div class="w-full flex flex-col bg-c-bg-secondary rounded-b-xl text-sm">
+		<div class="flex w-full flex-col rounded-b-xl bg-c-bg-secondary text-sm">
 			{#if cardType === 'admin-gallery' && (output.aesthetic_artifact_score !== undefined || output.aesthetic_rating_score !== undefined)}
 				<div
-					class="flex flex-row flex-wrap items-center justify-start px-2 md:px-3 pt-2 md:pt-2.25 gap-2.5 -mb-0.5 md:-mb-1.25"
+					class="-mb-0.5 flex flex-row flex-wrap items-center justify-start gap-2.5 px-2 pt-2 md:-mb-1.25 md:px-3 md:pt-2.25"
 				>
 					{#if output.aesthetic_rating_score !== undefined}
 						<div class="flex items-center gap-1">
-							<IconStar class="w-4 h-4" />
-							<p class="font-medium pt-0.25">
+							<IconStar class="h-4 w-4" />
+							<p class="pt-0.25 font-medium">
 								{numberFormatter.format(output.aesthetic_rating_score * 100)}
 							</p>
 						</div>
 					{/if}
 					{#if output.aesthetic_artifact_score !== undefined}
 						<div class="flex items-center gap-1">
-							<IconBug class="w-4 h-4" />
-							<p class="font-medium pt-0.25">
+							<IconBug class="h-4 w-4" />
+							<p class="pt-0.25 font-medium">
 								{numberFormatter.format(output.aesthetic_artifact_score * 100)}
 							</p>
 						</div>
@@ -129,31 +129,31 @@
 				</div>
 			{/if}
 			<p
-				class="w-full whitespace-nowrap overflow-hidden overflow-ellipsis px-2 md:px-3 pt-1.75 md:pt-2.5"
+				class="w-full overflow-hidden overflow-ellipsis whitespace-nowrap px-2 pt-1.75 md:px-3 md:pt-2.5"
 			>
 				{output.generation.prompt.text}
 			</p>
-			<div class="w-full flex items-end justify-between px-0.5 pb-0.5 md:px-1 md:pb-1">
+			<div class="flex w-full items-end justify-between px-0.5 pb-0.5 md:px-1 md:pb-1">
 				<a
 					href="/{output.generation.user.username}"
 					data-sveltekit-preload-data="hover"
-					class="flex flex-shrink min-w-0 items-center group gap-2 relative px-2 py-1.5 rounded-md"
+					class="group relative flex min-w-0 flex-shrink items-center gap-2 rounded-md px-2 py-1.5"
 				>
 					<ButtonHoverEffect noPadding color="bg-tertiary" size="md" />
 					<Avatar
-						class="w-5 h-5 md:w-6 md:h-6 flex-shrink-0 relative"
+						class="relative h-5 w-5 flex-shrink-0 md:h-6 md:w-6"
 						text={output.generation.user.username}
 					/>
-					<div class="flex flex-shrink min-w-0 flex-col pr-0.5 relative">
+					<div class="relative flex min-w-0 flex-shrink flex-col pr-0.5">
 						<p
-							class="whitespace-nowrap overflow-hidden overflow-ellipsis text-xs md:text-sm
-							font-medium text-c-on-bg/75 transition not-touch:group-hover:text-c-on-bg"
+							class="overflow-hidden overflow-ellipsis whitespace-nowrap text-xs font-medium
+							text-c-on-bg/75 transition not-touch:group-hover:text-c-on-bg md:text-sm"
 						>
 							<span class="text-c-on-bg/50 transition not-touch:group-hover:text-c-on-bg/75">@</span
 							>{output.generation.user.username}
 						</p>
 						<p
-							class="whitespace-nowrap overflow-hidden overflow-ellipsis text-c-on-bg/75 text-xs
+							class="overflow-hidden overflow-ellipsis whitespace-nowrap text-xs text-c-on-bg/75
 							transition not-touch:group-hover:text-c-on-bg"
 						>
 							{getRelativeDate({

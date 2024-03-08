@@ -29,7 +29,7 @@
 
 <div class={classes}>
 	<div class="flex flex-wrap gap-6">
-		<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">
+		<div class="flex min-w-[calc(50%-0.75rem)] flex-col items-start gap-1">
 			<WithTooltip
 				title={$LL.Home.ModelDropdown.Title()}
 				paragraph={$LL.Home.ModelDropdown.Paragraph()}
@@ -41,9 +41,9 @@
 					tabindex="-1"
 					use:trigger
 					{...triggerStoreValue}
-					class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
+					class="flex cursor-default items-center gap-1.5 text-sm text-c-on-bg/75"
 				>
-					<IconGenerationSettingsSet type="model" class="w-4 h-4" />
+					<IconGenerationSettingsSet type="model" class="h-4 w-4" />
 					<p class="font-medium">{$LL.Home.ModelDropdown.Title()}</p>
 				</div>
 			</WithTooltip>
@@ -53,7 +53,7 @@
 					$LL.Shared.UnknownTitle()}
 			</p>
 		</div>
-		<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">
+		<div class="flex min-w-[calc(50%-0.75rem)] flex-col items-start gap-1">
 			<WithTooltip
 				title={$LL.Home.GuidanceScaleSlider.Title()}
 				paragraph={$LL.Home.GuidanceScaleSlider.Paragraph()}
@@ -65,15 +65,15 @@
 					tabindex="-1"
 					use:trigger
 					{...triggerStoreValue}
-					class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
+					class="flex cursor-default items-center gap-1.5 text-sm text-c-on-bg/75"
 				>
-					<IconGenerationSettingsSet type="guidance-scale" class="w-4 h-4" />
+					<IconGenerationSettingsSet type="guidance-scale" class="h-4 w-4" />
 					<p class="font-medium">{$LL.Home.GuidanceScaleSlider.Title()}</p>
 				</div>
 				<p class="font-semibold">{generation.guidance_scale}</p>
 			</WithTooltip>
 		</div>
-		<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">
+		<div class="flex min-w-[calc(50%-0.75rem)] flex-col items-start gap-1">
 			<WithTooltip
 				title={$LL.Home.InferenceStepsTabBar.Title()}
 				paragraph={$LL.Home.InferenceStepsTabBar.Paragraph()}
@@ -85,15 +85,15 @@
 					tabindex="-1"
 					use:trigger
 					{...triggerStoreValue}
-					class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
+					class="flex cursor-default items-center gap-1.5 text-sm text-c-on-bg/75"
 				>
-					<IconGenerationSettingsSet type="inference-steps" class="w-4 h-4" />
+					<IconGenerationSettingsSet type="inference-steps" class="h-4 w-4" />
 					<p class="font-medium">{$LL.Home.InferenceStepsTabBar.Title()}</p>
 				</div>
 			</WithTooltip>
 			<p class="font-semibold">{generation.inference_steps}</p>
 		</div>
-		<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">
+		<div class="flex min-w-[calc(50%-0.75rem)] flex-col items-start gap-1">
 			<WithTooltip
 				title={$LL.Home.SchedulerDropdown.Title()}
 				paragraph={$LL.Home.SchedulerDropdown.Paragraph()}
@@ -105,9 +105,9 @@
 					tabindex="-1"
 					use:trigger
 					{...triggerStoreValue}
-					class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
+					class="flex cursor-default items-center gap-1.5 text-sm text-c-on-bg/75"
 				>
-					<IconGenerationSettingsSet type="scheduler" class="w-4 h-4" />
+					<IconGenerationSettingsSet type="scheduler" class="h-4 w-4" />
 					<p class="font-medium">{$LL.Home.SchedulerDropdown.Title()}</p>
 				</div>
 			</WithTooltip>
@@ -117,7 +117,7 @@
 			</p>
 		</div>
 		{#if generation.prompt_strength}
-			<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">
+			<div class="flex min-w-[calc(50%-0.75rem)] flex-col items-start gap-1">
 				<WithTooltip
 					title={$LL.Home.InitialImageStrengthTabBar.TitleAlt()}
 					paragraph={$LL.Home.InitialImageStrengthTabBar.Paragraph()}
@@ -129,9 +129,9 @@
 						tabindex="-1"
 						use:trigger
 						{...triggerStoreValue}
-						class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
+						class="flex cursor-default items-center gap-1.5 text-sm text-c-on-bg/75"
 					>
-						<IconGenerationSettingsSet type="image-strength" class="w-4 h-4" />
+						<IconGenerationSettingsSet type="image-strength" class="h-4 w-4" />
 						<p class="font-medium">{$LL.Home.InitialImageStrengthTabBar.TitleAlt()}</p>
 					</div>
 				</WithTooltip>
@@ -141,7 +141,7 @@
 			</div>
 		{/if}
 		{#if modalType === 'generate' || (modalType === 'history' && generation.user.username === $userSummary?.username) || modalType === 'admin-gallery'}
-			<div class="min-w-[calc(50%-0.75rem)] flex flex-wrap items-center gap-3.5">
+			<div class="flex min-w-[calc(50%-0.75rem)] flex-wrap items-center gap-3.5">
 				<div class="flex flex-col items-start gap-1">
 					<WithTooltip
 						title={$LL.Home.SeedInput.Title()}
@@ -154,9 +154,9 @@
 							tabindex="-1"
 							use:trigger
 							{...triggerStoreValue}
-							class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default"
+							class="flex cursor-default items-center gap-1.5 text-sm text-c-on-bg/75"
 						>
-							<IconGenerationSettingsSet type="seed" class="w-4 h-4" />
+							<IconGenerationSettingsSet type="seed" class="h-4 w-4" />
 							<p class="font-medium">{$LL.Home.SeedInput.Title()}</p>
 						</div>
 					</WithTooltip>
@@ -175,10 +175,10 @@
 						>
 							<Morpher morphed={buttonObjectsWithState.seed.state === 'success'}>
 								<div slot="0" class="flex items-center justify-center gap-1.5">
-									<IconCopy class="w-5 h-5" />
+									<IconCopy class="h-5 w-5" />
 								</div>
 								<div slot="1" class="flex items-center justify-center gap-1.5">
-									<IconTick class="w-8 h-8" />
+									<IconTick class="h-8 w-8" />
 								</div>
 							</Morpher>
 						</SubtleButton>
@@ -186,9 +186,9 @@
 				{/key}
 			</div>
 		{/if}
-		<div class="min-w-[calc(50%-0.75rem)] flex flex-col items-start gap-1">
-			<div class="flex items-center gap-1.5 text-c-on-bg/75 text-sm cursor-default">
-				<IconGenerationSettingsSet type="dimensions" class="w-4 h-4" />
+		<div class="flex min-w-[calc(50%-0.75rem)] flex-col items-start gap-1">
+			<div class="flex cursor-default items-center gap-1.5 text-sm text-c-on-bg/75">
+				<IconGenerationSettingsSet type="dimensions" class="h-4 w-4" />
 				<p class="font-medium">{$LL.GenerationFullscreen.Dimensions.Title()}</p>
 			</div>
 			<p class="font-semibold">{currentImageWidth} × {currentImageHeight}</p>

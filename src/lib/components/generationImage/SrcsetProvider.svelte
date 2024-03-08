@@ -9,7 +9,7 @@
 		cardType !== 'stage'
 			? getImgProxySrcSet({
 					src
-			  })
+				})
 			: undefined;
 	$: sizes =
 		cardType !== 'stage'

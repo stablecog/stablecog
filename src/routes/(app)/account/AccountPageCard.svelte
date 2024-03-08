@@ -24,30 +24,30 @@
 
 <div
 	bind:clientWidth={containerWidth}
-	class="w-full flex flex-col justify-start items-start rounded-2xl bg-c-bg relative z-0
-	shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-secondary overflow-hidden"
+	class="relative z-0 flex w-full flex-col items-start justify-start overflow-hidden rounded-2xl
+	bg-c-bg shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-secondary"
 >
 	<div
 		on:scroll={onScroll}
-		class="w-full flex flex-col items-start {overflowXScroll
+		class="flex w-full flex-col items-start {overflowXScroll
 			? 'overflow-x-auto overflow-y-hidden'
 			: ''} hide-scrollbar"
 	>
-		<div bind:clientWidth={innerContainerWidth} class="min-w-full flex flex-col">
+		<div bind:clientWidth={innerContainerWidth} class="flex min-w-full flex-col">
 			<slot />
 		</div>
 	</div>
 	<div
 		class="{showChevron
 			? 'translate-x-0 opacity-100'
-			: 'translate-x-full opacity-0'} transform transition absolute flex flex-col items-end justify-start bg-gradient-to-l
-			from-c-bg to-c-bg/0 rounded-r-2xl right-0 top-0 h-full w-16 pointer-events-none"
+			: 'translate-x-full opacity-0'} pointer-events-none absolute right-0 top-0 flex h-full w-16 transform
+			flex-col items-end justify-start rounded-r-2xl bg-gradient-to-l from-c-bg to-c-bg/0 transition"
 	>
 		<div
-			class="w-full flex justify-end items-center px-1.5 py-3.5 bg-gradient-to-l
-			from-c-bg from-[40%] to-c-bg/0"
+			class="flex w-full items-center justify-end bg-gradient-to-l from-c-bg from-[40%]
+			to-c-bg/0 px-1.5 py-3.5"
 		>
-			<IconChevronDown class="w-5 h-5 text-c-on-bg/50 transform -rotate-90" />
+			<IconChevronDown class="h-5 w-5 -rotate-90 transform text-c-on-bg/50" />
 		</div>
 	</div>
 </div>

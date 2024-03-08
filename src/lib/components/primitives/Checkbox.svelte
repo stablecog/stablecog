@@ -23,19 +23,19 @@
 			class="flex {size === 'lg'
 				? 'h-6 w-6 rounded-md'
 				: size === 'sm'
-					? 'w-4 h-4 rounded'
-					: 'w-5 h-5 rounded'} appearance-none ring-1.5 ring-c-primary relative"
+					? 'h-4 w-4 rounded'
+					: 'h-5 w-5 rounded'} relative appearance-none ring-1.5 ring-c-primary"
 			id="checkbox"
 		>
 			<div
-				class="w-full h-full transition duration-150 transform bg-c-primary ring-c-primary p-0.25
+				class="h-full w-full transform bg-c-primary p-0.25 ring-c-primary transition duration-150
 				{$isChecked ? 'scale-100 opacity-100 ring-2' : 'scale-25 opacity-0 ring-0'} {size === 'lg'
 					? 'rounded-md'
 					: size === 'sm'
 						? 'rounded'
 						: 'rounded'}"
 			>
-				<IconTickOnly class="w-full h-full text-c-on-primary" />
+				<IconTickOnly class="h-full w-full text-c-on-primary" />
 			</div>
 			<input {...$input} use:input id={name} />
 		</button>

@@ -159,30 +159,30 @@
 		<button
 			bind:this={buttonElement}
 			on:click={onClick}
-			class="touch-manipulation transition group/likebutton p-2.5 rounded-full bg-c-bg relative overflow-hidden z-0
-			flex flex-col items-center justify-center
-			before:w-full before:h-full before:absolute before:left-0 before:top-0
-			before:-translate-x-full before:not-touch:hover:translate-x-0
-			before:rounded-full before:transition before:transform before:bg-c-danger/25 {classes}"
+			class="group/likebutton relative z-0 flex touch-manipulation flex-col items-center justify-center overflow-hidden
+			rounded-full bg-c-bg p-2.5 transition
+			before:absolute before:left-0 before:top-0 before:h-full before:w-full
+			before:-translate-x-full before:transform
+			before:rounded-full before:bg-c-danger/25 before:transition before:not-touch:hover:translate-x-0 {classes}"
 			aria-label={generation.selected_output.is_liked ? 'Unlike' : 'Like'}
 		>
 			<IconHeartSet
 				liked={generation.selected_output.is_liked}
-				class="w-7 h-7 transform flex-shrink-0 relative transition not-touch:group-hover/likebutton:text-c-danger"
+				class="relative h-7 w-7 flex-shrink-0 transform transition not-touch:group-hover/likebutton:text-c-danger"
 			/>
 		</button>
 	{:else if type === 'on-grid-card'}
 		<button
 			bind:this={buttonElement}
 			on:click={onClick}
-			class="flex text-sm relative items-center justify-end gap-1 before:w-full before:h-full
-			before:min-w-[48px] before:min-h-[48px] rounded-md
-			before:absolute before:-bottom-2.5 before:-right-2.5 group px-2 py-1.5 {classes}"
+			class="group relative flex items-center justify-end gap-1 rounded-md px-2
+			py-1.5 text-sm before:absolute
+			before:-bottom-2.5 before:-right-2.5 before:h-full before:min-h-[48px] before:w-full before:min-w-[48px] {classes}"
 		>
 			<ButtonHoverEffect noPadding color="danger" size="sm" />
 			<IconHeartSet
 				liked={generation.selected_output.is_liked}
-				class="w-5 h-5 transform flex-shrink-0 relative transition not-touch:group-hover:text-c-danger"
+				class="relative h-5 w-5 flex-shrink-0 transform transition not-touch:group-hover:text-c-danger"
 			/>
 			<p
 				class="font-medium transition not-touch:group-hover:text-c-danger {generation
@@ -195,9 +195,9 @@
 		</button>
 	{:else}
 		<SubtleButton {onClick}>
-			<div class="max-w-full flex items-center justify-center gap-1 -my-1">
+			<div class="-my-1 flex max-w-full items-center justify-center gap-1">
 				<IconHeartSet
-					class="w-5 h-5 transition not-touch:group-hover:text-c-danger"
+					class="h-5 w-5 transition not-touch:group-hover:text-c-danger"
 					liked={generation.selected_output.is_liked}
 				/>
 				<p

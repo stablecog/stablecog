@@ -157,18 +157,18 @@
 
 <svelte:window on:keydown={onKeyDown} />
 
-<div class="w-full px-1 flex-1 flex flex-col items-center md:pt-4">
-	<div class="w-full px-1 flex justify-center">
+<div class="flex w-full flex-1 flex-col items-center px-1 md:pt-4">
+	<div class="flex w-full justify-center px-1">
 		<div
-			class="w-full max-w-3xl flex flex-col bg-c-bg-secondary shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]
-			rounded-2xl mt-3 relative z-0 overflow-hidden border-2 border-c-bg-secondary"
+			class="relative z-0 mt-3 flex w-full max-w-3xl flex-col
+			overflow-hidden rounded-2xl border-2 border-c-bg-secondary bg-c-bg-secondary shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]"
 		>
 			<div
-				class="w-full h-full pl-16 absolute left-0 top-0 flex items-center justify-center overflow-hidden z-0"
+				class="absolute left-0 top-0 z-0 flex h-full w-full items-center justify-center overflow-hidden pl-16"
 			>
 				{#if initialFirstOutput}
 					<img
-						class="w-full h-auto min-h-full filter blur-xl scale-110 transition ease-in {cardBgNaturalWidth
+						class="h-auto min-h-full w-full scale-110 blur-xl filter transition ease-in {cardBgNaturalWidth
 							? 'opacity-100'
 							: 'opacity-0'}"
 						src={getImgProxySrc({
@@ -182,54 +182,54 @@
 					/>
 				{:else if $galleryGenerationFullOutputsQuery?.isSuccess}
 					<div
-						class="w-full h-full bg-gradient-to-br
+						class="h-full w-full bg-gradient-to-br
 						from-c-primary via-c-secondary to-c-primary"
 					/>
 				{/if}
 			</div>
 			<div
-				class="w-full flex flex-col relative bg-gradient-to-r from-[5rem] from-c-bg-secondary
-				to-c-bg-secondary/0 px-2 py-4 md:px-5 md:pt-6.5 md:pb-7"
+				class="relative flex w-full flex-col bg-gradient-to-r from-c-bg-secondary from-[5rem]
+				to-c-bg-secondary/0 px-2 py-4 md:px-5 md:pb-7 md:pt-6.5"
 			>
-				<div class="w-full flex-shrink min-w-0 flex flex-col items-start gap-2 px-2 relative">
+				<div class="relative flex w-full min-w-0 flex-shrink flex-col items-start gap-2 px-2">
 					<Avatar
-						class="w-14 h-14 md:w-16 md:h-16 ring-2 ring-c-on-bg/25 rounded-full transition transform flex-shrink-0
-						relative shadow-lg shadow-c-shadow/[var(--o-shadow-stronger)] items-center justify-center overflow-hidden"
+						class="relative h-14 w-14 flex-shrink-0 transform items-center justify-center overflow-hidden rounded-full shadow-lg
+						shadow-c-shadow/[var(--o-shadow-stronger)] ring-2 ring-c-on-bg/25 transition md:h-16 md:w-16"
 						text={data.username}
 					/>
-					<div class="w-full flex justify-start items-center -mt-0.75 md:-mt-0.25">
+					<div class="-mt-0.75 flex w-full items-center justify-start md:-mt-0.25">
 						{#if data.username === $userSummary?.username}
 							<WithChangeUsernameModal
 								afterUsernameChanged={(username) => goto(`/${username}`)}
 								let:trigger
 							>
-								<NoBgButton {trigger} class="mt-0 -mx-3.5" hoverFrom="left">
+								<NoBgButton {trigger} class="-mx-3.5 mt-0" hoverFrom="left">
 									<div
-										class="flex flex-shrink min-w-0 items-center justify-center gap-2.5 -mx-0.5 -my-0.5"
+										class="-mx-0.5 -my-0.5 flex min-w-0 flex-shrink items-center justify-center gap-2.5"
 									>
 										<h1
-											class="max-w-full text-c-on-bg font-bold text-3xl md:text-4xl flex-shrink min-w-0 transition
-											whitespace-nowrap overflow-hidden overflow-ellipsis not-touch:group-hover:text-c-primary"
+											class="min-w-0 max-w-full flex-shrink overflow-hidden overflow-ellipsis whitespace-nowrap text-3xl font-bold
+											text-c-on-bg transition not-touch:group-hover:text-c-primary md:text-4xl"
 										>
 											<span
-												class="text-c-on-bg/50 not-touch:group-hover:text-c-primary/50 transition font-semibold"
+												class="font-semibold text-c-on-bg/50 transition not-touch:group-hover:text-c-primary/50"
 												>@</span
 											>{data.username}
 										</h1>
 										<IconPen
-											class="w-5 h-5 text-c-on-bg/50 not-touch:group-hover:text-c-primary/50 transition relative"
+											class="relative h-5 w-5 text-c-on-bg/50 transition not-touch:group-hover:text-c-primary/50"
 										/>
 									</div>
 								</NoBgButton>
 							</WithChangeUsernameModal>
 						{:else}
-							<div class="flex-shrink min-w-0 flex items-center justify-start gap-3 py-3">
+							<div class="flex min-w-0 flex-shrink items-center justify-start gap-3 py-3">
 								<h1
-									class="max-w-full text-c-on-bg font-bold text-3xl md:text-4xl flex-shrink min-w-0 transition
-									whitespace-nowrap overflow-hidden overflow-ellipsis not-touch:group-hover:text-c-primary"
+									class="min-w-0 max-w-full flex-shrink overflow-hidden overflow-ellipsis whitespace-nowrap text-3xl font-bold
+									text-c-on-bg transition not-touch:group-hover:text-c-primary md:text-4xl"
 								>
 									<span
-										class="text-c-on-bg/50 not-touch:group-hover:text-c-primary/50 transition font-semibold"
+										class="font-semibold text-c-on-bg/50 transition not-touch:group-hover:text-c-primary/50"
 										>@</span
 									>{data.username}
 								</h1>
@@ -238,7 +238,7 @@
 					</div>
 				</div>
 				<div
-					class="w-full flex flex-wrap items-center justify-start gap-3 px-2 mt-2 md:mt-2.5 relative"
+					class="relative mt-2 flex w-full flex-wrap items-center justify-start gap-3 px-2 md:mt-2.5"
 				>
 					<ProfileCardBadge
 						icon={data.userMetadata.active_product_id ? IconStar : IconFreePlan}
@@ -254,8 +254,8 @@
 			</div>
 		</div>
 	</div>
-	<div class="w-full px-1 py-1 md:py-2 flex justify-center mt-2 md:mt-3.5">
-		<div class="w-full flex max-w-3xl justify-center">
+	<div class="mt-2 flex w-full justify-center px-1 py-1 md:mt-3.5 md:py-2">
+		<div class="flex w-full max-w-3xl justify-center">
 			<SearchAndFilterBar
 				bind:modelIdFilters={$someUserGalleryModelIdFilters}
 				bind:searchString={$someUserGallerySearchString}
@@ -263,10 +263,10 @@
 			/>
 		</div>
 	</div>
-	<div class="w-full pb-3 pt-1 md:pt-3 relative flex flex-col flex-1">
+	<div class="relative flex w-full flex-1 flex-col pb-3 pt-1 md:pt-3">
 		{#if $galleryGenerationFullOutputsQuery?.isInitialLoading}
 			<div
-				class="w-full flex flex-col text-c-on-bg/60 flex-1 py-6 px-4 justify-center items-center text-center"
+				class="flex w-full flex-1 flex-col items-center justify-center px-4 py-6 text-center text-c-on-bg/60"
 			>
 				<div
 					in:scale={{
@@ -275,9 +275,9 @@
 						opacity: 0,
 						start: 0.5
 					}}
-					class="w-12 h-12"
+					class="h-12 w-12"
 				>
-					<IconAnimatedSpinner class="w-full h-full" />
+					<IconAnimatedSpinner class="h-full w-full" />
 				</div>
 				<p class="mt-2 opacity-0">
 					{$LL.Gallery.SearchingTitle()}
@@ -285,18 +285,18 @@
 				<div class="h-[2vh]" />
 			</div>
 		{:else if $galleryGenerationFullOutputsQuery?.isError || ($galleryGenerationFullOutputsQuery?.data && !$galleryGenerationFullOutputsQuery?.data?.pages)}
-			<div class="w-full flex-1 flex flex-col items-center py-8 px-5">
-				<div class="flex flex-col my-auto items-center gap-2">
-					<IconSadFace class="w-16 h-16 text-c-on-bg/50" />
+			<div class="flex w-full flex-1 flex-col items-center px-5 py-8">
+				<div class="my-auto flex flex-col items-center gap-2">
+					<IconSadFace class="h-16 w-16 text-c-on-bg/50" />
 					<p class="text-c-on-bg/50">{$LL.Error.SomethingWentWrong()}</p>
 				</div>
 			</div>
 		{:else if $galleryGenerationFullOutputsQuery?.data?.pages.length === 1 && $galleryGenerationFullOutputsQuery.data.pages[0].outputs.length === 0}
 			<div
-				class="w-full flex flex-col text-c-on-bg/60 flex-1 py-6 px-4 justify-center items-center text-center"
+				class="flex w-full flex-1 flex-col items-center justify-center px-4 py-6 text-center text-c-on-bg/60"
 			>
-				<div class="w-16 h-16">
-					<IconSearch class="w-full h-full" />
+				<div class="h-16 w-16">
+					<IconSearch class="h-full w-full" />
 				</div>
 				<p class="mt-2">
 					{$LL.Gallery.NoMatchingGenerationTitle()}
@@ -304,21 +304,21 @@
 				<div class="h-[2vh]" />
 			</div>
 		{:else if galleryGenerationFullOutputsQuery !== undefined && $windowWidth}
-			<div class="w-full flex-1 mt-1 md:mt-0.5 flex flex-col">
+			<div class="mt-1 flex w-full flex-1 flex-col md:mt-0.5">
 				<GenerationGridInfinite
 					cardType="user-profile"
 					generationsQuery={galleryGenerationFullOutputsQuery}
 					cols={$windowWidth > xl3Breakpoint
 						? 7
 						: $windowWidth > xl2Breakpoint
-						? 6
-						: $windowWidth > xlBreakpoint
-						? 5
-						: $windowWidth > lgBreakpoint
-						? 4
-						: $windowWidth > mdBreakpoint
-						? 3
-						: 2}
+							? 6
+							: $windowWidth > xlBreakpoint
+								? 5
+								: $windowWidth > lgBreakpoint
+									? 4
+									: $windowWidth > mdBreakpoint
+										? 3
+										: 2}
 					{setSearchQuery}
 				/>
 			</div>

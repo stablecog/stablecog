@@ -21,11 +21,11 @@
 </script>
 
 {#if similarOutputs.length > 0}
-	<div class="w-full flex flex-col mt-5">
-		<p class="max-w-full font-semibold text-3xl">
+	<div class="mt-5 flex w-full flex-col">
+		<p class="max-w-full text-3xl font-semibold">
 			{$LL.GenerationFullscreen.SimilarTitle()}
 		</p>
-		<div class="w-[calc(100%+8px)] flex flex-row justify-start items-start -m-4px mt-3.5">
+		<div class="-m-4px mt-3.5 flex w-[calc(100%+8px)] flex-row items-start justify-start">
 			<SimpleGrid cols={simpleGridCols} items={similarOutputs} let:item={similarOutput}>
 				<a
 					on:click={() => {
@@ -46,17 +46,17 @@
 						? `/${output.generation.user.username}/o/${similarOutput.id}`
 						: `/gallery/o/${similarOutput.id}`}
 					data-sveltekit-preload-data="hover"
-					class="w-full group"
+					class="group w-full"
 				>
 					<div class="w-full p-2px">
 						{#key similarOutput.id}
 							<div
-								class="w-full rounded-xl overflow-hidden border-2 border-c-bg-secondary relative z-0
-                shadow-lg shadow-c-shadow/[var(--o-shadow-stronger)] transition bg-c-bg-secondary not-touch:group-hover:border-c-primary"
+								class="relative z-0 w-full overflow-hidden rounded-xl border-2 border-c-bg-secondary
+                bg-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-stronger)] transition not-touch:group-hover:border-c-primary"
 							>
 								<Img
 									loading="lazy"
-									class="w-full h-auto not-touch:group-hover:scale-105 transition duration-350"
+									class="h-auto w-full transition duration-350 not-touch:group-hover:scale-105"
 									sizes={`(min-width: 1024px) calc(28rem / ${simpleGridCols}), calc(min(36rem, 100vw) / ${simpleGridCols})`}
 									src={getImgProxySrc({
 										src: similarOutput.upscaled_image_url ?? similarOutput.image_url,

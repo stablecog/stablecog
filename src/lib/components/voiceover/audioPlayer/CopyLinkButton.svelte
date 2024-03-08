@@ -32,9 +32,9 @@
 	use:copy={linkToCopy}
 	on:svelte-copy={onCopied}
 	on:svelte-copy:error={(e) => console.log(e)}
-	class="touch-manipulation relative rounded-lg group/download-button transition {copied
+	class="group/download-button relative touch-manipulation rounded-lg transition {copied
 		? 'bg-c-success'
-		: 'bg-c-success/0'} {size === 'lg' ? 'w-12 h-12' : 'w-10 h-10'}"
+		: 'bg-c-success/0'} {size === 'lg' ? 'h-12 w-12' : 'h-10 w-10'}"
 	aria-label={$LL.Shared.CopyLinkButton()}
 >
 	{#if !copied}
@@ -46,16 +46,16 @@
 		/>
 	{/if}
 	<div class="p-2">
-		<Morpher class="w-full h-full" morphed={copied}>
+		<Morpher class="h-full w-full" morphed={copied}>
 			<div slot="0">
 				<IconLink
-					class="w-full h-full transition {faded
+					class="h-full w-full transition {faded
 						? 'text-c-on-bg/50'
 						: 'text-c-on-bg'} not-touch:group-hover/download-button:text-c-primary"
 				/>
 			</div>
-			<div class="w-full h-full" slot="1">
-				<IconTick class="text-c-bg transform scale-150" />
+			<div class="h-full w-full" slot="1">
+				<IconTick class="scale-150 transform text-c-bg" />
 			</div>
 		</Morpher>
 	</div>

@@ -23,12 +23,12 @@
 />
 
 <PageWrapper>
-	<div class="w-full flex flex-col items-center justify-start my-auto">
-		<IconConfetti class="w-24 h-24 text-c-primary" />
-		<h1 class="text-center font-bold text-4xl mt-4 text-c-primary">
+	<div class="my-auto flex w-full flex-col items-center justify-start">
+		<IconConfetti class="h-24 w-24 text-c-primary" />
+		<h1 class="mt-4 text-center text-4xl font-bold text-c-primary">
 			{$LL.Pricing.Purchase.Succeeded.PageTitle()}
 		</h1>
-		<p class="max-w-xl mt-4 text-center leading-relaxed text-c-on-bg/75">
+		<p class="mt-4 max-w-xl text-center leading-relaxed text-c-on-bg/75">
 			{@html $LL.Pricing.Purchase.Succeeded.PageParagraph({ platform: '__discord__' }).replace(
 				'__discord__',
 				`<a class="text-c-primary font-bold hover:underline" href="/discord" target="_blank">Discord</a>`

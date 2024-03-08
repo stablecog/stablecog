@@ -75,26 +75,26 @@
 />
 
 <PageWrapper>
-	<div class="w-full flex flex-col justify-center items-center my-auto">
+	<div class="my-auto flex w-full flex-col items-center justify-center">
 		<div
-			class="w-full max-w-md flex flex-col items-center justify-center bg-c-bg ring-c-bg-secondary ring-2 px-3 py-4
-				md:p-7 rounded-3xl relative z-10 overflow-hidden shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]"
+			class="relative z-10 flex w-full max-w-md flex-col items-center justify-center overflow-hidden rounded-3xl bg-c-bg
+				px-3 py-4 shadow-xl shadow-c-shadow/[var(--o-shadow-normal)] ring-2 ring-c-bg-secondary md:p-7"
 		>
 			{#if changeEmailStatus === 'sent-otp' || changeEmailStatus === 'confirm-other-email'}
 				<div class="mb-2">
-					<IconEmail class="w-20 h-20 text-c-on-bg" />
+					<IconEmail class="h-20 w-20 text-c-on-bg" />
 				</div>
 			{/if}
-			<h1 class="w-full text-center font-bold leading-normal mt-1 md:-mt-2 text-2xl px-8">
+			<h1 class="mt-1 w-full px-8 text-center text-2xl font-bold leading-normal md:-mt-2">
 				{changeEmailStatus === 'sent-otp'
 					? $LL.Account.ChangeEmail.PageTitleSentLink()
 					: changeEmailStatus === 'confirm-other-email'
-					? $LL.Account.ChangeEmail.PageTitleConfirmOtherEmail()
-					: $LL.Account.ChangeEmail.PageTitle()}
+						? $LL.Account.ChangeEmail.PageTitleConfirmOtherEmail()
+						: $LL.Account.ChangeEmail.PageTitle()}
 			</h1>
-			<div class="w-full flex flex-col items-center justify-start mt-1.5">
+			<div class="mt-1.5 flex w-full flex-col items-center justify-start">
 				<p
-					class="w-full px-4 text-c-on-bg/60 text-center leading-relaxed mb-4 {changeEmailStatus ===
+					class="mb-4 w-full px-4 text-center leading-relaxed text-c-on-bg/60 {changeEmailStatus ===
 					'sent-otp'
 						? 'mt-1'
 						: ''}"
@@ -102,18 +102,18 @@
 					{changeEmailStatus === 'sent-otp'
 						? $LL.Account.ChangeEmail.PageParagraphSentLink()
 						: changeEmailStatus === 'confirm-other-email'
-						? $LL.Account.ChangeEmail.PageParagraphConfirmOtherEmail()
-						: $LL.Account.ChangeEmail.PageParagraph()}
+							? $LL.Account.ChangeEmail.PageParagraphConfirmOtherEmail()
+							: $LL.Account.ChangeEmail.PageParagraph()}
 				</p>
 				{#if changeEmailStatus === 'sent-otp' || changeEmailStatus === 'confirm-other-email'}
 					<div
-						class="mt-4 md:mt-6 -mx-5 md:-mx-10 -mb-4 md:-mb-7 border-t-2 border-c-bg-secondary w-[calc(100%+1.5rem)] md:w-[calc(100%+5rem)]
-						flex flex-col items-center justify-start relative z-0"
+						class="relative z-0 -mx-5 -mb-4 mt-4 flex w-[calc(100%+1.5rem)] flex-col items-center justify-start
+						border-t-2 border-c-bg-secondary md:-mx-10 md:-mb-7 md:mt-6 md:w-[calc(100%+5rem)]"
 					>
 						<DropdownItem onClick={() => (changeEmailStatus = 'idle')}>
-							<div class="w-full flex items-center justify-center gap-2.5">
+							<div class="flex w-full items-center justify-center gap-2.5">
 								<IconBack
-									class="text-c-on-bg/60 w-6 h-6 transition not-touch:group-hover:text-c-primary"
+									class="h-6 w-6 text-c-on-bg/60 transition not-touch:group-hover:text-c-primary"
 								/>
 								<p class="text-c-on-bg/60 transition not-touch:group-hover:text-c-primary">
 									{$LL.Shared.GoBackButton()}
@@ -124,12 +124,12 @@
 				{:else}
 					<div
 						transition:expandCollapse={{ duration: 200, easing: quadOut, opacity: 0 }}
-						class="relative z-0 flex flex-col justify-start items-center w-full"
+						class="relative z-0 flex w-full flex-col items-center justify-start"
 					>
 						<form
 							on:input={() => (errorText = null)}
 							on:submit|preventDefault={changeEmail}
-							class="w-full flex flex-col p-1 md:pb-2"
+							class="flex w-full flex-col p-1 md:pb-2"
 						>
 							<Input
 								disabled={changeEmailStatus === 'loading'}
@@ -138,10 +138,10 @@
 								bind:value={email}
 								hasIcon
 							>
-								<IconEmail slot="icon" class="w-full h-full" />
+								<IconEmail slot="icon" class="h-full w-full" />
 							</Input>
 							{#if errorText}
-								<ErrorLine text={errorText} class="text-xs -mt-1" />
+								<ErrorLine text={errorText} class="-mt-1 text-xs" />
 							{/if}
 							<Button class="mt-3" loading={changeEmailStatus === 'loading'} withSpinner>
 								{$LL.Shared.ContinueButton()}
@@ -152,14 +152,14 @@
 			</div>
 		</div>
 		{#if changeEmailStatus === 'idle'}
-			<div class="w-full flex items-center justify-center pt-3">
+			<div class="flex w-full items-center justify-center pt-3">
 				<NoBgButton href="/account">
 					<div class="flex items-center justify-center gap-2.5 px-2 py-1">
 						<IconBack
-							class="w-6 h-6 transform transition text-c-on-bg/50 group-hover:-translate-x-1
+							class="h-6 w-6 transform text-c-on-bg/50 transition group-hover:-translate-x-1
 						not-touch:group-hover:text-c-primary"
 						/>
-						<p class="transition text-c-on-bg/50 not-touch:group-hover:text-c-primary">
+						<p class="text-c-on-bg/50 transition not-touch:group-hover:text-c-primary">
 							{$LL.Shared.GoBackButton()}
 						</p>
 					</div>

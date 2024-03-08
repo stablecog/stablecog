@@ -26,14 +26,14 @@
 
 <button
 	on:click={_onClick}
-	class="{sizeClass} p-2 flex items-center justify-center group relative"
+	class="{sizeClass} group relative flex items-center justify-center p-2"
 	aria-label={label}
 	{disabled}
 >
 	<ButtonHoverEffect {disabled} color="on-bg" noPadding {paddingClass} size="sm" />
 	<svelte:component
 		this={icon}
-		class="w-full h-full transition transform duration-100 group-disabled:opacity-50 {recentlyClicked
+		class="h-full w-full transform transition duration-100 group-disabled:opacity-50 {recentlyClicked
 			? onClickClass
 			: ''} {iconClass}"
 	/>

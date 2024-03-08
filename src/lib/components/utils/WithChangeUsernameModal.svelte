@@ -127,22 +127,22 @@
 {#if mounted}
 	<div use:portalled {...$portalled}>
 		{#if $open}
-			<div {...$overlay} use:overlay class="fixed inset-0 z-[9999] w-full h-full bg-c-barrier/80" />
+			<div {...$overlay} use:overlay class="fixed inset-0 z-[9999] h-full w-full bg-c-barrier/80" />
 			<div
-				class="w-full h-full fixed inset-0 z-[10000] flex justify-center px-3 pt-8 pb-12 overflow-auto"
+				class="fixed inset-0 z-[10000] flex h-full w-full justify-center overflow-auto px-3 pb-12 pt-8"
 			>
 				<div
 					{...$content}
 					use:content
-					class="w-full max-w-sm my-auto bg-c-bg-secondary p-5 md:p-7 ring-2 ring-c-bg-tertiary relative
-      		rounded-2xl shadow-generation-modal shadow-c-shadow/[var(--o-shadow-strongest)]"
+					class="relative my-auto w-full max-w-sm rounded-2xl bg-c-bg-secondary p-5 shadow-generation-modal shadow-c-shadow/[var(--o-shadow-strongest)]
+      		ring-2 ring-c-bg-tertiary md:p-7"
 				>
-					<h2 class="text-xl font-bold -mt-1 md:-mt-2 pl-1 pr-12" {...$title} use:title>
+					<h2 class="-mt-1 pl-1 pr-12 text-xl font-bold md:-mt-2" {...$title} use:title>
 						{type === 'set'
 							? $LL.ChangeUsername.PickUsernameTitle()
 							: $LL.ChangeUsername.ChangeUsernameTitle()}
 					</h2>
-					<div class="w-full flex flex-col mt-0.5 md:mt-1">
+					<div class="mt-0.5 flex w-full flex-col md:mt-1">
 						<form use:form class="flex flex-col gap-2.5">
 							<Input
 								noAutocomplete
@@ -163,13 +163,13 @@
 						{/if}
 					</div>
 					<button
-						class="absolute right-0 top-0 p-3 rounded-xl overflow-hidden z-0 group"
+						class="group absolute right-0 top-0 z-0 overflow-hidden rounded-xl p-3"
 						{...$close}
 						use:close
 					>
 						<ButtonHoverEffect color="primary" hoverFrom="bottom" />
 						<IconCancel
-							class="text-c-on-bg/25 w-6 h-6 not-touch:group-hover:text-c-primary transition"
+							class="h-6 w-6 text-c-on-bg/25 transition not-touch:group-hover:text-c-primary"
 						/>
 					</button>
 				</div>

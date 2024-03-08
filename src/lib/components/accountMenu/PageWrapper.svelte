@@ -14,14 +14,14 @@
 <div
 	class="w-full {isNotAbsolute
 		? ''
-		: 'absolute left-0 top-0'} transform transition duration-300 overflow-hidden z-0 shadow-navbar {currentPage !==
+		: 'absolute left-0 top-0'} z-0 transform overflow-hidden shadow-navbar transition duration-300 {currentPage !==
 	thisPage
 		? 'pointer-events-none'
 		: ''} {thisPageLevel > currentPageLevel
 		? 'translate-x-full shadow-c-shadow/0'
 		: thisPageLevel < currentPageLevel
-		? '-translate-x-1/4 shadow-c-shadow/0'
-		: 'translate-x-0 shadow-c-shadow/[var(--o-shadow-strongest)]'} {Math.abs(
+			? '-translate-x-1/4 shadow-c-shadow/0'
+			: 'translate-x-0 shadow-c-shadow/[var(--o-shadow-strongest)]'} {Math.abs(
 		thisPageLevel - currentPageLevel
 	) > 1
 		? 'opacity-0'
@@ -29,8 +29,8 @@
 	bind:offsetHeight={height}
 >
 	<ScrollAreaWithChevron
-		class="w-full flex flex-col justify-start max-h-[calc(60vh-4rem)] md:max-h-[calc(70vh-4rem)] transition-all duration-100 hide-scrollbar
-    shadow-settings-page bg-c-bg-secondary shadow-c-shadow/[var(--o-shadow-stronger)] rounded-b-xl"
+		class="hide-scrollbar flex max-h-[calc(60vh-4rem)] w-full flex-col justify-start rounded-b-xl bg-c-bg-secondary shadow-settings-page
+    shadow-c-shadow/[var(--o-shadow-stronger)] transition-all duration-100 md:max-h-[calc(70vh-4rem)]"
 	>
 		<slot />
 	</ScrollAreaWithChevron>

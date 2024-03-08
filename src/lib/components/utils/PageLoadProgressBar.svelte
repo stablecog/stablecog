@@ -54,9 +54,8 @@
 <div
 	style="transform: scaleX({(progressType === 'before' ? $progressBefore : $progressAfter) *
 		100}%);"
-	class="w-full absolute top-0 rounded-full origin-left h-4px bg-c-primary z-10
-   pointer-events-none {progressType === 'after' ? 'transition-opacity' : ''} {(progressType ===
-		'after' &&
+	class="pointer-events-none absolute top-0 z-10 h-4px w-full origin-left rounded-full
+   bg-c-primary {progressType === 'after' ? 'transition-opacity' : ''} {(progressType === 'after' &&
 		$progressAfter === 1) ||
 	(progressType === 'before' && $progressBefore === 0)
 		? 'opacity-0'

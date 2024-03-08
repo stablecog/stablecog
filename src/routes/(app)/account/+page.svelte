@@ -84,34 +84,34 @@
 />
 
 {#if !$sessionStore?.user.email}
-	<div class="w-full flex justify-center items-center my-auto">
-		<IconAnimatedSpinner class="w-10 h-10 text-c-on-bg/60" />
+	<div class="my-auto flex w-full items-center justify-center">
+		<IconAnimatedSpinner class="h-10 w-10 text-c-on-bg/60" />
 	</div>
 {:else}
-	<div class="w-full flex flex-col items-center justify-center pt-6 pb-6 md:pb-8 md:px-3">
+	<div class="flex w-full flex-col items-center justify-center pb-6 pt-6 md:px-3 md:pb-8">
 		<div class="w-full max-w-4xl px-3">
 			<AccountPageCard>
-				<div class="w-full flex flex-wrap items-center gap-4 px-5 py-4 md:px-6">
+				<div class="flex w-full flex-wrap items-center gap-4 px-5 py-4 md:px-6">
 					<div class="flex items-center justify-between gap-3">
 						<Avatar
 							text={$userSummary?.username || ''}
-							class="w-8 h-8 ring-2 ring-c-on-bg/25 overflow-hidden rounded-full transition transform
-							relative shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] flex-shrink-0"
+							class="relative h-8 w-8 flex-shrink-0 transform overflow-hidden rounded-full shadow-lg
+							shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-on-bg/25 transition"
 						/>
 						<WithChangeUsernameModal let:trigger>
-							<NoBgButton class="mt-0 -ml-2" noPadding {trigger} hoverFrom="left">
-								<div class="flex-shrink min-w-0 flex items-center gap-2 px-2 py-2">
+							<NoBgButton class="-ml-2 mt-0" noPadding {trigger} hoverFrom="left">
+								<div class="flex min-w-0 flex-shrink items-center gap-2 px-2 py-2">
 									<p
-										class="not-touch:group-hover:text-c-primary text-c-on-bg text-xl transition
-										font-semibold flex-shrink min-w-0 overflow-hidden overflow-ellipsis"
+										class="min-w-0 flex-shrink overflow-hidden overflow-ellipsis
+										text-xl font-semibold text-c-on-bg transition not-touch:group-hover:text-c-primary"
 									>
 										<span
-											class="text-c-on-bg/50 transition not-touch:group-hover:text-c-primary/50 font-normal"
+											class="font-normal text-c-on-bg/50 transition not-touch:group-hover:text-c-primary/50"
 											>@</span
 										>{$userSummary?.username}
 									</p>
 									<IconPen
-										class="w-3.5 h-3.5 text-c-on-bg/50 transition not-touch:group-hover:text-c-primary/50 flex-shrink-0"
+										class="h-3.5 w-3.5 flex-shrink-0 text-c-on-bg/50 transition not-touch:group-hover:text-c-primary/50"
 									/>
 								</div>
 							</NoBgButton>
@@ -119,24 +119,24 @@
 					</div>
 					<SubtleButton target="_blank" href="/{$userSummary?.username}">
 						<div class="flex items-center gap-2 px-1">
-							<p class="text-base font-semibold flex flex-shrink min-w-0">
+							<p class="flex min-w-0 flex-shrink text-base font-semibold">
 								{$LL.Shared.VisitProfileButton()}
 							</p>
-							<IconExternalLink class="text-c-on-bg w-6 h-6 -mr-1" />
+							<IconExternalLink class="-mr-1 h-6 w-6 text-c-on-bg" />
 						</div>
 					</SubtleButton>
 				</div>
 				<AccountDetailLine title={$LL.Shared.EmailInput.Placeholder()}>
 					<NoBgButton noPadding class="-mx-3 -my-3" href="/account/change-email" hoverFrom="left">
-						<div class="flex-shrink min-w-0 flex items-center gap-2 px-4 py-3.5">
+						<div class="flex min-w-0 flex-shrink items-center gap-2 px-4 py-3.5">
 							<p
-								class="not-touch:group-hover:text-c-primary text-c-on-bg transition
-								font-semibold flex-shrink min-w-0 overflow-hidden overflow-ellipsis text-left"
+								class="min-w-0 flex-shrink overflow-hidden
+								overflow-ellipsis text-left font-semibold text-c-on-bg transition not-touch:group-hover:text-c-primary"
 							>
 								{$sessionStore.user.email}
 							</p>
 							<IconPen
-								class="w-3.5 h-3.5 text-c-on-bg/50 transition not-touch:group-hover:text-c-primary/50 flex-shrink-0"
+								class="h-3.5 w-3.5 flex-shrink-0 text-c-on-bg/50 transition not-touch:group-hover:text-c-primary/50"
 							/>
 						</div>
 					</NoBgButton>
@@ -144,8 +144,8 @@
 				<AccountDetailLine title={$LL.Account.RemainingCreditsTitle()}>
 					<div class="flex flex-row items-center justify-start">
 						<div class="flex items-center justify-start px-1">
-							<IconToken class="w-4.5 h-4.5 -ml-1 flex-shrink-0" />
-							<p class="font-semibold text-left">
+							<IconToken class="-ml-1 h-4.5 w-4.5 flex-shrink-0" />
+							<p class="text-left font-semibold">
 								{($userSummary?.total_remaining_credits || 0).toLocaleString($locale)}
 							</p>
 						</div>
@@ -153,7 +153,7 @@
 							<Button
 								noPadding
 								noRounding
-								class="rounded-lg w-full md:w-auto px-3 py-1.75 -my-0.75 ml-2.5"
+								class="-my-0.75 ml-2.5 w-full rounded-lg px-3 py-1.75 md:w-auto"
 								size="sm"
 								href="/pricing#credit-packs"
 							>
@@ -166,14 +166,14 @@
 					<AccountDetailLine title={$LL.Account.UpcomingCreditsTitle()}>
 						<div class="flex items-center justify-start">
 							<div class="flex items-center justify-start px-1">
-								<IconToken class="w-4.5 h-4.5 -ml-1 flex-shrink-0 text-c-on-bg" />
-								<p class="font-semibold text-left text-c-on-bg">
+								<IconToken class="-ml-1 h-4.5 w-4.5 flex-shrink-0 text-c-on-bg" />
+								<p class="text-left font-semibold text-c-on-bg">
 									{$userSummary.renews_at_credit_amount ??
 										$userSummary.more_free_credits_at_credit_amount}
 								</p>
 							</div>
 							<p
-								class="bg-c-on-bg/10 text-c-on-bg/75 rounded-md px-1.75 py-0.5 font-medium text-sm align-middle ml-1.5"
+								class="ml-1.5 rounded-md bg-c-on-bg/10 px-1.75 py-0.5 align-middle text-sm font-medium text-c-on-bg/75"
 							>
 								{getRelativeDate({
 									date: $userSummary.renews_at ?? $userSummary.more_free_credits_at,
@@ -195,11 +195,11 @@
 							/>
 							{#if $userSummary?.product_id && ($userSummary.renews_at || $userSummary.cancels_at)}
 								<div
-									class="max-w-full bg-c-bg p-1.5px absolute -right-2 -top-4 z-10 flex items-center justify-center rounded-md pointer-events-none"
+									class="pointer-events-none absolute -right-2 -top-4 z-10 flex max-w-full items-center justify-center rounded-md bg-c-bg p-1.5px"
 								>
 									<p
-										class="w-full whitespace-nowrap overflow-hidden overflow-ellipsis text-center text-xs rounded
-										font-semibold px-1 {$userSummary.renews_at
+										class="w-full overflow-hidden overflow-ellipsis whitespace-nowrap rounded px-1 text-center
+										text-xs font-semibold {$userSummary.renews_at
 											? 'bg-c-success/15 text-c-success ring-c-success/35'
 											: 'bg-c-danger/15 text-c-danger ring-c-danger/35'} ring-1.5"
 									>
@@ -218,7 +218,7 @@
 							? $LL.Account.SubscriptionRenewalTitle()
 							: $LL.Account.SubscriptionCancellationTitle()}
 					>
-						<p class="text-left font-semibold px-1">
+						<p class="px-1 text-left font-semibold">
 							{getRelativeDate({
 								date: $userSummary.renews_at ?? $userSummary.cancels_at,
 								locale: $locale
@@ -228,23 +228,23 @@
 				{/if}
 				<AccountDetailLine id="manage" title={$LL.Account.ManageSubscriptionTitle()}>
 					{#if $userSummary?.product_id}
-						<div class="w-full md:w-auto flex flex-wrap items-center gap-2.5 md:-my-0.75">
+						<div class="flex w-full flex-wrap items-center gap-2.5 md:-my-0.75 md:w-auto">
 							<Button
 								noPadding
-								class="w-full md:w-auto px-3.5 py-3"
+								class="w-full px-3.5 py-3 md:w-auto"
 								size="sm"
 								href={$page.data.customer_portal_url}
 							>
 								{$LL.Account.ManageSubscriptionButton()}
 							</Button>
-							<Button noPadding class="w-full md:w-auto px-3.5 py-3" size="sm" href={'/pricing'}>
+							<Button noPadding class="w-full px-3.5 py-3 md:w-auto" size="sm" href={'/pricing'}>
 								{$LL.Account.ComparePlansButton()}
 							</Button>
 						</div>
 					{:else}
 						<Button
 							noPadding
-							class="w-full md:w-auto px-4.5 py-3 md:-my-0.75"
+							class="w-full px-4.5 py-3 md:-my-0.75 md:w-auto"
 							size="sm"
 							href="/pricing"
 						>
@@ -252,8 +252,8 @@
 						</Button>
 					{/if}
 				</AccountDetailLine>
-				<div class="w-full h-2px bg-c-bg-secondary" />
-				<div class="w-full flex justify-start items-center">
+				<div class="h-2px w-full bg-c-bg-secondary" />
+				<div class="flex w-full items-center justify-start">
 					<WantsEmailCard
 						bg="primary"
 						bind:checked={wantsEmailChecked}
@@ -261,24 +261,24 @@
 						padding="p-5 md:px-6"
 					/>
 				</div>
-				<div class="w-full h-2px bg-c-bg-secondary" />
-				<div class="w-full flex flex-wrap items-stretch">
+				<div class="h-2px w-full bg-c-bg-secondary" />
+				<div class="flex w-full flex-wrap items-stretch">
 					<DropdownItem href="/generate" class="w-full md:w-auto md:flex-1">
 						<div
-							class="flex transition justify-center items-center gap-2 text-c-on-bg
+							class="flex items-center justify-center gap-2 text-c-on-bg transition
 							not-touch:group-hover:text-c-primary"
 						>
-							<IconHome class="w-6 h-6" />
+							<IconHome class="h-6 w-6" />
 							<p>{$LL.Shared.GoHomeButton()}</p>
 						</div>
 					</DropdownItem>
-					<div class="w-full h-2px md:h-auto md:w-2px bg-c-bg-secondary" />
+					<div class="h-2px w-full bg-c-bg-secondary md:h-auto md:w-2px" />
 					<DropdownItem onClick={signOut} class="w-full md:w-auto md:flex-1">
 						<div
-							class="flex transition justify-center items-center gap-2 text-c-on-bg
+							class="flex items-center justify-center gap-2 text-c-on-bg transition
 							not-touch:group-hover:text-c-primary"
 						>
-							<IconSignOut class="w-6 h-6" />
+							<IconSignOut class="h-6 w-6" />
 							<p>{$LL.SignIn.SignOutButton()}</p>
 						</div>
 					</DropdownItem>

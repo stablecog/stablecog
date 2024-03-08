@@ -37,23 +37,23 @@
 	image_url="{canonicalUrl}/previews/home-{previewImageVersion}.png"
 />
 
-<div class="w-full flex-1 flex justify-center px-5 py-6 md:py-8 pb-[calc(3vh)]">
-	<div class="w-full flex flex-row flex-wrap items-center justify-center gap-4 my-auto max-w-7xl">
+<div class="flex w-full flex-1 justify-center px-5 py-6 pb-[calc(3vh)] md:py-8">
+	<div class="my-auto flex w-full max-w-7xl flex-row flex-wrap items-center justify-center gap-4">
 		{#each adminRoutes.filter((r) => r.show !== false) as route}
 			<a
 				href={route.href}
 				data-sveltekit-preload-data="hover"
-				class="w-full max-w-md md:max-w-xs p-5 md:p-6 gap-2 self-stretch bg-c-bg-secondary ring-2 ring-c-bg-tertiary relative z-0 overflow-hidden
-					rounded-xl flex flex-col items-center shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] transition group
-					not-touch:hover:ring-4 not-touch:hover:shadow-xl
-					not-touch:hover:shadow-c-shadow/[var(--o-shadow-strong)] not-touch:hover:-translate-y-1.5"
+				class="group relative z-0 flex w-full max-w-md flex-col items-center gap-2 self-stretch overflow-hidden rounded-xl bg-c-bg-secondary
+					p-5 shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] ring-2 ring-c-bg-tertiary transition not-touch:hover:-translate-y-1.5 not-touch:hover:shadow-xl
+					not-touch:hover:shadow-c-shadow/[var(--o-shadow-strong)] not-touch:hover:ring-4
+					md:max-w-xs md:p-6"
 			>
 				<IconNavbarRoute
-					class="w-14 h-14 -mt-0.5 transition not-touch:group-hover:text-c-primary"
+					class="-mt-0.5 h-14 w-14 transition not-touch:group-hover:text-c-primary"
 					type={route.icon}
 				/>
 				<p
-					class="max-w-full text-center font-bold text-lg leading-snug text-c-on-bg transition
+					class="max-w-full text-center text-lg font-bold leading-snug text-c-on-bg transition
 					not-touch:group-hover:text-c-primary"
 				>
 					{route.title}

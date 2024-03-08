@@ -36,8 +36,8 @@
 			? 'hover'
 			: 'off'}
 		class="touch-manipulation {state === 'success'
-			? 'bg-c-success ring-c-success text-c-on-primary'
-			: 'bg-c-bg-secondary ring-c-bg-tertiary text-c-on-bg'} {noPadding
+			? 'bg-c-success text-c-on-primary ring-c-success'
+			: 'bg-c-bg-secondary text-c-on-bg ring-c-bg-tertiary'} {noPadding
 			? ''
 			: 'px-3 py-2.5'} shadow-lg {shadow === 'strongest'
 			? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
@@ -46,51 +46,51 @@
 			? 'text-sm'
 			: 'text-xs'} {!hasRing
 			? ''
-			: 'ring-2'} flex items-center justify-center relative overflow-hidden z-0 group {classes}"
+			: 'ring-2'} group relative z-0 flex items-center justify-center overflow-hidden {classes}"
 		aria-label={label}
 	>
-		<div class="w-[210%] h-full absolute left-0 top-0 flex items-center justify-center">
+		<div class="absolute left-0 top-0 flex h-full w-[210%] items-center justify-center">
 			<div
 				class="{state === 'success'
-					? 'bg-c-success translate-x-[-43%]'
-					: 'bg-c-bg-tertiary'} w-full aspect-square origin-left rounded-full transition transform -translate-x-full
+					? 'translate-x-[-43%] bg-c-success'
+					: 'bg-c-bg-tertiary'} aspect-square w-full origin-left -translate-x-full transform rounded-full transition
 					not-touch:group-hover:translate-x-[-43%] {loading ? 'translate-x-[-43%]' : ''}"
 			/>
 		</div>
 		<div
-			class="relative flex items-center justify-center text-center transition gap-1.5 {state ===
+			class="relative flex items-center justify-center gap-1.5 text-center transition {state ===
 			'success'
 				? 'text-c-on-primary'
 				: state === 'danger'
-				? 'text-c-on-primary'
-				: textColor === 'danger'
-				? 'text-c-danger'
-				: textColor === 'success'
-				? 'text-c-success'
-				: textColor === 'secondary'
-				? 'text-c-secondary'
-				: 'text-c-on-bg'}"
+					? 'text-c-on-primary'
+					: textColor === 'danger'
+						? 'text-c-danger'
+						: textColor === 'success'
+							? 'text-c-success'
+							: textColor === 'secondary'
+								? 'text-c-secondary'
+								: 'text-c-on-bg'}"
 		>
 			{#if withSpinner}
 				<Morpher morphed={loading}>
-					<div slot="0" class="w-full flex gap-1.5">
+					<div slot="0" class="flex w-full gap-1.5">
 						{#if icon}
 							<svelte:component
 								this={icon}
-								class="{size === 'md' ? 'w-5 h-5 -ml-0.5' : 'w-4 h-4 -ml-0.25'} flex-shrink-0"
+								class="{size === 'md' ? '-ml-0.5 h-5 w-5' : '-ml-0.25 h-4 w-4'} flex-shrink-0"
 							/>
 						{/if}
 						<slot />
 					</div>
 					<div slot="1">
-						<IconAnimatedSpinner {loading} class={size === 'md' ? 'w-5 h-5' : 'w-4 h-4'} />
+						<IconAnimatedSpinner {loading} class={size === 'md' ? 'h-5 w-5' : 'h-4 w-4'} />
 					</div>
 				</Morpher>
 			{:else}
 				{#if icon}
 					<svelte:component
 						this={icon}
-						class="{size === 'md' ? 'w-5 h-5 -ml-0.5' : 'w-4 h-4 -ml-0.25'} flex-shrink-0"
+						class="{size === 'md' ? '-ml-0.5 h-5 w-5' : '-ml-0.25 h-4 w-4'} flex-shrink-0"
 					/>
 				{/if}
 				<slot />
@@ -107,61 +107,61 @@
 		class="touch-manipulation {state === 'success'
 			? 'bg-c-success ring-c-success'
 			: state === 'danger'
-			? 'bg-c-danger ring-c-danger'
-			: 'bg-c-bg-secondary ring-c-bg-tertiary'} {noPadding
+				? 'bg-c-danger ring-c-danger'
+				: 'bg-c-bg-secondary ring-c-bg-tertiary'} {noPadding
 			? ''
 			: 'px-3 py-2.5'} shadow-lg {shadow === 'strongest'
 			? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
 			: 'shadow-c-shadow/[var(--o-shadow-strong)]'}
     	{rounding ? rounding : 'rounded-lg'} font-bold transition {size === 'md'
 			? 'text-sm'
-			: 'text-xs'} {!hasRing ? '' : 'ring-2'} relative overflow-hidden z-0 group {classes}"
+			: 'text-xs'} {!hasRing ? '' : 'ring-2'} group relative z-0 overflow-hidden {classes}"
 		aria-label={label}
 	>
-		<div class="w-[210%] h-full absolute left-0 top-0 flex items-center justify-center">
+		<div class="absolute left-0 top-0 flex h-full w-[210%] items-center justify-center">
 			<div
 				class="{state === 'success'
-					? 'bg-c-success translate-x-[-43%]'
+					? 'translate-x-[-43%] bg-c-success'
 					: state === 'danger'
-					? 'bg-c-danger translate-x-[-43%]'
-					: 'bg-c-bg-tertiary'} w-full aspect-square origin-left rounded-full transition transform -translate-x-full
+						? 'translate-x-[-43%] bg-c-danger'
+						: 'bg-c-bg-tertiary'} aspect-square w-full origin-left -translate-x-full transform rounded-full transition
 					not-touch:group-enabled:group-hover:translate-x-[-43%] {loading ? 'translate-x-[-43%]' : ''}"
 			/>
 		</div>
 		<div
-			class="relative flex items-center justify-center text-center transition gap-1.5 {state ===
+			class="relative flex items-center justify-center gap-1.5 text-center transition {state ===
 			'success'
 				? 'text-c-on-primary'
 				: state === 'danger'
-				? 'text-c-on-primary'
-				: textColor === 'danger'
-				? 'text-c-danger'
-				: textColor === 'success'
-				? 'text-c-success'
-				: textColor === 'secondary'
-				? 'text-c-secondary'
-				: 'text-c-on-bg'}"
+					? 'text-c-on-primary'
+					: textColor === 'danger'
+						? 'text-c-danger'
+						: textColor === 'success'
+							? 'text-c-success'
+							: textColor === 'secondary'
+								? 'text-c-secondary'
+								: 'text-c-on-bg'}"
 		>
 			{#if withSpinner}
 				<Morpher morphed={loading}>
-					<div slot="0" class="w-full flex gap-1.5">
+					<div slot="0" class="flex w-full gap-1.5">
 						{#if icon}
 							<svelte:component
 								this={icon}
-								class="{size === 'md' ? 'w-5 h-5 -ml-0.5' : 'w-4 h-4 -ml-0.25'} flex-shrink-0"
+								class="{size === 'md' ? '-ml-0.5 h-5 w-5' : '-ml-0.25 h-4 w-4'} flex-shrink-0"
 							/>
 						{/if}
 						<slot />
 					</div>
 					<div slot="1">
-						<IconAnimatedSpinner {loading} class={size === 'md' ? 'w-5 h-5' : 'w-4 h-4'} />
+						<IconAnimatedSpinner {loading} class={size === 'md' ? 'h-5 w-5' : 'h-4 w-4'} />
 					</div>
 				</Morpher>
 			{:else}
 				{#if icon}
 					<svelte:component
 						this={icon}
-						class="{size === 'md' ? 'w-5 h-5 -ml-0.5' : 'w-4 h-4 -ml-0.25'} flex-shrink-0"
+						class="{size === 'md' ? '-ml-0.5 h-5 w-5' : '-ml-0.25 h-4 w-4'} flex-shrink-0"
 					/>
 				{/if}
 				<slot />
@@ -176,61 +176,61 @@
 		class="touch-manipulation {state === 'success'
 			? 'bg-c-success ring-c-success'
 			: state === 'danger'
-			? 'bg-c-danger ring-c-danger'
-			: 'bg-c-bg-secondary ring-c-bg-tertiary'} {noPadding
+				? 'bg-c-danger ring-c-danger'
+				: 'bg-c-bg-secondary ring-c-bg-tertiary'} {noPadding
 			? ''
 			: 'px-3 py-2.5'} shadow-lg {shadow === 'strongest'
 			? 'shadow-c-shadow/[var(--o-shadow-strongest)]'
 			: 'shadow-c-shadow/[var(--o-shadow-strong)]'}
     	{rounding ? rounding : 'rounded-lg'} font-bold transition {size === 'md'
 			? 'text-sm'
-			: 'text-xs'} {!hasRing ? '' : 'ring-2'} relative overflow-hidden z-0 group {classes}"
+			: 'text-xs'} {!hasRing ? '' : 'ring-2'} group relative z-0 overflow-hidden {classes}"
 		aria-label={label}
 	>
-		<div class="w-[210%] h-full absolute left-0 top-0 flex items-center justify-center">
+		<div class="absolute left-0 top-0 flex h-full w-[210%] items-center justify-center">
 			<div
 				class="{state === 'success'
-					? 'bg-c-success translate-x-[-43%]'
+					? 'translate-x-[-43%] bg-c-success'
 					: state === 'danger'
-					? 'bg-c-danger translate-x-[-43%]'
-					: 'bg-c-bg-tertiary'} w-full aspect-square origin-left rounded-full transition transform -translate-x-full
+						? 'translate-x-[-43%] bg-c-danger'
+						: 'bg-c-bg-tertiary'} aspect-square w-full origin-left -translate-x-full transform rounded-full transition
 					not-touch:group-enabled:group-hover:translate-x-[-43%] {loading ? 'translate-x-[-43%]' : ''}"
 			/>
 		</div>
 		<div
-			class="relative flex items-center justify-center text-center transition gap-1.5 {state ===
+			class="relative flex items-center justify-center gap-1.5 text-center transition {state ===
 			'success'
 				? 'text-c-on-primary'
 				: state === 'danger'
-				? 'text-c-on-primary'
-				: textColor === 'danger'
-				? 'text-c-danger'
-				: textColor === 'success'
-				? 'text-c-success'
-				: textColor === 'secondary'
-				? 'text-c-secondary'
-				: 'text-c-on-bg'}"
+					? 'text-c-on-primary'
+					: textColor === 'danger'
+						? 'text-c-danger'
+						: textColor === 'success'
+							? 'text-c-success'
+							: textColor === 'secondary'
+								? 'text-c-secondary'
+								: 'text-c-on-bg'}"
 		>
 			{#if withSpinner}
 				<Morpher morphed={loading}>
-					<div slot="0" class="w-full flex gap-1.5">
+					<div slot="0" class="flex w-full gap-1.5">
 						{#if icon}
 							<svelte:component
 								this={icon}
-								class="{size === 'md' ? 'w-5 h-5 -ml-0.5' : 'w-4 h-4 -ml-0.25'} flex-shrink-0"
+								class="{size === 'md' ? '-ml-0.5 h-5 w-5' : '-ml-0.25 h-4 w-4'} flex-shrink-0"
 							/>
 						{/if}
 						<slot />
 					</div>
 					<div slot="1">
-						<IconAnimatedSpinner {loading} class={size === 'md' ? 'w-5 h-5' : 'w-4 h-4'} />
+						<IconAnimatedSpinner {loading} class={size === 'md' ? 'h-5 w-5' : 'h-4 w-4'} />
 					</div>
 				</Morpher>
 			{:else}
 				{#if icon}
 					<svelte:component
 						this={icon}
-						class="{size === 'md' ? 'w-5 h-5 -ml-0.5' : 'w-4 h-4 -ml-0.25'} flex-shrink-0"
+						class="{size === 'md' ? '-ml-0.5 h-5 w-5' : '-ml-0.25 h-4 w-4'} flex-shrink-0"
 					/>
 				{/if}
 				<slot />

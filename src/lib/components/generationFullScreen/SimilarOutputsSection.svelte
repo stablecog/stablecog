@@ -55,9 +55,9 @@
 
 {#if !similarOutputs || similarOutputs.length > 0}
 	<Divider class="lg:-mt-3" />
-	<div class="w-full flex flex-col px-2.5 md:px-3.5 lg:px-4 py-5">
-		<p class="font-bold text-2xl px-3">{$LL.GenerationFullscreen.SimilarTitle()}</p>
-		<div class="w-full flex flex-col mt-3">
+	<div class="flex w-full flex-col px-2.5 py-5 md:px-3.5 lg:px-4">
+		<p class="px-3 text-2xl font-bold">{$LL.GenerationFullscreen.SimilarTitle()}</p>
+		<div class="mt-3 flex w-full flex-col">
 			{#if !similarOutputs}
 				<SimpleGrid
 					cols={simpleGridCols}
@@ -65,7 +65,7 @@
 				>
 					<div class="w-full p-2px">
 						<svg
-							class="w-full rounded-xl bg-c-bg-tertiary border-2 border-c-bg-tertiary
+							class="w-full rounded-xl border-2 border-c-bg-tertiary bg-c-bg-tertiary
 							shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]"
 							xmlns="http://www.w3.org/2000/svg"
 							fill="none"
@@ -99,17 +99,17 @@
 								selected_output: similarOutput
 							});
 						}}
-						class="w-full group rounded-xl"
+						class="group w-full rounded-xl"
 					>
 						<div class="w-full p-2px">
 							{#key similarOutput.id}
 								<div
-									class="w-full rounded-xl overflow-hidden relative z-0 border-2 border-c-bg-tertiary
-									shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] transition bg-c-bg-tertiary not-touch:group-hover:border-c-primary"
+									class="relative z-0 w-full overflow-hidden rounded-xl border-2 border-c-bg-tertiary
+									bg-c-bg-tertiary shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] transition not-touch:group-hover:border-c-primary"
 								>
 									<Img
 										loading="lazy"
-										class="w-full h-auto not-touch:group-hover:scale-105 transition duration-350"
+										class="h-auto w-full transition duration-350 not-touch:group-hover:scale-105"
 										sizes={`(min-width: 1024px) calc(400px / ${simpleGridCols}), calc(min(700px, 100vw) / ${simpleGridCols})`}
 										src={getImgProxySrc({
 											src: similarOutput.upscaled_image_url ?? similarOutput.image_url,

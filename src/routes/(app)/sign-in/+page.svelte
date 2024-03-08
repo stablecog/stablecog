@@ -31,7 +31,7 @@
 />
 
 <PageWrapper>
-	<div class="w-[100%+1rem] flex justify-center items-center my-auto -mx-2">
+	<div class="-mx-2 my-auto flex w-[100%+1rem] items-center justify-center">
 		<SignInCard redirectTo={data.rd_to} />
 	</div>
 </PageWrapper>

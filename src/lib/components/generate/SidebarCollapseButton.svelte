@@ -73,21 +73,21 @@
 	on:blur|preventDefault={() => null}
 	role="button"
 	tabindex="0"
-	class="h-full {size === 'sm' ? 'w-5 -right-4.5' : 'w-8 -right-7'} absolute transition {isClosed
+	class="h-full {size === 'sm' ? '-right-4.5 w-5' : '-right-7 w-8'} absolute transition {isClosed
 		? isClosedClass
-		: ''} top-0 flex items-center justify-center transform z-20 cursor-default"
+		: ''} top-0 z-20 flex transform cursor-default items-center justify-center"
 >
 	<div
-		class="rounded-full bg-c-bg ring-2 ring-c-bg-secondary flex items-center justify-center
-    shadow-lg {isClosed
+		class="flex items-center justify-center rounded-full bg-c-bg shadow-lg ring-2
+    ring-c-bg-secondary {isClosed
 			? 'shadow-c-shadow/[var(--o-shadow-stronger)]'
 			: 'shadow-c-shadow/[var(--o-shadow-strongest)]'} transform transition {shouldShowButton ||
 		isClosed ||
 		isNewlyOpened
 			? size === 'sm'
-				? 'opacity-100 -translate-x-1.5'
-				: 'opacity-100 -translate-x-2.5'
-			: 'opacity-0 translate-x-0'}"
+				? '-translate-x-1.5 opacity-100'
+				: '-translate-x-2.5 opacity-100'
+			: 'translate-x-0 opacity-0'}"
 	>
 		<IconButton
 			{onClick}
@@ -98,13 +98,13 @@
 		>
 			<div class="p-2">
 				<IconChevronDown
-					class="text-c-on-bg/50 w-6 h-6 transform transition {isClosed
+					class="h-6 w-6 transform text-c-on-bg/50 transition {isClosed
 						? side === 'right'
 							? 'rotate-90'
 							: '-rotate-90'
 						: side === 'right'
-						? '-rotate-90'
-						: 'rotate-90'} not-touch:group-hover/iconbutton:text-c-primary"
+							? '-rotate-90'
+							: 'rotate-90'} not-touch:group-hover/iconbutton:text-c-primary"
 				/>
 			</div>
 		</IconButton>

@@ -145,8 +145,8 @@
 			? entry.status === 'succeeded'
 				? 'rgb(var(--c-success-secondary))'
 				: entry.status === 'failed'
-				? 'rgb(var(--c-danger-secondary))'
-				: 'rgb(var(--c-primary-secondary))'
+					? 'rgb(var(--c-danger-secondary))'
+					: 'rgb(var(--c-primary-secondary))'
 			: 'transparent';
 	}
 
@@ -210,33 +210,33 @@
 	image_url="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 />
 
-<div class="w-full flex-1 flex justify-center pb-[calc(2vh)]">
-	<div class="w-full flex flex-col items-center justify-center max-w-5xl">
+<div class="flex w-full flex-1 justify-center pb-[calc(2vh)]">
+	<div class="flex w-full max-w-5xl flex-col items-center justify-center">
 		<div
-			class="w-full px-8 md:px-16 flex flex-wrap items-center justify-center py-2 md:pt-10 gap-8 lg:gap-12"
+			class="flex w-full flex-wrap items-center justify-center gap-8 px-8 py-2 md:px-16 md:pt-10 lg:gap-12"
 		>
-			<div class="w-full lg:w-64 max-w-full flex flex-col gap-1.5 text-center lg:text-right">
-				<h2 class="text-c-on-bg/50 font-medium text-base">{$LL.Live.GenerationsTitle()}</h2>
-				<p class="font-bold text-4xl">
+			<div class="flex w-full max-w-full flex-col gap-1.5 text-center lg:w-64 lg:text-right">
+				<h2 class="text-base font-medium text-c-on-bg/50">{$LL.Live.GenerationsTitle()}</h2>
+				<p class="text-4xl font-bold">
 					{Math.floor($generationTotalCount).toLocaleString($locale)}
 				</p>
 			</div>
-			<div class="w-full lg:w-64 max-w-full flex flex-col gap-1.5 text-center lg:text-left">
-				<h2 class="text-c-on-bg/50 font-medium text-base">{$LL.Live.UpscalesTitle()}</h2>
-				<p class="font-bold text-4xl">
+			<div class="flex w-full max-w-full flex-col gap-1.5 text-center lg:w-64 lg:text-left">
+				<h2 class="text-base font-medium text-c-on-bg/50">{$LL.Live.UpscalesTitle()}</h2>
+				<p class="text-4xl font-bold">
 					{Math.floor($upscaleTotalCount).toLocaleString($locale)}
 				</p>
 			</div>
 		</div>
 		{#if allProcesses.length > 0}
-			<div transition:expandCollapse={{ duration: 300 }} class="w-full px-8 md:px-24 z-0 relative">
-				<div class="w-full flex flex-wrap items-center justify-center py-4">
+			<div transition:expandCollapse={{ duration: 300 }} class="relative z-0 w-full px-8 md:px-24">
+				<div class="flex w-full flex-wrap items-center justify-center py-4">
 					{#each allProcesses as processObject (processObject.id)}
 						<div
 							in:elementreceive={{ key: processObject.id }}
 							out:elementsend={{ key: processObject.id }}
 							animate:flip={{ duration: 300, easing: quadOut }}
-							class="flex items-center justify-center relative z-0 -m-3"
+							class="relative z-0 -m-3 flex items-center justify-center"
 						>
 							<LiveBubble
 								{processObject}
@@ -252,11 +252,11 @@
 		{:else}
 			<div
 				transition:expandCollapse={{ duration: 300 }}
-				class="w-full px-8 lg:px-16 relative max-w-lg"
+				class="relative w-full max-w-lg px-8 lg:px-16"
 			>
-				<div class="w-full flex flex-col items-center justify-center py-4">
-					<IconPulsing class="w-26 h-26 -m-3" />
-					<p class="w-full text-c-on-bg/75 font-medium text-center mt-1.5">
+				<div class="flex w-full flex-col items-center justify-center py-4">
+					<IconPulsing class="-m-3 h-26 w-26" />
+					<p class="mt-1.5 w-full text-center font-medium text-c-on-bg/75">
 						{$LL.Live.WaitingTitle()}
 					</p>
 				</div>

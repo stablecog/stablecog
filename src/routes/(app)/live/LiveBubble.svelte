@@ -36,8 +36,8 @@
 				processObject.process_type === 'upscale'
 					? $LL.Live.GenerationTooltip.Type.Upscale()
 					: processObject.process_type === 'voiceover'
-					? $LL.Live.GenerationTooltip.Type.Voiceover()
-					: $LL.Live.GenerationTooltip.Type.Generation()
+						? $LL.Live.GenerationTooltip.Type.Voiceover()
+						: $LL.Live.GenerationTooltip.Type.Generation()
 		},
 		...(processObject.process_type === 'upscale' || processObject.process_type === 'generate'
 			? [
@@ -46,7 +46,7 @@
 						// @ts-ignore
 						value: `${processObject.width} × ${processObject.height}`
 					}
-			  ]
+				]
 			: []),
 		...(processObject.aspect_ratio
 			? [
@@ -54,7 +54,7 @@
 						key: $LL.Live.GenerationTooltip.AspectRatioTitle() + ':',
 						value: processObject.aspect_ratio
 					}
-			  ]
+				]
 			: []),
 		...(processObject.actual_num_outputs
 			? [
@@ -62,7 +62,7 @@
 						key: $LL.Live.GenerationTooltip.OutputsTitle() + ':',
 						value: processObject.actual_num_outputs.toString()
 					}
-			  ]
+				]
 			: []),
 		...getOptionalInfo($LL, processObject),
 		...(processObject.completed_at !== undefined
@@ -73,7 +73,7 @@
 							maximumFractionDigits: 1
 						})}`
 					}
-			  ]
+				]
 			: []),
 		{
 			key: $LL.Account.Usage.UsageTable.Source() + ':',
@@ -85,32 +85,32 @@
 				processObject.status === 'queued' || processObject.status === 'processing'
 					? $LL.Live.GenerationTooltip.Status.Started()
 					: processObject.status === 'succeeded'
-					? $LL.Live.GenerationTooltip.Status.Succeeded()
-					: $LL.Live.GenerationTooltip.Status.Failed()
+						? $LL.Live.GenerationTooltip.Status.Succeeded()
+						: $LL.Live.GenerationTooltip.Status.Failed()
 		}
 	];
 </script>
 
 <div
-	class="p-8 relative z-0 {processObject.process_type === 'generate'
+	class="relative z-0 p-8 {processObject.process_type === 'generate'
 		? 'rounded-full'
 		: 'rounded-xl'}"
 >
 	{#if processObject.status === 'queued' || processObject.status === 'processing'}
 		<div
 			transition:scale={{ duration: 300, easing: quadOut }}
-			class="absolute w-full h-full left-0 top-0 origin-center"
+			class="absolute left-0 top-0 h-full w-full origin-center"
 		>
 			<div
-				class="w-full h-full transform {processObject.process_type === 'voiceover'
+				class="h-full w-full transform {processObject.process_type === 'voiceover'
 					? 'rotate-45'
 					: ''}"
 			>
 				<div
-					class="w-full h-full absolute left-0 top-0 {processObject.process_type === 'upscale' ||
+					class="absolute left-0 top-0 h-full w-full {processObject.process_type === 'upscale' ||
 					processObject.process_type === 'voiceover'
 						? 'rounded-4xl'
-						: 'rounded-full'} bg-c-primary/50 animate-ping-custom"
+						: 'rounded-full'} animate-ping-custom bg-c-primary/50"
 				/>
 			</div>
 		</div>
@@ -119,41 +119,41 @@
 		<div
 			tabindex="0"
 			role="button"
-			class="w-10 h-10 relative cursor-default rounded-xl"
+			class="relative h-10 w-10 cursor-default rounded-xl"
 			use:trigger
 			{...triggerStoreValue}
 		>
 			{#if processObject.status === 'queued' || processObject.status === 'processing'}
 				<div
 					transition:scale={{ duration: 300, easing: quadOut }}
-					class="w-full h-full absolute left-0 top-0 transform {processObject.process_type ===
+					class="absolute left-0 top-0 h-full w-full transform {processObject.process_type ===
 					'voiceover'
 						? 'rotate-45'
 						: ''}"
 				>
 					<div
-						class="w-full h-full {processObject.process_type === 'upscale'
+						class="h-full w-full {processObject.process_type === 'upscale'
 							? 'rounded-xl'
 							: processObject.process_type === 'voiceover'
-							? 'rounded-xl'
-							: 'rounded-full'} bg-c-primary animate-ping-custom-bg"
+								? 'rounded-xl'
+								: 'rounded-full'} animate-ping-custom-bg bg-c-primary"
 					/>
 				</div>
 			{/if}
 			<div
-				class="w-full h-full {processObject.process_type === 'upscale'
+				class="h-full w-full {processObject.process_type === 'upscale'
 					? 'rounded-xl'
 					: processObject.process_type === 'voiceover'
-					? 'rounded-xl rotate-45'
-					: 'rounded-full'} transform transition-all duration-300 flex items-center justify-center relative overflow-hidden z-0 {processObject.status ===
+						? 'rotate-45 rounded-xl'
+						: 'rounded-full'} relative z-0 flex transform items-center justify-center overflow-hidden transition-all duration-300 {processObject.status ===
 				'succeeded'
 					? 'bg-c-success'
 					: processObject.status === 'failed'
-					? 'bg-c-danger'
-					: 'bg-c-primary'} cursor-default"
+						? 'bg-c-danger'
+						: 'bg-c-primary'} cursor-default"
 			>
 				<div
-					class="w-full h-full flex flex-col items-center justify-center transform {processObject.process_type ===
+					class="flex h-full w-full transform flex-col items-center justify-center {processObject.process_type ===
 					'voiceover'
 						? '-rotate-45'
 						: ''}"
@@ -174,14 +174,14 @@
 				"
 				>
 					{#if processObject.system_generated === true}
-						<IconRobot class="text-c-on-primary/75 w-6 h-6 -mt-1" />
+						<IconRobot class="-mt-1 h-6 w-6 text-c-on-primary/75" />
 					{:else if processObject.country_code}
 						{#if processObject.source === 'api'}
-							<IconServer class="text-c-on-primary/75 w-4 h-4 -mb-0.25 -mt-0.5" />
+							<IconServer class="-mb-0.25 -mt-0.5 h-4 w-4 text-c-on-primary/75" />
 						{:else if processObject.source === 'discord'}
-							<IconSc type="discord" class="text-c-on-primary/75 w-5 h-5 -mb-0.5 -mt-0.5" />
+							<IconSc type="discord" class="-mb-0.5 -mt-0.5 h-5 w-5 text-c-on-primary/75" />
 						{/if}
-						<p class="text-center text-xs font-bold text-c-on-primary/75 cursor-default relative">
+						<p class="relative cursor-default text-center text-xs font-bold text-c-on-primary/75">
 							{processObject.country_code}
 						</p>
 					{/if}
@@ -190,9 +190,9 @@
 		</div>
 		<div class="flex flex-col gap-1.5" slot="tooltip">
 			{#each rows as row}
-				<div class="w-full flex flex-row items-center justify-between text-sm gap-4">
-					<p class="text-c-on-bg/60 text-left">{row.key}</p>
-					<p class="font-medium text-c-on-bg text-right">{row.value}</p>
+				<div class="flex w-full flex-row items-center justify-between gap-4 text-sm">
+					<p class="text-left text-c-on-bg/60">{row.key}</p>
+					<p class="text-right font-medium text-c-on-bg">{row.value}</p>
 				</div>
 			{/each}
 		</div>

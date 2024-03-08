@@ -25,7 +25,7 @@
 					return lastPage.next;
 				},
 				onSuccess: () => {}
-		  })
+			})
 		: undefined;
 </script>
 
@@ -35,9 +35,9 @@
 	image_url="{canonicalUrl}/previews/account-{previewImageVersion}.png"
 />
 
-<div class="w-full flex justify-center pt-4 md:pt-6 pb-6 md:pb-8 md:px-3">
-	<div class="w-full max-w-4xl flex flex-col">
-		<p class="leading-relaxed mb-5 md:mb-7 px-5">
+<div class="flex w-full justify-center pb-6 pt-4 md:px-3 md:pb-8 md:pt-6">
+	<div class="flex w-full max-w-4xl flex-col">
+		<p class="mb-5 px-5 leading-relaxed md:mb-7">
 			{$LL.Account.Usage.PageParagraph()}
 		</p>
 		<div class="w-full px-3">

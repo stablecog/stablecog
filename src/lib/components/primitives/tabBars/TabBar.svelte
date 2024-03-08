@@ -26,29 +26,29 @@
 
 <TabBarWrapper {outline} class={classes} {dontScale}>
 	{#if hasTitle}
-		<div class="self-stretch flex text-c-on-bg/50 relative">
+		<div class="relative flex self-stretch text-c-on-bg/50">
 			<slot name="title" />
 		</div>
-		<div class="w-2px mr-px -ml-px self-stretch relative">
+		<div class="relative -ml-px mr-px w-2px self-stretch">
 			<div
-				class="w-full h-full {outline === 'primary' ? 'bg-c-primary/15' : 'bg-c-bg-secondary'}"
+				class="h-full w-full {outline === 'primary' ? 'bg-c-primary/15' : 'bg-c-bg-secondary'}"
 			/>
 		</div>
 	{/if}
-	<div class="flex-1 min-w-0 flex relative rounded-r-xl">
-		<div class="w-full h-full absolute left-0 top-0 overflow-hidden rounded-r-xl z-0">
+	<div class="relative flex min-w-0 flex-1 rounded-r-xl">
+		<div class="absolute left-0 top-0 z-0 h-full w-full overflow-hidden rounded-r-xl">
 			<div
 				style="width: {(1 / tabs.length) * 100}%; transform: translateX({hideSelected
 					? -100
 					: selectedIndex * 100}%)"
-				class="h-full absolute left-0 top-0 transition py-1 {selectedIndex === 0
+				class="absolute left-0 top-0 h-full py-1 transition {selectedIndex === 0
 					? 'pl-1 pr-0.5'
 					: selectedIndex === tabs.length - 1
-					? 'pr-1 pl-0.5'
-					: 'px-0.5'}"
+						? 'pl-0.5 pr-1'
+						: 'px-0.5'}"
 			>
 				<div
-					class="w-full h-full bg-c-bg-secondary rounded-lg shadow-md shadow-c-shadow/[var(--o-shadow-strong)]"
+					class="h-full w-full rounded-lg bg-c-bg-secondary shadow-md shadow-c-shadow/[var(--o-shadow-strong)]"
 				/>
 			</div>
 		</div>
@@ -59,27 +59,27 @@
 					value = tab.value;
 					e.currentTarget.blur();
 				}}
-				class="flex-1 min-w-0 px-1 {vertical
+				class="min-w-0 flex-1 px-1 {vertical
 					? 'py-1.5'
 					: size === 'xs'
-					? 'py-3'
-					: size === 'sm'
-					? 'py-3.5'
-					: 'py-4'} relative text-center rounded-lg group transition"
+						? 'py-3'
+						: size === 'sm'
+							? 'py-3.5'
+							: 'py-4'} group relative rounded-lg text-center transition"
 				type="button"
 				aria-label={name}
 			>
 				<div
-					class="w-full h-full absolute left-0 top-0 rounded-lg py-1 {index === 0
+					class="absolute left-0 top-0 h-full w-full rounded-lg py-1 {index === 0
 						? 'pl-1 pr-0.5'
 						: index === tabs.length - 1
-						? 'pr-1 pl-0.5'
-						: 'px-0.5'}"
+							? 'pl-0.5 pr-1'
+							: 'px-0.5'}"
 				>
-					<div class="w-full h-full overflow-hidden relative z-0 rounded-lg">
+					<div class="relative z-0 h-full w-full overflow-hidden rounded-lg">
 						<div
-							class="w-full h-full origin-left rounded-lg transition transform translate-y-full
-									bg-c-bg-secondary {value !== tab.value
+							class="h-full w-full origin-left translate-y-full transform rounded-lg bg-c-bg-secondary
+									transition {value !== tab.value
 								? 'group-enabled:group-focus-visible:translate-y-0'
 								: ''} not-touch:group-enabled:group-hover:translate-y-0"
 						/>
@@ -88,9 +88,9 @@
 				<Morpher morphed={!isValid(tab.value)}>
 					<div
 						slot="0"
-						class="flex-1 px-1 flex {vertical
+						class="flex flex-1 px-1 {vertical
 							? 'flex-col gap-0.5'
-							: 'gap-1.5'} justify-center items-center {value === tab.value && !hideSelected
+							: 'gap-1.5'} items-center justify-center {value === tab.value && !hideSelected
 							? 'text-c-on-bg'
 							: 'text-c-on-bg/50'} {value === tab.value && !hideSelected
 							? 'not-touch:group-hover:text-c-primary'
@@ -99,26 +99,26 @@
 						{#if tab.icon}
 							<svelte:component
 								this={tab.icon}
-								class="{dontScale ? 'w-5 h-5' : 'w-5 h-5'} flex-shrink-0"
+								class="{dontScale ? 'h-5 w-5' : 'h-5 w-5'} flex-shrink-0"
 							/>
 						{:else if iconSet}
-							<svelte:component this={iconSet} type={tab.value} class="w-4 h-4 flex-shrink-0" />
+							<svelte:component this={iconSet} type={tab.value} class="h-4 w-4 flex-shrink-0" />
 						{/if}
 						<p
-							class="flex-shrink overflow-hidden overflow-ellipsis max-w-full whitespace-nowrap {fontWeight ===
+							class="max-w-full flex-shrink overflow-hidden overflow-ellipsis whitespace-nowrap {fontWeight ===
 							600
 								? 'font-semibold'
-								: 'font-medium'} relative transition z-0 {vertical ? 'text-xxs' : ''}"
+								: 'font-medium'} relative z-0 transition {vertical ? 'text-xxs' : ''}"
 						>
 							{tab.label}
 						</p>
 					</div>
 					<p
 						slot="1"
-						class="flex-1 px-1 overflow-hidden overflow-ellipsis whitespace-nowrap {fontWeight ===
+						class="flex-1 overflow-hidden overflow-ellipsis whitespace-nowrap px-1 {fontWeight ===
 						600
 							? 'font-semibold'
-							: 'font-medium'} relative transition max-w-full z-0 {value === tab.value &&
+							: 'font-medium'} relative z-0 max-w-full transition {value === tab.value &&
 						!hideSelected
 							? 'text-c-on-bg'
 							: 'text-c-on-bg/50'} {value === tab.value && !hideSelected

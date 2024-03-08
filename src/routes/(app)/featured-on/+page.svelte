@@ -31,19 +31,19 @@
 />
 
 <PageWrapper>
-	<div class="w-full flex flex-col items-center justify-center my-auto">
-		<h1 class="text-3xl md:text-4xl font-bold text-center px-6">{$LL.FeaturedOn.PageTitle()}</h1>
-		<div class="w-full max-w-4xl flex flex-wrap items-stretch justify-center mt-6 gap-6">
+	<div class="my-auto flex w-full flex-col items-center justify-center">
+		<h1 class="px-6 text-center text-3xl font-bold md:text-4xl">{$LL.FeaturedOn.PageTitle()}</h1>
+		<div class="mt-6 flex w-full max-w-4xl flex-wrap items-stretch justify-center gap-6">
 			{#each featuredOn as featured}
-				<div class="w-full md:w-1/3 flex flex-col items-center max-w-md relative">
+				<div class="relative flex w-full max-w-md flex-col items-center md:w-1/3">
 					<a
 						href={featured.url}
 						target="_blank"
 						rel="noopener noreferrer"
-						class="relative w-full h-full p-4 flex transition items-center justify-center rounded-xl
-          		ring-2 ring-c-bg-tertiary bg-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] group
-				  		text-c-on-bg not-touch:hover:text-c-primary not-touch:hover:ring-4 not-touch:hover:shadow-xl
-							not-touch:hover:shadow-c-shadow/[var(--o-shadow-strong)] not-touch:hover:-translate-y-1.5"
+						class="group relative flex h-full w-full items-center justify-center rounded-xl bg-c-bg-secondary
+          		p-4 text-c-on-bg shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] ring-2 ring-c-bg-tertiary
+				  		transition not-touch:hover:-translate-y-1.5 not-touch:hover:text-c-primary not-touch:hover:shadow-xl
+							not-touch:hover:shadow-c-shadow/[var(--o-shadow-strong)] not-touch:hover:ring-4"
 					>
 						{@html featured.logo}
 					</a>
@@ -54,7 +54,7 @@
 						target="_blank"
 					>
 						<p
-							class="font-semibold transition text-c-on-bg/50 not-touch:group-hover:text-c-primary"
+							class="font-semibold text-c-on-bg/50 transition not-touch:group-hover:text-c-primary"
 						>
 							{featured.name}
 						</p>

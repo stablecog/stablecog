@@ -26,11 +26,11 @@
 						currency === 'eur'
 							? STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[$userSummary.product_id].prices[
 									$userSummary.price_id
-							  ].currencies.eur.amount
+								].currencies.eur.amount
 							: STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[$userSummary.product_id].prices[
 									$userSummary.price_id
-							  ].currencies.usd.amount
-			  }
+								].currencies.usd.amount
+				}
 			: undefined;
 </script>
 
@@ -41,23 +41,23 @@
 />
 
 <PageWrapper>
-	<div class="w-full flex flex-col items-center justify-start my-auto">
-		<IconTick class="w-24 h-24 text-c-primary" />
-		<h1 class="text-center font-bold text-4xl mt-4 text-c-primary">
+	<div class="my-auto flex w-full flex-col items-center justify-start">
+		<IconTick class="h-24 w-24 text-c-primary" />
+		<h1 class="mt-4 text-center text-4xl font-bold text-c-primary">
 			{$LL.Account.Subscription.Succeeded.PageTitle()}
 		</h1>
-		<p class="max-w-xl mt-4 leading-relaxed text-center text-c-on-bg/75">
+		<p class="mt-4 max-w-xl text-center leading-relaxed text-c-on-bg/75">
 			{$LL.Account.Subscription.Succeeded.PageParagraph()}
 		</p>
 		{#if currentPlan}
 			<div
-				class="w-full max-w-sm flex flex-col items-start p-4 rounded-2xl bg-c-bg ring-2 ring-c-bg-secondary mt-5
-				shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]"
+				class="mt-5 flex w-full max-w-sm flex-col items-start rounded-2xl bg-c-bg p-4 shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]
+				ring-2 ring-c-bg-secondary"
 			>
-				<p class="text-sm text-c-on-bg/60 px-1">{$LL.Account.Subscription.NewPlanTitle()}</p>
-				<p class="w-full text-left font-bold text-2xl mt-1 text-c-on-bg px-1">
+				<p class="px-1 text-sm text-c-on-bg/60">{$LL.Account.Subscription.NewPlanTitle()}</p>
+				<p class="mt-1 w-full px-1 text-left text-2xl font-bold text-c-on-bg">
 					{currentPlan.title}<span
-						class="text-base bg-c-primary/15 font-medium text-c-primary px-1.5 py-0.75 rounded-md ml-2"
+						class="ml-2 rounded-md bg-c-primary/15 px-1.5 py-0.75 text-base font-medium text-c-primary"
 						>{STRIPE_CURRENCY_TO_SYMBOL[
 							currency
 						]}{currentPlan.amount}{$LL.Pricing.SlashMonth()}</span

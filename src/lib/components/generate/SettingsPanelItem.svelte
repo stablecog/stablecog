@@ -10,24 +10,24 @@
 	export let title: string;
 </script>
 
-<div class="w-full flex flex-col items-start px-3 md:px-4">
+<div class="flex w-full flex-col items-start px-3 md:px-4">
 	<WithTooltip let:trigger let:triggerStoreValue title={tooltipTitle} paragraph={tooltipParagraph}>
 		<div
 			tabindex="-1"
 			use:trigger
 			{...triggerStoreValue}
-			class="max-w-full px-2 flex items-center text-c-on-bg/75 gap-2 cursor-default"
+			class="flex max-w-full cursor-default items-center gap-2 px-2 text-c-on-bg/75"
 		>
 			{#if icon}
-				<svelte:component this={icon} class="w-5 h-5 flex-shrink-0" />
+				<svelte:component this={icon} class="h-5 w-5 flex-shrink-0" />
 			{:else if iconType}
-				<IconGenerationSettingsSet type={iconType} class="w-5 h-5 flex-shrink-0" />
+				<IconGenerationSettingsSet type={iconType} class="h-5 w-5 flex-shrink-0" />
 			{/if}
-			<p class="flex-shrink min-w-0 font-medium break-words">
+			<p class="min-w-0 flex-shrink break-words font-medium">
 				{title}
 			</p>
 		</div>
 	</WithTooltip>
-	<div class="w-full h-3" />
+	<div class="h-3 w-full" />
 	<slot />
 </div>

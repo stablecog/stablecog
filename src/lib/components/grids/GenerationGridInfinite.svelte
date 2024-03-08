@@ -265,9 +265,9 @@
 
 {#if $generationsQuery.isInitialLoading}
 	<div
-		class="w-full h-full flex-1 flex flex-col text-c-on-bg/60 py-6 px-4 justify-center items-center text-center"
+		class="flex h-full w-full flex-1 flex-col items-center justify-center px-4 py-6 text-center text-c-on-bg/60"
 	>
-		<IconAnimatedSpinner class="w-12 h-12" />
+		<IconAnimatedSpinner class="h-12 w-12" />
 		<p class="mt-2 opacity-0">{$LL.Gallery.SearchingTitle()}</p>
 		<div class="h-[2vh] {noLoadingSpinnerAlignmentAdjustment ? 'hidden' : ''}" />
 	</div>
@@ -279,11 +279,11 @@
 			$gridVirtualizer && $gridVirtualizer.scrollOffset > $windowHeight * 2}
 		{@const isGridLongEnoughForScrollToTopChevron =
 			$gridVirtualizer && $gridVirtualizer.getTotalSize() > $windowHeight * 1.5}
-		<div class="w-full relative">
+		<div class="relative w-full">
 			<div
 				style="height: {$gridVirtualizer.getTotalSize() +
 					($generationsQuery.hasNextPage ? $windowHeight : extraHeight)}px"
-				class="w-full relative"
+				class="relative w-full"
 			>
 				{#each $gridVirtualizer.getVirtualItems() as virtualItem (virtualItem.index + outputs[virtualItem.index].id)}
 					{@const output = outputs[virtualItem.index]}
@@ -331,13 +331,13 @@
 			{#if !$generationsQuery.hasNextPage && $gridVirtualizer.getTotalSize() >= $windowHeight}
 				<div
 					transition:scale={{ duration: 200, easing: quadOut, opacity: 0, start: 0.5 }}
-					class="w-full flex items-center justify-center mt-8 font-medium text-c-on-bg/75 px-2"
+					class="mt-8 flex w-full items-center justify-center px-2 font-medium text-c-on-bg/75"
 				>
 					<div
-						class="max-w-full flex items-center justify-center bg-c-bg-tertiary
-						border-1.5 border-c-on-bg/15 px-2 py-1 rounded-lg gap-1"
+						class="flex max-w-full items-center justify-center gap-1
+						rounded-lg border-1.5 border-c-on-bg/15 bg-c-bg-tertiary px-2 py-1"
 					>
-						<p class="flex-shrink min-w-0 text-sm overflow-hidden overflow-ellipsis text-center">
+						<p class="min-w-0 flex-shrink overflow-hidden overflow-ellipsis text-center text-sm">
 							{$LL.Shared.ReachedTheEndTitle()}
 						</p>
 					</div>
@@ -348,9 +348,9 @@
 					class="z-20 {showScrollToTopChevron ||
 					$gridVirtualizer.scrollOffset > $gridVirtualizer.getTotalSize() - $windowHeight
 						? 'translate-y-0'
-						: 'translate-y-full'} sticky transform transition duration-300
-					flex items-center justify-center left-0 bottom-0
-					w-full px-2 pt-8 pointer-events-none
+						: 'translate-y-full'} pointer-events-none sticky bottom-0 left-0
+					flex w-full transform items-center justify-center
+					px-2 pt-8 transition duration-300
 					md:px-3 md:pt-8 {hasExtraPadding
 						? 'pb-[calc(2rem+env(safe-area-inset-bottom))] md:pb-[calc(3rem+env(safe-area-inset-bottom))]'
 						: 'pb-[calc(0.5rem+env(safe-area-inset-bottom))] md:pb-[calc(1rem+env(safe-area-inset-bottom))]'}"
@@ -362,18 +362,18 @@
 							$gridVirtualizer?.scrollToOffset(0, {
 								behavior: 'smooth'
 							})}
-						class="relative rounded-lg group
-						before:absolute before:min-w-[56px] before:min-h-[56px]
-						before:left-1/2 before:top-1/2 before:-translate-x-1/2 before:-translate-y-1/2
-						before:w-full before:h-full before:rounded-lg
+						class="group relative rounded-lg
+						before:absolute before:left-1/2 before:top-1/2
+						before:h-full before:min-h-[56px] before:w-full before:min-w-[56px]
+						before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-lg
 						{showScrollToTopChevron ? 'pointer-events-auto before:pointer-events-auto' : ''}"
 					>
 						<div
-							class="w-full h-full rounded-full bg-c-bg-tertiary relative p-2.5
-							shadow-lg shadow-c-shadow/[var(--o-shadow-strongest)] border-2 border-c-on-bg/15"
+							class="relative h-full w-full rounded-full border-2 border-c-on-bg/15
+							bg-c-bg-tertiary p-2.5 shadow-lg shadow-c-shadow/[var(--o-shadow-strongest)]"
 						>
 							<ButtonHoverEffect color="on-bg" noPadding fullRounding />
-							<IconArrowRight class="transform -rotate-90 w-5 h-5" />
+							<IconArrowRight class="h-5 w-5 -rotate-90 transform" />
 						</div>
 					</button>
 				</div>

@@ -8,13 +8,13 @@
 </script>
 
 <div
-	class="w-full flex bg-c-bg-secondary px-3 py-2 gap-3.5 items-center
-  ring-2 ring-c-bg-tertiary rounded-[0.6rem] font-mono {classes}"
+	class="flex w-full items-center gap-3.5 rounded-[0.6rem] bg-c-bg-secondary px-3
+  py-2 font-mono ring-2 ring-c-bg-tertiary {classes}"
 >
 	{#if method}
 		<MethodBadge {method} class="-ml-1" />
 	{/if}
-	<p class="flex-1 min-w-0 font-medium {color === 'primary' ? 'text-c-primary' : 'text-c-on-bg'}">
+	<p class="min-w-0 flex-1 font-medium {color === 'primary' ? 'text-c-primary' : 'text-c-on-bg'}">
 		<slot />
 	</p>
 </div>

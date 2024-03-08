@@ -20,22 +20,22 @@
 
 <div
 	transition:expandCollapse={{ duration: 300 }}
-	class="w-full flex flex-col justify-start relative"
+	class="relative flex w-full flex-col justify-start"
 >
-	<div class="w-full flex items-center justify-center py-4 px-4">
+	<div class="flex w-full items-center justify-center px-4 py-4">
 		<div
-			class="bg-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] px-5 pb-5 pt-4 rounded-2xl
-      flex flex-col items-start justify-start gap-4 w-full max-w-[21rem]"
+			class="flex w-full max-w-[21rem] flex-col items-start justify-start gap-4
+      rounded-2xl bg-c-bg-secondary px-5 pb-5 pt-4 shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"
 		>
 			<div class="flex flex-col items-start justify-start gap-1.5">
 				<p class="text-sm font-bold text-c-on-bg/75">
 					{$LL.Home.SubmitToGalleryQuestion.Title()}
 				</p>
-				<p class="text-xs text-c-on-bg/50 leading-relaxed">
+				<p class="text-xs leading-relaxed text-c-on-bg/50">
 					{$LL.Home.SubmitToGalleryQuestion.Paragraph()}
 				</p>
 			</div>
-			<div class="w-full flex gap-4">
+			<div class="flex w-full gap-4">
 				<SubtleButton
 					onClick={() => {
 						shouldSubmitToGallery.set(true);

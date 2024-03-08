@@ -19,23 +19,23 @@
 	style={$windowHeight && $navbarHeight
 		? `max-height: calc(${$windowHeight - $navbarHeight}px); top: calc(${$navbarHeight}px);`
 		: `max-height: calc(100vh - ${navbarEstimatedHeight}px); max-height: calc(100svh - ${navbarEstimatedHeight}px); top: ${navbarEstimatedHeight}px;`}
-	class="w-72 self-stretch flex flex-col sticky top-24 mt-1 overflow-hidden {classes}"
+	class="sticky top-24 mt-1 flex w-72 flex-col self-stretch overflow-hidden {classes}"
 >
-	<div class="h-full absolute right-0 top-0 py-4">
-		<div class="h-full w-2px bg-c-on-bg/5 rounded-full" />
+	<div class="absolute right-0 top-0 h-full py-4">
+		<div class="h-full w-2px rounded-full bg-c-on-bg/5" />
 	</div>
 	<div
-		class="w-full h-full items-start justify-start flex flex-col
+		class="flex h-full w-full flex-col items-start justify-start
 		self-stretch"
 	>
-		<div class="w-full flex justify-center mb-1 px-5 mt-5">
+		<div class="mb-1 mt-5 flex w-full justify-center px-5">
 			<NoBgButton href="/blog" prefetch={true} hoverFrom="right">
 				<div class="flex items-center justify-center gap-2.5 px-2 py-1">
 					<IconBack
-						class="w-6 h-6 transform transition text-c-on-bg/50 group-hover:-translate-x-1
+						class="h-6 w-6 transform text-c-on-bg/50 transition group-hover:-translate-x-1
 						not-touch:group-hover:text-c-primary"
 					/>
-					<p class="transition text-c-on-bg/50 not-touch:group-hover:text-c-primary">
+					<p class="text-c-on-bg/50 transition not-touch:group-hover:text-c-primary">
 						{$LL.Blog.BackToBlogButton()}
 					</p>
 				</div>
@@ -44,11 +44,11 @@
 		<div class="w-full px-5">
 			<ScBar noGuide noBlog noGithub noProductHunt />
 		</div>
-		<div class="w-full px-5 mt-5">
-			<div class="w-full h-2px bg-c-on-bg/5 rounded-full px-5" />
+		<div class="mt-5 w-full px-5">
+			<div class="h-2px w-full rounded-full bg-c-on-bg/5 px-5" />
 		</div>
-		<nav class="w-full flex flex-col max-h-full overflow-auto pt-5 pb-16 px-3">
-			<ul class="w-full flex flex-col">
+		<nav class="flex max-h-full w-full flex-col overflow-auto px-3 pb-16 pt-5">
+			<ul class="flex w-full flex-col">
 				{#each toc as tocItem}
 					<ToCItem item={tocItem} {activeId} />
 				{/each}

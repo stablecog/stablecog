@@ -8,11 +8,11 @@
 
 <div
 	transition:expandCollapse={{ duration: 200 }}
-	class="transition-all ring-2 ring-c-bg-tertiary bg-c-bg-secondary 
-	rounded-xl flex flex-col justify-start shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]
-	absolute {alignment} overflow-hidden z-50 {classes}"
+	class="absolute flex flex-col justify-start
+	rounded-xl bg-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-tertiary
+	transition-all {alignment} z-50 overflow-hidden {classes}"
 >
-	<div class="w-full flex flex-col justify-start z-0 overflow-hidden relative">
+	<div class="relative z-0 flex w-full flex-col justify-start overflow-hidden">
 		<slot />
 	</div>
 </div>

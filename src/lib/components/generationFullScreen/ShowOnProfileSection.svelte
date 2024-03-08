@@ -164,8 +164,8 @@
 			<button
 				{...$root}
 				use:root
-				class="w-full flex items-center justify-between rounded-lg pl-5 md:pl-6.5 pr-4
-				md:pr-5 py-4 relative group -my-1.5 disabled:cursor-not-allowed disabled:opacity-50 disabled:pointer-events-none"
+				class="group relative -my-1.5 flex w-full items-center justify-between rounded-lg
+				py-4 pl-5 pr-4 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:pl-6.5 md:pr-5"
 				id="checkbox"
 				disabled={!canToggleVisibility}
 				on:click={() =>
@@ -173,25 +173,25 @@
 						? toggleVisibility(
 								[generation.selected_output.id],
 								$checked ? 'make-public' : 'make-private'
-						  )
+							)
 						: () => null}
 			>
 				{#if canToggleVisibility}
 					<ButtonHoverEffect size="md" hoverFrom="left" />
 				{/if}
 				<label
-					class="font-semibold flex gap-2 justify-start items-center
-					flex-1 min-w-0 relative pointer-events-none
-					transition text-c-on-bg"
+					class="pointer-events-none relative flex min-w-0 flex-1
+					items-center justify-start gap-2 font-semibold
+					text-c-on-bg transition"
 					for="checkbox"
 				>
 					<IconEyeOutline
-						class="flex-shrink-0 w-5 h-5 transition {canToggleVisibility
+						class="h-5 w-5 flex-shrink-0 transition {canToggleVisibility
 							? 'not-touch:group-hover:text-c-primary'
 							: ''}"
 					/>
 					<p
-						class="flex-1 whitespace-nowrap overflow-hidden overflow-ellipsis text-left transition {canToggleVisibility
+						class="flex-1 overflow-hidden overflow-ellipsis whitespace-nowrap text-left transition {canToggleVisibility
 							? 'not-touch:group-hover:text-c-primary'
 							: ''}"
 					>

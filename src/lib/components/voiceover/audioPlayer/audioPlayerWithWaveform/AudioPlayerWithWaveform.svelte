@@ -47,10 +47,10 @@
 		(status === 'succeeded' && audioArray === undefined)
 			? 'being-created'
 			: status === 'succeeded' && audioArray !== undefined
-			? 'created'
-			: status === 'failed'
-			? 'failed'
-			: 'idle';
+				? 'created'
+				: status === 'failed'
+					? 'failed'
+					: 'idle';
 	let audioArray: number[] | undefined;
 
 	function onOutputIdChanged() {
@@ -110,14 +110,14 @@
 	role="slider"
 	tabindex="0"
 	aria-valuenow={currentTime}
-	class="w-full h-full bg-c-bg-secondary flex flex-col rounded-xl md:rounded-2xl overflow-hidden relative z-0
-	shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] hide-scroll {classes}"
+	class="hide-scroll relative z-0 flex h-full w-full flex-col overflow-hidden rounded-xl bg-c-bg-secondary
+	shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] md:rounded-2xl {classes}"
 >
 	{#if audioStatus !== 'created'}
 		<div
 			in:scale={{ duration: 300, easing: quadOut, start: 0.85 }}
 			out:scale={{ duration: 200, easing: quadOut, start: 0.85 }}
-			class="w-full h-full absolute left-0 top-0 bg-c-bg-secondary"
+			class="absolute left-0 top-0 h-full w-full bg-c-bg-secondary"
 		>
 			<AudioPlayerWithWaveformPlaceholder {audioStatus} {voiceover} {barWidth} />
 		</div>
@@ -125,7 +125,7 @@
 		<div
 			in:scale={{ duration: 300, easing: quadOut, start: 1.15 }}
 			out:scale={{ duration: 200, easing: quadOut, start: 1.15 }}
-			class="w-full h-full flex flex-col bg-c-bg-secondary z-10"
+			class="z-10 flex h-full w-full flex-col bg-c-bg-secondary"
 		>
 			<AudioPlayerWithWaveformInner
 				bind:currentTime

@@ -23,13 +23,13 @@
 </script>
 
 <QueuePositionProvider {generation} let:positionInQueue let:showQueuePosition>
-	<div class="w-full h-full relative group">
+	<div class="group relative h-full w-full">
 		<ImagePlaceholder width={generation.width} height={generation.height} />
 		<div
-			class="absolute w-full h-full left-0 top-0 overflow-hidden z-0 rounded-xl bg-c-bg-secondary
-			transition border-2 border-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"
+			class="absolute left-0 top-0 z-0 h-full w-full overflow-hidden rounded-xl border-2
+			border-c-bg-secondary bg-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] transition"
 		>
-			<div class="w-full h-full relative rounded-xl z-0 overflow-hidden">
+			<div class="relative z-0 h-full w-full overflow-hidden rounded-xl">
 				{#if generation.is_placeholder}
 					{@const sizeClasses =
 						generation.height > generation.width
@@ -37,7 +37,7 @@
 							: 'w-full max-w-[2rem] md:max-w-[2.5rem] h-auto'}
 					<div
 						out:scale={{ duration: 200, easing: quadOut, opacity: 0 }}
-						class="w-full h-full absolute left-0 top-0 flex flex-col gap-3 items-center justify-center"
+						class="absolute left-0 top-0 flex h-full w-full flex-col items-center justify-center gap-3"
 					>
 						<IconImage class="{sizeClasses} text-c-on-bg/20" />
 					</div>
@@ -45,7 +45,7 @@
 					{#if status !== undefined && status !== 'succeeded' && animation !== undefined}
 						<div
 							out:fade={{ duration: 3000, easing: quadIn }}
-							class="w-full h-full absolute left-0 top-0 flex items-center justify-center"
+							class="absolute left-0 top-0 flex h-full w-full items-center justify-center"
 						>
 							<GenerationAnimation {animation} />
 							<QueuePosition position={positionInQueue} show={showQueuePosition} />
@@ -61,7 +61,7 @@
 							: 'w-full max-w-[2rem] md:max-w-[2.5rem] h-auto'}
 					<div
 						in:fade={{ duration: 200, easing: quadOut }}
-						class="w-full h-full flex flex-col items-center bg-c-bg-secondary justify-center relative px-4 md:px-5 py-3 gap-2"
+						class="relative flex h-full w-full flex-col items-center justify-center gap-2 bg-c-bg-secondary px-4 py-3 md:px-5"
 					>
 						{#if status === 'failed-nsfw'}
 							<IconEyeSlashOutline class="{sizeClasses} text-c-on-bg/50" />
@@ -71,13 +71,13 @@
 							<IconSadFaceOutline class="{sizeClasses} text-c-on-bg/50" />
 						{/if}
 						<p
-							class="text-xs md:text-sm text-c-on-bg/50 text-center leading-normal md:leading-normal"
+							class="text-center text-xs leading-normal text-c-on-bg/50 md:text-sm md:leading-normal"
 						>
 							{status === 'failed-nsfw'
 								? $LL.Error.ImageWasNSFW()
 								: status === 'failed-nsfw-prompt'
-								? $LL.Error.PromptWasNSFW()
-								: $LL.Error.SomethingWentWrong()}
+									? $LL.Error.PromptWasNSFW()
+									: $LL.Error.SomethingWentWrong()}
 						</p>
 						{#if status !== 'failed-nsfw' && status !== 'failed-nsfw-prompt' && generation.error !== undefined}
 							<ErrorChip class="mt-2" error={generation.error} />

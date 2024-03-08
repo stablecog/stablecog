@@ -21,52 +21,52 @@
 		{href}
 		on:click={onClick}
 		data-sveltekit-preload-data="hover"
-		class="bg-c-bg border-2 overflow-hidden z-10 shadow-lg flex-shrink-0
-  	shadow-c-shadow/[var(--o-shadow-normal)] group relative border-c-primary/30 {size === 'sm'
+		class="group relative z-10 flex-shrink-0 overflow-hidden border-2
+  	border-c-primary/30 bg-c-bg shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] {size === 'sm'
 			? 'rounded-lg'
 			: size === 'md'
-			? 'rounded-lg2'
-			: 'rounded-lg2'} {classes}"
+				? 'rounded-lg2'
+				: 'rounded-lg2'} {classes}"
 	>
 		<div
-			class="w-[200%] h-full absolute left-0 top-0 items-center justify-center hidden not-touch:flex"
+			class="absolute left-0 top-0 hidden h-full w-[200%] items-center justify-center not-touch:flex"
 		>
 			<div
-				class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full
-				bg-c-primary/15 not-touch:group-hover:translate-x-[-45%]"
+				class="aspect-square w-full origin-left -translate-x-full transform rounded-full bg-c-primary/15
+				transition not-touch:group-hover:translate-x-[-45%]"
 			/>
 		</div>
 		<div
-			class="flex items-center justify-center z-10 text-c-primary bg-c-primary/15
+			class="z-10 flex items-center justify-center bg-c-primary/15 text-c-primary
     	{size === 'sm'
 				? 'gap-1.5 px-2.5 py-1'
 				: size === 'md'
-				? 'gap-1.5 px-3 py-1.25'
-				: 'gap-1.5 px-4 py-1.25'}"
+					? 'gap-1.5 px-3 py-1.25'
+					: 'gap-1.5 px-4 py-1.25'}"
 		>
 			{#if productId === undefined || productId === 'free'}
 				<IconFreePlan
 					class="{size === 'sm'
-						? 'w-4 h-4 -ml-0.75'
+						? '-ml-0.75 h-4 w-4'
 						: size === 'md'
-						? 'w-5 h-5 -ml-0.75'
-						: 'w-6 h-6 -ml-1'} flex-shrink-0 text-c-primary"
+							? '-ml-0.75 h-5 w-5'
+							: '-ml-1 h-6 w-6'} flex-shrink-0 text-c-primary"
 				/>
 			{:else}
 				<IconStar
 					class="{size === 'sm'
-						? 'w-4 h-4 -ml-0.75'
+						? '-ml-0.75 h-4 w-4'
 						: size === 'md'
-						? 'w-5 h-5 -ml-0.75'
-						: 'w-6 h-6 -ml-1'} flex-shrink-0 text-c-primary"
+							? '-ml-0.75 h-5 w-5'
+							: '-ml-1 h-6 w-6'} flex-shrink-0 text-c-primary"
 				/>
 			{/if}
 			<p
 				class="{size === 'sm'
 					? 'text-sm font-semibold'
 					: size === 'md'
-					? 'text-base font-semibold'
-					: 'text-lg font-semibold'} flex-shrink min-w-0 overflow-hidden overflow-ellipsis whitespace-nowrap"
+						? 'text-base font-semibold'
+						: 'text-lg font-semibold'} min-w-0 flex-shrink overflow-hidden overflow-ellipsis whitespace-nowrap"
 			>
 				{loading ? '----' : planTitle}
 			</p>
@@ -74,44 +74,44 @@
 	</a>
 {:else}
 	<div
-		class="bg-c-bg border-2 overflow-hidden z-10 shadow-lg flex-shrink-0
-  	shadow-c-shadow/[var(--o-shadow-normal)] border-c-primary/30 {size === 'sm'
+		class="z-10 flex-shrink-0 overflow-hidden border-2 border-c-primary/30 bg-c-bg
+  	shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] {size === 'sm'
 			? 'rounded-lg'
 			: size === 'md'
-			? 'rounded-lg2'
-			: 'rounded-lg2'} {classes}"
+				? 'rounded-lg2'
+				: 'rounded-lg2'} {classes}"
 	>
 		<div
-			class="flex items-center justify-center z-10 text-c-primary bg-c-primary/15
+			class="z-10 flex items-center justify-center bg-c-primary/15 text-c-primary
     	{size === 'sm'
 				? 'gap-1.5 px-2.5 py-1'
 				: size === 'md'
-				? 'gap-1.5 px-3 py-1.25'
-				: 'gap-1.5 px-4 py-1.25'}"
+					? 'gap-1.5 px-3 py-1.25'
+					: 'gap-1.5 px-4 py-1.25'}"
 		>
 			{#if productId === undefined || productId === 'free'}
 				<IconFreePlan
 					class="{size === 'sm'
-						? 'w-4 h-4 -ml-0.75'
+						? '-ml-0.75 h-4 w-4'
 						: size === 'md'
-						? 'w-5 h-5 -ml-0.75'
-						: 'w-6 h-6 -ml-1'} flex-shrink-0 text-c-primary"
+							? '-ml-0.75 h-5 w-5'
+							: '-ml-1 h-6 w-6'} flex-shrink-0 text-c-primary"
 				/>
 			{:else}
 				<IconStar
 					class="{size === 'sm'
-						? 'w-4 h-4 -ml-0.75'
+						? '-ml-0.75 h-4 w-4'
 						: size === 'md'
-						? 'w-5 h-5 -ml-0.75'
-						: 'w-6 h-6 -ml-1'} flex-shrink-0 text-c-primary"
+							? '-ml-0.75 h-5 w-5'
+							: '-ml-1 h-6 w-6'} flex-shrink-0 text-c-primary"
 				/>
 			{/if}
 			<p
 				class="{size === 'sm'
 					? 'text-sm font-semibold'
 					: size === 'md'
-					? 'text-base font-semibold'
-					: 'text-lg font-semibold'} flex-shrink min-w-0 overflow-hidden overflow-ellipsis whitespace-nowrap"
+						? 'text-base font-semibold'
+						: 'text-lg font-semibold'} min-w-0 flex-shrink overflow-hidden overflow-ellipsis whitespace-nowrap"
 			>
 				{loading ? '----' : planTitle}
 			</p>

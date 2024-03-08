@@ -83,62 +83,62 @@
 </script>
 
 {#if $operationsQuery?.isError}
-	<div class="w-full flex flex-col items-center justify-center py-8 px-5 md:px-12">
-		<IconSadFaceOutline class="w-10 h-10 text-c-on-bg/50" />
-		<p class="text-c-on-surface-secondary text-c-on-bg/50 mt-2 text-center">
+	<div class="flex w-full flex-col items-center justify-center px-5 py-8 md:px-12">
+		<IconSadFaceOutline class="h-10 w-10 text-c-on-bg/50" />
+		<p class="text-c-on-surface-secondary mt-2 text-center text-c-on-bg/50">
 			{$LL.Error.SomethingWentWrong()}
 		</p>
 	</div>
 {:else if operations === undefined || $operationsQuery === undefined || $operationsQuery.data === undefined || $operationsQuery?.isInitialLoading}
-	<div class="w-full flex flex-col items-center justify-center py-8 px-5 md:px-12">
-		<IconAnimatedSpinner class="w-10 h-10 text-c-on-bg/50" />
-		<p class="text-c-on-surface-secondary text-c-on-bg/50 mt-2 text-center">
+	<div class="flex w-full flex-col items-center justify-center px-5 py-8 md:px-12">
+		<IconAnimatedSpinner class="h-10 w-10 text-c-on-bg/50" />
+		<p class="text-c-on-surface-secondary mt-2 text-center text-c-on-bg/50">
 			{$LL.Shared.LoadingTitle()}
 		</p>
 	</div>
 {:else if operations.length === 0}
-	<div class="w-full flex flex-col items-center justify-center py-8 px-5 md:px-12">
-		<IconGraph class="w-10 h-10 text-c-on-bg/50" />
-		<p class="text-c-on-surface-secondary text-c-on-bg/50 mt-2 text-center">
+	<div class="flex w-full flex-col items-center justify-center px-5 py-8 md:px-12">
+		<IconGraph class="h-10 w-10 text-c-on-bg/50" />
+		<p class="text-c-on-surface-secondary mt-2 text-center text-c-on-bg/50">
 			{$LL.Account.Usage.NoUsageYet()}
 		</p>
 	</div>
 {:else if browser && $listVirtualizer}
-	<div class="w-full text-sm md:text-base flex items-center font-semibold">
+	<div class="flex w-full items-center text-sm font-semibold md:text-base">
 		<p
-			class="border-b-2 border-c-bg-secondary flex-1 px-4 py-3.5 min-w-[7rem] w-1/6 whitespace-nowrap overflow-hidden overflow-ellipsis"
+			class="w-1/6 min-w-[7rem] flex-1 overflow-hidden overflow-ellipsis whitespace-nowrap border-b-2 border-c-bg-secondary px-4 py-3.5"
 		>
 			{$LL.Account.Usage.UsageTable.ID()}
 		</p>
 		<p
-			class="border-b-2 border-c-bg-secondary flex-1 px-4 py-3.5 min-w-[7rem] w-1/6 whitespace-nowrap overflow-hidden overflow-ellipsis"
+			class="w-1/6 min-w-[7rem] flex-1 overflow-hidden overflow-ellipsis whitespace-nowrap border-b-2 border-c-bg-secondary px-4 py-3.5"
 		>
 			{$LL.Account.Usage.UsageTable.Operation()}
 		</p>
 		<p
-			class="border-b-2 border-c-bg-secondary flex-1 px-4 py-3.5 min-w-[7rem] w-1/6 whitespace-nowrap overflow-hidden overflow-ellipsis"
+			class="w-1/6 min-w-[7rem] flex-1 overflow-hidden overflow-ellipsis whitespace-nowrap border-b-2 border-c-bg-secondary px-4 py-3.5"
 		>
 			{$LL.Account.Usage.UsageTable.Cost()}
 		</p>
 		<p
-			class="border-b-2 border-c-bg-secondary flex-1 px-4 py-3.5 min-w-[7rem] w-1/6 whitespace-nowrap overflow-hidden overflow-ellipsis"
+			class="w-1/6 min-w-[7rem] flex-1 overflow-hidden overflow-ellipsis whitespace-nowrap border-b-2 border-c-bg-secondary px-4 py-3.5"
 		>
 			{$LL.Account.APIKeys.KeyTable.CreatedAtTitle()}
 		</p>
 		<p
-			class="border-b-2 border-c-bg-secondary flex-1 px-4 py-3.5 min-w-[7rem] w-1/6 whitespace-nowrap overflow-hidden overflow-ellipsis"
+			class="w-1/6 min-w-[7rem] flex-1 overflow-hidden overflow-ellipsis whitespace-nowrap border-b-2 border-c-bg-secondary px-4 py-3.5"
 		>
 			{$LL.Account.Usage.UsageTable.Duration()}
 		</p>
 		<p
-			class="border-b-2 border-c-bg-secondary flex-1 px-4 py-3.5 min-w-[7rem] w-1/6 whitespace-nowrap overflow-hidden overflow-ellipsis"
+			class="w-1/6 min-w-[7rem] flex-1 overflow-hidden overflow-ellipsis whitespace-nowrap border-b-2 border-c-bg-secondary px-4 py-3.5"
 		>
 			{$LL.Account.Usage.UsageTable.Source()}
 		</p>
 	</div>
 	<div
 		style="height: {$listVirtualizer.getTotalSize()}px"
-		class="w-full text-sm md:text-base relative"
+		class="relative w-full text-sm md:text-base"
 	>
 		{#each $listVirtualizer.getVirtualItems() as virtualItem (virtualItem.index + operations[virtualItem.index].id)}
 			{@const operation = operations[virtualItem.index]}
@@ -153,46 +153,46 @@
 						transform: translateY({virtualItem.start}px);
 					"
 			>
-				<div class="h-full flex items-center text-c-on-bg/75">
+				<div class="flex h-full items-center text-c-on-bg/75">
 					<p
 						class="{virtualItem.index !== operations.length - 1
 							? 'border-b-2'
-							: ''} border-c-bg-secondary flex-1 px-4 py-3.5 min-w-[7rem] w-1/6 whitespace-nowrap overflow-hidden overflow-ellipsis"
+							: ''} w-1/6 min-w-[7rem] flex-1 overflow-hidden overflow-ellipsis whitespace-nowrap border-c-bg-secondary px-4 py-3.5"
 					>
 						{operation.id}
 					</p>
 					<p
 						class="{virtualItem.index !== operations.length - 1
 							? 'border-b-2'
-							: ''} border-c-bg-secondary flex-1 px-4 py-3.5 min-w-[7rem] w-1/6 whitespace-nowrap overflow-hidden overflow-ellipsis"
+							: ''} w-1/6 min-w-[7rem] flex-1 overflow-hidden overflow-ellipsis whitespace-nowrap border-c-bg-secondary px-4 py-3.5"
 					>
 						{operationTypeToLocaleString(operation.operation_type, $LL)}
 					</p>
 					<p
 						class="{virtualItem.index !== operations.length - 1
 							? 'border-b-2'
-							: ''} border-c-bg-secondary flex-1 px-4 py-3.5 min-w-[7rem] w-1/6 whitespace-nowrap overflow-hidden overflow-ellipsis"
+							: ''} w-1/6 min-w-[7rem] flex-1 overflow-hidden overflow-ellipsis whitespace-nowrap border-c-bg-secondary px-4 py-3.5"
 					>
 						{costFormatter.format(operation.cost)}
 					</p>
 					<p
 						class="{virtualItem.index !== operations.length - 1
 							? 'border-b-2'
-							: ''} border-c-bg-secondary flex-1 px-4 py-3.5 min-w-[7rem] w-1/6 text-c-on-bg/50 whitespace-nowrap overflow-hidden overflow-ellipsis"
+							: ''} w-1/6 min-w-[7rem] flex-1 overflow-hidden overflow-ellipsis whitespace-nowrap border-c-bg-secondary px-4 py-3.5 text-c-on-bg/50"
 					>
 						{getRelativeDate({ date: operation.created_at, locale: $locale })}
 					</p>
 					<p
 						class="{virtualItem.index !== operations.length - 1
 							? 'border-b-2'
-							: ''} border-c-bg-secondary flex-1 px-4 py-3.5 min-w-[7rem] w-1/6 text-c-on-bg/50 whitespace-nowrap overflow-hidden overflow-ellipsis"
+							: ''} w-1/6 min-w-[7rem] flex-1 overflow-hidden overflow-ellipsis whitespace-nowrap border-c-bg-secondary px-4 py-3.5 text-c-on-bg/50"
 					>
 						{durationFormatter.format(operation.duration_sec)}
 					</p>
 					<p
 						class="{virtualItem.index !== operations.length - 1
 							? 'border-b-2'
-							: ''} border-c-bg-secondary flex-1 px-4 py-3.5 min-w-[7rem] w-1/6 text-c-on-bg/50 whitespace-nowrap overflow-hidden overflow-ellipsis"
+							: ''} w-1/6 min-w-[7rem] flex-1 overflow-hidden overflow-ellipsis whitespace-nowrap border-c-bg-secondary px-4 py-3.5 text-c-on-bg/50"
 					>
 						{operationSourceToLocaleString(operation.source, $LL)}
 					</p>

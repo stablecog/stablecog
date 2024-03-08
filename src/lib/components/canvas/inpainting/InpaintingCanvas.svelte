@@ -430,8 +430,8 @@
 </script>
 
 <QueuePositionProvider {generation} let:positionInQueue let:showQueuePosition>
-	<div class="w-full flex-1 min-h-0 flex flex-col items-center justify-center">
-		<div class="w-full flex items-center justify-center z-10">
+	<div class="flex min-h-0 w-full flex-1 flex-col items-center justify-center">
+		<div class="z-10 flex w-full items-center justify-center">
 			<Toolbar
 				{selectedTool}
 				{onUndo}
@@ -443,7 +443,7 @@
 				{onCancelClicked}
 			/>
 		</div>
-		<div class="w-full h-4" />
+		<div class="h-4 w-full" />
 		<div
 			bind:clientWidth={canvasContainerWidth}
 			bind:clientHeight={canvasContainerHeight}
@@ -453,27 +453,27 @@
 				style="width: {canvasContainerWidth}px; height: {canvasHeight}"
 				class="absolute left-0 top-0"
 			>
-				<div class="w-full full flex items-center justify-center">
+				<div class="full flex w-full items-center justify-center">
 					<div
 						style="width: {canvasWidth}px; height: {canvasHeight}px"
-						class="relative rounded-lg overflow-hidden ring-2 bg-c-bg-secondary
-						ring-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"
+						class="relative overflow-hidden rounded-lg bg-c-bg-secondary shadow-lg
+						shadow-c-shadow/[var(--o-shadow-normal)] ring-2 ring-c-bg-secondary"
 					>
 						<div
-							class="w-full h-full relative filter transition ease-in {isGeneratedImageStatus ===
+							class="relative h-full w-full filter transition ease-in {isGeneratedImageStatus ===
 							'loading'
-								? 'duration-400 blur-lg pointer-events-none'
+								? 'pointer-events-none blur-lg duration-400'
 								: 'duration-250'}"
 							id={konvaContainerId}
 						/>
 						{#if !image || !imageLoadedFirstTime}
-							<div class="w-full h-full absolute left-0 top-0 flex items-center justify-center">
-								<IconAnimatedSpinner loading={true} class="w-8 h-8 text-c-on-bg/50" />
+							<div class="absolute left-0 top-0 flex h-full w-full items-center justify-center">
+								<IconAnimatedSpinner loading={true} class="h-8 w-8 text-c-on-bg/50" />
 							</div>
 						{/if}
 						{#if !$KonvaInstance && konvaErrored}
 							<div
-								class="w-full h-full bg-c-bg-secondary absolute p-3 left-0 top-0 flex items-center justify-center"
+								class="absolute left-0 top-0 flex h-full w-full items-center justify-center bg-c-bg-secondary p-3"
 							>
 								<ErrorChip error={$LL.Error.SomethingWentWrong()} />
 							</div>
@@ -481,7 +481,7 @@
 						{#if isGenerating && animation}
 							<div
 								out:fade={{ duration: 400, easing: quadIn }}
-								class="w-full h-full absolute left-0 top-0 flex items-center justify-center"
+								class="absolute left-0 top-0 flex h-full w-full items-center justify-center"
 							>
 								<GenerationAnimation {animation} type={$generateMode} />
 								<QueuePosition hasBg position={positionInQueue} show={showQueuePosition} />
@@ -489,28 +489,28 @@
 						{:else if allOutputs !== undefined && isGeneratedImageStatus === 'loaded'}
 							{@const outputs = allOutputs}
 							<div
-								class="w-full h-full pointer-events-none absolute bottom-0 left-0 flex flex-col justify-end items-center p-2"
+								class="pointer-events-none absolute bottom-0 left-0 flex h-full w-full flex-col items-center justify-end p-2"
 							>
-								<div class="max-w-full relative">
+								<div class="relative max-w-full">
 									<div
-										class="w-full absolute -top-[calc(100%-1.1rem)] transform z-0 flex items-center justify-center
+										class="absolute -top-[calc(100%-1.1rem)] z-0 flex w-full transform items-center justify-center
 											transition duration-150 {selectedOutputIndex === 0
 											? 'translate-y-0 opacity-100'
 											: 'translate-y-4 opacity-0'}"
 									>
 										<div
-											class="max-w-full bg-c-bg-secondary p-px text-sm text-center rounded-lg shadow-md
-												shadow-c-shadow/[var(--o-shadow-normal)] pointer-events-auto"
+											class="pointer-events-auto max-w-full rounded-lg bg-c-bg-secondary p-px text-center text-sm
+												shadow-md shadow-c-shadow/[var(--o-shadow-normal)]"
 										>
 											<p
 												class="max-w-full overflow-hidden overflow-ellipsis
-													px-2 pt-0.75 pb-2.5 font-semibold text-c-primary"
+													px-2 pb-2.5 pt-0.75 font-semibold text-c-primary"
 											>
 												{$LL.Inpainting.OriginalImageTitle()}
 											</p>
 										</div>
 									</div>
-									<ToolbarSectionWrapper class="gap-2 pointer-events-auto z-10">
+									<ToolbarSectionWrapper class="pointer-events-auto z-10 gap-2">
 										<ToolbarButton
 											label="Go Left"
 											onClick={() => {
@@ -523,7 +523,7 @@
 											onClickClass="-translate-x-1"
 											disabled={selectedOutputIndex === 0}
 										/>
-										<p class="font-medium text-c-on-bg/50 min-w-[2.5rem] text-center">
+										<p class="min-w-[2.5rem] text-center font-medium text-c-on-bg/50">
 											<span
 												class="font-semibold transition duration-100 {selectedOutputIndex === 0
 													? 'text-c-primary'
@@ -550,6 +550,6 @@
 				</div>
 			</div>
 		</div>
-		<div class="w-0 h-0 overflow-hidden" id={konvaContainerForExportId} />
+		<div class="h-0 w-0 overflow-hidden" id={konvaContainerForExportId} />
 	</div>
 </QueuePositionProvider>

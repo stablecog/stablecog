@@ -16,9 +16,9 @@
 	on:click={onClick}
 	{disabled}
 	aria-label={isMuted ? $LL.Voiceover.UnmuteButton() : $LL.Voiceover.MuteButton()}
-	class="touch-manipulation relative rounded-lg group/mute-button {size === 'lg'
-		? 'w-12 h-12'
-		: 'w-10 h-10'}"
+	class="group/mute-button relative touch-manipulation rounded-lg {size === 'lg'
+		? 'h-12 w-12'
+		: 'h-10 w-10'}"
 >
 	<ButtonHoverEffect
 		groupClass="not-touch:group-hover/mute-button:translate-x-0 not-touch:group-hover/mute-button:translate-y-0 not-touch:group-hover/mute-button:opacity-100"
@@ -29,11 +29,11 @@
 	<div class="p-2">
 		{#if isMuted}
 			<IconSoundOff
-				class="w-full h-full transition text-c-on-bg not-touch:group-hover/mute-button:text-c-primary"
+				class="h-full w-full text-c-on-bg transition not-touch:group-hover/mute-button:text-c-primary"
 			/>
 		{:else}
 			<IconSoundOn
-				class="w-full h-full transition text-c-on-bg not-touch:group-hover/mute-button:text-c-primary"
+				class="h-full w-full text-c-on-bg transition not-touch:group-hover/mute-button:text-c-primary"
 			/>
 		{/if}
 	</div>

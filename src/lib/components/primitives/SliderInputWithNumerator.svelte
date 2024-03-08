@@ -14,14 +14,14 @@
 	let classes = 'px-4 gap-3.5';
 </script>
 
-<div class="range-input flex-1 min-w-0 flex items-center relative rounded-r-xl {classes}">
+<div class="range-input relative flex min-w-0 flex-1 items-center rounded-r-xl {classes}">
 	<Numerator
 		{min}
 		{max}
 		{step}
 		{numeratorFormatter}
 		{value}
-		class="{valueSize === 'md' ? 'text-base px-0.5' : 'text-sm'} text-c-on-bg"
+		class="{valueSize === 'md' ? 'px-0.5 text-base' : 'text-sm'} text-c-on-bg"
 	/>
-	<SliderInput {disabled} class="flex-1 h-full" bind:value {name} {min} {max} {step} />
+	<SliderInput {disabled} class="h-full flex-1" bind:value {name} {min} {max} {step} />
 </div>

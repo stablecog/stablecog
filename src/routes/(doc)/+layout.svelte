@@ -14,9 +14,9 @@
 <LayoutWrapper isAppRoute={false}>
 	<Navbar dirTree={data.dirTree} />
 	{#if !rawRoutes.includes($page.url.pathname) && ($navbarStickyType === undefined || $navbarStickyType !== 'relative')}
-		<div style={$navbarHeight ? `height: ${$navbarHeight}px` : ``} class="h-16 md:h-18 w-full" />
+		<div style={$navbarHeight ? `height: ${$navbarHeight}px` : ``} class="h-16 w-full md:h-18" />
 	{/if}
-	<main class="w-full flex-1 flex flex-col relative break-words">
+	<main class="relative flex w-full flex-1 flex-col break-words">
 		<slot />
 	</main>
 	<Footer />

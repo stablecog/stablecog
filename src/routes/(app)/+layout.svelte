@@ -49,7 +49,7 @@
 				<UpscaleWorker>
 					<LayoutWrapper isAppRoute={appRoutes.includes($page.url.pathname)}>
 						{#if showUpdateAvailableCard}
-							<div class="w-full flex-1 flex flex-col items-center justify-center my-auto py-4">
+							<div class="my-auto flex w-full flex-1 flex-col items-center justify-center py-4">
 								<UpdateAvailableCard />
 							</div>
 						{:else if showUnderDevelopmentCard}
@@ -62,10 +62,10 @@
 								{#if !rawRoutes.includes($page.url.pathname) && ($navbarStickyType === undefined || $navbarStickyType !== 'relative')}
 									<div
 										style={$navbarHeight ? `height: ${$navbarHeight}px` : ``}
-										class="h-16 md:h-18 w-full"
+										class="h-16 w-full md:h-18"
 									/>
 								{/if}
-								<main class="w-full flex-1 flex flex-col relative break-words">
+								<main class="relative flex w-full flex-1 flex-col break-words">
 									<slot />
 								</main>
 								<Footer />

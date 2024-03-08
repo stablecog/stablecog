@@ -49,14 +49,14 @@
 
 <TabBarWrapper class={classes}>
 	{#if hasTitle}
-		<div class="self-stretch flex text-c-on-bg/50">
+		<div class="flex self-stretch text-c-on-bg/50">
 			<slot name="title" />
 		</div>
-		<div class="w-2px mr-px -ml-px self-stretch">
-			<div class="w-full h-full bg-c-bg-secondary" />
+		<div class="-ml-px mr-px w-2px self-stretch">
+			<div class="h-full w-full bg-c-bg-secondary" />
 		</div>
 	{/if}
-	<div class="flex-1 min-w-0 flex relative {hasTitle ? 'rounded-r-xl' : 'rounded-xl'} group">
+	<div class="relative flex min-w-0 flex-1 {hasTitle ? 'rounded-r-xl' : 'rounded-xl'} group">
 		<textarea
 			use:autoresize={{ maxRows: maxRows, placeholder }}
 			rows="1"
@@ -75,9 +75,11 @@
 				}
 			}}
 			{placeholder}
-			class="touch-manipulation hide-scrollbar resize-none text-base w-full text-c-on-bg self-stretch overflow-ellipsis
-			ring-0 transition ring-c-primary/25 focus:ring-c-primary/50 focus:ring-2
-			pl-4 py-3.5 {hasTitle ? 'rounded-r-xl' : 'rounded-xl'} bg-transparent placeholder:text-c-on-bg/50
+			class="hide-scrollbar w-full touch-manipulation resize-none self-stretch overflow-ellipsis py-3.5 pl-4
+			text-base text-c-on-bg ring-0 ring-c-primary/25 transition
+			focus:ring-2 focus:ring-c-primary/50 {hasTitle
+				? 'rounded-r-xl'
+				: 'rounded-xl'} bg-transparent placeholder:text-c-on-bg/50
 				not-touch:hover:ring-2 not-touch:group-hover:ring-2 {showClearInputButton
 				? 'pr-10 md:pr-12'
 				: 'pr-4'}"

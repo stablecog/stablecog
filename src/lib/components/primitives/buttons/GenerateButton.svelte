@@ -17,10 +17,10 @@
 		element.blur();
 	}}
 	data-sveltekit-preload-data="hover"
-	class="touch-manipulation transition group/generatebutton p-2.5 rounded-full bg-c-bg relative overflow-hidden z-0
-	before:w-full before:h-full before:absolute before:left-0 before:top-0
-	before:-translate-x-full before:not-touch:hover:translate-x-0
-	before:rounded-full before:transition before:transform before:bg-c-primary {classes}"
+	class="group/generatebutton relative z-0 touch-manipulation overflow-hidden rounded-full bg-c-bg p-2.5 transition
+	before:absolute before:left-0 before:top-0 before:h-full before:w-full
+	before:-translate-x-full before:transform
+	before:rounded-full before:bg-c-primary before:transition before:not-touch:hover:translate-x-0 {classes}"
 	href={getGenerationUrlFromParams({
 		prompt: generation.prompt,
 		negative_prompt: generation.negative_prompt ?? undefined,
@@ -34,7 +34,7 @@
 	aria-label={label}
 >
 	<IconWand
-		class="w-7 h-7 transform scale-100 transition text-c-on-bg relative
+		class="relative h-7 w-7 scale-100 transform text-c-on-bg transition
 			not-touch:group-hover/generatebutton:text-c-on-primary"
 	/>
 </a>

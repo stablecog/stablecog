@@ -21,9 +21,9 @@
 
 <nav
 	style={styles !== undefined ? styles : _styles}
-	class="{classes} flex justify-start md:sticky md:top-0 items-stretch overflow-hidden"
+	class="{classes} flex items-stretch justify-start overflow-hidden md:sticky md:top-0"
 >
-	<div class="flex-1 min-w-0 flex h-full overflow-hidden">
+	<div class="flex h-full min-w-0 flex-1 overflow-hidden">
 		<div
 			class="w-full pt-1 md:pt-4 {noBottomPadding
 				? ''
@@ -33,8 +33,8 @@
 		</div>
 	</div>
 	{#if !noDivider}
-		<div class="h-full flex py-4 flex-col">
-			<div class="w-2px h-full rounded-full bg-c-bg-secondary" />
+		<div class="flex h-full flex-col py-4">
+			<div class="h-full w-2px rounded-full bg-c-bg-secondary" />
 		</div>
 	{/if}
 </nav>

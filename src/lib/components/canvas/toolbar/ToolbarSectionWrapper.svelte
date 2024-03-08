@@ -4,7 +4,7 @@
 </script>
 
 <div
-	class="flex flex-row items-center relative bg-c-bg-secondary rounded-lg shadow-md shadow-c-shadow/[var(--o-shadow-normal)] {classes}"
+	class="relative flex flex-row items-center rounded-lg bg-c-bg-secondary shadow-md shadow-c-shadow/[var(--o-shadow-normal)] {classes}"
 >
 	<slot />
 </div>

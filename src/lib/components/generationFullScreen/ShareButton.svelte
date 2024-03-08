@@ -38,7 +38,7 @@
 				? getUserProfilePreviewImageUrlFromOutputId(
 						generation.selected_output.id,
 						generation.user.username
-				  )
+					)
 				: getPreviewImageUrlFromOutputId(generation.selected_output.id)
 		);
 		logShareModalOpened({
@@ -52,7 +52,7 @@
 	}}
 >
 	<div class="flex items-center justify-center gap-1.5">
-		<IconShare class="w-5 h-5 -ml-0.5" />
+		<IconShare class="-ml-0.5 h-5 w-5" />
 		<p>{$LL.Shared.ShareButton()}</p>
 	</div>
 </SubtleButton>
@@ -64,7 +64,7 @@
 		bind:portalBarrier
 		bind:portalContent
 	>
-		<div use:clickoutside={{ callback: closeModal }} class="max-w-full my-auto">
+		<div use:clickoutside={{ callback: closeModal }} class="my-auto max-w-full">
 			<ShareCard {generation} {url} close={closeModal} />
 		</div>
 	</ModalWrapper>

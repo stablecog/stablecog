@@ -31,18 +31,18 @@
 </script>
 
 <div class="relative py-0.5">
-	<div class="overflow-hidden relative py-3.5 {classes}">
+	<div class="relative overflow-hidden py-3.5 {classes}">
 		<div class="relative z-0 text-center">
-			<p bind:clientHeight={itemHeight} class="opacity-0 leading-5 select-none">
+			<p bind:clientHeight={itemHeight} class="select-none leading-5 opacity-0">
 				{numeratorFormatter(max)}
 			</p>
 			<div
 				style="transform: translateY(-{array.findIndex((i) => i === value) * itemHeight}px)"
-				class="flex flex-col transition absolute left-0 top-0"
+				class="absolute left-0 top-0 flex flex-col transition"
 			>
 				{#each array as n}
 					<p
-						class="transform transition font-medium select-none cursor-default {n === value
+						class="transform cursor-default select-none font-medium transition {n === value
 							? 'scale-100'
 							: 'scale-75 opacity-50'} leading-5"
 					>
@@ -53,19 +53,19 @@
 		</div>
 	</div>
 	<div
-		class="absolute left-0 top-0 bg-gradient-to-b transition
-		from-c-bg via-c-bg/50 to-c-bg/0 w-full h-4.5"
+		class="absolute left-0 top-0 h-4.5 w-full
+		bg-gradient-to-b from-c-bg via-c-bg/50 to-c-bg/0 transition"
 	/>
 	<div
-		class="absolute left-0 bottom-0 bg-gradient-to-t transition
-		from-c-bg via-c-bg/50 to-c-bg/0 w-full h-4.5"
+		class="absolute bottom-0 left-0 h-4.5 w-full
+		bg-gradient-to-t from-c-bg via-c-bg/50 to-c-bg/0 transition"
 	/>
 	<div
-		class="absolute left-0 top-0 bg-gradient-to-b transition
-		bg-c-bg w-full h-4.5 {!showWheel ? 'opacity-100' : 'opacity-0'}"
+		class="absolute left-0 top-0 h-4.5 w-full
+		bg-c-bg bg-gradient-to-b transition {!showWheel ? 'opacity-100' : 'opacity-0'}"
 	/>
 	<div
-		class="absolute left-0 bottom-0 bg-gradient-to-t transition
-		bg-c-bg w-full h-4.5 {!showWheel ? 'opacity-100' : 'opacity-0'}"
+		class="absolute bottom-0 left-0 h-4.5 w-full
+		bg-c-bg bg-gradient-to-t transition {!showWheel ? 'opacity-100' : 'opacity-0'}"
 	/>
 </div>

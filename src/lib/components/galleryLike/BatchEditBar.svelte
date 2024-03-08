@@ -318,7 +318,7 @@
 
 <div
 	in:fly={{ duration: 150, easing: quadOut, y: -12, opacity: 0 }}
-	class="w-full flex flex-row flex-wrap justify-between items-center bg-c-bg rounded-xl
+	class="flex w-full flex-row flex-wrap items-center justify-between rounded-xl bg-c-bg
 	shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-secondary"
 >
 	<div class="flex flex-wrap items-center gap-2.5 p-2">
@@ -421,12 +421,12 @@
 					isDeselectModalOpen = false;
 				}
 			}}
-			class="max-w-full my-auto"
+			class="my-auto max-w-full"
 		>
 			<div
-				class="w-full max-w-md bg-c-bg ring-2 ring-c-bg-secondary rounded-xl p-5 md:p-6 shadow-2xl shadow-c-shadow/[var(--o-shadow-stronger)]"
+				class="w-full max-w-md rounded-xl bg-c-bg p-5 shadow-2xl shadow-c-shadow/[var(--o-shadow-stronger)] ring-2 ring-c-bg-secondary md:p-6"
 			>
-				<h1 class="font-bold text-xl -mt-1">
+				<h1 class="-mt-1 text-xl font-bold">
 					{#if isDeleteModalOpen}
 						{$LL.Shared.BatchEditBar.ConfirmationModal.Delete.Title({
 							selectedCount: selectedOutputIds.length
@@ -445,7 +445,7 @@
 						})}
 					{/if}
 				</h1>
-				<p class="mt-3 text-c-on-bg/75 leading-relaxed">
+				<p class="mt-3 leading-relaxed text-c-on-bg/75">
 					{#if isDeleteModalOpen}
 						{$LL.Shared.BatchEditBar.ConfirmationModal.Delete.Paragraph({
 							selectedCount: selectedOutputIds.length
@@ -464,7 +464,7 @@
 						})}
 					{/if}
 				</p>
-				<div class="w-full flex flex-wrap justify-end items-stretch mt-6 gap-2">
+				<div class="mt-6 flex w-full flex-wrap items-stretch justify-end gap-2">
 					<Button
 						disabled={actionStatus === 'loading'}
 						onClick={closeModal}

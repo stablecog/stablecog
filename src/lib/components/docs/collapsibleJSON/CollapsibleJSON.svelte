@@ -85,11 +85,11 @@
 	}
 </script>
 
-<div class="w-full flex flex-col font-mono {classes}">
+<div class="flex w-full flex-col font-mono {classes}">
 	<div
-		class="w-full flex justify-start items-center bg-c-bg rounded-t-[0.6rem] ring-2 ring-c-bg-tertiary relative z-10"
+		class="relative z-10 flex w-full items-center justify-start rounded-t-[0.6rem] bg-c-bg ring-2 ring-c-bg-tertiary"
 	>
-		<div class="flex-1 min-w-0 flex-row overflow-auto px-3 py-3">
+		<div class="min-w-0 flex-1 flex-row overflow-auto px-3 py-3">
 			<p class="whitespace-nowrap">
 				{title}
 			</p>
@@ -97,9 +97,9 @@
 		<CopyButton {onCopied} bind:isCopied textToCopy={JSON.stringify(json, null, 2)} />
 	</div>
 	<div
-		class="w-full flex justify-start bg-c-bg-secondary rounded-b-[0.6rem] ring-2 ring-c-bg-tertiary"
+		class="flex w-full justify-start rounded-b-[0.6rem] bg-c-bg-secondary ring-2 ring-c-bg-tertiary"
 	>
-		<div class="flex flex-col items-start overflow-auto pl-1 md:pl-2 pr-4 md:pr-5 py-1.5 md:py-3">
+		<div class="flex flex-col items-start overflow-auto py-1.5 pl-1 pr-4 md:py-3 md:pl-2 md:pr-5">
 			<CollapsibleJsonInner {keyObject} />
 		</div>
 	</div>

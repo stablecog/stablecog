@@ -10,7 +10,7 @@
 <button
 	aria-label="Toggle Code Block"
 	disabled={keyObject.children === undefined}
-	class="h-8 w-8 mr-1 group relative flex items-center justify-center {keyObject.children ===
+	class="group relative mr-1 flex h-8 w-8 items-center justify-center {keyObject.children ===
 	undefined
 		? 'opacity-0'
 		: ''}"
@@ -23,7 +23,7 @@
 		hoverFrom={keyObject.isOpen ? 'bottom' : 'top'}
 	/>
 	<IconChevronDown
-		class="w-4.5 h-4.5 transition text-c-on-bg/50 not-touch:group-hover:text-c-on-bg transform {keyObject.isOpen
+		class="h-4.5 w-4.5 transform text-c-on-bg/50 transition not-touch:group-hover:text-c-on-bg {keyObject.isOpen
 			? 'rotate-0'
 			: '-rotate-90'}"
 	/>

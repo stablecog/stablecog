@@ -13,21 +13,21 @@
 
 <button
 	aria-label={$LL.Shared.CopyButton()}
-	class="flex items-stretch justify-center p-1 self-stretch group relative"
+	class="group relative flex items-stretch justify-center self-stretch p-1"
 	use:copy={textToCopy || ''}
 	on:svelte-copy={onCopied}
 	on:svelte-copy:error={(e) => console.log(e)}
 >
 	<ButtonHoverEffect color="success" hoverFrom="bottom" size="sm" hovered={isCopied} />
 	<div
-		class="flex justify-center items-center self-stretch p-2 rounded-lg text-sm transition relative"
+		class="relative flex items-center justify-center self-stretch rounded-lg p-2 text-sm transition"
 	>
 		<Morpher morphed={isCopied}>
 			<div slot="0" class="flex items-center justify-center">
-				<IconCopy class="w-6 h-6 transition text-c-on-bg not-touch:group-hover:text-c-success" />
+				<IconCopy class="h-6 w-6 text-c-on-bg transition not-touch:group-hover:text-c-success" />
 			</div>
 			<div slot="1" class="flex items-center justify-center">
-				<IconTick class="w-9 h-9 flex-shrink-0 text-c-success" />
+				<IconTick class="h-9 w-9 flex-shrink-0 text-c-success" />
 			</div>
 		</Morpher>
 	</div>

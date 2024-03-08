@@ -32,9 +32,9 @@
 <button
 	on:click={download}
 	disabled={disabled || isDownloading}
-	class="touch-manipulation relative rounded-lg group/download-button {size === 'lg'
-		? 'w-12 h-12'
-		: 'w-10 h-10'}"
+	class="group/download-button relative touch-manipulation rounded-lg {size === 'lg'
+		? 'h-12 w-12'
+		: 'h-10 w-10'}"
 	aria-label={$LL.Shared.DownloadButton()}
 >
 	<ButtonHoverEffect
@@ -44,17 +44,17 @@
 		color="primary"
 	/>
 	<div class="p-2">
-		<Morpher class="w-full h-full" morphed={isDownloading}>
+		<Morpher class="h-full w-full" morphed={isDownloading}>
 			<div slot="0">
 				<IconDownload
-					class="w-full h-full transition {faded
+					class="h-full w-full transition {faded
 						? 'text-c-on-bg/50'
 						: 'text-c-on-bg'} not-touch:group-hover/download-button:text-c-primary"
 				/>
 			</div>
-			<div class="w-full h-full" slot="1">
+			<div class="h-full w-full" slot="1">
 				<IconAnimatedSpinner
-					class="w-full h-full {faded
+					class="h-full w-full {faded
 						? 'text-c-on-bg/50'
 						: 'text-c-on-bg'} not-touch:group-hover/download-button:text-c-primary"
 					loading={isDownloading}

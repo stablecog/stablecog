@@ -88,19 +88,19 @@
 	<button
 		bind:this={buttonElement}
 		on:click={() => favoriteOutput(generation.selected_output.is_favorited ? 'remove' : 'add')}
-		class="touch-manipulation transition group/favoritebutton p-2.5 rounded-full bg-c-bg relative overflow-hidden z-0
-		before:w-full before:h-full before:absolute before:left-0 before:top-0
-		before:-translate-x-full before:not-touch:hover:translate-x-0
-		before:rounded-full before:transition before:transform before:bg-c-secondary/25 {classes}"
+		class="group/favoritebutton relative z-0 touch-manipulation overflow-hidden rounded-full bg-c-bg p-2.5 transition
+		before:absolute before:left-0 before:top-0 before:h-full before:w-full
+		before:-translate-x-full before:transform
+		before:rounded-full before:bg-c-secondary/25 before:transition before:not-touch:hover:translate-x-0 {classes}"
 		aria-label="Favorite Output"
 	>
 		<IconFavorite
-			class="w-7 h-7 transition not-touch:group-hover/favoritebutton:text-c-secondary"
+			class="h-7 w-7 transition not-touch:group-hover/favoritebutton:text-c-secondary"
 			favorited={generation.selected_output.is_favorited}
 		/>
 	</button>
 {:else}
-	<div class="flex bg-c-bg/75 rounded-full {classes}">
+	<div class="flex rounded-full bg-c-bg/75 {classes}">
 		<IconButton
 			type="secondary"
 			name="Favorite"
@@ -108,7 +108,7 @@
 			onClick={() => favoriteOutput(generation.selected_output.is_favorited ? 'remove' : 'add')}
 		>
 			<IconFavorite
-				class="w-7 h-7 transition not-touch:group-hover/iconbutton:text-c-secondary"
+				class="h-7 w-7 transition not-touch:group-hover/iconbutton:text-c-secondary"
 				favorited={generation.selected_output.is_favorited}
 			/>
 		</IconButton>

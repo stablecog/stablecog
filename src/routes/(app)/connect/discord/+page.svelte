@@ -52,10 +52,10 @@
 />
 
 <PageWrapper>
-	<div class="w-full flex flex-col items-center justify-start my-auto">
-		<section id="connect" class="w-full flex flex-col items-center justify-start">
+	<div class="my-auto flex w-full flex-col items-center justify-start">
+		<section id="connect" class="flex w-full flex-col items-center justify-start">
 			{#if !$sessionStore?.access_token || !$sessionStore.user.email || !$userSummary}
-				<div class="flex items-center justify-center mt-6">
+				<div class="mt-6 flex items-center justify-center">
 					<SignInCard
 						redirectTo={`${$page.url.pathname}?${$page.url.searchParams}`}
 						title={$LL.Connect.ConnectToTitle({ platform: $LL.Platform.Discord() })}
@@ -63,24 +63,24 @@
 					/>
 				</div>
 			{:else if !data.platform_user_id || !data.platform_token || !data.platform_username}
-				<IconSadFaceOutline class="w-20 h-20 text-c-danger" />
-				<h1 class="mt-3 w-full max-w-sm text-center font-bold text-3xl md:text-4xl text-c-danger">
+				<IconSadFaceOutline class="h-20 w-20 text-c-danger" />
+				<h1 class="mt-3 w-full max-w-sm text-center text-3xl font-bold text-c-danger md:text-4xl">
 					{$LL.Connect.ConnectToTitle({ platform: $LL.Platform.Discord() })}
 				</h1>
 				<p
-					class="w-full max-w-sm md:max-w-md mt-2 md:mt-3 text-base md:text-lg text-c-on-bg/75 text-center"
+					class="mt-2 w-full max-w-sm text-center text-base text-c-on-bg/75 md:mt-3 md:max-w-md md:text-lg"
 				>
 					{!data.platform_user_id
 						? $LL.Connect.NoPlatformIDParagraph({ platform: $LL.Platform.Discord() })
 						: !data.platform_token
-						? $LL.Connect.NoPlatformTokenParagraph({ platform: $LL.Platform.Discord() })
-						: !data.platform_username
-						? $LL.Connect.NoPlatformUsernameParagraph({ platform: $LL.Platform.Discord() })
-						: $LL.Connect.NoPlatformIDParagraph({ platform: $LL.Platform.Discord() })}
+							? $LL.Connect.NoPlatformTokenParagraph({ platform: $LL.Platform.Discord() })
+							: !data.platform_username
+								? $LL.Connect.NoPlatformUsernameParagraph({ platform: $LL.Platform.Discord() })
+								: $LL.Connect.NoPlatformIDParagraph({ platform: $LL.Platform.Discord() })}
 				</p>
 			{:else}
 				<h1
-					class="w-full max-w-sm text-center font-bold text-3xl md:text-4xl {status === 'success'
+					class="w-full max-w-sm text-center text-3xl font-bold md:text-4xl {status === 'success'
 						? 'text-c-success'
 						: 'text-c-on-bg'}"
 				>
@@ -89,7 +89,7 @@
 						: $LL.Connect.ConnectToTitle({ platform: $LL.Platform.Discord() })}
 				</h1>
 				<p
-					class="w-full max-w-sm md:max-w-md mt-2 md:mt-3 text-base md:text-lg text-c-on-bg/75 text-center"
+					class="mt-2 w-full max-w-sm text-center text-base text-c-on-bg/75 md:mt-3 md:max-w-md md:text-lg"
 				>
 					{status === 'success'
 						? $LL.Connect.ReturnBackToParagraph({ platform: $LL.Platform.Discord() })
@@ -98,9 +98,9 @@
 				{#if status !== 'success'}
 					<div
 						out:expandCollapse={{ duration: 300 }}
-						class="w-full max-w-lg flex flex-col justify-start items-center"
+						class="flex w-full max-w-lg flex-col items-center justify-start"
 					>
-						<div class="w-full flex flex-col justify-start items-center pt-5 pb-4 md:pb-0">
+						<div class="flex w-full flex-col items-center justify-start pb-4 pt-5 md:pb-0">
 							<Button
 								onClick={_connectToDiscord}
 								withSpinner
@@ -112,20 +112,20 @@
 							{#if status === 'error'}
 								<div
 									transition:expandCollapse={{ duration: 200 }}
-									class="w-full flex flex-col justify-start items-center"
+									class="flex w-full flex-col items-center justify-start"
 								>
-									<div class="w-full flex flex-col justify-start items-center pt-5">
+									<div class="flex w-full flex-col items-center justify-start pt-5">
 										<ErrorChip
 											size="sm"
 											error={statusError === 'already_linked'
 												? $LL.Connect.Error.AlreadyLinked({
 														platform: $LL.Platform.Discord()
-												  })
+													})
 												: statusError === 'invalid_token'
-												? $LL.Connect.Error.InvalidToken({
-														platform: $LL.Platform.Discord()
-												  })
-												: $LL.Error.SomethingWentWrong()}
+													? $LL.Connect.Error.InvalidToken({
+															platform: $LL.Platform.Discord()
+														})
+													: $LL.Error.SomethingWentWrong()}
 										/>
 									</div>
 								</div>
@@ -134,7 +134,7 @@
 					</div>
 				{/if}
 				<div
-					class="max-w-full flex flex-col md:flex-row items-center justify-center mt-3 md:mt-7 gap-4"
+					class="mt-3 flex max-w-full flex-col items-center justify-center gap-4 md:mt-7 md:flex-row"
 				>
 					<!-- Platform Info -->
 					<ConnectCard
@@ -149,9 +149,9 @@
 						username={data.platform_username}
 					/>
 					<!-- Connection div -->
-					<div class="relative flex flex-col md:flex-row justify-center items-center gap-2">
+					<div class="relative flex flex-col items-center justify-center gap-2 md:flex-row">
 						<div
-							class="w-2px h-5 md:w-6 md:h-2px rounded-full transition duration-300 {status ===
+							class="h-5 w-2px rounded-full transition duration-300 md:h-2px md:w-6 {status ===
 							'success'
 								? 'bg-c-success'
 								: 'bg-c-on-bg/20'}"
@@ -162,13 +162,13 @@
 								: ''}"
 						>
 							<IconLink
-								class="w-6 h-6 md:w-8 md:h-8 transition duration-300 {status === 'success'
+								class="h-6 w-6 transition duration-300 md:h-8 md:w-8 {status === 'success'
 									? 'text-c-success'
 									: 'text-c-on-bg/30'}"
 							/>
 						</div>
 						<div
-							class="w-2px h-5 md:w-6 md:h-2px rounded-full transition duration-300 {status ===
+							class="h-5 w-2px rounded-full transition duration-300 md:h-2px md:w-6 {status ===
 							'success'
 								? 'bg-c-success'
 								: 'bg-c-on-bg/20'}"

@@ -134,23 +134,23 @@
 	});
 </script>
 
-<div class="w-full h-full bg-c-bg-secondary flex flex-col relative">
-	<div class="w-full flex justify-start items-center p-2.5 md:p-4">
-		<div class="flex-shrink-0 relative flex items-center justify-start">
+<div class="relative flex h-full w-full flex-col bg-c-bg-secondary">
+	<div class="flex w-full items-center justify-start p-2.5 md:p-4">
+		<div class="relative flex flex-shrink-0 items-center justify-start">
 			<div
-				class="absolute left-0 top-0 w-full h-full bg-c-on-bg/20 rounded-lg md:rounded-2xl {shouldAnimate
+				class="absolute left-0 top-0 h-full w-full rounded-lg bg-c-on-bg/20 md:rounded-2xl {shouldAnimate
 					? 'animate-ping-speaker-bg'
 					: ''}"
 			/>
 			<div class="{shouldAnimate ? 'animate-ping-speaker' : ''} flex-shrink-0">
 				<IconSpeaker
 					sizes="(min-width: 768px) 60px, 44px"
-					class="w-11 h-11 md:w-15 md:h-15 rounded-md md:rounded-lg2 shadow-lg relative shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-tertiary"
+					class="relative h-11 w-11 rounded-md shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-tertiary md:h-15 md:w-15 md:rounded-lg2"
 					type={voiceover.speaker.id}
 				/>
 			</div>
 		</div>
-		<p class="flex-1 min-w-0 break-words text-c-on-bg/50 text-sm md:text-base pl-3 md:pl-4 pr-10">
+		<p class="min-w-0 flex-1 break-words pl-3 pr-10 text-sm text-c-on-bg/50 md:pl-4 md:text-base">
 			{@html $LL.Voiceover.Generate.SpeakerParagraph({
 				speakerName: getHighlightedSpan($voiceoverSpeakerIdToDisplayName[voiceover.speaker.id]),
 				languageName: getHighlightedSpan(languageName($locale).of(voiceover.speaker.locale) || '')
@@ -159,10 +159,10 @@
 		{#if canShowTimer && elapsedSecondsSinceCreation > 0.5 && audioStatus === 'being-created' && remainingSeconds !== estimatedDuration}
 			<div
 				transition:fly={{ duration: 150, easing: quadOut, y: -20 }}
-				class="flex items-center justify-end absolute right-3 top-2 md:right-4 md:top-3 gap-0.75"
+				class="absolute right-3 top-2 flex items-center justify-end gap-0.75 md:right-4 md:top-3"
 			>
-				<IconTimerAnimated class="text-c-on-bg/50 w-4.5 h-4.5" />
-				<p class="text-c-on-bg/50 mt-0.5 font-medium">
+				<IconTimerAnimated class="h-4.5 w-4.5 text-c-on-bg/50" />
+				<p class="mt-0.5 font-medium text-c-on-bg/50">
 					{Math.max(0, remainingSeconds).toLocaleString($locale, {
 						maximumFractionDigits: 0
 					})}
@@ -171,23 +171,23 @@
 		{:else if canShowTimer && elapsedSecondsSinceCreation > 0.5 && audioStatus === 'being-created' && remainingSeconds === estimatedDuration}
 			<div
 				transition:fly={{ duration: 150, easing: quadOut, y: -20 }}
-				class="flex items-center justify-end absolute right-2 top-2 md:right-3 md:top-3"
+				class="absolute right-2 top-2 flex items-center justify-end md:right-3 md:top-3"
 			>
 				<div class="flex items-center justify-center">
-					<IconHourglassAnimated class="text-c-on-bg-faded w-6 h-6" />
+					<IconHourglassAnimated class="h-6 w-6 text-c-on-bg-faded" />
 				</div>
 			</div>
 		{/if}
 	</div>
 
-	<div class="w-full flex-1 flex relative overflow-hidden pt-2">
+	<div class="relative flex w-full flex-1 overflow-hidden pt-2">
 		<div
 			bind:clientWidth={waveformContainerWidth}
 			bind:clientHeight={waveformContainerHeight}
-			class="w-full h-full"
+			class="h-full w-full"
 		>
 			{#if waveformContainerWidth && waveformContainerHeight}
-				<div class="w-full h-0" bind:this={waveformContainer} />
+				<div class="h-0 w-full" bind:this={waveformContainer} />
 			{/if}
 		</div>
 	</div>
@@ -196,7 +196,7 @@
 		<div
 			in:scale={{ duration: 200, easing: easingBounceOut, start: 0.5 }}
 			out:scale={{ duration: 200, easing: quadOut, start: 0.5 }}
-			class="w-full bottom-0 absolute left-0 p-5 flex items-center justify-center"
+			class="absolute bottom-0 left-0 flex w-full items-center justify-center p-5"
 		>
 			<ErrorChip size="md" class="max-h-[6rem] overflow-auto" error={voiceover.error} />
 		</div>

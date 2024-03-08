@@ -6,17 +6,17 @@
 </script>
 
 <div
-	class="flex justify-end absolute -top-1 -right-1 md:-top-1.5 md:-right-1.5 pointer-events-none"
+	class="pointer-events-none absolute -right-1 -top-1 flex justify-end md:-right-1.5 md:-top-1.5"
 >
 	<div
-		class="max-w-full z-10 bg-c-bg shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] rounded-md md:rounded-lg"
+		class="z-10 max-w-full rounded-md bg-c-bg shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] md:rounded-lg"
 	>
 		<div
-			class="w-full px-1.25 md:px-1.5 border-2 bg-c-secondary/10 border-c-secondary/20 rounded-md md:rounded-lg flex items-center"
+			class="flex w-full items-center rounded-md border-2 border-c-secondary/20 bg-c-secondary/10 px-1.25 md:rounded-lg md:px-1.5"
 		>
-			<IconToken class="w-4 h-4 -ml-0.5 flex-shrink-0 text-c-secondary" />
+			<IconToken class="-ml-0.5 h-4 w-4 flex-shrink-0 text-c-secondary" />
 			<p
-				class="flex-shrink min-w-0 overflow-hidden overflow-ellipsis text-xs font-medium text-c-secondary py-0.5 md:py-0.75"
+				class="min-w-0 flex-shrink overflow-hidden overflow-ellipsis py-0.5 text-xs font-medium text-c-secondary md:py-0.75"
 			>
 				{remainingCredits}/{neededCredits}
 			</p>

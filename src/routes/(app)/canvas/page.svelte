@@ -5,8 +5,8 @@
 	let clientHeight: number;
 </script>
 
-<div bind:clientWidth bind:clientHeight class="w-full flex flex-col flex-1">
-	<div class="w-full h-full absolute left-0 top-0">
+<div bind:clientWidth bind:clientHeight class="flex w-full flex-1 flex-col">
+	<div class="absolute left-0 top-0 h-full w-full">
 		<Canvas {clientWidth} {clientHeight} />
 	</div>
 </div>

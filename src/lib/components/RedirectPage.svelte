@@ -27,11 +27,11 @@
 
 <MetaTag {title} {description} {image_url} />
 
-<div class="w-full flex-1 flex justify-center px-8 md:px-24 pt-8 pb-[calc(7vh+2rem)]">
-	<div class="w-full flex flex-col items-center justify-center max-w-lg">
-		<div class="w-full flex flex-col items-center justify-start py-4">
-			<IconPulsing class="w-26 h-26 -m-3" />
-			<p class="w-full text-c-on-bg/75 font-medium text-lg text-center mt-1.5">{redirectingText}</p>
+<div class="flex w-full flex-1 justify-center px-8 pb-[calc(7vh+2rem)] pt-8 md:px-24">
+	<div class="flex w-full max-w-lg flex-col items-center justify-center">
+		<div class="flex w-full flex-col items-center justify-start py-4">
+			<IconPulsing class="-m-3 h-26 w-26" />
+			<p class="mt-1.5 w-full text-center text-lg font-medium text-c-on-bg/75">{redirectingText}</p>
 		</div>
 	</div>
 </div>

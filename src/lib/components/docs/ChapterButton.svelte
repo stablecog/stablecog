@@ -23,21 +23,21 @@
 <a
 	data-sveltekit-preload-data="hover"
 	href={item.pathname}
-	class="flex-1 flex flex-col w-full overflow-hidden group justify-between items-center
-  rounded-xl ring-2 p-3 ring-c-bg-secondary group relative bg-c-bg shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] {classes}"
+	class="group group relative flex w-full flex-1 flex-col items-center
+  justify-between overflow-hidden rounded-xl bg-c-bg p-3 shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] ring-2 ring-c-bg-secondary {classes}"
 >
 	<ButtonHoverEffect noPadding color="bg-secondary" hoverFrom="left" />
-	<div class="w-full flex-1 flex flex-col relative">
-		<div class="w-full px-1 flex-1 flex flex-row item-center gap-4 items-center">
-			<div class="flex-1 max-w-full flex-col overflow-hidden">
+	<div class="relative flex w-full flex-1 flex-col">
+		<div class="item-center flex w-full flex-1 flex-row items-center gap-4 px-1">
+			<div class="max-w-full flex-1 flex-col overflow-hidden">
 				<p
-					class="max-w-full font-normal overflow-hidden overflow-ellipsis whitespace-nowrap text-sm text-c-on-bg/60"
+					class="max-w-full overflow-hidden overflow-ellipsis whitespace-nowrap text-sm font-normal text-c-on-bg/60"
 				>
 					{item.http_method ? $LL.Guide.EndpointTitle() : $LL.Guide.ChapterTitle()}
 				</p>
 				<div class="flex items-center gap-2.5 pr-1">
 					<h3
-						class="inline flex-shrink min-w-0 text-lg font-semibold
+						class="inline min-w-0 flex-shrink text-lg font-semibold
 						text-c-on-bg transition not-touch:group-hover:text-c-primary"
 					>
 						{item.title}
@@ -48,7 +48,7 @@
 				</div>
 			</div>
 			<IconArrowRight
-				class="w-5 h-5 text-c-on-bg/50 transition not-touch:group-hover:translate-x-1.5 
+				class="h-5 w-5 text-c-on-bg/50 transition not-touch:group-hover:translate-x-1.5 
 				not-touch:group-hover:text-c-primary"
 			/>
 		</div>
@@ -58,7 +58,7 @@
 					loading="lazy"
 					width="1200"
 					height="630"
-					class="w-full h-auto rounded-lg mt-3 bg-c-bg-secondary border-2 border-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"
+					class="mt-3 h-auto w-full rounded-lg border-2 border-c-bg-secondary bg-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)]"
 					{sizes}
 					{src}
 					{srcset}

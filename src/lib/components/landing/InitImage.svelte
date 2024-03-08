@@ -9,33 +9,33 @@
 
 <section
 	id="init-image"
-	class="w-full flex flex-col lg:flex-row justify-center overflow-hidden relative z-0 pt-20 pb-4"
+	class="relative z-0 flex w-full flex-col justify-center overflow-hidden pb-4 pt-20 lg:flex-row"
 >
-	<div class="flex lg:hidden flex-col items-center px-5">
+	<div class="flex flex-col items-center px-5 lg:hidden">
 		<h2
-			class="font-semibold text-3xl md:text-4xl
-				lg:text-5xl flex-1 leading-tight lg:leading-tight text-center"
+			class="flex-1 text-center text-3xl
+				font-semibold leading-tight md:text-4xl lg:text-5xl lg:leading-tight"
 		>
 			{$LL.Landing.InitImage.Title()}
 		</h2>
 		<p
-			class="max-w-[24rem] md:max-w-[26rem] lg:max-w-[35rem] leading-relaxed md:text-lg lg:text-xl mt-2 text-center text-c-on-bg/75"
+			class="mt-2 max-w-[24rem] text-center leading-relaxed text-c-on-bg/75 md:max-w-[26rem] md:text-lg lg:max-w-[35rem] lg:text-xl"
 		>
 			{$LL.Landing.InitImage.Paragraph()}
 		</p>
 		<Button
 			href={$sessionStore?.user.id && $userSummary ? '/generate' : '/generate?smo=true'}
-			class="mt-6 w-full max-w-[15rem] px-6 md:px-8 py-4"
+			class="mt-6 w-full max-w-[15rem] px-6 py-4 md:px-8"
 			noPadding
 		>
 			{$LL.Landing.TryItNowButton()}
 		</Button>
 	</div>
 	<div
-		class="w-full relative mt-8 max-w-[120rem] gap-4 md:gap-8 lg:gap-0 flex justify-center items-center
-    lg:h-[calc(100svh-env(safe-area-inset-bottom)-10rem)] lg:min-h-[40rem]"
+		class="relative mt-8 flex w-full max-w-[120rem] items-center justify-center gap-4 md:gap-8 lg:h-[calc(100svh-env(safe-area-inset-bottom)-10rem)]
+    lg:min-h-[40rem] lg:gap-0"
 	>
-		<div class="flex-1 lg:flex-none aspect-[2/3] h-full relative -ml-[15%] lg:ml-0">
+		<div class="relative -ml-[15%] aspect-[2/3] h-full flex-1 lg:ml-0 lg:flex-none">
 			<LazyImageWithOutline
 				style="
 					-webkit-mask-image: url(/landing/dragon/dragon-mask.svg);
@@ -47,7 +47,7 @@
 					mask-position: right center;
 					-webkit-mask-position: right center;
 				"
-				class="w-full h-full absolute right-0 top-0"
+				class="absolute right-0 top-0 h-full w-full"
 				src="/landing/dragon/dragon-1920.webp"
 				srcset="
           /landing/dragon/dragon-512.webp 512w,
@@ -69,44 +69,44 @@
 			/>
 		</div>
 		<div
-			class="absolute bottom-[20%] lg:bottom-0 lg:relative px-6 pt-6 pb-8 lg:pt-12 lg:pb-20 lg:min-w-[35%] xl:min-w-[44%] flex flex-col items-center z-10"
+			class="absolute bottom-[20%] z-10 flex flex-col items-center px-6 pb-8 pt-6 lg:relative lg:bottom-0 lg:min-w-[35%] lg:pb-20 lg:pt-12 xl:min-w-[44%]"
 		>
-			<div class="hidden lg:flex flex-col items-center">
+			<div class="hidden flex-col items-center lg:flex">
 				<h2
-					class="max-w-[19rem] md:max-w-[22rem] lg:max-w-[36rem] font-semibold text-3xl md:text-4xl
-						lg:text-5xl flex-1 leading-tight lg:leading-tight text-center"
+					class="max-w-[19rem] flex-1 text-center text-3xl font-semibold leading-tight
+						md:max-w-[22rem] md:text-4xl lg:max-w-[36rem] lg:text-5xl lg:leading-tight"
 				>
 					{$LL.Landing.InitImage.Title()}
 				</h2>
 				<p
-					class="max-w-[22rem] lg:max-w-[36rem] leading-relaxed md:text-lg lg:text-xl mt-2 text-center text-c-on-bg/75"
+					class="mt-2 max-w-[22rem] text-center leading-relaxed text-c-on-bg/75 md:text-lg lg:max-w-[36rem] lg:text-xl"
 				>
 					{$LL.Landing.InitImage.Paragraph()}
 				</p>
 				<Button
 					href={$sessionStore?.user.id && $userSummary ? '/generate' : '/generate?smo=true'}
-					class="mt-6 w-full max-w-[15rem] px-6 md:px-8 py-4"
+					class="mt-6 w-full max-w-[15rem] px-6 py-4 md:px-8"
 					noPadding
 				>
 					{$LL.Landing.TryItNowButton()}
 				</Button>
 			</div>
-			<div class="w-full flex relative items-center justify-center lg:mt-20">
+			<div class="relative flex w-full items-center justify-center lg:mt-20">
 				<div
 					style="background-image: url({$themeApp === 'light'
 						? '/landing/arrow/arrow-middle-light.png'
 						: '/landing/arrow/arrow-middle-dark.png'}); background-size: auto 100%; background-repeat: repeat-x;"
-					class="w-[calc(100%+20rem)] lg:w-[calc(100%+12rem)] max-w-[calc(100vw-4rem)] h-4 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2"
+					class="absolute left-1/2 top-1/2 h-4 w-[calc(100%+20rem)] max-w-[calc(100vw-4rem)] -translate-x-1/2 -translate-y-1/2 transform lg:w-[calc(100%+12rem)]"
 				>
 					<img
-						class="h-full absolute -left-4 top-0"
+						class="absolute -left-4 top-0 h-full"
 						alt="Arrow Start"
 						src={$themeApp === 'light'
 							? '/landing/arrow/arrow-start-light.png'
 							: '/landing/arrow/arrow-start-dark.png'}
 					/>
 					<img
-						class="w-14 h-14 absolute -right-9 -bottom-5"
+						class="absolute -bottom-5 -right-9 h-14 w-14"
 						alt="Arrow End"
 						src={$themeApp === 'light'
 							? '/landing/arrow/arrow-end-light.png'
@@ -114,14 +114,14 @@
 					/>
 				</div>
 				<p
-					class="px-4 py-2 md:px-6 md:py-3 font-medium rounded-xl bg-c-bg-secondary relative
-						text-lg md:text-2xl lg:text-3xl ring-2 ring-c-bg-tertiary shadow-xl shadow-c-shadow/[var(--o-shadow-stronger)]"
+					class="relative rounded-xl bg-c-bg-secondary px-4 py-2 text-lg font-medium shadow-xl
+						shadow-c-shadow/[var(--o-shadow-stronger)] ring-2 ring-c-bg-tertiary md:px-6 md:py-3 md:text-2xl lg:text-3xl"
 				>
 					{$LL.Landing.InitImage.Prompt()}
 				</p>
 			</div>
 		</div>
-		<div class="flex-1 lg:flex-none aspect-[2/3] h-full relative -mr-[15%] lg:mr-0">
+		<div class="relative -mr-[15%] aspect-[2/3] h-full flex-1 lg:mr-0 lg:flex-none">
 			<LazyImageWithOutline
 				style="
 					-webkit-mask-image: url(/landing/dragon-alien/dragon-alien-mask.svg);
@@ -133,7 +133,7 @@
 					mask-position: right center;
 					-webkit-mask-position: right center;
 				"
-				class="w-full h-full absolute right-0 top-0"
+				class="absolute right-0 top-0 h-full w-full"
 				src="/landing/dragon-alien/dragon-alien-1920.webp"
 				srcset="
           /landing/dragon-alien/dragon-alien-512.webp 512w,

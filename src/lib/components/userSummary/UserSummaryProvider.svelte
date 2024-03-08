@@ -25,7 +25,7 @@
 		browser && userId
 			? createQuery(getUserSummaryQueryKey(userId), {
 					queryFn: () => getUserSummary(accessToken)
-			  })
+				})
 			: undefined;
 
 	$: [$userSummaryQuery], setUserSummary();
@@ -60,7 +60,7 @@
 						queryClient.invalidateQueries(getUserSummaryQueryKey(userId));
 					}
 				}
-		  )
+			)
 		: undefined;
 	$: [$userSummary, $wantsEmail, $page], setWantsEmailIfNeeded();
 

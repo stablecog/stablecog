@@ -156,7 +156,7 @@
 	const resetDeleteStatus = () => (deleteStatus = 'idle');
 </script>
 
-<div class="w-full flex flex-wrap gap-3 pb-1 {classes}">
+<div class="flex w-full flex-wrap gap-3 pb-1 {classes}">
 	<LikeButton {generation} {modalType} {onLikesChanged} />
 	<SubtleButton
 		prefetch={true}
@@ -175,7 +175,7 @@
 		}}
 	>
 		<div class="flex items-center justify-center gap-1.5">
-			<IconWand class="w-5 h-5 -ml-0.5" />
+			<IconWand class="-ml-0.5 h-5 w-5" />
 			<p>{$LL.GenerationFullscreen.GenerateSimilarButton()}</p>
 		</div>
 	</SubtleButton>
@@ -208,7 +208,7 @@
 			}}
 		>
 			<div class="flex items-center justify-center gap-1.5">
-				<IconImageSearch class="w-5 h-5 -ml-0.5" />
+				<IconImageSearch class="-ml-0.5 h-5 w-5" />
 				<p>{$LL.GenerationFullscreen.ExploreSimilarButton()}</p>
 			</div>
 		</SubtleButton>
@@ -221,11 +221,11 @@
 		<SubtleButton state={buttonObjectsWithState.prompt.state === 'success' ? 'success' : 'idle'}>
 			<Morpher morphed={buttonObjectsWithState.prompt.state === 'success'}>
 				<div slot="0" class="flex items-center justify-center gap-1.5">
-					<IconCopy class="w-5 h-5 -ml-0.5" />
+					<IconCopy class="-ml-0.5 h-5 w-5" />
 					<p>{$LL.GenerationFullscreen.CopyPromptButton()}</p>
 				</div>
 				<div slot="1" class="flex items-center justify-center gap-1.5">
-					<IconTick class="w-5 h-5 -ml-0.5 scale-110" />
+					<IconTick class="-ml-0.5 h-5 w-5 scale-110" />
 					<p>{$LL.GenerationFullscreen.CopiedButtonState()}</p>
 				</div>
 			</Morpher>
@@ -250,19 +250,19 @@
 				<div slot="0" class="flex items-center justify-center gap-1.5">
 					<Morpher morphed={buttonObjectsWithState.download.state === 'loading'}>
 						<div slot="0" class="flex items-center justify-center gap-1.5">
-							<IconDownload class="w-5 h-5 -ml-0.5" />
+							<IconDownload class="-ml-0.5 h-5 w-5" />
 							<p>{$LL.GenerationFullscreen.DownloadButton()}</p>
 						</div>
 						<div slot="1" class="flex items-center justify-center gap-1.5">
 							<IconAnimatedSpinner
-								class="w-5 h-5"
+								class="h-5 w-5"
 								loading={buttonObjectsWithState.download.state === 'loading'}
 							/>
 						</div>
 					</Morpher>
 				</div>
 				<div slot="1" class="flex items-center justify-center gap-1.5">
-					<IconTick class="w-5 h-5 -ml-0.5 transform scale-110 text-c-on-primary" />
+					<IconTick class="-ml-0.5 h-5 w-5 scale-110 transform text-c-on-primary" />
 					<p>{$LL.GenerationFullscreen.DoneButtonState()}</p>
 				</div>
 			</Morpher>
@@ -279,16 +279,16 @@
 					<div slot="0" class="flex items-center justify-center gap-1.5 text-c-danger">
 						<Morpher morphed={deleteStatus === 'loading'}>
 							<div slot="0" class="flex items-center justify-center gap-1.5 text-c-danger">
-								<IconTrashcan class="w-5 h-5 -ml-0.5" />
+								<IconTrashcan class="-ml-0.5 h-5 w-5" />
 								<p>{$LL.Shared.DeleteButton()}</p>
 							</div>
 							<div slot="1" class="flex items-center justify-center gap-1.5 text-c-on-primary">
-								<IconAnimatedSpinner loading={deleteStatus === 'loading'} class="w-5 h-5" />
+								<IconAnimatedSpinner loading={deleteStatus === 'loading'} class="h-5 w-5" />
 							</div>
 						</Morpher>
 					</div>
 					<div slot="1" class="flex items-center justify-center gap-1.5">
-						<IconTrashcanFilledOpen class="w-5 h-5 -ml-0.5 scale-110 text-c-on-primary" />
+						<IconTrashcanFilledOpen class="-ml-0.5 h-5 w-5 scale-110 text-c-on-primary" />
 					</div>
 				</Morpher>
 			</SubtleButton>

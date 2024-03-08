@@ -18,30 +18,30 @@
 
 <section
 	id="hero"
-	class="w-full h-[100svh] pb-[calc(env(safe-area-inset-bottom)+2rem)] min-h-[25rem] md:min-h-[40rem] flex flex-col md:flex-row items-center justify-between"
+	class="flex h-[100svh] min-h-[25rem] w-full flex-col items-center justify-between pb-[calc(env(safe-area-inset-bottom)+2rem)] md:min-h-[40rem] md:flex-row"
 >
 	<div
-		class="px-6 pt-6 pb-8 md:py-12 md:pl-[max(calc((100%-1280px)/2+4rem),4rem)]
-			md:pr-6 xl:pr-16 flex flex-col items-center md:items-start order-2 md:order-1"
+		class="order-2 flex flex-col items-center px-6
+			pb-8 pt-6 md:order-1 md:items-start md:py-12 md:pl-[max(calc((100%-1280px)/2+4rem),4rem)] md:pr-6 xl:pr-16"
 	>
 		<h1
-			class="font-semibold text-3xl md:text-4xl lg:text-5xl flex-1 leading-tight md:leading-tight lg:leading-tight
-				max-w-[18rem] md:max-w-[22rem] lg:max-w-[30.25rem] text-center md:text-left"
+			class="max-w-[18rem] flex-1 text-center text-3xl font-semibold leading-tight md:max-w-[22rem] md:text-left
+				md:text-4xl md:leading-tight lg:max-w-[30.25rem] lg:text-5xl lg:leading-tight"
 		>
 			{$LL.Landing.Hero.Title()}
 		</h1>
 		<Button
 			href={$sessionStore?.user.id && $userSummary ? '/generate' : '/generate?smo=true'}
-			class="mt-5 w-full max-w-[15rem] px-6 md:px-8 py-4"
+			class="mt-5 w-full max-w-[15rem] px-6 py-4 md:px-8"
 			noPadding
 		>
 			{$LL.Landing.GetStartedButton()}
 		</Button>
 	</div>
 	<div
-		class="flex-1 min-h-0 pl-12 md:pl-0 w-full md:h-full flex flex-col justify-end items-end relative order-1 md:order-2"
+		class="relative order-1 flex min-h-0 w-full flex-1 flex-col items-end justify-end pl-12 md:order-2 md:h-full md:pl-0"
 	>
-		<div class="flex-1 flex-col w-full md:h-full overflow-hidden relative">
+		<div class="relative w-full flex-1 flex-col overflow-hidden md:h-full">
 			<ImageWithOutlineAndPlaceholder
 				style="
 					-webkit-mask-image: url('{mask}');
@@ -53,7 +53,7 @@
 					mask-position: left bottom;
 					-webkit-mask-position: left bottom;
 				"
-				class="w-full h-full object-cover object-[25%_100%] md:object-[40%_100%] lg:object-left-bottom"
+				class="h-full w-full object-cover object-[25%_100%] md:object-[40%_100%] lg:object-left-bottom"
 				srcset="
 					/landing/hero/hero-v2-512.webp 512w,
 					/landing/hero/hero-v2-768.webp 768w,

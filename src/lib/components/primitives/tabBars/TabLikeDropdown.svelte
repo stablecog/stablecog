@@ -92,13 +92,13 @@
 
 <TabBarWrapper {dontScale} class="{classes} {isDropdownOpen ? 'z-20' : 'z-10'} relative">
 	{#if hasTitle}
-		<div class="self-stretch flex text-c-on-bg/50">
+		<div class="flex self-stretch text-c-on-bg/50">
 			<slot name="title" />
 		</div>
 	{/if}
 	<div
 		use:clickoutside={{ callback: () => (isDropdownOpen = false) }}
-		class="{hasTitle ? 'ml-px' : ''} flex-1 min-w-0 flex flex-col relative rounded-r-xl {!hasTitle
+		class="{hasTitle ? 'ml-px' : ''} relative flex min-w-0 flex-1 flex-col rounded-r-xl {!hasTitle
 			? 'rounded-l-xl'
 			: ''}"
 	>
@@ -110,10 +110,10 @@
 				setDropdownWrapperPosition();
 				toggleDropdown();
 			}}
-			class="touch-manipulation flex-1 ring-2 text-left flex items-center justify-between min-w-0 disabled:opacity-50 {hasTitle
+			class="flex min-w-0 flex-1 touch-manipulation items-center justify-between text-left ring-2 disabled:opacity-50 {hasTitle
 				? 'px-4'
-				: 'px-5'} py-3.5 relative
-				group transition-all duration-150 z-30 gap-2 {isDropdownOpen
+				: 'px-5'} group relative
+				z-30 gap-2 py-3.5 transition-all duration-150 {isDropdownOpen
 				? dropdownPlacement === 'top'
 					? `rounded-br-xl ${!hasTitle ? 'rounded-bl-xl' : ''} bg-c-bg-secondary ring-c-bg-tertiary`
 					: `rounded-tr-xl ${!hasTitle ? 'rounded-tl-xl' : ''} bg-c-bg-secondary ring-c-bg-tertiary`
@@ -122,37 +122,37 @@
 			aria-label={name}
 		>
 			<div
-				class="w-full h-full absolute left-0 top-0 overflow-hidden z-0 transition-all duration-150 {isDropdownOpen
+				class="absolute left-0 top-0 z-0 h-full w-full overflow-hidden transition-all duration-150 {isDropdownOpen
 					? dropdownPlacement === 'top'
 						? `rounded-br-xl ${!hasTitle ? 'rounded-bl-xl' : ''}`
 						: `rounded-tr-xl ${!hasTitle ? 'rounded-tl-xl' : ''}`
 					: `rounded-r-xl ${!hasTitle ? 'rounded-l-xl' : ''}`}"
 			>
-				<div class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center">
+				<div class="absolute left-0 top-0 flex h-full w-[200%] items-center justify-center">
 					<div
-						class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full opacity-0
-							bg-c-primary/10 not-touch:group-enabled:group-hover:translate-x-[-45%] not-touch:group-enabled:group-hover:opacity-100"
+						class="aspect-square w-full origin-left -translate-x-full transform rounded-full bg-c-primary/10 opacity-0
+							transition not-touch:group-enabled:group-hover:translate-x-[-45%] not-touch:group-enabled:group-hover:opacity-100"
 					/>
 				</div>
 			</div>
-			<div class="flex-shrink min-w-0 flex items-center">
+			<div class="flex min-w-0 flex-shrink items-center">
 				<svelte:component
 					this={disabled && disabledIcon !== undefined ? disabledIcon : iconSet}
 					type={selectedItem?.value}
 					class="{iconSetClass} transition"
 				/>
 				<p
-					class="flex-shrink whitespace-nowrap overflow-hidden overflow-ellipsis text-base font-medium relative transition
-					max-w-full z-0 text-c-on-bg not-touch:group-enabled:group-hover:text-c-primary"
+					class="relative z-0 max-w-full flex-shrink overflow-hidden overflow-ellipsis whitespace-nowrap text-base
+					font-medium text-c-on-bg transition not-touch:group-enabled:group-hover:text-c-primary"
 				>
 					{disabled && disabledText !== undefined ? disabledText : selectedItem?.label}
 				</p>
 			</div>
 			<div
-				class="-mr-2 flex-shrink-0 w-5 h-5 transition {isDropdownOpen ? 'rotate-180' : 'rotate-0'}"
+				class="-mr-2 h-5 w-5 flex-shrink-0 transition {isDropdownOpen ? 'rotate-180' : 'rotate-0'}"
 			>
 				<IconChevronDown
-					class="relative w-full h-full transition text-c-on-bg/50 not-touch:group-enabled:group-hover:text-c-primary"
+					class="relative h-full w-full text-c-on-bg/50 transition not-touch:group-enabled:group-hover:text-c-primary"
 				/>
 			</div>
 		</button>
@@ -160,28 +160,28 @@
 			style="transform: translateY({dropdownPlacement === 'top'
 				? `${-dropdownHeight}px`
 				: `${buttonHeight}px`}); height: {dropdownHeight}px;"
-			class="absolute left-0 top-0 w-full pointer-events-none flex flex-col {dropdownPlacement ===
+			class="pointer-events-none absolute left-0 top-0 flex w-full flex-col {dropdownPlacement ===
 			'top'
 				? 'justify-end'
 				: 'justify-start'}"
 		>
 			<div
 				style="height: {isDropdownOpen ? dropdownHeight : '0'}px"
-				class="w-full flex flex-col overflow-hidden bg-c-bg-secondary shadow-xl transition-all
-					shadow-c-shadow/[var(--o-shadow-strongest)] ring-2 ring-c-bg-tertiary {dropdownPlacement === 'top'
-					? 'rounded-t-xl origin-bottom justify-end'
-					: 'rounded-b-xl origin-top justify-start'} {isDropdownOpen
-					? 'opacity-100 pointer-events-auto'
-					: 'opacity-0 pointer-events-none'}"
+				class="flex w-full flex-col overflow-hidden bg-c-bg-secondary shadow-xl shadow-c-shadow/[var(--o-shadow-strongest)]
+					ring-2 ring-c-bg-tertiary transition-all {dropdownPlacement === 'top'
+					? 'origin-bottom justify-end rounded-t-xl'
+					: 'origin-top justify-start rounded-b-xl'} {isDropdownOpen
+					? 'pointer-events-auto opacity-100'
+					: 'pointer-events-none opacity-0'}"
 			>
 				<div
 					style="max-height: {dropdownMaxHeight}px;"
 					bind:clientHeight={dropdownHeight}
-					class="w-full flex flex-col justify-start relative z-20 {dropdownClass}"
+					class="relative z-20 flex w-full flex-col justify-start {dropdownClass}"
 				>
 					<div
 						bind:clientHeight={dropdownHeight}
-						class="w-full flex flex-col justify-start relative z-20 overflow-hidden {dropdownClass}"
+						class="relative z-20 flex w-full flex-col justify-start overflow-hidden {dropdownClass}"
 					>
 						<ScrollAreaWithChevron class="w-full {listClass}">
 							{#each itemsOptionallyFiltered as item, index (item.value)}
@@ -199,29 +199,29 @@
 									<button
 										disabled={disabled || !isDropdownOpen}
 										on:click={onClick}
-										class="touch-manipulation w-full text-left flex items-center justify-start min-w-0 {hasTitle
+										class="flex w-full min-w-0 touch-manipulation items-center justify-start text-left {hasTitle
 											? 'px-4'
-											: 'px-5'} py-3.5 relative z-0 group
+											: 'px-5'} group relative z-0 py-3.5
 									{index === itemsOptionallyFiltered.length - 1 ? 'rounded-b-lg' : ''}"
 										type="button"
 										aria-label={item.label}
 									>
 										<div
-											class="w-full h-full absolute left-0 top-0 overflow-hidden z-0 {index ===
+											class="absolute left-0 top-0 z-0 h-full w-full overflow-hidden {index ===
 											itemsOptionallyFiltered.length - 1
 												? 'rounded-b-lg'
 												: ''}"
 										>
 											<div
-												class="w-[200%] h-full absolute left-0 top-0 flex items-center justify-center"
+												class="absolute left-0 top-0 flex h-full w-[200%] items-center justify-center"
 											>
 												<div
-													class="w-full aspect-square origin-left rounded-full transition transform -translate-x-full opacity-0
-													bg-c-primary/10 not-touch:group-hover:translate-x-[-45%] not-touch:group-hover:opacity-100"
+													class="aspect-square w-full origin-left -translate-x-full transform rounded-full bg-c-primary/10 opacity-0
+													transition not-touch:group-hover:translate-x-[-45%] not-touch:group-hover:opacity-100"
 												/>
 											</div>
 										</div>
-										<div class="w-full flex items-center">
+										<div class="flex w-full items-center">
 											<svelte:component
 												this={iconSet}
 												type={item.value}
@@ -229,10 +229,10 @@
 													? 'text-c-primary'
 													: 'text-c-on-bg'} transition"
 											/>
-											<div class="flex-shrink min-w-0 flex items-center gap-2">
+											<div class="flex min-w-0 flex-shrink items-center gap-2">
 												<p
-													class="flex-shrink whitespace-nowrap overflow-hidden overflow-ellipsis text-base font-medium relative transition
-													max-w-full z-0 {isSelected
+													class="relative z-0 max-w-full flex-shrink overflow-hidden overflow-ellipsis whitespace-nowrap text-base
+													font-medium transition {isSelected
 														? 'text-c-primary'
 														: 'text-c-on-bg'} not-touch:group-hover:text-c-primary"
 												>
@@ -241,7 +241,7 @@
 												{#if isSelected}
 													<div
 														transition:scale={{ duration: 150, easing: quadOut, start: 0 }}
-														class="w-2 h-2 flex-shrink-0 rounded-full bg-c-primary"
+														class="h-2 w-2 flex-shrink-0 rounded-full bg-c-primary"
 													/>
 												{/if}
 											</div>

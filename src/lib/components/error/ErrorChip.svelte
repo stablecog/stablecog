@@ -13,31 +13,31 @@
 	class="max-w-full bg-c-bg-secondary ring-2 ring-c-danger/20 {size === 'md'
 		? 'rounded-lg'
 		: size === 'sm'
-		? 'rounded-md'
-		: 'rounded-md'} {classes}"
+			? 'rounded-md'
+			: 'rounded-md'} {classes}"
 >
 	<div
 		class="flex items-center justify-center bg-c-danger/10 {size === 'md'
-			? 'rounded-lg pl-3 gap-1.5'
+			? 'gap-1.5 rounded-lg pl-3'
 			: size === 'sm'
-			? 'rounded-md pl-3 gap-1.5'
-			: 'rounded-md pl-2 gap-1.5'}"
+				? 'gap-1.5 rounded-md pl-3'
+				: 'gap-1.5 rounded-md pl-2'}"
 	>
 		{#if !noIcon}
 			<IconWarningOutline
 				class="{size === 'md'
-					? '-ml-1.5 w-6 h-6'
+					? '-ml-1.5 h-6 w-6'
 					: size === 'sm'
-					? '-ml-1.5 w-5 h-5'
-					: '-ml-0.75 w-5 h-5'} text-c-danger flex-shrink-0"
+						? '-ml-1.5 h-5 w-5'
+						: '-ml-0.75 h-5 w-5'} flex-shrink-0 text-c-danger"
 			/>
 		{/if}
 		<p
 			class="{size === 'md'
-				? 'text-base max-h-[3.5rem] py-1 pr-3'
+				? 'max-h-[3.5rem] py-1 pr-3 text-base'
 				: size === 'sm'
-				? 'text-sm max-h-[3rem] py-1 pr-3'
-				: 'text-xs max-h-[2.625rem] py-1.25 pr-2'} overflow-auto hide-scrollbar break-words flex-shrink min-w-0 font-medium text-c-danger"
+					? 'max-h-[3rem] py-1 pr-3 text-sm'
+					: 'max-h-[2.625rem] py-1.25 pr-2 text-xs'} hide-scrollbar min-w-0 flex-shrink overflow-auto break-words font-medium text-c-danger"
 		>
 			{error}
 		</p>

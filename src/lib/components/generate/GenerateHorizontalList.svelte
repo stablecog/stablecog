@@ -128,10 +128,10 @@
 </script>
 
 {#if $generationsQuery.isInitialLoading}
-	<div class="w-full h-full">
+	<div class="h-full w-full">
 		<div
 			bind:clientHeight={placeholderInnerContainerHeight}
-			class="w-full h-full flex flex-row items-center justify-center"
+			class="flex h-full w-full flex-row items-center justify-center"
 		>
 			<ImagePlaceholder
 				containerHeight={placeholderInnerContainerHeight}
@@ -140,9 +140,9 @@
 				class="opacity-0"
 			/>
 			<div
-				class="w-full h-full absolute flex flex-col text-c-on-bg/60 justify-center items-center text-center overflow-hidden z-0"
+				class="absolute z-0 flex h-full w-full flex-col items-center justify-center overflow-hidden text-center text-c-on-bg/60"
 			>
-				<IconAnimatedSpinner class="w-7 h-7" />
+				<IconAnimatedSpinner class="h-7 w-7" />
 			</div>
 		</div>
 	</div>
@@ -153,7 +153,7 @@
 		<div
 			style="width: {$listVirtualizer.getTotalSize() +
 				($generationsQuery.hasNextPage ? $windowWidth : 0)}px"
-			class="h-full relative"
+			class="relative h-full"
 		>
 			{#each $listVirtualizer.getVirtualItems() as virtualItem (virtualItem.index + outputs[virtualItem.index].id)}
 				{@const output = outputs[virtualItem.index]}
@@ -167,12 +167,12 @@
 						transform: translateX({virtualItem.start}px);
 					"
 				>
-					<div class="w-full h-full p-px">
-						<div class="w-full h-full relative group">
+					<div class="h-full w-full p-px">
+						<div class="group relative h-full w-full">
 							<ImagePlaceholder width={output.generation.width} height={output.generation.height} />
 							<div
-								class="absolute left-0 top-0 w-full h-full bg-c-bg-secondary transition
-										z-0 rounded-md border overflow-hidden border-c-bg-secondary {output.status !== 'failed' &&
+								class="absolute left-0 top-0 z-0 h-full w-full overflow-hidden
+										rounded-md border border-c-bg-secondary bg-c-bg-secondary transition {output.status !== 'failed' &&
 								output.status !== 'failed-nsfw' &&
 								output.status !== 'failed-nsfw-prompt'
 									? 'not-touch:hover:border-c-primary'
@@ -183,7 +183,7 @@
 										{#if output.status !== undefined && output.status !== 'succeeded' && output.animation !== undefined}
 											<div
 												out:fade={{ duration: 3000, easing: quadIn }}
-												class="w-full h-full absolute left-0 top-0"
+												class="absolute left-0 top-0 h-full w-full"
 											>
 												<GenerationAnimation animation={output.animation} />
 											</div>
@@ -204,11 +204,11 @@
 													? 'h-full max-h-[1.75rem] xl:max-h-[2rem] w-auto'
 													: 'h-full max-h-[2rem] xl:max-h-[2.5rem] w-auto'
 												: cardType === 'generate'
-												? 'w-full max-w-[1.75rem] xl:max-w-[2rem] h-auto'
-												: 'w-full max-w-[2rem] xl:max-w-[2.5rem] h-auto'}
+													? 'w-full max-w-[1.75rem] xl:max-w-[2rem] h-auto'
+													: 'w-full max-w-[2rem] xl:max-w-[2.5rem] h-auto'}
 										<div
 											in:fade={{ duration: 200, easing: quadOut }}
-											class="w-full h-full flex items-center bg-c-bg-secondary justify-center relative p-1"
+											class="relative flex h-full w-full items-center justify-center bg-c-bg-secondary p-1"
 										>
 											{#if output.status === 'failed-nsfw'}
 												<IconEyeSlashOutline class="{sizeClasses} text-c-on-bg/50" />
@@ -228,11 +228,11 @@
 		</div>
 	{/if}
 	<div
-		class="absolute left-0 top-0 w-12 h-full bg-gradient-to-r from-c-bg to-c-bg/0 transition
-      duration-100 pointer-events-none {listAtStart ? 'opacity-0' : 'opacity-100'}"
+		class="pointer-events-none absolute left-0 top-0 h-full w-12 bg-gradient-to-r from-c-bg to-c-bg/0
+      transition duration-100 {listAtStart ? 'opacity-0' : 'opacity-100'}"
 	/>
 	<div
-		class="absolute right-0 top-0 w-12 h-full bg-gradient-to-l from-c-bg to-c-bg/0 transition
-			duration-100 pointer-events-none {listAtEnd ? 'opacity-0' : 'opacity-100'}"
+		class="pointer-events-none absolute right-0 top-0 h-full w-12 bg-gradient-to-l from-c-bg to-c-bg/0
+			transition duration-100 {listAtEnd ? 'opacity-0' : 'opacity-100'}"
 	/>
 {/if}

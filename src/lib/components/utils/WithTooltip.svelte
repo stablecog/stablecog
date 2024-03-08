@@ -79,7 +79,7 @@
 			opacity: 0,
 			y: size === 'sm' ? 8 : 16
 		}}
-		class="max-w-[17rem] shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] z-[9999] {size === 'sm'
+		class="z-[9999] max-w-[17rem] shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] {size === 'sm'
 			? 'rounded-md'
 			: 'rounded-xl'} {color == 'bg-secondary' ? 'bg-c-bg-secondary' : 'bg-c-bg-tertiary'} {size ===
 		'sm'
@@ -89,23 +89,23 @@
 		use:content
 	>
 		{#if !noArrow}
-			<div class="rounded -my-0.75" {...$arrow} use:arrow />
+			<div class="-my-0.75 rounded" {...$arrow} use:arrow />
 		{/if}
 		<div
 			class="max-w-full {color == 'bg-secondary'
 				? 'bg-c-bg-secondary'
-				: 'bg-c-bg-tertiary'} z-[99999] relative {size === 'sm'
-				? 'px-2.5 py-1.25 rounded-md'
-				: 'px-4 py-3 rounded-xl'}"
+				: 'bg-c-bg-tertiary'} relative z-[99999] {size === 'sm'
+				? 'rounded-md px-2.5 py-1.25'
+				: 'rounded-xl px-4 py-3'}"
 		>
 			{#if title || paragraph}
-				<div class="w-full flex flex-col gap-1">
+				<div class="flex w-full flex-col gap-1">
 					{#if title}
-						<div class="w-full flex items-center gap-1">
+						<div class="flex w-full items-center gap-1">
 							{#if titleIcon}
 								<svelte:component
 									this={titleIcon}
-									class="w-4 h-4 -mt-0.5 text-c-on-bg flex-shrink-0"
+									class="-mt-0.5 h-4 w-4 flex-shrink-0 text-c-on-bg"
 								/>
 							{/if}
 							<p class="flex-1 flex-shrink font-semibold text-c-on-bg">{title}</p>
@@ -115,7 +115,7 @@
 						<p class="w-full text-c-on-bg/75">{paragraph}</p>
 					{/if}
 					{#if buttonHref && buttonText}
-						<div class="pt-1.5 pb-1.25">
+						<div class="pb-1.25 pt-1.5">
 							<Button size="sm" href={buttonHref}>{buttonText}</Button>
 						</div>
 					{/if}

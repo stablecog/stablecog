@@ -33,7 +33,7 @@
 <SidebarWrapper {rounding} {noWrapper} hasGradient>
 	<div
 		bind:this={settingsContainer}
-		class="w-full h-full flex flex-col overflow-auto pt-4 md:pt-5 pb-[calc(5.5rem+env(safe-area-inset-bottom))] md:pb-32 gap-7"
+		class="flex h-full w-full flex-col gap-7 overflow-auto pb-[calc(5.5rem+env(safe-area-inset-bottom))] pt-4 md:pb-32 md:pt-5"
 	>
 		<SettingsPanelItem
 			title={$LL.Voiceover.Settings.Speaker.Title()}

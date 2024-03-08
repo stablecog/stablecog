@@ -24,7 +24,7 @@
 </script>
 
 <PageWrapper bind:height {currentPage} thisPage="language">
-	<div class="w-full bg-c-bg-secondary flex flex-col justify-start">
+	<div class="flex w-full flex-col justify-start bg-c-bg-secondary">
 		{#each locales as locale}
 			<DropdownItem
 				padding="lg"
@@ -35,13 +35,13 @@
 					}, modalCloseDelay);
 				}}
 			>
-				<div class="flex-1 min-w-0 flex items-center overflow-hidden gap-3">
-					<div class="w-5 h-5 rounded-sm overflow-hidden">
-						<IconLocale type={locale} class="w-full h-full" />
+				<div class="flex min-w-0 flex-1 items-center gap-3 overflow-hidden">
+					<div class="h-5 w-5 overflow-hidden rounded-sm">
+						<IconLocale type={locale} class="h-full w-full" />
 					</div>
 					<p
-						class="flex-1 min-w-0 overflow-hidden overflow-ellipsis whitespace-nowrap text-left
-							 transition text-c-on-bg not-touch:group-hover:text-c-primary"
+						class="min-w-0 flex-1 overflow-hidden overflow-ellipsis whitespace-nowrap text-left
+							 text-c-on-bg transition not-touch:group-hover:text-c-primary"
 					>
 						{languageName(locale).of(locale)}
 					</p>
