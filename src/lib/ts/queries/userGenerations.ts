@@ -98,6 +98,9 @@ export async function getAllUserGenerationFullOutputs({
 	} else if (gallery_status) {
 		query.append('gallery_status', gallery_status);
 	}
+	if (gallery_status === 'waiting_for_approval') {
+		query.append('order', 'asc');
+	}
 	if (search && search !== '') {
 		query.append('search', search);
 		query.append('score_threshold', SEARCH_SCORE_THRESHOLD_DEFAULT.toString());
