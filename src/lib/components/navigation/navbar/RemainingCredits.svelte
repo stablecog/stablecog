@@ -47,6 +47,13 @@
 		$userSummary?.total_remaining_credits.toLocaleString($locale) || '';
 	$: [totalRemainingCreditsString], onCreditsChanged();
 
+	$: hasUpcomingCredits = $userSummary
+		? ($userSummary.renews_at !== undefined &&
+				$userSummary.renews_at_credit_amount !== undefined) ||
+			($userSummary.more_free_credits_at !== undefined &&
+				$userSummary.more_free_credits_at_credit_amount !== undefined)
+		: false;
+
 	let creditsChangedCounter = 0;
 	function onCreditsChanged() {
 		if (isFirstRender) {
@@ -67,40 +74,42 @@
 		let:trigger
 		let:triggerStoreValue
 		onOpenChanged={onUpcomingCreditsTooltipOpenChanged}
-		isActive={($userSummary.renews_at !== undefined &&
-			$userSummary.renews_at_credit_amount !== undefined) ||
-			($userSummary.more_free_credits_at !== undefined &&
-				$userSummary.more_free_credits_at_credit_amount !== undefined)}
 	>
 		<div slot="tooltip" class="flex max-w-full flex-col break-words text-sm">
 			<p class="min-w-0 flex-shrink font-bold">
-				{$userSummary.renews_at
-					? $LL.UpcomingCredits.MorePaidPlanCreditsTooltip.Title()
-					: $LL.UpcomingCredits.MoreFreeCreditsTooltip.Title()}
+				{!hasUpcomingCredits
+					? $LL.UpcomingCredits.NoUpcomingCreditsTooltip.Title()
+					: $userSummary.renews_at
+						? $LL.UpcomingCredits.MorePaidPlanCreditsTooltip.Title()
+						: $LL.UpcomingCredits.MoreFreeCreditsTooltip.Title()}
 			</p>
 			<p class="mt-0.5 min-w-0 flex-shrink font-medium text-c-on-bg/75">
-				{$userSummary.renews_at
-					? $LL.UpcomingCredits.MorePaidPlanCreditsTooltip.Paragraph()
-					: $LL.UpcomingCredits.MoreFreeCreditsTooltip.Paragraph()}
+				{!hasUpcomingCredits
+					? $LL.UpcomingCredits.NoUpcomingCreditsTooltip.Paragraph()
+					: $userSummary.renews_at
+						? $LL.UpcomingCredits.MorePaidPlanCreditsTooltip.Paragraph()
+						: $LL.UpcomingCredits.MoreFreeCreditsTooltip.Paragraph()}
 			</p>
-			<div
-				class="flex flex-wrap items-center justify-start gap-2 rounded-md
+			{#if hasUpcomingCredits}
+				<div
+					class="flex flex-wrap items-center justify-start gap-2 rounded-md
 					pb-0.25 pt-1.25 text-left font-bold text-c-primary"
-			>
-				<div class="flex min-w-0 max-w-full flex-shrink items-center justify-center">
-					<IconToken class="-ml-0.75 h-4.5 w-4.5 flex-shrink-0" />
-					<p class="-mb-0.5 min-w-0 flex-shrink text-lg">
-						{numberFormatter.format(
-							$userSummary.renews_at_credit_amount ??
-								$userSummary.more_free_credits_at_credit_amount ??
-								0
-						)}&nbsp;&nbsp;<span
-							class="rounded-md bg-c-primary/10 px-1.75 py-1 align-middle text-sm font-medium"
-							>{relativeDate}</span
-						>
-					</p>
+				>
+					<div class="flex min-w-0 max-w-full flex-shrink items-center justify-center">
+						<IconToken class="-ml-0.75 h-4.5 w-4.5 flex-shrink-0" />
+						<p class="-mb-0.5 min-w-0 flex-shrink text-lg">
+							{numberFormatter.format(
+								$userSummary.renews_at_credit_amount ??
+									$userSummary.more_free_credits_at_credit_amount ??
+									0
+							)}&nbsp;&nbsp;<span
+								class="rounded-md bg-c-primary/10 px-1.75 py-1 align-middle text-sm font-medium"
+								>{relativeDate}</span
+							>
+						</p>
+					</div>
 				</div>
-			</div>
+			{/if}
 		</div>
 		<div
 			use:trigger

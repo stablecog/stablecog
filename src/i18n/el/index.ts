@@ -488,6 +488,10 @@ const es: Translation = {
 			Title: 'More on the way!',
 			Paragraph: 'Your credits will refresh:'
 		},
+		NoUpcomingCreditsTooltip: {
+			Title: 'No upcoming credits',
+			Paragraph: 'There are no upcoming credits.'
+		},
 		MoreFreeCreditsTooltip: {
 			Title: 'More on the way!',
 			Paragraph: "You'll receive more free credits:"

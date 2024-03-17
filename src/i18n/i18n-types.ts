@@ -1423,6 +1423,16 @@ type RootTranslation = {
 			 */
 			Paragraph: string
 		}
+		NoUpcomingCreditsTooltip: {
+			/**
+			 * N​o​ ​u​p​c​o​m​i​n​g​ ​c​r​e​d​i​t​s
+			 */
+			Title: string
+			/**
+			 * T​h​e​r​e​ ​a​r​e​ ​n​o​ ​u​p​c​o​m​i​n​g​ ​c​r​e​d​i​t​s​.
+			 */
+			Paragraph: string
+		}
 		MoreFreeCreditsTooltip: {
 			/**
 			 * M​o​r​e​ ​o​n​ ​t​h​e​ ​w​a​y​!
@@ -4717,6 +4727,16 @@ export type TranslationFunctions = {
 			Title: () => LocalizedString
 			/**
 			 * Your credits will refresh:
+			 */
+			Paragraph: () => LocalizedString
+		}
+		NoUpcomingCreditsTooltip: {
+			/**
+			 * No upcoming credits
+			 */
+			Title: () => LocalizedString
+			/**
+			 * There are no upcoming credits.
 			 */
 			Paragraph: () => LocalizedString
 		}

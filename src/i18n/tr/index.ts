@@ -494,6 +494,10 @@ const tr: Translation = {
 			Title: 'Daha fazlası yolda!',
 			Paragraph: 'Kredilerin yenilecek:'
 		},
+		NoUpcomingCreditsTooltip: {
+			Title: 'No upcoming credits',
+			Paragraph: 'There are no upcoming credits.'
+		},
 		MoreFreeCreditsTooltip: {
 			Title: 'Daha fazlası yolda!',
 			Paragraph: 'Daha fazla ücretsiz kredi gelecek:'
