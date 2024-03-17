@@ -39,7 +39,7 @@
 				if (onInput) onInput();
 			}}
 			style="width: {(1 / length) * 100}%"
-			class="rounded-xl bg-c-bg-secondary py-4 text-center text-lg font-semibold text-c-on-bg
+			class="rounded-xl bg-c-bg-secondary py-3.5 text-center text-lg font-semibold text-c-on-bg
       {$_valueStr || index === 0
 				? 'focus:ring-2 not-touch:enabled:hover:ring-2'
 				: ''} {!$_valueStr && index === 0

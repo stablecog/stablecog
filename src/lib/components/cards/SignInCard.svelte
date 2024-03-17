@@ -231,6 +231,7 @@
 								class="w-full"
 							>
 								<DropdownItem
+									padding="md"
 									noHoverEffectPadding
 									onClick={() => ($signInCardCodeSignInStatus = 'entering')}
 								>
@@ -276,6 +277,7 @@
 						{/if}
 						<div class="h-2px w-full bg-c-bg-secondary" />
 						<DropdownItem
+							padding="md"
 							noHoverEffectPadding
 							onClick={() => {
 								signInCardStatus.set('idle');
