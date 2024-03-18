@@ -30,7 +30,7 @@
 	>
 		<div class="mb-1 mt-5 flex w-full justify-center px-5">
 			<NoBgButton href="/blog" prefetch={true} hoverFrom="right">
-				<div class="flex items-center justify-center gap-2.5 px-2 py-1">
+				<div class="flex items-center justify-center gap-2.5 px-2">
 					<IconBack
 						class="h-6 w-6 transform text-c-on-bg/50 transition group-hover:-translate-x-1
 						not-touch:group-hover:text-c-primary"

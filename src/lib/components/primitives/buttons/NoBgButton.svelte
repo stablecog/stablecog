@@ -14,7 +14,7 @@
 	export let name: string | undefined = undefined;
 	export let noPadding = false;
 	export let paddingClassForHoverEffect: string | undefined = undefined;
-	export let noPaddingForHover = false;
+	export let paddingForHover = false;
 	export let withSpinner = false;
 	export let loading = false;
 	export let trigger: any | undefined = undefined;
@@ -30,7 +30,7 @@
 			: 'off'}
 		class="relative z-0 max-w-full touch-manipulation overflow-hidden {noPadding
 			? ''
-			: 'px-4 py-3.5'} group pointer-events-auto flex
+			: 'px-4 py-4'} group pointer-events-auto flex
 		items-center gap-1.5 font-semibold transition {size === 'sm'
 			? 'rounded-md'
 			: size === 'md'
@@ -39,7 +39,7 @@
 	>
 		{#if !loading}
 			<ButtonHoverEffect
-				noPadding={noPaddingForHover}
+				noPadding={!paddingForHover}
 				paddingClass={paddingClassForHoverEffect}
 				{hoverFrom}
 				{size}
@@ -78,7 +78,7 @@
 		disabled={disabled || loading}
 		class="relative z-0 max-w-full touch-manipulation overflow-hidden {noPadding
 			? ''
-			: 'px-4 py-3.5'} group pointer-events-auto flex
+			: 'px-4 py-4'} group pointer-events-auto flex
 			items-center gap-1.5 font-semibold transition {size === 'sm'
 			? 'rounded-md'
 			: size === 'md'
@@ -119,7 +119,7 @@
 		disabled={disabled || loading}
 		class="relative z-0 max-w-full touch-manipulation overflow-hidden {noPadding
 			? ''
-			: 'px-4 py-3.5'} group pointer-events-auto flex
+			: 'px-4 py-4'} group pointer-events-auto flex
 		items-center gap-1.5 font-semibold transition {size === 'sm'
 			? 'rounded-md'
 			: size === 'md'

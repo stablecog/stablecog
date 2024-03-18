@@ -172,13 +172,13 @@
 			</div>
 		{/key}
 		<div class="flex w-full max-w-xl flex-shrink-0 flex-col items-start gap-4 px-5 lg:max-w-md">
-			<div class="flex w-full justify-center lg:-ml-6 lg:-mt-2 lg:justify-start">
+			<div class="flex w-full justify-center lg:-ml-5 lg:-mt-2 lg:justify-start">
 				<NoBgButton
 					href={modalType === 'user-profile' ? `/${generation.user.username}` : '/gallery'}
 					prefetch={true}
 					hoverFrom="right"
 				>
-					<div class="flex items-center justify-center gap-2.5 px-2 py-1">
+					<div class="flex items-center justify-center gap-2.5">
 						<IconBack
 							class="h-6 w-6 transform text-c-on-bg/50 transition group-hover:-translate-x-1
 							not-touch:group-hover:text-c-primary"
@@ -191,7 +191,7 @@
 					</div>
 				</NoBgButton>
 			</div>
-			<UsernameButton username={output.generation.user.username} class="-mt-3" />
+			<UsernameButton username={output.generation.user.username} class="-mt-2" />
 			<div class="mt-1 flex w-full flex-col items-start gap-3">
 				<div class="flex w-full flex-col gap-2">
 					<p class="w-full text-3xl font-semibold">{$LL.Home.PromptInput.Title()}</p>

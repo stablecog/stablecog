@@ -153,11 +153,11 @@
 		</div>
 		{#if changeEmailStatus === 'idle'}
 			<div class="flex w-full items-center justify-center pt-3">
-				<NoBgButton href="/account">
-					<div class="flex items-center justify-center gap-2.5 px-2 py-1">
+				<NoBgButton hoverFrom="right" href="/account">
+					<div class="flex items-center justify-center gap-2.5 px-2">
 						<IconBack
 							class="h-6 w-6 transform text-c-on-bg/50 transition group-hover:-translate-x-1
-						not-touch:group-hover:text-c-primary"
+							not-touch:group-hover:text-c-primary"
 						/>
 						<p class="text-c-on-bg/50 transition not-touch:group-hover:text-c-primary">
 							{$LL.Shared.GoBackButton()}

@@ -101,8 +101,8 @@
 	</div>
 	<div class="mt-16 flex w-full flex-col items-center gap-5">
 		<p class="w-full px-3 text-center text-3xl font-bold">{$LL.Blog.ThanksForReading()}</p>
-		<NoBgButton href="/blog" prefetch={true}>
-			<div class="flex items-center justify-center gap-2.5 px-2 py-1">
+		<NoBgButton hoverFrom="right" href="/blog" prefetch={true}>
+			<div class="flex items-center justify-center gap-2.5 px-2">
 				<IconBack
 					class="h-6 w-6 transform text-c-on-bg/50 transition group-hover:-translate-x-1
 					not-touch:group-hover:text-c-primary"

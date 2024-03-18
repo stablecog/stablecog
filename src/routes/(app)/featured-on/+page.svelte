@@ -49,7 +49,7 @@
 					</a>
 					<NoBgButton
 						size="sm"
-						class="mt-1 font-semibold text-c-on-bg/60"
+						class="mt-2 font-semibold text-c-on-bg/60"
 						href={featured.url}
 						target="_blank"
 					>

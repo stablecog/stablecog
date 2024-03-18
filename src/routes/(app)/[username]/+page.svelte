@@ -191,13 +191,15 @@
 				class="relative flex w-full flex-col bg-gradient-to-r from-c-bg-secondary from-[5rem]
 				to-c-bg-secondary/0 px-2 py-4 md:px-5 md:pb-7 md:pt-6.5"
 			>
-				<div class="relative flex w-full min-w-0 flex-shrink flex-col items-start gap-2 px-2">
+				<div
+					class="relative flex w-full min-w-0 flex-shrink flex-col items-start justify-start gap-2 px-2"
+				>
 					<Avatar
 						class="relative h-14 w-14 flex-shrink-0 transform items-center justify-center overflow-hidden rounded-full shadow-lg
 						shadow-c-shadow/[var(--o-shadow-stronger)] ring-2 ring-c-on-bg/25 transition md:h-16 md:w-16"
 						text={data.username}
 					/>
-					<div class="-mt-0.75 flex w-full items-center justify-start md:-mt-0.25">
+					<div class="-mt-0.75 flex w-full items-center justify-start">
 						{#if data.username === $userSummary?.username}
 							<WithChangeUsernameModal
 								afterUsernameChanged={(username) => goto(`/${username}`)}
@@ -205,7 +207,7 @@
 							>
 								<NoBgButton {trigger} class="-mx-3.5 mt-0" hoverFrom="left">
 									<div
-										class="-mx-0.5 -my-0.5 flex min-w-0 flex-shrink items-center justify-center gap-2.5"
+										class="-mx-0.5 -my-1 flex min-w-0 flex-shrink items-center justify-center gap-2.5"
 									>
 										<h1
 											class="min-w-0 max-w-full flex-shrink overflow-hidden overflow-ellipsis whitespace-nowrap text-3xl font-bold
