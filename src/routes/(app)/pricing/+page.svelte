@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import MetaTag from '$components/utils/MetaTag.svelte';
 	import PageWrapper from '$components/wrappers/PageWrapper.svelte';
@@ -29,7 +28,8 @@
 	import {
 		STRIPE_CURRENCY_TO_SYMBOL,
 		STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS,
-		STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO
+		STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO,
+		freeDailyImageCount
 	} from '$ts/constants/stripePublic';
 	import { getCustomerPortalUrl } from '$ts/helpers/user/getCustomerPortalUrl.js';
 	import { isSignInModalOpen } from '$ts/stores/isSignInModalOpen.js';
@@ -51,12 +51,13 @@
 			currency: data.currency,
 			currencySymbol: STRIPE_CURRENCY_TO_SYMBOL[data.currency],
 			amount: 0,
-			features: [
+			mainFeatures: [
 				{
-					paragraph: $LL.Pricing.Features.DailyImages({
-						count: 20
-					})
-				},
+					title: freeDailyImageCount.toLocaleString($locale),
+					subtitle: $LL.Pricing.ImagesPerDaySubtitle()
+				}
+			],
+			features: [
 				{
 					paragraph: $LL.Pricing.Features.SlowGeneration(),
 					icon: IconMinus
@@ -92,15 +93,16 @@
 					: STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
 							PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION
 						].prices[PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_MO].currencies.usd.amount,
-			features: [
+			mainFeatures: [
 				{
-					paragraph: $LL.Pricing.Features.MonthlyImages({
-						count:
-							STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
-								PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION
-							].monthly_images.toLocaleString($locale)
-					})
-				},
+					title:
+						STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
+							PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION
+						].monthly_images.toLocaleString($locale),
+					subtitle: $LL.Pricing.ImagesPerMonthSubtitle()
+				}
+			],
+			features: [
 				{
 					paragraph: $LL.Pricing.Features.FastGeneration()
 				},
@@ -134,15 +136,16 @@
 							.prices[PUBLIC_STRIPE_PRICE_ID_PRO_SUBSCRIPTION_MO].currencies.eur.amount
 					: STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION]
 							.prices[PUBLIC_STRIPE_PRICE_ID_PRO_SUBSCRIPTION_MO].currencies.usd.amount,
-			features: [
+			mainFeatures: [
 				{
-					paragraph: $LL.Pricing.Features.MonthlyImages({
-						count:
-							STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
-								PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION
-							].monthly_images.toLocaleString($locale)
-					})
-				},
+					title:
+						STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
+							PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION
+						].monthly_images.toLocaleString($locale),
+					subtitle: $LL.Pricing.ImagesPerMonthSubtitle()
+				}
+			],
+			features: [
 				{ paragraph: $LL.Pricing.Features.FastGeneration() },
 				{
 					paragraph: $LL.Pricing.Features.ParallelGenerations({
@@ -178,15 +181,16 @@
 					: STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
 							PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
 						].prices[PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_MO].currencies.usd.amount,
-			features: [
+			mainFeatures: [
 				{
-					paragraph: $LL.Pricing.Features.MonthlyImages({
-						count:
-							STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
-								PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
-							].monthly_images.toLocaleString($locale)
-					})
-				},
+					title:
+						STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
+							PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
+						].monthly_images.toLocaleString($locale),
+					subtitle: $LL.Pricing.ImagesPerMonthSubtitle()
+				}
+			],
+			features: [
 				{ paragraph: $LL.Pricing.Features.FastGeneration() },
 				{
 					paragraph: $LL.Pricing.Features.ParallelGenerations({
@@ -223,15 +227,16 @@
 					: STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[PUBLIC_STRIPE_PRODUCT_ID_MEDIUM_PACK].prices[
 							PUBLIC_STRIPE_PRICE_ID_MEDIUM_PACK
 						].currencies.usd.amount,
-			features: [
+			mainFeatures: [
 				{
-					paragraph: $LL.Pricing.Features.Images({
-						count:
-							STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[
-								PUBLIC_STRIPE_PRODUCT_ID_MEDIUM_PACK
-							].images.toLocaleString($locale)
-					})
-				},
+					title:
+						STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[
+							PUBLIC_STRIPE_PRODUCT_ID_MEDIUM_PACK
+						].images.toLocaleString($locale),
+					subtitle: $LL.Pricing.ImagesSubtitle()
+				}
+			],
+			features: [
 				{ paragraph: $LL.Pricing.Features.FastGeneration() },
 				{ paragraph: $LL.Pricing.Features.NeverExpires() }
 			],
@@ -254,15 +259,16 @@
 					: STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[PUBLIC_STRIPE_PRODUCT_ID_LARGE_PACK].prices[
 							PUBLIC_STRIPE_PRICE_ID_LARGE_PACK
 						].currencies.usd.amount,
-			features: [
+			mainFeatures: [
 				{
-					paragraph: $LL.Pricing.Features.Images({
-						count:
-							STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[
-								PUBLIC_STRIPE_PRODUCT_ID_LARGE_PACK
-							].images.toLocaleString($locale)
-					})
-				},
+					title:
+						STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[
+							PUBLIC_STRIPE_PRODUCT_ID_LARGE_PACK
+						].images.toLocaleString($locale),
+					subtitle: $LL.Pricing.ImagesSubtitle()
+				}
+			],
+			features: [
 				{ paragraph: $LL.Pricing.Features.FastGeneration() },
 				{ paragraph: $LL.Pricing.Features.NeverExpires() }
 			],
@@ -285,15 +291,16 @@
 					: STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[PUBLIC_STRIPE_PRODUCT_ID_MEGA_PACK].prices[
 							PUBLIC_STRIPE_PRICE_ID_MEGA_PACK
 						].currencies.usd.amount,
-			features: [
+			mainFeatures: [
 				{
-					paragraph: $LL.Pricing.Features.Images({
-						count:
-							STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[
-								PUBLIC_STRIPE_PRODUCT_ID_MEGA_PACK
-							].images.toLocaleString($locale)
-					})
-				},
+					title:
+						STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[
+							PUBLIC_STRIPE_PRODUCT_ID_MEGA_PACK
+						].images.toLocaleString($locale),
+					subtitle: $LL.Pricing.ImagesSubtitle()
+				}
+			],
+			features: [
 				{ paragraph: $LL.Pricing.Features.FastGeneration() },
 				{ paragraph: $LL.Pricing.Features.NeverExpires() }
 			],
@@ -478,6 +485,7 @@
 						discountRate={card.discountRate}
 						discountBadgeType={card.id === 'plan-free' ? 'on-bg' : 'primary'}
 						features={card.features}
+						mainFeatures={card.mainFeatures}
 					>
 						<div slot="button" class="w-full">
 							{#if $userSummary && accessToken}
@@ -558,6 +566,7 @@
 							currencyAmount={card.amount}
 							currencySymbol={card.currencySymbol}
 							features={card.features}
+							mainFeatures={card.mainFeatures}
 						>
 							<div slot="button" class="w-full">
 								<Button

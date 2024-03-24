@@ -792,6 +792,12 @@ const de: Translation = {
 		MonthlyTitle: 'Monatlich',
 		YearlyTitle: 'Jährlich',
 		SlashMonth: '/ Monat',
+		GenerationsSubtitle: 'generations',
+		GenerationsPerDaySubtitle: 'generations per day',
+		GenerationsPerMonthSubtitle: 'generations per month',
+		ImagesSubtitle: 'images',
+		ImagesPerDaySubtitle: 'images per day',
+		ImagesPerMonthSubtitle: 'images per month',
 		Plans: {
 			FreeTitle: 'Gratis',
 			StarterTitle: 'Starter',

@@ -2420,6 +2420,30 @@ type RootTranslation = {
 		 * /​m​o​n​t​h
 		 */
 		SlashMonth: string
+		/**
+		 * g​e​n​e​r​a​t​i​o​n​s
+		 */
+		GenerationsSubtitle: string
+		/**
+		 * g​e​n​e​r​a​t​i​o​n​s​ ​p​e​r​ ​d​a​y
+		 */
+		GenerationsPerDaySubtitle: string
+		/**
+		 * g​e​n​e​r​a​t​i​o​n​s​ ​p​e​r​ ​m​o​n​t​h
+		 */
+		GenerationsPerMonthSubtitle: string
+		/**
+		 * i​m​a​g​e​s
+		 */
+		ImagesSubtitle: string
+		/**
+		 * i​m​a​g​e​s​ ​p​e​r​ ​d​a​y
+		 */
+		ImagesPerDaySubtitle: string
+		/**
+		 * i​m​a​g​e​s​ ​p​e​r​ ​m​o​n​t​h
+		 */
+		ImagesPerMonthSubtitle: string
 		Plans: {
 			/**
 			 * F​r​e​e
@@ -5716,6 +5740,30 @@ export type TranslationFunctions = {
 		 * /month
 		 */
 		SlashMonth: () => LocalizedString
+		/**
+		 * generations
+		 */
+		GenerationsSubtitle: () => LocalizedString
+		/**
+		 * generations per day
+		 */
+		GenerationsPerDaySubtitle: () => LocalizedString
+		/**
+		 * generations per month
+		 */
+		GenerationsPerMonthSubtitle: () => LocalizedString
+		/**
+		 * images
+		 */
+		ImagesSubtitle: () => LocalizedString
+		/**
+		 * images per day
+		 */
+		ImagesPerDaySubtitle: () => LocalizedString
+		/**
+		 * images per month
+		 */
+		ImagesPerMonthSubtitle: () => LocalizedString
 		Plans: {
 			/**
 			 * Free

@@ -5,6 +5,11 @@ export interface TFeature {
 	icon?: ConstructorOfATypedSvelteComponent;
 }
 
+export interface TMainFeature {
+	title: string;
+	subtitle: string;
+}
+
 export interface TCard {
 	id: string;
 	title: LocalizedString;
@@ -12,6 +17,7 @@ export interface TCard {
 	currencySymbol: string;
 	promotionCodeId?: string;
 	amount: number;
+	mainFeatures?: TMainFeature[];
 	features: TFeature[];
 	ringClass: string;
 	badgeText?: string;

@@ -791,6 +791,12 @@ const ko: Translation = {
 		MonthlyTitle: 'Monthly',
 		YearlyTitle: 'Yearly',
 		SlashMonth: '/month',
+		GenerationsSubtitle: 'generations',
+		GenerationsPerDaySubtitle: 'generations per day',
+		GenerationsPerMonthSubtitle: 'generations per month',
+		ImagesSubtitle: 'images',
+		ImagesPerDaySubtitle: 'images per day',
+		ImagesPerMonthSubtitle: 'images per month',
 		Plans: {
 			FreeTitle: 'Free',
 			StarterTitle: 'Starter',

@@ -818,6 +818,12 @@ const es: Translation = {
 		MonthlyTitle: 'Μηνιαία',
 		YearlyTitle: 'Ετήσια',
 		SlashMonth: '/μήνα',
+		GenerationsSubtitle: 'generations',
+		GenerationsPerDaySubtitle: 'generations per day',
+		GenerationsPerMonthSubtitle: 'generations per month',
+		ImagesSubtitle: 'images',
+		ImagesPerDaySubtitle: 'images per day',
+		ImagesPerMonthSubtitle: 'images per month',
 		Plans: {
 			FreeTitle: 'Δωρεάν',
 			StarterTitle: 'Πλάνο εκκίνησης',

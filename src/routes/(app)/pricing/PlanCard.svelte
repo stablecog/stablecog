@@ -1,7 +1,7 @@
 <script lang="ts">
 	import IconTickOnly from '$components/icons/IconTickOnly.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
-	import type { TFeature } from '$routes/(app)/pricing/types';
+	import type { TFeature, TMainFeature } from '$routes/(app)/pricing/types';
 	import type { LocalizedString } from 'typesafe-i18n';
 
 	export let isSelected = false;
@@ -15,6 +15,7 @@
 	export let currencyAmount: number;
 	export let currencySymbol: string;
 	export let features: TFeature[];
+	export let mainFeatures: TMainFeature[] | undefined = undefined;
 	export let discountRate: number | undefined = undefined;
 </script>
 
@@ -27,7 +28,7 @@
 	>
 		{#if badgeText && badgeClasses}
 			<div
-				class="absolute -right-2.5 -top-3 rounded-full px-3.5 py-1.5 text-right text-xs
+				class="absolute -right-2.5 top-0 -translate-y-1/2 transform rounded-full px-3 py-1 text-right text-xs
 				font-bold {isSelected ? 'bg-c-success text-c-on-primary' : badgeClasses}"
 			>
 				{badgeText}
@@ -72,21 +73,35 @@
 				</div>
 			{/if}
 		</div>
-		<ul class="flex w-full flex-1 flex-col gap-2.5 px-1 py-6">
-			{#each features as feature}
-				<li class="flex items-start gap-3">
-					{#if feature.icon}
-						<svelte:component
-							this={feature.icon}
-							class="mt-1.5px h-5 w-5 flex-shrink-0 text-c-on-bg/80"
-						/>
-					{:else}
-						<IconTickOnly class="mt-1.5px h-5 w-5 flex-shrink-0 text-c-success" />
-					{/if}
-					<span class="min-w-0 flex-shrink">{feature.paragraph}</span>
-				</li>
-			{/each}
-		</ul>
+		<div class="flex w-full flex-1 flex-col">
+			{#if mainFeatures}
+				<ul class="-mb-2 flex w-full flex-col gap-5 px-1.75 pt-6">
+					{#each mainFeatures as mainFeature}
+						<h5 class="text-xl font-semibold leading-5.5">
+							{mainFeature.title}<br /><span class="text-sm font-medium"
+								>{mainFeature.subtitle}</span
+							>
+						</h5>
+					{/each}
+				</ul>
+			{/if}
+			<ul class="flex w-full flex-col gap-2 px-1 pt-6">
+				{#each features as feature}
+					<li class="flex items-start gap-2.5">
+						{#if feature.icon}
+							<svelte:component
+								this={feature.icon}
+								class="mt-1.5px h-5 w-5 flex-shrink-0 text-c-on-bg/80"
+							/>
+						{:else}
+							<IconTickOnly class="mt-1.5px h-5 w-5 flex-shrink-0 text-c-success" />
+						{/if}
+						<span class="min-w-0 flex-shrink">{feature.paragraph}</span>
+					</li>
+				{/each}
+			</ul>
+		</div>
+		<div class="mt-6" />
 		<slot name="button" />
 	</div>
 </div>

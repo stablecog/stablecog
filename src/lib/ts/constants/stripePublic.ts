@@ -13,6 +13,8 @@ import {
 	PUBLIC_STRIPE_PRICE_ID_MEGA_PACK
 } from '$env/static/public';
 
+export const freeDailyImageCount = 20;
+
 export const STRIPE_CURRENCIES = ['usd', 'eur'] as const;
 
 export const STRIPE_PRICE_IDS_SUBSCRIPTIONS_MO = [

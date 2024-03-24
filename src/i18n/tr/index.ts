@@ -495,8 +495,8 @@ const tr: Translation = {
 			Paragraph: 'Kredilerin yenilecek:'
 		},
 		NoUpcomingCreditsTooltip: {
-			Title: 'No upcoming credits',
-			Paragraph: 'There are no upcoming credits.'
+			Title: 'Gelecek kredi yok',
+			Paragraph: 'Yakında gelmesi beklenen kredi yok.'
 		},
 		MoreFreeCreditsTooltip: {
 			Title: 'Daha fazlası yolda!',
@@ -827,6 +827,12 @@ const tr: Translation = {
 		MonthlyTitle: 'Aylık',
 		YearlyTitle: 'Yıllık',
 		SlashMonth: '/ay',
+		GenerationsSubtitle: 'üretim',
+		GenerationsPerDaySubtitle: 'üretim (günlük)',
+		GenerationsPerMonthSubtitle: 'üretim (aylık)',
+		ImagesSubtitle: 'fotoğraf',
+		ImagesPerDaySubtitle: 'fotoğraf (günlük)',
+		ImagesPerMonthSubtitle: 'fotoğraf (aylık)',
 		Plans: {
 			FreeTitle: 'Ücretsiz',
 			StarterTitle: 'Başlangıç',
@@ -880,7 +886,7 @@ const tr: Translation = {
 		}
 	},
 	FAQ: {
-		Title: 'SSO',
+		Title: 'SSS',
 		TitleAlt: 'Sıkça Sorulan Sorular',
 		Questions: {
 			CommercialUse: {
