@@ -77,7 +77,7 @@
 			{#if mainFeatures}
 				<ul class="-mb-2 flex w-full flex-col gap-5 px-1.75 pt-6">
 					{#each mainFeatures as mainFeature}
-						<h5 class="text-xl font-semibold leading-5.5">
+						<h5 class="text-xl font-semibold leading-5.25">
 							{mainFeature.title}<br /><span class="text-sm font-medium"
 								>{mainFeature.subtitle}</span
 							>
