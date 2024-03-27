@@ -822,6 +822,8 @@ const ko: Translation = {
 			NeverExpires: 'Never expires.',
 			GenerationQueuePriority: 'Generation priority.',
 			NoGenerationQueuePriority: 'No generation priority.',
+			OptionalCreditTopUps: 'Optional credit top-ups.',
+			NoOptionalCreditTopUps: 'No credit top-ups.',
 			CommercialUse: 'Commercial use.',
 			SlowGeneration: 'Slow generation.',
 			FastGeneration: 'Fast generation.',

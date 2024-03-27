@@ -837,6 +837,8 @@ const ja: Translation = {
 			NeverExpires: '無期限。',
 			GenerationQueuePriority: 'Generation priority.',
 			NoGenerationQueuePriority: 'No generation priority.',
+			OptionalCreditTopUps: 'Optional credit top-ups.',
+			NoOptionalCreditTopUps: 'No credit top-ups.',
 			CommercialUse: '商業利用可能',
 			SlowGeneration: 'Slow generation',
 			FastGeneration: 'Fast generation',

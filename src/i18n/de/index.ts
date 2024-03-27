@@ -823,6 +823,8 @@ const de: Translation = {
 			NeverExpires: 'Läuft nie ab.',
 			GenerationQueuePriority: 'Generation priority.',
 			NoGenerationQueuePriority: 'No generation priority.',
+			OptionalCreditTopUps: 'Optional credit top-ups.',
+			NoOptionalCreditTopUps: 'No credit top-ups.',
 			CommercialUse: 'Kommerzielle Nutzung.',
 			SlowGeneration: 'Slow generation',
 			FastGeneration: 'Fast generation',

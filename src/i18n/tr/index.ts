@@ -858,6 +858,8 @@ const tr: Translation = {
 			NeverExpires: 'Tarihi geçmez.',
 			GenerationQueuePriority: 'Üretim önceliği.',
 			NoGenerationQueuePriority: 'Üretim önceliği yok.',
+			OptionalCreditTopUps: 'İsteğe bağlı ekstra kredi.',
+			NoOptionalCreditTopUps: 'Ekstra kredi yok.',
 			CommercialUse: 'Ticari kullanım.',
 			SlowGeneration: 'Yavaş üretim.',
 			FastGeneration: 'Hızlı üretim.',

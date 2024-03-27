@@ -35,6 +35,7 @@
 	import { isSignInModalOpen } from '$ts/stores/isSignInModalOpen.js';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { sessionStore } from '$ts/constants/supabase';
+	import type { Readable } from 'svelte/motion';
 
 	export let data;
 
@@ -44,6 +45,39 @@
 		: undefined;
 
 	let subscriptionCards: TSubscriptionCard[];
+	const getPaidSubscriptionFeatures = ({
+		$LL,
+		parallelGenerations
+	}: {
+		$LL: TranslationFunctions;
+		parallelGenerations: number;
+	}) => [
+		{
+			paragraph: $LL.Pricing.Features.FastGeneration()
+		},
+		{
+			paragraph: $LL.Pricing.Features.ParallelGenerations({
+				count: parallelGenerations.toLocaleString($locale)
+			})
+		},
+		{ paragraph: $LL.Pricing.Features.CommercialUse() },
+		{
+			paragraph: $LL.Pricing.Features.ImagesArePrivate()
+		},
+		{
+			paragraph: $LL.Pricing.Features.OptionalCreditTopUps()
+		}
+	];
+
+	const getCreditPackFeatures = ({ $LL }: { $LL: TranslationFunctions }) => [
+		{ paragraph: $LL.Pricing.Features.FastGeneration() },
+		{ paragraph: $LL.Pricing.Features.NeverExpires() },
+		{
+			paragraph: $LL.Pricing.Features.CommercialUse()
+		},
+		{ paragraph: $LL.Pricing.Features.ImagesArePrivate() }
+	];
+
 	$: subscriptionCards = [
 		{
 			id: 'plan-free',
@@ -72,6 +106,10 @@
 				},
 				{
 					paragraph: $LL.Pricing.Features.ImagesArePublic(),
+					icon: IconMinus
+				},
+				{
+					paragraph: $LL.Pricing.Features.NoOptionalCreditTopUps(),
 					icon: IconMinus
 				}
 			],
@@ -102,23 +140,12 @@
 					subtitle: $LL.Pricing.ImagesPerMonthSubtitle()
 				}
 			],
-			features: [
-				{
-					paragraph: $LL.Pricing.Features.FastGeneration()
-				},
-				{
-					paragraph: $LL.Pricing.Features.ParallelGenerations({
-						count:
-							STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
-								PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION
-							].parallel_generations.toLocaleString($locale)
-					})
-				},
-				{ paragraph: $LL.Pricing.Features.CommercialUse() },
-				{
-					paragraph: $LL.Pricing.Features.ImagesArePrivate()
-				}
-			],
+			features: getPaidSubscriptionFeatures({
+				$LL,
+				parallelGenerations:
+					STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION]
+						.parallel_generations
+			}),
 			ringClass: 'ring-c-bg-secondary',
 			discountRate: isFirstPurchase30Off ? 0.3 : undefined
 		},
@@ -145,21 +172,12 @@
 					subtitle: $LL.Pricing.ImagesPerMonthSubtitle()
 				}
 			],
-			features: [
-				{ paragraph: $LL.Pricing.Features.FastGeneration() },
-				{
-					paragraph: $LL.Pricing.Features.ParallelGenerations({
-						count:
-							STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
-								PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION
-							].parallel_generations.toLocaleString($locale)
-					})
-				},
-				{ paragraph: $LL.Pricing.Features.CommercialUse() },
-				{
-					paragraph: $LL.Pricing.Features.ImagesArePrivate()
-				}
-			],
+			features: getPaidSubscriptionFeatures({
+				$LL,
+				parallelGenerations:
+					STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION]
+						.parallel_generations
+			}),
 			ringClass: 'ring-c-bg-secondary',
 			badgeText: $LL.Pricing.Badges.Recommended(),
 			badgeClasses: 'bg-c-primary text-c-on-primary',
@@ -190,21 +208,12 @@
 					subtitle: $LL.Pricing.ImagesPerMonthSubtitle()
 				}
 			],
-			features: [
-				{ paragraph: $LL.Pricing.Features.FastGeneration() },
-				{
-					paragraph: $LL.Pricing.Features.ParallelGenerations({
-						count:
-							STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
-								PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
-							].parallel_generations.toLocaleString($locale)
-					})
-				},
-				{ paragraph: $LL.Pricing.Features.CommercialUse() },
-				{
-					paragraph: $LL.Pricing.Features.ImagesArePrivate()
-				}
-			],
+			features: getPaidSubscriptionFeatures({
+				$LL,
+				parallelGenerations:
+					STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION]
+						.parallel_generations
+			}),
 			ringClass: 'ring-c-bg-secondary',
 			discountRate: isFirstPurchase30Off ? 0.3 : undefined
 		}
@@ -236,10 +245,7 @@
 					subtitle: $LL.Pricing.ImagesSubtitle()
 				}
 			],
-			features: [
-				{ paragraph: $LL.Pricing.Features.FastGeneration() },
-				{ paragraph: $LL.Pricing.Features.NeverExpires() }
-			],
+			features: getCreditPackFeatures({ $LL }),
 			ringClass: 'ring-c-bg-secondary',
 			badgeText: undefined,
 			badgeClasses: undefined
@@ -268,10 +274,7 @@
 					subtitle: $LL.Pricing.ImagesSubtitle()
 				}
 			],
-			features: [
-				{ paragraph: $LL.Pricing.Features.FastGeneration() },
-				{ paragraph: $LL.Pricing.Features.NeverExpires() }
-			],
+			features: getCreditPackFeatures({ $LL }),
 			ringClass: 'ring-c-bg-secondary',
 			badgeText: $LL.Pricing.Badges.MostPopular(),
 			badgeClasses: 'bg-c-primary text-c-on-primary'
@@ -300,10 +303,7 @@
 					subtitle: $LL.Pricing.ImagesSubtitle()
 				}
 			],
-			features: [
-				{ paragraph: $LL.Pricing.Features.FastGeneration() },
-				{ paragraph: $LL.Pricing.Features.NeverExpires() }
-			],
+			features: getCreditPackFeatures({ $LL }),
 			ringClass: 'ring-c-bg-secondary',
 			badgeText: undefined,
 			badgeClasses: undefined

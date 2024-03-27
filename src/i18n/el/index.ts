@@ -849,6 +849,8 @@ const es: Translation = {
 			NeverExpires: 'Χωρίς Λήξη.',
 			GenerationQueuePriority: 'Generation priority.',
 			NoGenerationQueuePriority: 'No generation priority.',
+			OptionalCreditTopUps: 'Optional credit top-ups.',
+			NoOptionalCreditTopUps: 'No credit top-ups.',
 			CommercialUse: 'Εμπορική χρήση.',
 			SlowGeneration: 'Slow generation',
 			FastGeneration: 'Fast generation',

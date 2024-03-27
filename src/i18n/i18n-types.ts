@@ -2538,6 +2538,14 @@ type RootTranslation = {
 			 */
 			NoGenerationQueuePriority: string
 			/**
+			 * O​p​t​i​o​n​a​l​ ​c​r​e​d​i​t​ ​t​o​p​-​u​p​s​.
+			 */
+			OptionalCreditTopUps: string
+			/**
+			 * N​o​ ​c​r​e​d​i​t​ ​t​o​p​-​u​p​s​.
+			 */
+			NoOptionalCreditTopUps: string
+			/**
 			 * C​o​m​m​e​r​c​i​a​l​ ​u​s​e​.
 			 */
 			CommercialUse: string
@@ -5849,6 +5857,14 @@ export type TranslationFunctions = {
 			 * No generation priority.
 			 */
 			NoGenerationQueuePriority: () => LocalizedString
+			/**
+			 * Optional credit top-ups.
+			 */
+			OptionalCreditTopUps: () => LocalizedString
+			/**
+			 * No credit top-ups.
+			 */
+			NoOptionalCreditTopUps: () => LocalizedString
 			/**
 			 * Commercial use.
 			 */
