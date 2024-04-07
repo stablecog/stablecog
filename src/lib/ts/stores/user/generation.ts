@@ -219,11 +219,13 @@ export async function queueInitialGenerationRequest(request: TInitialGenerationR
 export async function submitInitialGenerationRequest({
 	request,
 	access_token,
-	app_version
+	app_version,
+	thumbmark_id
 }: {
 	request: TInitialGenerationRequest;
 	access_token: string;
 	app_version: string;
+	thumbmark_id?: string;
 }) {
 	const promptText = request.prompt.text;
 	const negativePromptText = request.negative_prompt?.text;
@@ -244,11 +246,12 @@ export async function submitInitialGenerationRequest({
 		negative_prompt: negativePromptText,
 		mask_image_url
 	};
-	const response = await fetch(`${apiUrl.origin}/v1/user/generation`, {
+	const response = await fetch(`${apiUrl.origin}/v1/image/generation/create`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 			'X-App-Version': app_version,
+			'X-Thumbmark-Id': thumbmark_id || '',
 			Authorization: `Bearer ${access_token}`
 		},
 		body: JSON.stringify(finalRequest)
@@ -540,7 +543,6 @@ export interface TInitialGenerationRequest extends TGenerationBase {
 	submit_to_gallery: boolean;
 	init_image_file?: FileList;
 	mask_image_data_url?: string;
-	thumbmark_id?: string;
 }
 
 export type TGenerationStatus =

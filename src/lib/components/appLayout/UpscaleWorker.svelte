@@ -47,11 +47,11 @@
 					const res = await submitInitialUpscaleRequest({
 						request: {
 							...upscale,
-							stream_id: $sseId,
-							thumbmark_id: $thumbmarkId
+							stream_id: $sseId
 						},
 						access_token: $sessionStore.access_token,
-						app_version: $appVersion
+						app_version: $appVersion,
+						thumbmark_id: $thumbmarkId
 					});
 					const { id, error, total_remaining_credits, ui_id, queued_id, queue_items } = res;
 					if (total_remaining_credits !== undefined && $userSummary) {

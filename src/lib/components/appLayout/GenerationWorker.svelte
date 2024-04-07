@@ -54,9 +54,9 @@
 						...generation,
 						stream_id: $sseId,
 						output_image_extension: 'jpeg',
-						process_type: 'generate',
-						thumbmark_id: $thumbmarkId
+						process_type: 'generate'
 					},
+					thumbmark_id: $thumbmarkId,
 					access_token: $sessionStore.access_token,
 					app_version: $appVersion
 				});

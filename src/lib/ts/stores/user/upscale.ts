@@ -159,17 +159,20 @@ export async function queueInitialUpscaleRequest(request: TInitialUpscaleRequest
 export async function submitInitialUpscaleRequest({
 	request,
 	access_token,
-	app_version
+	app_version,
+	thumbmark_id
 }: {
 	request: TInitialUpscaleRequest;
 	access_token: string;
 	app_version: string;
+	thumbmark_id?: string;
 }) {
 	const response = await fetch(`${apiUrl.origin}/v1/user/upscale`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 			'X-App-Version': app_version,
+			'X-Thumbmark-Id': thumbmark_id || '',
 			Authorization: `Bearer ${access_token}`
 		},
 		body: JSON.stringify(request)
