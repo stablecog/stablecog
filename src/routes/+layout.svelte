@@ -25,6 +25,7 @@
 	import { notAtTheVeryTop, scrollDirection } from '$ts/stores/scroll.js';
 	import { sessionStore, supabaseStore } from '$ts/constants/supabase.js';
 	import { thumbmarkId } from '$ts/stores/thumbmark.js';
+	import deepEqual from 'deep-equal';
 
 	export let data;
 
@@ -51,21 +52,30 @@
 	if (data.isLeftSidebarHidden !== null) isLeftSidebarHiddenApp.set(data.isLeftSidebarHidden);
 
 	let mounted = false;
+	let isThumbmarkIdReady = false;
 
-	let lastIdentity: string | undefined = undefined;
-	$: [mounted, $page], identifyUser();
+	$: [mounted, isThumbmarkIdReady, $page], identifyUser();
+
+	let lastIdentityObject: Record<string, any> | undefined = undefined;
 
 	function identifyUser() {
-		if (!mounted || !$sessionStore?.user.id || lastIdentity === $sessionStore?.user.id) {
+		if (!mounted || !$sessionStore?.user.id || !isThumbmarkIdReady) {
 			return;
 		}
-		posthog.identify($sessionStore.user.id, {
+		let indentityObject: Record<string, any> = {
 			email: $sessionStore.user.email,
 			'SC - User Id': $sessionStore.user.id,
 			'SC - Stripe Product Id': $userSummary?.product_id,
 			'SC - App Version': $appVersion
-		});
-		lastIdentity = $sessionStore?.user.id;
+		};
+		if ($thumbmarkId !== undefined && $thumbmarkId !== null && $thumbmarkId !== '') {
+			indentityObject['SC - Thumbmark ID'] = $thumbmarkId;
+		}
+		if (lastIdentityObject !== undefined && deepEqual(indentityObject, lastIdentityObject)) {
+			return;
+		}
+		posthog.identify($sessionStore.user.id, indentityObject);
+		lastIdentityObject = indentityObject;
 	}
 
 	const runIfMounted = (fn: () => void) => {
@@ -169,6 +179,8 @@
 			if (thumbmark) thumbmarkId.set(thumbmark);
 		} catch (error) {
 			console.log('ThumbmarkJS error:', error);
+		} finally {
+			isThumbmarkIdReady = true;
 		}
 	}
 </script>
