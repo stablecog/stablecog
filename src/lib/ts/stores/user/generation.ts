@@ -251,7 +251,7 @@ export async function submitInitialGenerationRequest({
 		headers: {
 			'Content-Type': 'application/json',
 			'X-App-Version': app_version,
-			'X-Thumbmark-Id': thumbmark_id || '',
+			'X-Thumbmark-ID': thumbmark_id || '',
 			Authorization: `Bearer ${access_token}`
 		},
 		body: JSON.stringify(finalRequest)
