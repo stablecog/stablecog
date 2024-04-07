@@ -246,7 +246,7 @@ export async function submitInitialGenerationRequest({
 		negative_prompt: negativePromptText,
 		mask_image_url
 	};
-	const response = await fetch(`${apiUrl.origin}/v1/image/generation/create`, {
+	const response = await fetch(`${apiUrl.origin}/v1/user/generation`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
