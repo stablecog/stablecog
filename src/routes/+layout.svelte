@@ -24,6 +24,7 @@
 	import { appRoutes } from '$ts/constants/routes.js';
 	import { notAtTheVeryTop, scrollDirection } from '$ts/stores/scroll.js';
 	import { sessionStore, supabaseStore } from '$ts/constants/supabase.js';
+	import { thumbmarkId } from '$ts/stores/thumbmark.js';
 
 	export let data;
 
@@ -127,6 +128,7 @@
 			isLeftSidebarHiddenApp.set($isLeftSidebarHidden);
 		}
 		setNavbarState();
+		setThumbmark();
 		mounted = true;
 		return () => {
 			subscription.unsubscribe();
@@ -156,6 +158,17 @@
 			document.body.classList.add('overflow-hidden-for-app-routes');
 		} else {
 			document.body.classList.remove('overflow-hidden-for-app-routes');
+		}
+	}
+
+	async function setThumbmark() {
+		try {
+			// @ts-ignore
+			const { getFingerprint } = await import('@thumbmarkjs/thumbmarkjs');
+			const thumbmark = await getFingerprint();
+			if (thumbmark) thumbmarkId.set(thumbmark);
+		} catch (error) {
+			console.log('ThumbmarkJS error:', error);
 		}
 	}
 </script>

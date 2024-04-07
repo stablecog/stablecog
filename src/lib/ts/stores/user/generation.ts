@@ -216,11 +216,15 @@ export async function queueInitialGenerationRequest(request: TInitialGenerationR
 	});
 }
 
-export async function submitInitialGenerationRequest(
-	request: TInitialGenerationRequest,
-	access_token: string,
-	app_version: string
-) {
+export async function submitInitialGenerationRequest({
+	request,
+	access_token,
+	app_version
+}: {
+	request: TInitialGenerationRequest;
+	access_token: string;
+	app_version: string;
+}) {
 	const promptText = request.prompt.text;
 	const negativePromptText = request.negative_prompt?.text;
 	const { prompt, negative_prompt, ...rest } = request;
@@ -536,6 +540,7 @@ export interface TInitialGenerationRequest extends TGenerationBase {
 	submit_to_gallery: boolean;
 	init_image_file?: FileList;
 	mask_image_data_url?: string;
+	thumbmark_id?: string;
 }
 
 export type TGenerationStatus =

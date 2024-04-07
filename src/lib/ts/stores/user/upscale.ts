@@ -252,6 +252,7 @@ export interface TUpscale extends TUpscaleBase {
 export interface TInitialUpscaleRequest extends TUpscaleBase {
 	ui_id: string;
 	stream_id: string;
+	thumbmark_id?: string;
 }
 
 export interface TUpscaleOutput {

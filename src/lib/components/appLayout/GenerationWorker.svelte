@@ -23,6 +23,7 @@
 	import { sseId } from '$ts/stores/user/sse';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { sessionStore } from '$ts/constants/supabase';
+	import { thumbmarkId } from '$ts/stores/thumbmark';
 
 	$: $generationInitImageFiles, onFilesChanged();
 	$: $generations, onGenerationsChanged();
@@ -48,16 +49,17 @@
 			isSubmittingGenerations = true;
 			try {
 				console.log('Submitting initial generation request', generation);
-				const res = await submitInitialGenerationRequest(
-					{
+				const res = await submitInitialGenerationRequest({
+					request: {
 						...generation,
 						stream_id: $sseId,
 						output_image_extension: 'jpeg',
-						process_type: 'generate'
+						process_type: 'generate',
+						thumbmark_id: $thumbmarkId
 					},
-					$sessionStore.access_token,
-					$appVersion
-				);
+					access_token: $sessionStore.access_token,
+					app_version: $appVersion
+				});
 				const { id, error, total_remaining_credits, ui_id, queued_id, queue_items } = res;
 				if (total_remaining_credits !== undefined && $userSummary) {
 					userSummary.set({ ...$userSummary, total_remaining_credits });

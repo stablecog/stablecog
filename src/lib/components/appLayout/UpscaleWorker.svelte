@@ -14,6 +14,7 @@
 		upscales
 	} from '$ts/stores/user/upscale';
 	import { sessionStore } from '$ts/constants/supabase';
+	import { thumbmarkId } from '$ts/stores/thumbmark';
 
 	$: $upscales, onUpscalesChanged();
 
@@ -42,10 +43,12 @@
 			} else if (upscale.status === 'to-be-submitted') {
 				isSubmittingUpscales = true;
 				try {
+					console.log('Submitting initial upscale request', upscale);
 					const res = await submitInitialUpscaleRequest({
 						request: {
 							...upscale,
-							stream_id: $sseId
+							stream_id: $sseId,
+							thumbmark_id: $thumbmarkId
 						},
 						access_token: $sessionStore.access_token,
 						app_version: $appVersion

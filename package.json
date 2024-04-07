@@ -74,6 +74,7 @@
 		"@sveltejs/vite-plugin-svelte": "^3.0.1",
 		"@tanstack/svelte-query": "^4.36.1",
 		"@tanstack/svelte-virtual": "^3.0.4",
+		"@thumbmarkjs/thumbmarkjs": "^0.14.6",
 		"canvas": "^2.11.2",
 		"copy-anything": "^3.0.5",
 		"discord.js": "^14.14.1",
