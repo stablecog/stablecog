@@ -157,7 +157,8 @@
 				'SC - Advanced Mode': $advancedModeApp,
 				'SC - User Id': $sessionStore?.user.id,
 				'SC - Stripe Product Id': $userSummary?.product_id,
-				'SC - App Version': $appVersion
+				'SC - App Version': $appVersion,
+				'SC - Thumbmark ID': $thumbmarkId
 			};
 			logPageview(props);
 		}
