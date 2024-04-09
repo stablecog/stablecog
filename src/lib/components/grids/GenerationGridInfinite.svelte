@@ -276,7 +276,9 @@
 {:else if $generationsQuery.isSuccess && $generationsQuery.data.pages.length > 0 && outputs !== undefined}
 	{#if $gridVirtualizer}
 		{@const showScrollToTopChevron =
-			$gridVirtualizer && $gridVirtualizer.scrollOffset > $windowHeight * 2}
+			$gridVirtualizer &&
+			($gridVirtualizer.scrollOffset > $windowHeight * 2 ||
+				$gridVirtualizer.scrollOffset > $gridVirtualizer.getTotalSize() - $windowHeight)}
 		{@const isGridLongEnoughForScrollToTopChevron =
 			$gridVirtualizer && $gridVirtualizer.getTotalSize() > $windowHeight * 1.5}
 		<div class="relative w-full">
@@ -345,8 +347,7 @@
 			{/if}
 			{#if isGridLongEnoughForScrollToTopChevron}
 				<div
-					class="z-20 {showScrollToTopChevron ||
-					$gridVirtualizer.scrollOffset > $gridVirtualizer.getTotalSize() - $windowHeight
+					class="z-20 {showScrollToTopChevron
 						? 'translate-y-0'
 						: 'translate-y-full'} pointer-events-none sticky bottom-0 left-0
 					flex w-full transform items-center justify-center
