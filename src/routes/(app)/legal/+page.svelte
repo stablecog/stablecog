@@ -48,7 +48,9 @@
 						not-touch:hover:-translate-y-1.5 not-touch:hover:shadow-xl
 						not-touch:hover:shadow-c-shadow/[var(--o-shadow-strong)] not-touch:hover:ring-4"
 					>
-						<h1 class="max-w-full text-xl font-bold">
+						<h1
+							class="max-w-full text-xl font-bold text-c-on-bg transition not-touch:group-hover:text-c-primary"
+						>
 							{doc.title}
 						</h1>
 					</a>
