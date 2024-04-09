@@ -123,7 +123,7 @@ You may be required to register to use the Services. You agree to keep your pass
 
 **Our Free Plan, accessible at [stablecog.com/pricing](https://stablecog.com/pricing), is exclusively for personal, non-commercial use**. By utilizing the Free Plan, you expressly agree not to engage in any commercial activities through this service plan. Should your use of the Services extend to commercial purposes, it is incumbent upon you to upgrade to a paid subscription plan.
 
-Additionally, **the Free Plan is limited to a single account per individual**. Should your requirements necessitate additional accounts, transitioning to a paid subscription plan is required. Failure to adhere to these conditions may result in the immediate termination of your account without prior notice, at our sole discretion.
+Additionally, **our Free Plan is limited to a single account per individual**. Should your requirements necessitate additional accounts, transitioning to a paid subscription plan is required. Failure to adhere to these conditions may result in the immediate termination of your account without prior notice, at our sole discretion.
 
 ## 5. PURCHASES AND PAYMENT
 
