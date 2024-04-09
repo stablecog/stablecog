@@ -935,7 +935,7 @@ const de: Translation = {
 		TermsOfServiceTitle: 'Terms of Service',
 		PrivacyPolicyTitle: 'Privacy Policy',
 		RefundPolicyTitle: 'Refund Policy',
-		SignUpPoliciesConfirmationPagraph: `By using our service, you confirm you've read and accepted our {termsOfService} & {privacyPolicy}.`,
+		SignUpPoliciesConfirmationPagraph: `By using our service, you confirm you've read and accepted our {termsOfService} and {privacyPolicy}.`,
 		ContentPolicyTitle: 'Content Policy'
 	},
 	Documentation: {

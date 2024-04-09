@@ -340,7 +340,7 @@
 				<form
 					on:input={() => (errorText = null)}
 					on:submit|preventDefault={signIn}
-					class="flex w-full max-w-[21rem] flex-col p-1 md:pb-2"
+					class="flex w-full max-w-[21rem] flex-col px-1 pb-3.5 pt-1"
 				>
 					<Input
 						class="w-full"
@@ -366,8 +366,12 @@
 					</Button>
 				</form>
 			</div>
-			<div class="flex w-full justify-center px-2 md:px-0">
-				<p class="max-w-xs pb-1.5 pt-3.5 text-sm text-c-on-bg/60 md:pb-0">
+			<div
+				class="-mx-5 my-5 flex h-2px w-[calc(100%+1.5rem)] items-center gap-4 bg-c-bg-secondary
+				md:-mx-10 md:my-6 md:w-[calc(100%+5rem)]"
+			/>
+			<div class="-mt-1.5 flex w-full justify-center px-2 md:-mb-2 md:-mt-2 md:px-0">
+				<p class="max-w-xs text-sm text-c-on-bg/60">
 					{@html $LL.Legal.SignUpPoliciesConfirmationPagraph({
 						termsOfService: `<a target='_blank' class='text-c-primary hover:underline' href="/terms">${$LL.Legal.TermsOfServiceTitle()}</a>`,
 						privacyPolicy: `<a target="_blank" class='text-c-primary hover:underline' href="/privacy">${$LL.Legal.PrivacyPolicyTitle()}</a>`

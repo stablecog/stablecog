@@ -962,7 +962,7 @@ const es: Translation = {
 		TermsOfServiceTitle: 'Όροι χρήσης',
 		PrivacyPolicyTitle: 'Πολιτική Απορρήτου',
 		RefundPolicyTitle: 'Πολιτικές επιστροφής χρημάτων',
-		SignUpPoliciesConfirmationPagraph: `By using our service, you confirm you've read and accepted our {termsOfService} & {privacyPolicy}.`,
+		SignUpPoliciesConfirmationPagraph: `By using our service, you confirm you've read and accepted our {termsOfService} and {privacyPolicy}.`,
 		ContentPolicyTitle: 'Πολιτική Περιεχομένου'
 	},
 	Documentation: {
