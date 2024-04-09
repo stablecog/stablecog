@@ -121,6 +121,10 @@ If you provide any information that is untrue, inaccurate, not current, or incom
 
 You may be required to register to use the Services. You agree to keep your password confidential and will be responsible for all use of your account and password. We reserve the right to remove, reclaim, or change a username you select if we determine, in our sole discretion, that such username is inappropriate, obscene, or otherwise objectionable.
 
+**Our Free Plan, accessible at [stablecog.com/pricing](https://stablecog.com/pricing), is exclusively for personal, non-commercial use**. By utilizing the Free Plan, you expressly agree not to engage in any commercial activities through this service plan. Should your use of the Services extend to commercial purposes, it is incumbent upon you to upgrade to a paid subscription plan.
+
+Additionally, **the Free Plan is limited to a single account per individual**. Should your requirements necessitate additional accounts, transitioning to a paid subscription plan is required. Failure to adhere to these conditions may result in the immediate termination of your account without prior notice, at our sole discretion.
+
 ## 5. PURCHASES AND PAYMENT
 
 We accept the following forms of payment:

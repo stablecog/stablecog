@@ -941,6 +941,7 @@ const nl: Translation = {
 		TermsOfServiceTitle: 'Gebruiksvoorwaarden',
 		PrivacyPolicyTitle: 'Privacybeleid',
 		RefundPolicyTitle: 'Restitutiebeleid',
+		SignUpPoliciesConfirmationPagraph: `By using our service, you confirm you've read and accepted our {termsOfService} & {privacyPolicy}.`,
 		ContentPolicyTitle: 'Inhoudsbeleid'
 	},
 	Documentation: {

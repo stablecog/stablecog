@@ -949,6 +949,7 @@ const ja: Translation = {
 		TermsOfServiceTitle: '利用規約',
 		PrivacyPolicyTitle: 'プライバシーポリシー',
 		RefundPolicyTitle: '返金ポリシー',
+		SignUpPoliciesConfirmationPagraph: `By using our service, you confirm you've read and accepted our {termsOfService} & {privacyPolicy}.`,
 		ContentPolicyTitle: 'コンテンツポリシー'
 	},
 	Documentation: {

@@ -332,7 +332,7 @@
 					class="-mx-5 my-5 flex w-[calc(100%+1.5rem)] items-center gap-4 md:-mx-10 md:my-6 md:w-[calc(100%+5rem)]"
 				>
 					<div class="h-2px flex-1 rounded-r-full bg-c-bg-secondary" />
-					<p class="inline-block min-w-0 flex-shrink text-center text-base text-c-on-bg/50">
+					<p class="inline-block min-w-0 flex-shrink text-center text-base text-c-on-bg/60">
 						{$LL.SignIn.OrContinueWithEmailTitle()}
 					</p>
 					<div class="h-2px flex-1 rounded-l-full bg-c-bg-secondary" />
@@ -365,6 +365,14 @@
 						{$LL.SignIn.ContinueButton()}
 					</Button>
 				</form>
+			</div>
+			<div class="flex w-full justify-center px-2 md:px-0">
+				<p class="max-w-xs pb-1.5 pt-3.5 text-sm text-c-on-bg/60 md:pb-0">
+					{@html $LL.Legal.SignUpPoliciesConfirmationPagraph({
+						termsOfService: `<a target='_blank' class='text-c-primary hover:underline' href="/terms">${$LL.Legal.TermsOfServiceTitle()}</a>`,
+						privacyPolicy: `<a target="_blank" class='text-c-primary hover:underline' href="/privacy">${$LL.Legal.PrivacyPolicyTitle()}</a>`
+					})}
+				</p>
 			</div>
 		{/if}
 	</div>
