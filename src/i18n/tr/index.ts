@@ -967,7 +967,7 @@ const tr: Translation = {
 		TermsOfServiceTitle: 'Kullanım Şartları',
 		PrivacyPolicyTitle: 'Gizlilik Politikası',
 		RefundPolicyTitle: 'İade Politikası',
-		SignUpPoliciesConfirmationPagraph: `Servisimizi kullanarak, {termsOfService}'nı ve {privacyPolicy}'nı okuduğunu ve onayladığını kabul ediyorsun.`,
+		AcceptedPoliciesParagraph: `Servisimizi kullanarak, {termsOfService}'nı ve {privacyPolicy}'nı kabul ediyorsun.`,
 		ContentPolicyTitle: 'İçerik Politikası'
 	},
 	Documentation: {

@@ -2814,11 +2814,11 @@ type RootTranslation = {
 		 */
 		RefundPolicyTitle: string
 		/**
-		 * B​y​ ​u​s​i​n​g​ ​o​u​r​ ​s​e​r​v​i​c​e​,​ ​y​o​u​ ​c​o​n​f​i​r​m​ ​y​o​u​'​v​e​ ​r​e​a​d​ ​a​n​d​ ​a​c​c​e​p​t​e​d​ ​o​u​r​ ​{​t​e​r​m​s​O​f​S​e​r​v​i​c​e​}​ ​a​n​d​ ​{​p​r​i​v​a​c​y​P​o​l​i​c​y​}​.
+		 * B​y​ ​u​s​i​n​g​ ​o​u​r​ ​s​e​r​v​i​c​e​,​ ​y​o​u​ ​a​g​r​e​e​ ​t​o​ ​o​u​r​ ​{​t​e​r​m​s​O​f​S​e​r​v​i​c​e​}​ ​a​n​d​ ​{​p​r​i​v​a​c​y​P​o​l​i​c​y​}​.
 		 * @param {unknown} privacyPolicy
 		 * @param {unknown} termsOfService
 		 */
-		SignUpPoliciesConfirmationPagraph: RequiredParams<'privacyPolicy' | 'termsOfService'>
+		AcceptedPoliciesParagraph: RequiredParams<'privacyPolicy' | 'termsOfService'>
 		/**
 		 * C​o​n​t​e​n​t​ ​P​o​l​i​c​y
 		 */
@@ -6135,9 +6135,9 @@ export type TranslationFunctions = {
 		 */
 		RefundPolicyTitle: () => LocalizedString
 		/**
-		 * By using our service, you confirm you've read and accepted our {termsOfService} and {privacyPolicy}.
+		 * By using our service, you agree to our {termsOfService} and {privacyPolicy}.
 		 */
-		SignUpPoliciesConfirmationPagraph: (arg: { privacyPolicy: unknown, termsOfService: unknown }) => LocalizedString
+		AcceptedPoliciesParagraph: (arg: { privacyPolicy: unknown, termsOfService: unknown }) => LocalizedString
 		/**
 		 * Content Policy
 		 */

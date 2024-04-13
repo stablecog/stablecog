@@ -178,8 +178,7 @@
 </script>
 
 <div
-	class="relative z-10 flex max-w-full flex-col items-center justify-center overflow-hidden rounded-3xl bg-c-bg
-	px-3 py-4 ring-2 ring-c-bg-secondary md:px-10 md:py-7 {isModal
+	class="relative z-10 flex max-w-full flex-col items-center justify-center overflow-hidden rounded-3xl bg-c-bg px-6 py-4 ring-2 ring-c-bg-secondary md:px-12 md:py-7 {isModal
 		? 'shadow-2xl shadow-c-shadow/[var(--o-shadow-strong)]'
 		: 'shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]'}"
 >
@@ -193,7 +192,7 @@
 			</div>
 		</div>
 	{/if}
-	<h1 class="mt-1 max-w-sm px-8 text-center text-2xl font-bold leading-normal md:-mt-1">
+	<h1 class="mt-1 max-w-[21rem] text-center text-2xl font-bold leading-normal md:-mt-1">
 		{$signInCardStatus === 'sent-otp'
 			? $LL.SignIn.PageTitleSentLink()
 			: title
@@ -202,7 +201,7 @@
 	</h1>
 	<div class="mt-1.5 flex w-full flex-col items-center justify-start">
 		<p
-			class="mb-4 max-w-sm px-3 text-center text-base leading-relaxed text-c-on-bg/75 md:px-0 md:text-base {$signInCardStatus ===
+			class="mb-4 max-w-[21rem] text-center text-base leading-relaxed text-c-on-bg/75 md:text-base {$signInCardStatus ===
 			'sent-otp'
 				? 'mt-1'
 				: ''}"
@@ -214,12 +213,12 @@
 					: $LL.SignIn.PageParagraphV2()}
 		</p>
 		{#if !wantsEmailOnMount && $signInCardStatus !== 'sent-otp'}
-			<WantsEmailCard checked={wantsEmailChecked} class="mb-3.5 max-w-[20.5rem]" />
+			<WantsEmailCard checked={wantsEmailChecked} class="mb-3.5 max-w-[20.6rem]" />
 		{/if}
 		{#if $signInCardStatus === 'sent-otp'}
 			<div
 				transition:expandCollapse={{ duration: 200, easing: quadOut, opacity: 0 }}
-				class="-mx-5 -mb-4 flex w-[calc(100%+1.5rem)] flex-col justify-start pt-4 md:-mx-10 md:-mb-7 md:w-[calc(100%+5rem)] md:pt-6"
+				class="-mx-5 -mb-4 flex w-[calc(100%+3rem)] flex-col justify-start pt-4 md:-mx-10 md:-mb-7 md:w-[calc(100%+6rem)] md:pt-6"
 			>
 				<div class="flex w-full flex-col items-center justify-start">
 					<div
@@ -249,12 +248,12 @@
 							<form
 								transition:expandCollapse={{ duration: 200, easing: quadOut, opacity: 0 }}
 								on:submit|preventDefault={signInWithCode}
-								class="flex w-full flex-col items-center justify-start"
+								class="flex w-full flex-col items-center justify-start px-5"
 							>
 								<div
-									class="flex flex-col items-center justify-start px-4 pb-6 pt-5 md:px-6 md:pb-7 md:pt-6"
+									class="flex max-w-[21rem] flex-col items-center justify-start pb-6 pt-5 md:pb-7 md:pt-6"
 								>
-									<div class="flex w-full max-w-[21rem] flex-col items-center justify-start">
+									<div class="flex w-full flex-col items-center justify-start">
 										<PinInput
 											bind:value={codeValue}
 											on:pincomplete={signInWithCode}
@@ -329,7 +328,7 @@
 					</div>
 				</div>
 				<div
-					class="-mx-5 my-5 flex w-[calc(100%+1.5rem)] items-center gap-4 md:-mx-10 md:my-6 md:w-[calc(100%+5rem)]"
+					class="-mx-5 my-5 flex w-[calc(100%+3rem)] items-center gap-4 md:-mx-10 md:my-6 md:w-[calc(100%+6rem)]"
 				>
 					<div class="h-2px flex-1 rounded-r-full bg-c-bg-secondary" />
 					<p class="inline-block min-w-0 flex-shrink text-center text-base text-c-on-bg/60">
@@ -340,7 +339,7 @@
 				<form
 					on:input={() => (errorText = null)}
 					on:submit|preventDefault={signIn}
-					class="flex w-full max-w-[21rem] flex-col px-1 pb-3.5 pt-1"
+					class="flex w-full max-w-[21rem] flex-col pb-3.5 pt-1"
 				>
 					<Input
 						class="w-full"
@@ -366,12 +365,12 @@
 					</Button>
 				</form>
 				<div
-					class="-mx-5 my-5 flex h-2px w-[calc(100%+1.5rem)] items-center gap-4 bg-c-bg-secondary
-					md:-mx-10 md:my-6 md:w-[calc(100%+5rem)]"
+					class="-mx-5 my-5 flex h-2px w-[calc(100%+3rem)] items-center gap-4 bg-c-bg-secondary
+					md:-mx-10 md:my-6 md:w-[calc(100%+6rem)]"
 				/>
-				<div class="-mt-1.5 flex w-full justify-center px-2 md:-mb-2.25 md:-mt-2 md:px-0">
-					<p class="max-w-xs text-sm text-c-on-bg/60">
-						{@html $LL.Legal.SignUpPoliciesConfirmationPagraph({
+				<div class="-mt-1.5 flex w-full justify-center md:-mb-2.25 md:-mt-2">
+					<p class="max-w-[21rem] text-sm text-c-on-bg/60">
+						{@html $LL.Legal.AcceptedPoliciesParagraph({
 							termsOfService: `<a target='_blank' class='text-c-primary hover:underline' href="/terms">${$LL.Legal.TermsOfServiceTitle()}</a>`,
 							privacyPolicy: `<a target="_blank" class='text-c-primary hover:underline' href="/privacy">${$LL.Legal.PrivacyPolicyTitle()}</a>`
 						})}
