@@ -368,8 +368,8 @@
 					class="-mx-5 my-5 flex h-2px w-[calc(100%+3rem)] items-center gap-4 bg-c-bg-secondary
 					md:-mx-10 md:my-6 md:w-[calc(100%+6rem)]"
 				/>
-				<div class="-mt-1.5 flex w-full justify-center md:-mb-2.25 md:-mt-2">
-					<p class="max-w-[21rem] text-sm text-c-on-bg/60">
+				<div class="-mt-1.5 flex w-full max-w-[21rem] justify-center md:-mb-2.25 md:-mt-2">
+					<p class="max-w-full text-center text-sm text-c-on-bg/60">
 						{@html $LL.Legal.AcceptedPoliciesParagraph({
 							termsOfService: `<a target='_blank' class='text-c-primary hover:underline' href="/terms">${$LL.Legal.TermsOfServiceTitle()}</a>`,
 							privacyPolicy: `<a target="_blank" class='text-c-primary hover:underline' href="/privacy">${$LL.Legal.PrivacyPolicyTitle()}</a>`
