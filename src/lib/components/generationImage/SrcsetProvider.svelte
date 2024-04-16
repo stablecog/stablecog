@@ -1,14 +1,16 @@
 <script lang="ts">
 	import type { TGenerationImageCardType } from '$components/generationImage/types';
-	import { getImgProxySrcSet } from '$ts/helpers/imgproxy';
+	import { getImgProxySrcSet, type TImgProxyQuality } from '$ts/helpers/imgproxy';
 
 	export let cardType: TGenerationImageCardType;
 	export let src: string;
+	export let imageQualityPreset: TImgProxyQuality | undefined = undefined;
 
 	$: srcset =
 		cardType !== 'stage'
 			? getImgProxySrcSet({
-					src
+					src,
+					quality: imageQualityPreset
 				})
 			: undefined;
 	$: sizes =

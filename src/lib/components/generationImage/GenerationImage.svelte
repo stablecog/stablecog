@@ -42,6 +42,7 @@
 	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
 	import { sessionStore } from '$ts/constants/supabase';
 	import { pushState } from '$app/navigation';
+	import type { TImgProxyQuality } from '$ts/helpers/imgproxy';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let cardType: TGenerationImageCardType;
@@ -49,6 +50,7 @@
 	export let didLoadBefore: boolean = false;
 	export let cardWidth: number | undefined = undefined;
 	export let setSearchQuery: ((query: string) => void) | undefined = undefined;
+	export let imageQualityPreset: TImgProxyQuality | undefined = undefined;
 
 	$: srcHighest =
 		generation.selected_output.upscaled_image_url ?? generation.selected_output.image_url;
@@ -189,7 +191,7 @@
 		<IconNoImage class="h-10 w-10 text-c-on-bg/50" />
 	</div>
 {:else}
-	<SrcsetProvider src={srcHighest} {cardType} let:sizes let:srcset>
+	<SrcsetProvider {imageQualityPreset} src={srcHighest} {cardType} let:sizes let:srcset>
 		<div
 			class="absolute left-0 top-0 h-full w-full transition duration-350 {cardType === 'generate'
 				? 'not-touch:group-hover:scale-105'

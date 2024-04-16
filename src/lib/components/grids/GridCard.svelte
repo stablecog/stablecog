@@ -63,6 +63,7 @@
 				{/if}
 				{#if output.status === undefined || output.status === 'succeeded'}
 					<GenerationImage
+						imageQualityPreset={cardType === 'stage' ? undefined : 'q60'}
 						{cardType}
 						{cardWidth}
 						{didLoadBefore}

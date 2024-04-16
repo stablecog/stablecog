@@ -15,7 +15,9 @@ type TImgProxyPreset =
 	| '3840w'
 	| 'full';
 
-type TExtention = 'jpeg' | 'webp' | 'png';
+export type TImgProxyQuality = 'q50' | 'q60' | 'q70';
+
+type TExtension = 'jpeg' | 'webp' | 'png';
 
 const srcsetEntriesSmall: TImgProxyPreset[] = ['32w', '64w', '128w', '256w'];
 const srcsetEntries: TImgProxyPreset[] = [
@@ -30,40 +32,50 @@ const srcsetEntries: TImgProxyPreset[] = [
 	'3840w'
 ];
 const srcDefault: TImgProxyPreset = '1920w';
-const extentionDefault: TExtention = 'webp';
+const extensionDefault: TExtension = 'webp';
 
 export function getImgProxySrc({
 	src,
 	preset,
-	extention = extentionDefault
+	extension = extensionDefault,
+	quality
 }: {
 	src: string;
 	preset: TImgProxyPreset;
-	extention?: TExtention;
+	extension?: TExtension;
+	quality?: TImgProxyQuality;
 }) {
-	return `${PUBLIC_IMGPROXY_URL}/insecure/${preset}/${Base64.encodeURL(src)}.${extention}`;
+	let presets: string[] = [preset];
+	if (quality !== undefined) {
+		presets.push(quality);
+	}
+	return `${PUBLIC_IMGPROXY_URL}/insecure/${presets.join(':')}/${Base64.encodeURL(src)}.${extension}`;
 }
 
 export function getImgProxySrcFull({
 	src,
-	extention = extentionDefault
+	extension = extensionDefault,
+	quality
 }: {
 	src: string;
-	extention?: TExtention;
+	extension?: TExtension;
+	quality?: TImgProxyQuality;
 }) {
-	return getImgProxySrc({ src, preset: 'full', extention });
+	return getImgProxySrc({ src, preset: 'full', extension, quality });
 }
 
 export function getImgProxySrcSet({
 	src,
-	extention = extentionDefault
+	extension = extensionDefault,
+	quality
 }: {
 	src: string;
-	extention?: TExtention;
+	extension?: TExtension;
+	quality?: TImgProxyQuality;
 }) {
 	let srcset = '';
 	for (let i = 0; i < srcsetEntries.length; i++) {
-		srcset += `${getImgProxySrc({ src, preset: srcsetEntries[i], extention })} ${
+		srcset += `${getImgProxySrc({ src, preset: srcsetEntries[i], extension, quality })} ${
 			srcsetEntries[i]
 		},`;
 	}
@@ -72,14 +84,16 @@ export function getImgProxySrcSet({
 
 export function getImgProxySrcSetSmall({
 	src,
-	extention = extentionDefault
+	extension = extensionDefault,
+	quality
 }: {
 	src: string;
-	extention?: TExtention;
+	extension?: TExtension;
+	quality?: TImgProxyQuality;
 }) {
 	let srcset = '';
 	for (let i = 0; i < srcsetEntriesSmall.length; i++) {
-		srcset += `${getImgProxySrc({ src, preset: srcsetEntries[i], extention })} ${
+		srcset += `${getImgProxySrc({ src, preset: srcsetEntries[i], extension, quality })} ${
 			srcsetEntries[i]
 		},`;
 	}
@@ -87,5 +101,5 @@ export function getImgProxySrcSetSmall({
 }
 
 export function getImgProxySrcDefault(src: string) {
-	return getImgProxySrc({ src, preset: srcDefault, extention: extentionDefault });
+	return getImgProxySrc({ src, preset: srcDefault, extension: extensionDefault });
 }
