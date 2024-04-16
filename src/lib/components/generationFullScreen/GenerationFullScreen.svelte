@@ -64,6 +64,7 @@
 	import { fly } from 'svelte/transition';
 	import { sessionStore } from '$ts/constants/supabase';
 	import IconGalleryFilled from '$components/icons/IconGalleryFilled.svelte';
+	import { imageQualityLowDefault } from '$ts/helpers/imgproxy';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let prevGeneration: TGenerationWithSelectedOutput | undefined = undefined;
@@ -415,7 +416,13 @@
 		<div class="relative flex items-center self-stretch">
 			{#if generation.selected_output.image_url}
 				{#key generation.selected_output.id}
-					<SrcsetProvider src={backgroundImageUrl} cardType={modalType} let:sizes let:srcset>
+					<SrcsetProvider
+						imageQualityPreset={imageQualityLowDefault}
+						src={backgroundImageUrl}
+						cardType={modalType}
+						let:sizes
+						let:srcset
+					>
 						<img
 							class="translate-3d-0 absolute left-0 top-0 h-full w-full scale-125 transform blur-xl"
 							{sizes}

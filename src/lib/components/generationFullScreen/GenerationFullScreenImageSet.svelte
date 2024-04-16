@@ -5,6 +5,7 @@
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import { quadOut } from 'svelte/easing';
 	import { scale } from 'svelte/transition';
+	import { imageQualityLowDefault } from '$ts/helpers/imgproxy';
 
 	export let backgroundImageUrl: string;
 	export let backgroundImageWidth: number;
@@ -21,7 +22,13 @@
 	$: loading = !naturalWidth || !naturalHeight;
 </script>
 
-<SrcsetProvider src={backgroundImageUrl} {cardType} let:sizes let:srcset>
+<SrcsetProvider
+	src={backgroundImageUrl}
+	{cardType}
+	let:sizes
+	let:srcset
+	imageQualityPreset={imageQualityLowDefault}
+>
 	<img
 		class="absolute h-auto w-full transform transition lg:left-0 lg:top-0 lg:h-full lg:object-contain"
 		{sizes}

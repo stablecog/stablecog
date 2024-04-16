@@ -17,6 +17,8 @@ type TImgProxyPreset =
 
 export type TImgProxyQuality = 'q50' | 'q60' | 'q70';
 
+export const imageQualityLowDefault: TImgProxyQuality = 'q60';
+
 type TExtension = 'jpeg' | 'webp' | 'png';
 
 const srcsetEntriesSmall: TImgProxyPreset[] = ['32w', '64w', '128w', '256w'];

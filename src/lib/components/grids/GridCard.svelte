@@ -17,6 +17,7 @@
 	import { userSummary } from '$ts/stores/user/summary';
 	import { quadIn, quadOut } from 'svelte/easing';
 	import { fade } from 'svelte/transition';
+	import { imageQualityLowDefault } from '$ts/helpers/imgproxy';
 
 	export let cardType: TGenerationImageCardType;
 	export let output: TGenerationFullOutput;
@@ -63,7 +64,7 @@
 				{/if}
 				{#if output.status === undefined || output.status === 'succeeded'}
 					<GenerationImage
-						imageQualityPreset={cardType === 'stage' ? undefined : 'q60'}
+						imageQualityPreset={cardType === 'stage' ? undefined : imageQualityLowDefault}
 						{cardType}
 						{cardWidth}
 						{didLoadBefore}
