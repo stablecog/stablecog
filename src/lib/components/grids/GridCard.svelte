@@ -138,7 +138,7 @@
 			<div class="flex w-full items-end justify-between px-0.5 pb-0.5 md:px-1 md:pb-1">
 				<a
 					href="/{output.generation.user.username}"
-					data-sveltekit-preload-data="hover"
+					data-sveltekit-preload-data="tap"
 					class="group relative flex min-w-0 flex-shrink items-center gap-2 rounded-md px-2 py-1.5"
 				>
 					<ButtonHoverEffect noPadding color="bg-tertiary" size="md" />

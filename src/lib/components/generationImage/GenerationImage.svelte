@@ -254,7 +254,7 @@
 	<a
 		aria-label="View generation: {shortPrompt}..."
 		href={imageClickHref}
-		data-sveltekit-preload-data="hover"
+		data-sveltekit-preload-data="tap"
 		on:click={onImageClick}
 		class="absolute left-0 top-0 flex h-full w-full flex-col items-end justify-end overflow-hidden pt-16"
 	>
