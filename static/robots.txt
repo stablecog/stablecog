@@ -1,4 +1,6 @@
 User-agent: *
+Disallow: /*/o/
+
 Allow: /
 
 Sitemap: https://stablecog.com/sitemap.xml

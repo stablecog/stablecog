@@ -1,8 +1,7 @@
+import { flatDocsSidebarShallow } from '$docroutes/docs/v1/constants';
 import { flatGuideSidebarShallow } from '$docroutes/guide/constants';
 import { flatTrySidebarShallow } from '$docroutes/try/constants';
-import { flatDocsSidebarShallow } from '$docroutes/docs/v1/constants';
 import type { TPost, TPostMetadata } from '$routes/(doc)/blog/types';
-import { supabaseAdmin } from '$ts/constants/supabaseAdmin';
 
 const today = new Date();
 const getDateStringFromDate = (date: Date) => {
@@ -75,32 +74,13 @@ export const getAllRoutes = async () => {
 		lastmod: todayString,
 		changefreq: 'weekly'
 	}));
-	let galleryOutputRoutes: IRoute[] = [];
-	const { data, error } = await supabaseAdmin
-		.from('generation_outputs')
-		.select('id, gallery_status, created_at')
-		.eq('gallery_status', 'approved')
-		.order('created_at', { ascending: false })
-		.limit(5000);
-	if (error) {
-		console.log(error);
-	}
-	if (data) {
-		data.forEach((item) => {
-			galleryOutputRoutes.push({
-				loc: `/gallery/o/${item.id}`,
-				lastmod: getDateStringFromDate(new Date(item.created_at)),
-				changefreq: 'weekly'
-			});
-		});
-	}
+
 	const allRoutes = [
 		...definedRoutes,
 		...blogPostRoutes,
 		...guideRoutes,
 		...tryRoutes,
-		...docsRoutes,
-		...galleryOutputRoutes
+		...docsRoutes
 	];
 	return allRoutes;
 };
