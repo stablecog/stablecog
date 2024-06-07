@@ -1,42 +1,30 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
-	import IconSearch from '$components/icons/IconSearch.svelte';
-	import MetaTag from '$components/utils/MetaTag.svelte';
-	import LL, { locale } from '$i18n/i18n-svelte';
-	import { canonicalUrl } from '$ts/constants/main';
-	import { activeGeneration, type TGenerationFullOutput } from '$ts/stores/user/generation';
-	import { createInfiniteQuery } from '@tanstack/svelte-query';
-	import { quadOut } from 'svelte/easing';
-	import { scale } from 'svelte/transition';
-	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
+	import Avatar from '$components/avatar/Avatar.svelte';
 	import SearchAndFilterBar from '$components/galleryLike/SearchAndFilterBar.svelte';
-	import IconSadFace from '$components/icons/IconSadFace.svelte';
-	import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
-	import { setActiveGenerationToOutputIndex } from '$ts/helpers/goToOutputIndex';
-	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
-	import { windowWidth } from '$ts/stores/window';
+	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import {
 		lgBreakpoint,
 		mdBreakpoint,
-		xlBreakpoint,
 		xl2Breakpoint,
-		xl3Breakpoint
+		xl3Breakpoint,
+		xlBreakpoint
 	} from '$components/generationFullScreen/constants';
-	import Avatar from '$components/avatar/Avatar.svelte';
+	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
+	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconBirthday from '$components/icons/IconBirthday.svelte';
-	import IconStar from '$components/icons/IconStar.svelte';
-	import { getTitleFromProductId } from '$ts/helpers/stripe/plan.js';
-	import IconHeart from '$components/icons/IconHeart.svelte';
-	import { userSummary } from '$ts/stores/user/summary.js';
-	import { goto } from '$app/navigation';
-	import IconPen from '$components/icons/IconPen.svelte';
-	import WithChangeUsernameModal from '$components/utils/WithChangeUsernameModal.svelte';
-	import NoBgButton from '$components/primitives/buttons/NoBgButton.svelte';
-	import { getPreviewImageUrlForUserProfile } from '$ts/helpers/getPreviewImageUrl.js';
-	import { getImgProxySrc } from '$ts/helpers/imgproxy.js';
-	import { someUserProfileFullOutputsQueryKey } from '$ts/stores/user/queryKeys.js';
 	import IconFreePlan from '$components/icons/IconFreePlan.svelte';
+	import IconHeart from '$components/icons/IconHeart.svelte';
+	import IconPen from '$components/icons/IconPen.svelte';
+	import IconSadFace from '$components/icons/IconSadFace.svelte';
+	import IconSearch from '$components/icons/IconSearch.svelte';
+	import IconStar from '$components/icons/IconStar.svelte';
+	import NoBgButton from '$components/primitives/buttons/NoBgButton.svelte';
+	import MetaTag from '$components/utils/MetaTag.svelte';
+	import WithChangeUsernameModal from '$components/utils/WithChangeUsernameModal.svelte';
+	import LL, { locale } from '$i18n/i18n-svelte';
+	import ProfileCardBadge from '$routes/(app)/[username]/ProfileCardBadge.svelte';
 	import {
 		getSomeUserProfileInfiniteQueryKey,
 		getSomeUserProfileInfiniteQueryProps,
@@ -44,9 +32,20 @@
 		someUserGalleryModelIdFilters,
 		someUserGallerySearchString
 	} from '$routes/(app)/[username]/constants.js';
-	import ProfileCardBadge from '$routes/(app)/[username]/ProfileCardBadge.svelte';
-	import { hydrated } from '$ts/stores/hydrated.js';
+	import { canonicalUrl } from '$ts/constants/main';
 	import { sessionStore } from '$ts/constants/supabase';
+	import { getPreviewImageUrlForUserProfile } from '$ts/helpers/getPreviewImageUrl.js';
+	import { setActiveGenerationToOutputIndex } from '$ts/helpers/goToOutputIndex';
+	import { getImgProxySrc } from '$ts/helpers/imgproxy.js';
+	import { getTitleFromProductId } from '$ts/helpers/stripe/plan.js';
+	import { hydrated } from '$ts/stores/hydrated.js';
+	import { activeGeneration, type TGenerationFullOutput } from '$ts/stores/user/generation';
+	import { someUserProfileFullOutputsQueryKey } from '$ts/stores/user/queryKeys.js';
+	import { userSummary } from '$ts/stores/user/summary.js';
+	import { windowWidth } from '$ts/stores/window';
+	import { createInfiniteQuery } from '@tanstack/svelte-query';
+	import { quadOut } from 'svelte/easing';
+	import { scale } from 'svelte/transition';
 
 	export let data;
 
@@ -153,6 +152,7 @@
 	description="Check out the profile of @{data.username} on Stablecog: Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
 	image_url={getPreviewImageUrlForUserProfile(data.username)}
 	canonical="{canonicalUrl}{$page.url.pathname}"
+	robots="noindex"
 />
 
 <svelte:window on:keydown={onKeyDown} />

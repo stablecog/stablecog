@@ -12,6 +12,7 @@
 	export let article_published_time: string | undefined = undefined;
 	export let article_author: string | undefined = undefined;
 	export let article_publisher: string | undefined = undefined;
+	export let robots: string | undefined = undefined;
 
 	$: canonicalFallback = canonicalUrl + ($page.url.pathname !== '/' ? $page.url.pathname : '');
 </script>
@@ -46,6 +47,7 @@
 				]
 			: undefined
 	}}
+	{robots}
 	twitter={image_url
 		? {
 				cardType: 'summary_large_image',
