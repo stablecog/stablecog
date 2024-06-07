@@ -1,6 +1,15 @@
 User-agent: *
-Disallow: /*/o/
+Disallow: /
 
-Allow: /
+Allow: /$
+Allow: /generate
+Allow: /voiceover
+Allow: /history
+Allow: /live
+Allow: /gallery
+Allow: /blog
+Allow: /docs
+Allow: /guide
+Allow: /try
 
 Sitemap: https://stablecog.com/sitemap.xml
