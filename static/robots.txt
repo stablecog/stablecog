@@ -3,13 +3,22 @@ Disallow: /
 
 Allow: /$
 Allow: /generate
+Allow: /generate/
 Allow: /voiceover
+Allow: /voiceover/
 Allow: /history
+Allow: /history/
 Allow: /live
+Allow: /live/
 Allow: /gallery
+Allow: /gallery/
 Allow: /blog
+Allow: /blog/
 Allow: /docs
+Allow: /docs/
 Allow: /guide
+Allow: /guide/
 Allow: /try
+Allow: /try/
 
 Sitemap: https://stablecog.com/sitemap.xml
