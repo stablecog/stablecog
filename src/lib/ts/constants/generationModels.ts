@@ -121,16 +121,8 @@ export const availableModelIdDropdownItems = derived(
 				isNew: true
 			},
 			{
-				label: $modelIdToDisplayName['22b0857d-7edc-4d00-9cd9-45aa509db093'],
-				value: '22b0857d-7edc-4d00-9cd9-45aa509db093'
-			},
-			{
 				label: $modelIdToDisplayName['b6c1372f-31a7-457c-907c-d292a6ffef97'],
 				value: 'b6c1372f-31a7-457c-907c-d292a6ffef97'
-			},
-			{
-				label: $modelIdToDisplayName['8acfe4c8-751d-4aa6-8c3c-844e3ef478e0'],
-				value: '8acfe4c8-751d-4aa6-8c3c-844e3ef478e0'
 			},
 			{
 				label: $modelIdToDisplayName['fc06f6ab-ed14-4186-a7c0-aaec288d4f38'],
@@ -139,14 +131,6 @@ export const availableModelIdDropdownItems = derived(
 			{
 				label: $modelIdToDisplayName['f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9'],
 				value: 'f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9'
-			},
-			{
-				label: $modelIdToDisplayName['eaa438e1-dbf9-48fd-be71-206f0f257617'],
-				value: 'eaa438e1-dbf9-48fd-be71-206f0f257617'
-			},
-			{
-				label: $modelIdToDisplayName['36d9d835-646f-4fc7-b9fe-98654464bf8e'],
-				value: '36d9d835-646f-4fc7-b9fe-98654464bf8e'
 			}
 		];
 		return items;
