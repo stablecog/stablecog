@@ -13,13 +13,17 @@ export let removeRepeatingOutputs = ({
 	const uniqueOutputsMap = new Map<string, TGenerationFullOutput>();
 
 	outputs.forEach((output) => {
-		if (!uniqueOutputsMap.has(output.id)) {
+		if (output?.id && !uniqueOutputsMap.has(output.id)) {
 			uniqueOutputsMap.set(output.id, output);
 		}
 	});
 
 	outputsPinned.forEach((output) => {
-		if (!uniqueOutputsMap.has(output.id) && (!onlySucceeded || output.status === 'succeeded')) {
+		if (
+			output?.id &&
+			!uniqueOutputsMap.has(output.id) &&
+			(!onlySucceeded || output.status === 'succeeded')
+		) {
 			uniqueOutputsMap.set(output.id, output);
 		}
 	});
