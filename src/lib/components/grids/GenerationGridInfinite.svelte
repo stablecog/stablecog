@@ -35,7 +35,6 @@
 	import type { Readable } from 'svelte/store';
 	import { scale } from 'svelte/transition';
 	import { quadOut } from 'svelte/easing';
-	import { set } from 'zod';
 
 	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
 	export let hasGridScrollContainer = false;
