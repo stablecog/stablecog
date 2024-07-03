@@ -10,8 +10,8 @@
 		logGalleryModalSimilarClicked,
 		logUserProfileModalSimilarClicked
 	} from '$ts/helpers/loggers';
-	import { getGalleryGenerationFullOutputs } from '$ts/queries/galleryLike/galleryGenerations';
-	import { getSomeUsersGenerationFullOutputs } from '$ts/queries/galleryLike/someUsersOutputs';
+	import { getGalleryFullOutputs } from '$ts/queries/galleryLike/galleryOutputs';
+	import { getUserProfileFullOutputs } from '$ts/queries/galleryLike/userProfileOutputs';
 	import { appVersion } from '$ts/stores/appVersion';
 	import {
 		activeGeneration,
@@ -33,15 +33,15 @@
 
 	$: similarOutputsQuery = browser
 		? modalType === 'user-profile'
-			? createQuery(['other_user_similar_outputs_short', outputId], () => {
-					return getSomeUsersGenerationFullOutputs({
+			? createQuery(['user_profile_similar_outputs_short', outputId], () => {
+					return getUserProfileFullOutputs({
 						search: outputId,
 						per_page: similarOutputsCount + 1,
 						username: generation.user.username
 					});
 				})
 			: createQuery(['gallery_similar_outputs_short', outputId], () => {
-					return getGalleryGenerationFullOutputs({
+					return getGalleryFullOutputs({
 						search: outputId,
 						per_page: similarOutputsCount + 1
 					});

@@ -7,7 +7,7 @@
 	import IconEyeOutline from '$components/icons/IconEyeOutline.svelte';
 	import IconStar from '$components/icons/IconStar.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
-	import { getSomeUserProfileInfiniteQueryKey } from '$routes/(app)/[username]/constants';
+	import { getUserProfileInfiniteQueryKey } from '$routes/(app)/[username]/constants';
 	import { apiUrl } from '$ts/constants/main';
 	import { isGalleryAdmin, isSuperAdmin } from '$ts/helpers/admin/roles';
 	import {
@@ -22,8 +22,8 @@
 		type TGenerationWithSelectedOutput
 	} from '$ts/stores/user/generation';
 	import {
-		generatePageUserGenerationFullOutputsQueryKey,
-		userGenerationFullOutputsQueryKey
+		generatePageHistoryFullOutputsQueryKey,
+		historyFullOutputsQueryKey
 	} from '$ts/stores/user/queryKeys';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { createCheckbox } from '@melt-ui/svelte';
@@ -113,21 +113,20 @@
 						})
 					};
 				};
-				const otherProfileQueryKey = getSomeUserProfileInfiniteQueryKey({
+				const otherProfileQueryKey = getUserProfileInfiniteQueryKey({
 					searchString: undefined,
 					modelIdFilters: undefined,
 					username: $userSummary?.username || ''
 				});
-				const hasInitialData1 =
-					queryClient.getQueryData($userGenerationFullOutputsQueryKey) !== undefined;
+				const hasInitialData1 = queryClient.getQueryData($historyFullOutputsQueryKey) !== undefined;
 				const hasInitialData2 =
-					queryClient.getQueryData($generatePageUserGenerationFullOutputsQueryKey) !== undefined;
+					queryClient.getQueryData($generatePageHistoryFullOutputsQueryKey) !== undefined;
 				const hasInitialData3 = queryClient.getQueryData(otherProfileQueryKey) !== undefined;
 				if (hasInitialData1) {
-					queryClient.setQueryData($userGenerationFullOutputsQueryKey, updateFunction);
+					queryClient.setQueryData($historyFullOutputsQueryKey, updateFunction);
 				}
 				if (hasInitialData2) {
-					queryClient.setQueryData($generatePageUserGenerationFullOutputsQueryKey, updateFunction);
+					queryClient.setQueryData($generatePageHistoryFullOutputsQueryKey, updateFunction);
 				}
 				if (hasInitialData3) {
 					queryClient.setQueryData(otherProfileQueryKey, updateFunction);

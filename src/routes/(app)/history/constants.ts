@@ -1,14 +1,11 @@
-import {
-	getUserGenerationFullOutputs,
-	type TUserGenerationFullOutputsPage
-} from '$ts/queries/userGenerations';
+import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
+import type { TAvailableAspectRatio } from '$ts/constants/generationSize';
+import { getHistoryFullOutputs } from '$ts/queries/galleryLike/historyOutputs';
+import type { TGalleryFullOutputsPage } from '$ts/queries/galleryLike/types';
+import { sessionAndUrlParamWritable } from '$ts/stores/sessionAndUrlParamStore';
 import type { TUserGalleryView } from '$ts/stores/user/gallery';
 import type { Session } from '@supabase/supabase-js';
 import type { CreateInfiniteQueryOptions } from '@tanstack/svelte-query';
-import { writable as writableLocal } from '@macfja/svelte-persistent-store';
-import type { TAvailableAspectRatio } from '$ts/constants/generationSize';
-import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
-import { sessionAndUrlParamWritable } from '$ts/stores/sessionAndUrlParamStore';
 
 export const userGallerySearchString = sessionAndUrlParamWritable<string>(
 	'userGallerySearchString',
@@ -49,10 +46,10 @@ export function getHistoryInfiniteQueryProps({
 	aspectRatioFilters?: TAvailableAspectRatio[];
 	session: Session;
 }): CreateInfiniteQueryOptions<
-	TUserGenerationFullOutputsPage,
+	TGalleryFullOutputsPage,
 	unknown,
-	TUserGenerationFullOutputsPage,
-	TUserGenerationFullOutputsPage,
+	TGalleryFullOutputsPage,
+	TGalleryFullOutputsPage,
 	string[]
 > {
 	return {
@@ -63,7 +60,7 @@ export function getHistoryInfiniteQueryProps({
 			aspectRatioFilters
 		}),
 		queryFn: (lastPage) => {
-			return getUserGenerationFullOutputs({
+			return getHistoryFullOutputs({
 				access_token: session.access_token || '',
 				cursor: lastPage?.pageParam,
 				is_favorited: userGalleryCurrentView === 'favorites' ? true : undefined,
@@ -73,7 +70,7 @@ export function getHistoryInfiniteQueryProps({
 				aspect_ratios: aspectRatioFilters
 			});
 		},
-		getNextPageParam: (lastPage: TUserGenerationFullOutputsPage) => {
+		getNextPageParam: (lastPage: TGalleryFullOutputsPage) => {
 			if (!lastPage.next) return undefined;
 			return lastPage.next;
 		}

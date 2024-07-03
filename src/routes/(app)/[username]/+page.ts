@@ -1,17 +1,13 @@
 import {
-	availableGenerationModelIds,
-	type TAvailableGenerationModelId
-} from '$ts/constants/generationModels';
-import type { QueryClient } from '@tanstack/svelte-query';
-import type { PageLoad } from './$types';
-import { error, redirect } from '@sveltejs/kit';
-import { getOtherUserMetadata, type TOtherUserMetadata } from '$ts/queries/otherUserMetadata';
-import type { Session } from '@supabase/supabase-js';
-import {
-	getSomeUserProfileInfiniteQueryKey,
-	getSomeUserProfileInfiniteQueryProps
+	getUserProfileInfiniteQueryKey,
+	getUserProfileProfileInfiniteQueryProps
 } from '$routes/(app)/[username]/constants';
 import { getGalleryLikeParamsFromSearchParams } from '$ts/helpers/galleryLike';
+import { getOtherUserMetadata, type TOtherUserMetadata } from '$ts/queries/otherUserMetadata';
+import type { Session } from '@supabase/supabase-js';
+import { error, redirect } from '@sveltejs/kit';
+import type { QueryClient } from '@tanstack/svelte-query';
+import type { PageLoad } from './$types';
 
 interface TParent {
 	queryClient: QueryClient;
@@ -32,7 +28,7 @@ export const load: PageLoad = async ({ url, parent, params }) => {
 
 	const hasInitialData =
 		queryClient.getQueryData(
-			getSomeUserProfileInfiniteQueryKey({
+			getUserProfileInfiniteQueryKey({
 				...galleryLikeParams,
 				username
 			})
@@ -42,7 +38,7 @@ export const load: PageLoad = async ({ url, parent, params }) => {
 		if (!hasInitialData) {
 			const [_, userRes] = await Promise.all([
 				queryClient.prefetchInfiniteQuery(
-					getSomeUserProfileInfiniteQueryProps({
+					getUserProfileProfileInfiniteQueryProps({
 						...galleryLikeParams,
 						username,
 						accessToken: session?.access_token

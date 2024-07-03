@@ -8,7 +8,7 @@
 	import { logGenerationOutputLikedChange } from '$ts/helpers/loggers';
 	import { replaceOutputInUserQueryData } from '$ts/helpers/replaceOutputInUserQueryData';
 	import { likeOutputs } from '$ts/queries/likeOutputs';
-	import { allUserGenerationFullOutputsQueryKey } from '$ts/stores/admin/gallery';
+	import { adminFullOutputsQueryKey } from '$ts/stores/admin/gallery';
 	import { appVersion } from '$ts/stores/appVersion';
 	import { isSignInModalOpen } from '$ts/stores/isSignInModalOpen';
 	import {
@@ -17,9 +17,9 @@
 		type TGenerationWithSelectedOutput
 	} from '$ts/stores/user/generation';
 	import {
-		galleryGenerationFullOutputsQueryKey,
-		someUserProfileFullOutputsQueryKey,
-		userGenerationFullOutputsQueryKey
+		galleryFullOutputsQueryKey,
+		userProfileFullOutputsQueryKey,
+		historyFullOutputsQueryKey
 	} from '$ts/stores/user/queryKeys';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { useQueryClient } from '@tanstack/svelte-query';
@@ -67,40 +67,40 @@
 		});
 		try {
 			if (modalType === 'gallery') {
-				const _galleryGenerationFullOutputsQueryKey = get(galleryGenerationFullOutputsQueryKey);
-				await replaceOutputInUserQueryData(queryClient, _galleryGenerationFullOutputsQueryKey, {
+				const _galleryFullOutputsQueryKey = get(galleryFullOutputsQueryKey);
+				await replaceOutputInUserQueryData(queryClient, _galleryFullOutputsQueryKey, {
 					id: generation.selected_output.id,
 					is_liked: newIsLikedByUser,
 					like_count: newLikeCount
 				});
 			} else if (modalType === 'history') {
-				const _userGenerationFullOutputsQueryKey = get(userGenerationFullOutputsQueryKey);
-				await replaceOutputInUserQueryData(queryClient, _userGenerationFullOutputsQueryKey, {
+				const _historyFullOutputsQueryKey = get(historyFullOutputsQueryKey);
+				await replaceOutputInUserQueryData(queryClient, _historyFullOutputsQueryKey, {
 					id: generation.selected_output.id,
 					is_liked: newIsLikedByUser,
 					like_count: newLikeCount
 				});
 			} else if (modalType === 'generate' || modalType === 'stage') {
-				const _userGenerationFullOutputsQueryKey = get(userGenerationFullOutputsQueryKey);
+				const _historyFullOutputsQueryKey = get(historyFullOutputsQueryKey);
 				setGenerationOutputPartial(generation.selected_output.id, {
 					is_liked: newIsLikedByUser,
 					like_count: newLikeCount
 				});
-				await replaceOutputInUserQueryData(queryClient, _userGenerationFullOutputsQueryKey, {
+				await replaceOutputInUserQueryData(queryClient, _historyFullOutputsQueryKey, {
 					id: generation.selected_output.id,
 					is_liked: newIsLikedByUser,
 					like_count: newLikeCount
 				});
 			} else if (modalType === 'user-profile') {
-				const _userGenerationFullOutputsQueryKey = get(someUserProfileFullOutputsQueryKey);
-				await replaceOutputInUserQueryData(queryClient, _userGenerationFullOutputsQueryKey, {
+				const _historyFullOutputsQueryKey = get(userProfileFullOutputsQueryKey);
+				await replaceOutputInUserQueryData(queryClient, _historyFullOutputsQueryKey, {
 					id: generation.selected_output.id,
 					is_liked: newIsLikedByUser,
 					like_count: newLikeCount
 				});
 			} else if (modalType === 'admin-gallery') {
-				const _allUserGenerationFullOutputsQueryKey = get(allUserGenerationFullOutputsQueryKey);
-				await replaceOutputInUserQueryData(queryClient, _allUserGenerationFullOutputsQueryKey, {
+				const _adminFullOutputsQueryKey = get(adminFullOutputsQueryKey);
+				await replaceOutputInUserQueryData(queryClient, _adminFullOutputsQueryKey, {
 					id: generation.selected_output.id,
 					is_liked: newIsLikedByUser,
 					like_count: newLikeCount

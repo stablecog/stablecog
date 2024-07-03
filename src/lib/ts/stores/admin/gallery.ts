@@ -13,7 +13,7 @@ export const adminGalleryCurrentFilter = sessionAndUrlParamWritable<TGalleryStat
 	'view',
 	adminGalleryCurrentFilterDefault
 );
-export const allUserGenerationFullOutputsQueryKey = writable<string[]>(undefined);
+export const adminFullOutputsQueryKey = writable<string[]>(undefined);
 
 export const adminGallerySelectedOutputObjects = derived(
 	[adminGalleryActionableItems, adminGalleryCurrentFilter],

@@ -1,0 +1,3 @@
+export const SEARCH_SCORE_THRESHOLD_DEFAULT = 50;
+export const PER_PAGE_DEFAULT = 50;
+export const OVERSAMPLING_DEFAULT = 8;

@@ -26,11 +26,11 @@
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import ProfileCardBadge from '$routes/(app)/[username]/ProfileCardBadge.svelte';
 	import {
-		getSomeUserProfileInfiniteQueryKey,
-		getSomeUserProfileInfiniteQueryProps,
-		someUserGalleryAspectRatioFilters,
-		someUserGalleryModelIdFilters,
-		someUserGallerySearchString
+		getUserProfileInfiniteQueryKey,
+		getUserProfileProfileInfiniteQueryProps,
+		userProfileAspectRatioFilters,
+		userProfileModelIdFilters,
+		userProfileSearchString
 	} from '$routes/(app)/[username]/constants.js';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { sessionStore } from '$ts/constants/supabase';
@@ -40,7 +40,7 @@
 	import { getTitleFromProductId } from '$ts/helpers/stripe/plan.js';
 	import { hydrated } from '$ts/stores/hydrated.js';
 	import { activeGeneration, type TGenerationFullOutput } from '$ts/stores/user/generation';
-	import { someUserProfileFullOutputsQueryKey } from '$ts/stores/user/queryKeys.js';
+	import { userProfileFullOutputsQueryKey } from '$ts/stores/user/queryKeys.js';
 	import { userSummary } from '$ts/stores/user/summary.js';
 	import { windowWidth } from '$ts/stores/window';
 	import { createInfiniteQuery } from '@tanstack/svelte-query';
@@ -50,25 +50,25 @@
 	export let data;
 
 	if (!hydrated) {
-		someUserGalleryModelIdFilters.set(data.modelIdFilters);
-		someUserGalleryAspectRatioFilters.set(data.aspectRatioFilters);
-		someUserGallerySearchString.set(data.searchString);
+		userProfileModelIdFilters.set(data.modelIdFilters);
+		userProfileAspectRatioFilters.set(data.aspectRatioFilters);
+		userProfileSearchString.set(data.searchString);
 	}
 
-	$: someUserProfileFullOutputsQueryKey.set(
-		getSomeUserProfileInfiniteQueryKey({
-			searchString: $someUserGallerySearchString,
-			modelIdFilters: $someUserGalleryModelIdFilters,
-			aspectRatioFilters: $someUserGalleryAspectRatioFilters,
+	$: userProfileFullOutputsQueryKey.set(
+		getUserProfileInfiniteQueryKey({
+			searchString: $userProfileSearchString,
+			modelIdFilters: $userProfileModelIdFilters,
+			aspectRatioFilters: $userProfileAspectRatioFilters,
 			username: data.username
 		})
 	);
 
 	$: galleryGenerationFullOutputsQuery = createInfiniteQuery(
-		getSomeUserProfileInfiniteQueryProps({
-			searchString: $someUserGallerySearchString,
-			modelIdFilters: $someUserGalleryModelIdFilters,
-			aspectRatioFilters: $someUserGalleryAspectRatioFilters,
+		getUserProfileProfileInfiniteQueryProps({
+			searchString: $userProfileSearchString,
+			modelIdFilters: $userProfileModelIdFilters,
+			aspectRatioFilters: $userProfileAspectRatioFilters,
 			username: data.username,
 			accessToken: $sessionStore?.access_token
 		})
@@ -88,7 +88,7 @@
 	$: rightIndex = outputs && outputIndex < outputs?.length - 1 ? outputIndex + 1 : -1;
 
 	function setSearchQuery(query: string) {
-		someUserGallerySearchString.set(query);
+		userProfileSearchString.set(query);
 	}
 
 	function setInitialFirstOutput() {
@@ -259,9 +259,9 @@
 	<div class="mt-2 flex w-full justify-center px-1 py-1 md:mt-3.5 md:py-2">
 		<div class="flex w-full max-w-3xl justify-center">
 			<SearchAndFilterBar
-				bind:modelIdFilters={$someUserGalleryModelIdFilters}
-				bind:searchString={$someUserGallerySearchString}
-				bind:aspectRatioFilters={$someUserGalleryAspectRatioFilters}
+				bind:modelIdFilters={$userProfileModelIdFilters}
+				bind:searchString={$userProfileSearchString}
+				bind:aspectRatioFilters={$userProfileAspectRatioFilters}
 			/>
 		</div>
 	</div>

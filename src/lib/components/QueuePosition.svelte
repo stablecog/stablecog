@@ -6,6 +6,7 @@
 	import { appVersion } from '$ts/stores/appVersion';
 	import { page } from '$app/stores';
 	import { sessionStore } from '$ts/constants/supabase';
+	import IconPulsing from '$components/icons/IconPulsing.svelte';
 
 	export let position: number;
 	export let hasBg = false;
@@ -33,9 +34,7 @@
 			{$LL.Generate.QueueTitle()}
 		</p>
 		<div class="-mt-0.25 flex max-w-full items-center justify-center gap-1.5">
-			<IconQueue
-				class="-ml-0.5 h-5 w-5 flex-shrink-0 {hasBg ? 'text-c-on-bg' : 'text-c-on-bg/75'}"
-			/>
+			<IconPulsing class="-ml-2 -mr-1 h-6 w-6 flex-shrink-0" />
 			<p
 				class="mt-0.5 min-w-0 flex-shrink text-center text-lg font-medium {hasBg
 					? 'text-c-on-bg'

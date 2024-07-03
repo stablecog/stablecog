@@ -468,12 +468,12 @@ export interface TUser {
 	email?: string;
 	username: string;
 }
-export interface TGeneration extends TGenerationBase {
+
+export interface TGenerationWithoutOutputs extends TGenerationBase {
 	status: TGenerationStatus;
 	error?: string;
 	id?: string;
 	ui_id: string;
-	outputs: TGenerationOutput[];
 	started_at?: string;
 	created_at: string;
 	completed_at?: string;
@@ -481,6 +481,10 @@ export interface TGeneration extends TGenerationBase {
 	is_placeholder?: boolean;
 	user: TUser;
 	queued_id?: string;
+}
+
+export interface TGeneration extends TGenerationWithoutOutputs {
+	outputs: TGenerationOutput[];
 }
 
 export interface TGenerationOutput {
@@ -527,6 +531,10 @@ export type TGenerationOutputStatus =
 
 export interface TGenerationFullOutput extends TGenerationOutput {
 	generation: TGeneration;
+}
+
+export interface TGenerationFullOutputShallow extends TGenerationOutput {
+	generation: TGenerationWithoutOutputs;
 }
 
 export interface TGenerationWithSelectedOutput extends TGeneration {

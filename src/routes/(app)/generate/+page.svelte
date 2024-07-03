@@ -10,11 +10,7 @@
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { page } from '$app/stores';
 	import { createInfiniteQuery } from '@tanstack/svelte-query';
-	import {
-		getUserGenerationFullOutputs,
-		type TUserGenerationFullOutputsPage
-	} from '$ts/queries/userGenerations';
-	import { generatePageUserGenerationFullOutputsQueryKey } from '$ts/stores/user/queryKeys.js';
+	import { generatePageHistoryFullOutputsQueryKey } from '$ts/stores/user/queryKeys.js';
 	import { windowWidth } from '$ts/stores/window';
 	import SidebarWrapper from '$components/generate/SidebarWrapper.svelte';
 	import GenerationStage from '$components/generate/GenerationStage.svelte';
@@ -58,6 +54,8 @@
 	import { sessionStore } from '$ts/constants/supabase';
 	import { getModelPreviewImageUrl } from '$ts/helpers/getPreviewImageUrl.js';
 	import { metaDescriptionDefault } from '$ts/constants/meta.js';
+	import { getHistoryFullOutputs } from '$ts/queries/galleryLike/historyOutputs.js';
+	import type { TGalleryFullOutputsPage } from '$ts/queries/galleryLike/types.js';
 
 	export let data;
 
@@ -82,25 +80,25 @@
 	$: isCheckCompleted =
 		isReadyMap.generationSettings && isReadyMap.generationStage && isReadyMap.promptBar;
 
-	$: generatePageUserGenerationFullOutputsQueryKey.set([
+	$: generatePageHistoryFullOutputsQueryKey.set([
 		'user_generation_full_outputs',
 		userGalleryCurrentView,
 		'',
 		''
 	]);
 
-	$: userGenerationFullOutputsQuery =
+	$: historyFullOutputsQueryKey =
 		$sessionStore?.user.id && $userSummary
 			? createInfiniteQuery({
-					queryKey: $generatePageUserGenerationFullOutputsQueryKey,
+					queryKey: $generatePageHistoryFullOutputsQueryKey,
 					queryFn: async (lastPage) => {
-						let outputsPage = await getUserGenerationFullOutputs({
+						let outputsPage = await getHistoryFullOutputs({
 							access_token: $sessionStore?.access_token || '',
 							cursor: lastPage?.pageParam
 						});
 						return outputsPage;
 					},
-					getNextPageParam: (lastPage: TUserGenerationFullOutputsPage) => {
+					getNextPageParam: (lastPage: TGalleryFullOutputsPage) => {
 						if (!lastPage.next) return undefined;
 						return lastPage.next;
 					}
@@ -128,14 +126,12 @@
 		.filter((g) => g.status !== 'pre-submit')
 		.flatMap((g) => g.outputs.map((o) => ({ ...o, generation: g })));
 
-	$: userGenerationOutputs = $userGenerationFullOutputsQuery?.data?.pages?.flatMap(
-		(p) => p.outputs
-	);
+	$: historyOutputs = $historyFullOutputsQueryKey?.data?.pages?.flatMap((p) => p.outputs);
 
-	$: generateAllSucceededOutputs = userGenerationOutputs
+	$: generateAllSucceededOutputs = historyOutputs
 		? removeRepeatingOutputs({
 				outputsPinned: pinnedFullOutputs,
-				outputs: userGenerationOutputs,
+				outputs: historyOutputs,
 				onlySucceeded: true
 			})
 		: undefined;
@@ -312,7 +308,7 @@
 						<SidebarWrapper hasGradient>
 							{#if !$sessionStore?.user.id || !$userSummary}
 								<GenerateGridPlaceholder text={$LL.Generate.Grid.NotSignedIn.Paragraph()} />
-							{:else if userGenerationFullOutputsQuery}
+							{:else if historyFullOutputsQueryKey}
 								<AutoSize bind:element={gridScrollContainer} let:clientWidth let:clientHeight>
 									{#if $windowWidth > lgBreakpoint && gridScrollContainer}
 										<GenerationGridInfinite
@@ -325,7 +321,7 @@
 											noLoadingSpinnerAlignmentAdjustment
 											hasPlaceholder
 											cardType="generate"
-											generationsQuery={userGenerationFullOutputsQuery}
+											generationsQuery={historyFullOutputsQueryKey}
 											cols={$windowWidth > xlBreakpoint ? 3 : 2}
 											{gridScrollContainer}
 											gridScrollContainerWidth={clientWidth}
@@ -391,7 +387,7 @@
 										<GenerateHorizontalListPlaceholder
 											text={$LL.Generate.Grid.NotSignedIn.Paragraph()}
 										/>
-									{:else if userGenerationFullOutputsQuery}
+									{:else if historyFullOutputsQueryKey}
 										{#if $windowWidth < mdBreakpoint && listScrollContainer}
 											<GenerateHorizontalList
 												{listScrollContainer}
@@ -400,7 +396,7 @@
 												paddingX={8}
 												paddingY={6}
 												{pinnedFullOutputs}
-												generationsQuery={userGenerationFullOutputsQuery}
+												generationsQuery={historyFullOutputsQueryKey}
 												cardType="generate"
 											/>
 										{/if}
@@ -470,7 +466,7 @@
 									<GenerateHorizontalListPlaceholder
 										text={$LL.Generate.Grid.NotSignedIn.Paragraph()}
 									/>
-								{:else if userGenerationFullOutputsQuery}
+								{:else if historyFullOutputsQueryKey}
 									<AutoSize
 										bind:element={listScrollContainerMd}
 										hideScroll
@@ -483,7 +479,7 @@
 												listScrollContainerWidth={clientWidth}
 												listScrollContainerHeight={clientHeight}
 												{pinnedFullOutputs}
-												generationsQuery={userGenerationFullOutputsQuery}
+												generationsQuery={historyFullOutputsQueryKey}
 												cardType="generate"
 												paddingX={6}
 												paddingY={6}

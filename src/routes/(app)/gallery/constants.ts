@@ -1,9 +1,9 @@
-import { getGalleryGenerationFullOutputs } from '$ts/queries/galleryLike/galleryGenerations';
-import type { TUserProfileFullOutputsPage } from '$ts/queries/galleryLike/types';
+import { getGalleryFullOutputs } from '$ts/queries/galleryLike/galleryOutputs';
 import type { FetchInfiniteQueryOptions } from '@tanstack/svelte-query';
 import { sessionAndUrlParamWritable } from '$ts/stores/sessionAndUrlParamStore';
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 import type { TAvailableAspectRatio } from '$ts/constants/generationSize';
+import type { TGalleryFullOutputsPage } from '$ts/queries/galleryLike/types';
 
 export const gallerySearchString = sessionAndUrlParamWritable<string>(
 	'gallerySearchString',
@@ -85,12 +85,7 @@ export function getGalleryInfiniteQueryProps({
 	usernameFilters?: string[];
 	seed?: number;
 	accessToken?: string;
-}): FetchInfiniteQueryOptions<
-	TUserProfileFullOutputsPage,
-	unknown,
-	TUserProfileFullOutputsPage,
-	any
-> {
+}): FetchInfiniteQueryOptions<TGalleryFullOutputsPage, unknown, TGalleryFullOutputsPage, any> {
 	return {
 		queryKey: getGalleryInfiniteQueryKey({
 			searchString,
@@ -101,7 +96,7 @@ export function getGalleryInfiniteQueryProps({
 			seed
 		}),
 		queryFn: async (lastPage) => {
-			return getGalleryGenerationFullOutputs({
+			return getGalleryFullOutputs({
 				cursor: lastPage?.pageParam,
 				seed,
 				search: searchString,
@@ -112,7 +107,7 @@ export function getGalleryInfiniteQueryProps({
 				accessToken
 			});
 		},
-		getNextPageParam: (lastPage: TUserProfileFullOutputsPage) => {
+		getNextPageParam: (lastPage: TGalleryFullOutputsPage) => {
 			if (!lastPage.next) return undefined;
 			return lastPage.next;
 		}

@@ -35,7 +35,7 @@
 	import { sessionStore } from '$ts/constants/supabase';
 	import { setActiveGenerationToOutputIndex } from '$ts/helpers/goToOutputIndex';
 	import { logBatchEditActived, logBatchEditDeactivated } from '$ts/helpers/loggers';
-	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
+	import type { TGalleryFullOutputsPage } from '$ts/queries/galleryLike/types.js';
 	import { appVersion } from '$ts/stores/appVersion';
 	import { hydrated, updateHydrated } from '$ts/stores/hydrated.js';
 	import { searchParamsString } from '$ts/stores/searchParamsString';
@@ -46,7 +46,7 @@
 		userGalleryModelIdFilters,
 		type TUserGalleryView
 	} from '$ts/stores/user/gallery';
-	import { userGenerationFullOutputsQueryKey } from '$ts/stores/user/queryKeys';
+	import { historyFullOutputsQueryKey } from '$ts/stores/user/queryKeys';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { windowWidth } from '$ts/stores/window';
 	import type { TTab } from '$ts/types/main';
@@ -58,8 +58,8 @@
 
 	let totalOutputs: number;
 
-	let userGenerationFullOutputsQuery:
-		| CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>
+	let historyFullOutputsQuery:
+		| CreateInfiniteQueryResult<TGalleryFullOutputsPage, unknown>
 		| undefined;
 
 	let searchInputIsFocused = false;
@@ -71,7 +71,7 @@
 		userGallerySearchString.set(data.searchString);
 	}
 
-	$: userGenerationFullOutputsQueryKey.set(
+	$: historyFullOutputsQueryKey.set(
 		getHistoryInfiniteQueryKey({
 			userGalleryCurrentView: $userGalleryCurrentView,
 			searchString: $userGallerySearchString,
@@ -80,7 +80,7 @@
 		})
 	);
 
-	$: userGenerationFullOutputsQuery =
+	$: historyFullOutputsQuery =
 		$sessionStore?.user.id && $userSummary
 			? createInfiniteQuery(
 					getHistoryInfiniteQueryProps({
@@ -93,7 +93,7 @@
 				)
 			: undefined;
 
-	$: $userGenerationFullOutputsQuery?.data?.pages, onPagesChanged();
+	$: $historyFullOutputsQuery?.data?.pages, onPagesChanged();
 
 	const getUserGalleryTabs = ($LL: TranslationFunctions): TTab<TUserGalleryView>[] => [
 		{
@@ -116,7 +116,7 @@
 	let userGalleryEditActivatedOnce = false;
 	$: $isUserGalleryEditActive, onUserGalleryEditActiveChanged();
 
-	$: outputs = $userGenerationFullOutputsQuery?.data?.pages
+	$: outputs = $historyFullOutputsQuery?.data?.pages
 		.flatMap((page) => page.outputs)
 		.filter((i) => i !== undefined);
 	$: outputIndex = outputs
@@ -143,12 +143,12 @@
 	}
 
 	const onPagesChanged = () => {
-		if (!$sessionStore?.user.id || !$userGenerationFullOutputsQuery) return;
-		if (!$userGenerationFullOutputsQuery.data?.pages) return;
-		for (let i = 0; i < $userGenerationFullOutputsQuery.data.pages.length; i++) {
-			let page = $userGenerationFullOutputsQuery.data.pages[i];
-			if (page.total_count !== undefined) {
-				totalOutputs = page.total_count;
+		if (!$sessionStore?.user.id || !$historyFullOutputsQuery) return;
+		if (!$historyFullOutputsQuery.data?.pages) return;
+		for (let i = 0; i < $historyFullOutputsQuery.data.pages.length; i++) {
+			let page = $historyFullOutputsQuery.data.pages[i];
+			if (page.total !== undefined) {
+				totalOutputs = page.total;
 			}
 		}
 	};
@@ -246,15 +246,15 @@
 			</div>
 		{/if}
 		<GalleryLikeGridWrapper>
-			{#if userGenerationFullOutputsQuery !== undefined}
-				{#if $userGenerationFullOutputsQuery?.isError || ($userGenerationFullOutputsQuery?.data && !$userGenerationFullOutputsQuery?.data?.pages)}
+			{#if historyFullOutputsQuery !== undefined}
+				{#if $historyFullOutputsQuery?.isError || ($historyFullOutputsQuery?.data && !$historyFullOutputsQuery?.data?.pages)}
 					<div class="flex w-full flex-1 flex-col items-center px-5 py-8">
 						<div class="my-auto flex flex-col items-center gap-2">
 							<IconSadFace class="h-16 w-16 text-c-on-bg/50" />
 							<p class="text-c-on-bg/50">{$LL.Error.SomethingWentWrong()}</p>
 						</div>
 					</div>
-				{:else if $userGenerationFullOutputsQuery?.data?.pages.length === 1 && $userGenerationFullOutputsQuery.data.pages[0].outputs.length === 0}
+				{:else if $historyFullOutputsQuery?.data?.pages.length === 1 && $historyFullOutputsQuery.data.pages[0].outputs.length === 0}
 					<div class="flex w-full flex-1 flex-col items-center px-5 py-8">
 						<div class="my-auto flex flex-col items-center gap-6">
 							<div class="-mb-3 flex items-center justify-center">
@@ -287,7 +287,7 @@
 								$userGalleryAspectRatioFilters.join(',')}
 						>
 							<GenerationGridInfinite
-								generationsQuery={userGenerationFullOutputsQuery}
+								generationsQuery={historyFullOutputsQuery}
 								cardType="history"
 								cols={$windowWidth > xl3Breakpoint
 									? 7

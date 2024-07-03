@@ -16,13 +16,12 @@
 		logGenerationOutputDeleted,
 		logGenerationOutputFavoritedChange
 	} from '$ts/helpers/loggers';
-	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
 	import {
 		adminGalleryActionableItems,
 		adminGalleryCurrentFilter,
 		adminGallerySelectedOutputIds,
 		adminGallerySelectedOutputObjects,
-		allUserGenerationFullOutputsQueryKey,
+		adminFullOutputsQueryKey,
 		isAdminGalleryEditActive,
 		type TAdminGalleryAction
 	} from '$ts/stores/admin/gallery';
@@ -35,12 +34,13 @@
 		userGallerySelectedOutputIds,
 		userGallerySelectedOutputObjects
 	} from '$ts/stores/user/gallery';
-	import { userGenerationFullOutputsQueryKey } from '$ts/stores/user/queryKeys';
+	import { historyFullOutputsQueryKey } from '$ts/stores/user/queryKeys';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { useQueryClient } from '@tanstack/svelte-query';
 	import { quadOut } from 'svelte/easing';
 	import { fly } from 'svelte/transition';
 	import { sessionStore } from '$ts/constants/supabase';
+	import type { TGalleryFullOutputsPage } from '$ts/queries/galleryLike/types';
 
 	export let type: 'history' | 'admin-gallery';
 
@@ -183,9 +183,9 @@
 				logGenerationOutputFavoritedChange(action === 'add' ? 'favorite' : 'unfavorite', logProps);
 			}
 			if (type === 'history') {
-				queryClient.setQueryData($userGenerationFullOutputsQueryKey, (data: any) => ({
+				queryClient.setQueryData($historyFullOutputsQueryKey, (data: any) => ({
 					...data,
-					pages: data.pages.map((page: TUserGenerationFullOutputsPage) => {
+					pages: data.pages.map((page: TGalleryFullOutputsPage) => {
 						return {
 							...page,
 							outputs: page.outputs.map((output) =>
@@ -224,9 +224,9 @@
 			if (!res.ok) throw new Error('Response not ok');
 			console.log('Delete generation output response', res);
 			if (type === 'history') {
-				queryClient.setQueryData($userGenerationFullOutputsQueryKey, (data: any) => ({
+				queryClient.setQueryData($historyFullOutputsQueryKey, (data: any) => ({
 					...data,
-					pages: data.pages.map((page: TUserGenerationFullOutputsPage) => {
+					pages: data.pages.map((page: TGalleryFullOutputsPage) => {
 						return {
 							...page,
 							outputs: page.outputs.map((output) =>
@@ -284,9 +284,9 @@
 					(i) => !ids.includes(i.output_id) || i.filter !== $adminGalleryCurrentFilter
 				)
 			);
-			queryClient.setQueryData($allUserGenerationFullOutputsQueryKey, (data: any) => ({
+			queryClient.setQueryData($adminFullOutputsQueryKey, (data: any) => ({
 				...data,
-				pages: data.pages.map((page: TUserGenerationFullOutputsPage) => {
+				pages: data.pages.map((page: TGalleryFullOutputsPage) => {
 					return {
 						...page,
 						outputs: page.outputs.map((output) =>

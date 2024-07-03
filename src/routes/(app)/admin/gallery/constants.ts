@@ -1,12 +1,10 @@
-import {
-	getAllUserGenerationFullOutputs,
-	type TUserGenerationFullOutputsPage
-} from '$ts/queries/userGenerations';
-import type { TGalleryStatus } from '$ts/stores/user/generation';
-import type { CreateInfiniteQueryOptions } from '@tanstack/svelte-query';
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 import type { TAvailableAspectRatio } from '$ts/constants/generationSize';
+import { getAdminFullOutputs } from '$ts/queries/galleryLike/adminOutputs';
+import type { TGalleryFullOutputsPage } from '$ts/queries/galleryLike/types';
 import { sessionAndUrlParamWritable } from '$ts/stores/sessionAndUrlParamStore';
+import type { TGalleryStatus } from '$ts/stores/user/generation';
+import type { CreateInfiniteQueryOptions } from '@tanstack/svelte-query';
 
 export const adminGallerySearchString = sessionAndUrlParamWritable<string>(
 	'adminGallerySearchString',
@@ -29,7 +27,7 @@ export const adminGalleryAspectRatioFilters = sessionAndUrlParamWritable<TAvaila
 	[]
 );
 
-export const getAllUserGenerationFullOutputsQueryKey = ({
+export const getAdminFullOutputsQueryKey = ({
 	adminGalleryCurrentFilter,
 	searchString,
 	modelIdFilters,
@@ -52,7 +50,7 @@ export const getAllUserGenerationFullOutputsQueryKey = ({
 	];
 };
 
-export function getAllUserGenerationFullOutputsQueryProps({
+export function getAdminFullOutputsQueryProps({
 	adminGalleryCurrentFilter,
 	searchString,
 	modelIdFilters,
@@ -67,14 +65,14 @@ export function getAllUserGenerationFullOutputsQueryProps({
 	usernameFilters?: string[];
 	session: Session;
 }): CreateInfiniteQueryOptions<
-	TUserGenerationFullOutputsPage,
+	TGalleryFullOutputsPage,
 	unknown,
-	TUserGenerationFullOutputsPage,
-	TUserGenerationFullOutputsPage,
+	TGalleryFullOutputsPage,
+	TGalleryFullOutputsPage,
 	string[]
 > {
 	return {
-		queryKey: getAllUserGenerationFullOutputsQueryKey({
+		queryKey: getAdminFullOutputsQueryKey({
 			adminGalleryCurrentFilter,
 			searchString,
 			modelIdFilters,
@@ -82,7 +80,7 @@ export function getAllUserGenerationFullOutputsQueryProps({
 			usernameFilters
 		}),
 		queryFn: (lastPage) => {
-			return getAllUserGenerationFullOutputs({
+			return getAdminFullOutputs({
 				access_token: session?.access_token || '',
 				cursor: lastPage?.pageParam,
 				gallery_status: adminGalleryCurrentFilter,
@@ -96,7 +94,7 @@ export function getAllUserGenerationFullOutputsQueryProps({
 				username_filters: usernameFilters
 			});
 		},
-		getNextPageParam: (lastPage: TUserGenerationFullOutputsPage) => {
+		getNextPageParam: (lastPage: TGalleryFullOutputsPage) => {
 			if (!lastPage.next) return undefined;
 			return lastPage.next;
 		}

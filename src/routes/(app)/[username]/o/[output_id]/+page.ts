@@ -7,11 +7,8 @@ import { error, redirect } from '@sveltejs/kit';
 import { similarCount } from '$routes/(app)/gallery/o/[output_id]/constants';
 import type { PageLoad } from './$types';
 import type { QueryClient } from '@tanstack/svelte-query';
-import type {
-	TUserProfileFullOutputsPage,
-	TUserProfileGenerationFullOutputPageRes
-} from '$ts/queries/galleryLike/types';
-import { getSomeUsersGenerationFullOutputs } from '$ts/queries/galleryLike/someUsersOutputs';
+import type { TUserProfileFullOutputsPage } from '$ts/queries/galleryLike/types';
+import { getUserProfileFullOutputs } from '$ts/queries/galleryLike/userProfileOutputs';
 import type { Session } from '@supabase/supabase-js';
 
 interface TParent {
@@ -39,7 +36,7 @@ export const load: PageLoad = async ({ params, parent }) => {
 		fetch(`${apiUrl.origin}/v1/profile/${username}/outputs?output_id=${outputId}`, {
 			headers
 		}),
-		getSomeUsersGenerationFullOutputs({
+		getUserProfileFullOutputs({
 			search: outputId,
 			per_page: similarCount + 1,
 			username,
@@ -49,55 +46,11 @@ export const load: PageLoad = async ({ params, parent }) => {
 	if (!generationFullOutputRes.ok) {
 		error(404, 'Response for generation not ok');
 	}
-	const data: TUserProfileGenerationFullOutputPageRes = await generationFullOutputRes.json();
-	if (!data.hits || !data.hits[0]) {
+	const data: TUserProfileFullOutputsPage = await generationFullOutputRes.json();
+	if (!data.outputs || !data.outputs[0]) {
 		error(404, 'No output found');
 	}
-	const hit = data.hits[0];
-	const output: TGenerationOutput = {
-		id: hit.id,
-		image_url: hit.image_url,
-		upscaled_image_url: hit.upscaled_image_url,
-		created_at: hit.created_at,
-		updated_at: hit.updated_at,
-		was_auto_submitted: hit.was_auto_submitted,
-		is_public: hit.is_public,
-		is_liked: hit.is_liked,
-		like_count: hit.like_count
-	};
-	generationFullOutput = {
-		generation: {
-			id: hit.generation_id || hit.id,
-			ui_id: hit.generation_id || hit.id,
-			width: hit.width,
-			height: hit.height,
-			inference_steps: hit.inference_steps,
-			guidance_scale: hit.guidance_scale,
-			model_id: hit.model_id as TAvailableGenerationModelId,
-			scheduler_id: hit.scheduler_id as TAvailableSchedulerId,
-			created_at: output.created_at || convertToDBTimeString(Date.now()),
-			prompt: {
-				id: hit.prompt_id,
-				text: hit.prompt_text
-			},
-			negative_prompt:
-				hit.negative_prompt_id && hit.negative_prompt_text
-					? {
-							id: hit.negative_prompt_id,
-							text: hit.negative_prompt_text
-					  }
-					: undefined,
-			outputs: [output],
-			status: 'succeeded',
-			seed: 1,
-			num_outputs: 1,
-			submit_to_gallery: true,
-			user: {
-				username: data.metadata.username
-			}
-		},
-		...output
-	};
+	generationFullOutput = data.outputs[0];
 
 	similarGenerationFullOutputs = similarGenerationFullOutputsRes.outputs
 		.filter((o) => o.id !== generationFullOutput?.id)
@@ -112,7 +65,7 @@ export const load: PageLoad = async ({ params, parent }) => {
 	if (username !== data.metadata.username)
 		redirect(302, `/${data.metadata.username}/o/${outputId}`);
 
-	queryClient.setQueryData(['other_user_similar_outputs_short', outputId], page);
+	queryClient.setQueryData(['user_profile_similar_outputs_short', outputId], page);
 
 	return {
 		generationFullOutput,

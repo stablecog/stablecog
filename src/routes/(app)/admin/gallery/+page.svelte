@@ -27,18 +27,17 @@
 		adminGalleryModelIdFilters,
 		adminGalleryAspectRatioFilters,
 		adminGallerySearchString,
-		getAllUserGenerationFullOutputsQueryKey,
-		getAllUserGenerationFullOutputsQueryProps,
+		getAdminFullOutputsQueryKey,
+		getAdminFullOutputsQueryProps,
 		adminGalleryUsernameFilters
 	} from '$routes/(app)/admin/gallery/constants';
 	import type { TRequestNavigationEventParams } from '$routes/(app)/admin/gallery/types.js';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
-	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
 	import {
 		adminGalleryCurrentFilter,
-		allUserGenerationFullOutputsQueryKey,
+		adminFullOutputsQueryKey,
 		isAdminGalleryEditActive
 	} from '$ts/stores/admin/gallery';
 	import { hydrated, updateHydrated } from '$ts/stores/hydrated.js';
@@ -53,6 +52,7 @@
 	import { onMount } from 'svelte';
 	import { sessionStore } from '$ts/constants/supabase';
 	import GenerationGridInfiniteWrapper from '$components/grids/GenerationGridInfiniteWrapper.svelte';
+	import type { TGalleryFullOutputsPage } from '$ts/queries/galleryLike/types.js';
 
 	export let data;
 
@@ -69,12 +69,12 @@
 	let prevGeneration: TGenerationWithSelectedOutput | undefined = undefined;
 	let nextGeneration: TGenerationWithSelectedOutput | undefined = undefined;
 
-	let allUserGenerationFullOutputsQuery:
-		| CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>
+	let adminFullOutputsQuery:
+		| CreateInfiniteQueryResult<TGalleryFullOutputsPage, unknown>
 		| undefined;
 
-	$: allUserGenerationFullOutputsQueryKey.set(
-		getAllUserGenerationFullOutputsQueryKey({
+	$: adminFullOutputsQueryKey.set(
+		getAdminFullOutputsQueryKey({
 			adminGalleryCurrentFilter: $adminGalleryCurrentFilter,
 			searchString: $adminGallerySearchString,
 			modelIdFilters: $adminGalleryModelIdFilters,
@@ -83,10 +83,10 @@
 		})
 	);
 
-	$: allUserGenerationFullOutputsQuery =
+	$: adminFullOutputsQuery =
 		browser && $sessionStore?.user.id
 			? createInfiniteQuery(
-					getAllUserGenerationFullOutputsQueryProps({
+					getAdminFullOutputsQueryProps({
 						adminGalleryCurrentFilter: $adminGalleryCurrentFilter,
 						session: $sessionStore,
 						modelIdFilters: $adminGalleryModelIdFilters,
@@ -97,9 +97,9 @@
 				)
 			: undefined;
 
-	$: $allUserGenerationFullOutputsQuery?.data?.pages, onPagesChanged();
+	$: $adminFullOutputsQuery?.data?.pages, onPagesChanged();
 
-	$: outputs = $allUserGenerationFullOutputsQuery?.data?.pages
+	$: outputs = $adminFullOutputsQuery?.data?.pages
 		.flatMap((page) => page.outputs)
 		.filter((i) => i !== undefined);
 	$: outputIndex = outputs
@@ -146,12 +146,12 @@
 	];
 
 	const onPagesChanged = () => {
-		if (!$sessionStore?.user.id || !$allUserGenerationFullOutputsQuery) return;
-		if (!$allUserGenerationFullOutputsQuery.data?.pages) return;
-		for (let i = 0; i < $allUserGenerationFullOutputsQuery.data.pages.length; i++) {
-			let page = $allUserGenerationFullOutputsQuery.data.pages[i];
-			if (page.total_count !== undefined) {
-				totalOutputs = page.total_count;
+		if (!$sessionStore?.user.id || !$adminFullOutputsQuery) return;
+		if (!$adminFullOutputsQuery.data?.pages) return;
+		for (let i = 0; i < $adminFullOutputsQuery.data.pages.length; i++) {
+			let page = $adminFullOutputsQuery.data.pages[i];
+			if (page.total !== undefined) {
+				totalOutputs = page.total;
 			}
 		}
 	};
@@ -195,7 +195,7 @@
 	}
 
 	function goToSide(side: 'left' | 'right') {
-		const outputs = $allUserGenerationFullOutputsQuery?.data?.pages
+		const outputs = $adminFullOutputsQuery?.data?.pages
 			.flatMap((page) => page.outputs)
 			.filter((i) => i !== undefined);
 		if (!outputs) return;
@@ -271,7 +271,7 @@
 			</div>
 		{/if}
 		<GalleryLikeGridWrapper>
-			{#if allUserGenerationFullOutputsQuery === undefined || $allUserGenerationFullOutputsQuery === undefined || $allUserGenerationFullOutputsQuery.isInitialLoading}
+			{#if adminFullOutputsQuery === undefined || $adminFullOutputsQuery === undefined || $adminFullOutputsQuery.isInitialLoading}
 				<div
 					class="flex w-full flex-1 flex-col items-center justify-center px-4 py-6 text-center text-c-on-bg/60"
 				>
@@ -279,7 +279,7 @@
 					<p class="mt-2 opacity-0">{$LL.Gallery.SearchingTitle()}</p>
 					<div class="h-[2vh]" />
 				</div>
-			{:else if $allUserGenerationFullOutputsQuery?.data?.pages?.length === 1 && $allUserGenerationFullOutputsQuery.data.pages[0].outputs.length === 0}
+			{:else if $adminFullOutputsQuery?.data?.pages?.length === 1 && $adminFullOutputsQuery.data.pages[0].outputs.length === 0}
 				<div class="flex w-full flex-1 flex-col items-center px-5 py-8">
 					<div class="my-auto flex flex-col items-center gap-2 text-center text-c-on-bg/50">
 						<IconTick class="h-16 w-16" />
@@ -287,7 +287,7 @@
 						<div class="h-[1vh]" />
 					</div>
 				</div>
-			{:else if $allUserGenerationFullOutputsQuery.isError}
+			{:else if $adminFullOutputsQuery.isError}
 				<div class="flex w-full flex-1 flex-col items-center px-5 py-8">
 					<div class="my-auto flex flex-col items-center gap-2">
 						<IconSadFace class="h-16 w-16 text-c-on-bg/50" />
@@ -301,7 +301,7 @@
 						$adminGalleryAspectRatioFilters.join(',')}
 				>
 					<GenerationGridInfinite
-						generationsQuery={allUserGenerationFullOutputsQuery}
+						generationsQuery={adminFullOutputsQuery}
 						cardType="admin-gallery"
 						cols={$windowWidth > xl3Breakpoint
 							? 7

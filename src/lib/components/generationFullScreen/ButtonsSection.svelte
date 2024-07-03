@@ -34,8 +34,8 @@
 	import { userSummary } from '$ts/stores/user/summary';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import {
-		generatePageUserGenerationFullOutputsQueryKey,
-		userGenerationFullOutputsQueryKey
+		generatePageHistoryFullOutputsQueryKey,
+		historyFullOutputsQueryKey
 	} from '$ts/stores/user/queryKeys';
 	import { appVersion } from '$ts/stores/appVersion';
 	import { replaceOutputInUserQueryData } from '$ts/helpers/replaceOutputInUserQueryData';
@@ -135,13 +135,13 @@
 			if (!res.ok) throw new Error('Response not ok');
 			logGenerationOutputDeleted(logProps);
 			if (modalType === 'history') {
-				replaceOutputInUserQueryData(queryClient, $userGenerationFullOutputsQueryKey, {
+				replaceOutputInUserQueryData(queryClient, $historyFullOutputsQueryKey, {
 					id: generation.selected_output.id,
 					is_deleted: true
 				});
 			} else if (modalType === 'generate' || modalType === 'stage') {
 				setGenerationOutputToDeleted(generation.selected_output.id);
-				replaceOutputInUserQueryData(queryClient, $generatePageUserGenerationFullOutputsQueryKey, {
+				replaceOutputInUserQueryData(queryClient, $generatePageHistoryFullOutputsQueryKey, {
 					id: generation.selected_output.id,
 					is_deleted: true
 				});

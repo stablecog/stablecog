@@ -1,19 +1,17 @@
 import { mainSortViewDefault } from '$routes/(app)/gallery/constants';
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 import { apiUrl } from '$ts/constants/main';
-import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
-import { convertToDBTimeString } from '$ts/helpers/convertToDBTimeString';
 import type {
-	TUserProfileFullOutputsPage,
-	TUserProfileGenerationFullOutputPageRes
+	TGalleryFullOutputsPage,
+	TGalleryFullOutputsPageShallow
 } from '$ts/queries/galleryLike/types';
-import type { TGenerationFullOutput, TGenerationOutput } from '$userStores/generation';
+import {
+	OVERSAMPLING_DEFAULT,
+	PER_PAGE_DEFAULT,
+	SEARCH_SCORE_THRESHOLD_DEFAULT
+} from '$ts/queries/galleryLike/constants';
 
-const SEARCH_SCORE_THRESHOLD_DEFAULT = 50;
-const PER_PAGE_DEFAULT = 50;
-const OVERSAMPLING_DEFAULT = 8;
-
-export async function getGalleryGenerationFullOutputs({
+export async function getGalleryFullOutputs({
 	cursor,
 	search,
 	seed,
@@ -41,12 +39,14 @@ export async function getGalleryGenerationFullOutputs({
 	oversampling?: number;
 	prompt_id?: string;
 	accessToken?: string;
-}): Promise<TUserProfileFullOutputsPage> {
+}): Promise<TGalleryFullOutputsPage> {
 	console.log('getGalleryOutputs');
 	const query = new URLSearchParams();
 	let shouldAddSeed = true;
 	query.append('per_page', per_page.toString());
 	query.append('oversampling', oversampling.toString());
+
+	query.append('test', 'true');
 
 	if (cursor) {
 		query.append('cursor', cursor);
@@ -100,58 +100,13 @@ export async function getGalleryGenerationFullOutputs({
 		headers
 	});
 	if (!res.ok) throw new Error(`Failed to fetch gallery outputs: ${res.status}, ${res.statusText}`);
-	const data: TUserProfileGenerationFullOutputPageRes = await res.json();
-	const { hits, next, metadata } = data;
-	const outputs: TGenerationFullOutput[] = hits.map((hit) => {
-		const output: TGenerationOutput = {
-			id: hit.id,
-			image_url: hit.image_url,
-			upscaled_image_url: hit.upscaled_image_url,
-			created_at: hit.created_at,
-			updated_at: hit.updated_at,
-			was_auto_submitted: hit.was_auto_submitted,
-			is_public: hit.is_public,
-			like_count: hit.like_count,
-			is_liked: hit.is_liked
-		};
-		return {
-			generation: {
-				id: hit.generation_id || hit.id,
-				ui_id: hit.generation_id || hit.id,
-				width: hit.width,
-				height: hit.height,
-				inference_steps: hit.inference_steps,
-				guidance_scale: hit.guidance_scale,
-				model_id: hit.model_id as TAvailableGenerationModelId,
-				scheduler_id: hit.scheduler_id as TAvailableSchedulerId,
-				created_at: convertToDBTimeString(Date.now()),
-				prompt: {
-					id: hit.prompt_id,
-					text: hit.prompt_text
-				},
-				negative_prompt:
-					hit.negative_prompt_id && hit.negative_prompt_text
-						? {
-								id: hit.negative_prompt_id,
-								text: hit.negative_prompt_text
-							}
-						: undefined,
-				outputs: [output],
-				status: 'succeeded',
-				seed: 1,
-				num_outputs: 1,
-				submit_to_gallery: true,
-				user: {
-					username: hit.user.username
-				}
-			},
-			...output
-		};
-	});
-	const page: TUserProfileFullOutputsPage = {
-		outputs,
-		next,
-		metadata
+	const data: TGalleryFullOutputsPageShallow = await res.json();
+	const editedData: TGalleryFullOutputsPage = {
+		...data,
+		outputs: data.outputs.map((output) => ({
+			...output,
+			generation: { ...output.generation, outputs: [] }
+		}))
 	};
-	return page;
+	return editedData;
 }

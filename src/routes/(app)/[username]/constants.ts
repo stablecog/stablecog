@@ -1,23 +1,27 @@
-import { getSomeUsersGenerationFullOutputs } from '$ts/queries/galleryLike/someUsersOutputs';
-import type { TUserProfileFullOutputsPage } from '$ts/queries/galleryLike/types';
-import type { FetchInfiniteQueryOptions } from '@tanstack/svelte-query';
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 import type { TAvailableAspectRatio } from '$ts/constants/generationSize';
+import { getUserProfileFullOutputs } from '$ts/queries/galleryLike/userProfileOutputs';
+import type { TGalleryFullOutputsPage } from '$ts/queries/galleryLike/types';
 import { sessionAndUrlParamWritable } from '$ts/stores/sessionAndUrlParamStore';
+import type { FetchInfiniteQueryOptions } from '@tanstack/svelte-query';
 
-export const someUserGallerySearchString = sessionAndUrlParamWritable<string>(
-	'someUserGallerySearchString',
+export const userProfileSearchString = sessionAndUrlParamWritable<string>(
+	'userProfileSearchString',
 	'q',
 	''
 );
-export const someUserGalleryModelIdFilters = sessionAndUrlParamWritable<
-	TAvailableGenerationModelId[]
->('someUserGalleryModelIdFilters', 'mi', []);
-export const someUserGalleryAspectRatioFilters = sessionAndUrlParamWritable<
-	TAvailableAspectRatio[]
->('someUserGalleryAspectRatioFilters', 'ar', []);
+export const userProfileModelIdFilters = sessionAndUrlParamWritable<TAvailableGenerationModelId[]>(
+	'userProfileModelIdFilters',
+	'mi',
+	[]
+);
+export const userProfileAspectRatioFilters = sessionAndUrlParamWritable<TAvailableAspectRatio[]>(
+	'userProfileAspectRatioFilters',
+	'ar',
+	[]
+);
 
-export const getSomeUserProfileInfiniteQueryKey = ({
+export const getUserProfileInfiniteQueryKey = ({
 	searchString,
 	modelIdFilters,
 	aspectRatioFilters,
@@ -29,7 +33,7 @@ export const getSomeUserProfileInfiniteQueryKey = ({
 	username: string;
 }) => {
 	return [
-		'other_user_generation_full_outputs',
+		'user_profile_full_outputs',
 		username,
 		searchString ? searchString : '',
 		modelIdFilters ? modelIdFilters.sort().join(',') : '',
@@ -37,7 +41,7 @@ export const getSomeUserProfileInfiniteQueryKey = ({
 	];
 };
 
-export function getSomeUserProfileInfiniteQueryProps({
+export function getUserProfileProfileInfiniteQueryProps({
 	searchString,
 	modelIdFilters,
 	aspectRatioFilters,
@@ -49,21 +53,16 @@ export function getSomeUserProfileInfiniteQueryProps({
 	aspectRatioFilters?: TAvailableAspectRatio[];
 	username: string;
 	accessToken?: string;
-}): FetchInfiniteQueryOptions<
-	TUserProfileFullOutputsPage,
-	unknown,
-	TUserProfileFullOutputsPage,
-	any
-> {
+}): FetchInfiniteQueryOptions<TGalleryFullOutputsPage, unknown, TGalleryFullOutputsPage, any> {
 	return {
-		queryKey: getSomeUserProfileInfiniteQueryKey({
+		queryKey: getUserProfileInfiniteQueryKey({
 			searchString,
 			modelIdFilters,
 			aspectRatioFilters,
 			username
 		}),
 		queryFn: async (lastPage) => {
-			return getSomeUsersGenerationFullOutputs({
+			return getUserProfileFullOutputs({
 				cursor: lastPage?.pageParam,
 				search: searchString,
 				model_ids: modelIdFilters,
@@ -72,7 +71,7 @@ export function getSomeUserProfileInfiniteQueryProps({
 				access_token: accessToken
 			});
 		},
-		getNextPageParam: (lastPage: TUserProfileFullOutputsPage) => {
+		getNextPageParam: (lastPage: TGalleryFullOutputsPage) => {
 			if (!lastPage.next) return undefined;
 			return lastPage.next;
 		}

@@ -43,7 +43,7 @@
 	import { globalSeed } from '$ts/stores/globalSeed';
 	import { hydrated, updateHydrated } from '$ts/stores/hydrated.js';
 	import { activeGeneration } from '$ts/stores/user/generation';
-	import { galleryGenerationFullOutputsQueryKey } from '$ts/stores/user/queryKeys.js';
+	import { galleryFullOutputsQueryKey } from '$ts/stores/user/queryKeys.js';
 	import { userSummary } from '$ts/stores/user/summary.js';
 	import { windowWidth } from '$ts/stores/window';
 	import type { TTab } from '$ts/types/main.js';
@@ -95,7 +95,7 @@
 
 	$: mainSortView, onMainSortViewChanged();
 
-	$: galleryGenerationFullOutputsQueryKey.set(
+	$: galleryFullOutputsQueryKey.set(
 		getGalleryInfiniteQueryKey({
 			searchString: $gallerySearchString,
 			modelIdFilters: $galleryModelIdFilters,

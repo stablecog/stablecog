@@ -4,8 +4,8 @@ import type { TUserSummary } from '$ts/stores/user/summary';
 import type { PageLoad } from './$types';
 import { isSuperAdmin } from '$ts/helpers/admin/roles';
 import {
-	getAllUserGenerationFullOutputsQueryKey,
-	getAllUserGenerationFullOutputsQueryProps
+	getAdminFullOutputsQueryKey,
+	getAdminFullOutputsQueryProps
 } from '$routes/(app)/admin/gallery/constants';
 import { TGalleryStatusSchema } from '$ts/stores/user/generation';
 import { adminGalleryCurrentFilterDefault } from '$ts/stores/admin/gallery';
@@ -33,14 +33,14 @@ export const load: PageLoad = async ({ parent, url }) => {
 	};
 	const hasInitialData =
 		queryClient.getQueryData(
-			getAllUserGenerationFullOutputsQueryKey({
+			getAdminFullOutputsQueryKey({
 				...sharedQueryParams
 			})
 		) !== undefined;
 	if (session && userSummary && !hasInitialData && isSuperAdmin(userSummary.roles)) {
 		try {
 			await queryClient.prefetchInfiniteQuery(
-				getAllUserGenerationFullOutputsQueryProps({
+				getAdminFullOutputsQueryProps({
 					...sharedQueryParams,
 					session
 				})

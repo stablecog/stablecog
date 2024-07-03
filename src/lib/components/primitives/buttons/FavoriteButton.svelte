@@ -15,8 +15,8 @@
 		type TGenerationWithSelectedOutput
 	} from '$ts/stores/user/generation';
 	import {
-		generatePageUserGenerationFullOutputsQueryKey,
-		userGenerationFullOutputsQueryKey
+		generatePageHistoryFullOutputsQueryKey,
+		historyFullOutputsQueryKey
 	} from '$ts/stores/user/queryKeys';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { useQueryClient } from '@tanstack/svelte-query';
@@ -47,7 +47,7 @@
 		let newIsFavorited = action === 'add';
 		logGenerationOutputFavoritedChange(newIsFavorited ? 'favorite' : 'unfavorite', logProps);
 		if (modalType === 'history') {
-			replaceOutputInUserQueryData(queryClient, $userGenerationFullOutputsQueryKey, {
+			replaceOutputInUserQueryData(queryClient, $historyFullOutputsQueryKey, {
 				id: generation.selected_output.id,
 				is_favorited: newIsFavorited
 			});
@@ -55,7 +55,7 @@
 			setGenerationOutputPartial(generation.selected_output.id, {
 				is_favorited: newIsFavorited
 			});
-			replaceOutputInUserQueryData(queryClient, $generatePageUserGenerationFullOutputsQueryKey, {
+			replaceOutputInUserQueryData(queryClient, $generatePageHistoryFullOutputsQueryKey, {
 				id: generation.selected_output.id,
 				is_favorited: newIsFavorited
 			});
