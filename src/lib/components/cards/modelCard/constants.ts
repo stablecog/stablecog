@@ -1,1 +1,1 @@
-export const modelImageVersion = 'v12';
+export const modelImageVersion = 'v13';
