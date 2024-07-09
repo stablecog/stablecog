@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
 	import GenerateGridPlaceholder from '$components/generate/GenerateGridPlaceholder.svelte';
 	import { mdBreakpoint } from '$components/generationFullScreen/constants';
 	import type { TGenerationImageCardType } from '$components/generationImage/types';
@@ -8,9 +7,10 @@
 	import { gridScrollPositions } from '$components/grids/scrollPosition';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconArrowRight from '$components/icons/IconArrowRight.svelte';
+	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { removeRepeatingOutputs } from '$ts/helpers/removeRepeatingOutputs';
-	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
+	import type { TGalleryFullOutputsPage } from '$ts/queries/galleryLike/types';
 	import {
 		adminGalleryActionableItems,
 		adminGalleryCurrentFilter,
@@ -25,18 +25,20 @@
 	} from '$ts/stores/user/gallery';
 	import type { TGenerationFullOutput } from '$ts/stores/user/generation';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
-	import type { CreateInfiniteQueryResult } from '@tanstack/svelte-query';
+	import type { CreateInfiniteQueryResult, InfiniteData } from '@tanstack/svelte-query';
 	import {
 		createVirtualizer,
 		createWindowVirtualizer,
 		type SvelteVirtualizer
 	} from '@tanstack/svelte-virtual';
 	import { onMount, tick } from 'svelte';
+	import { quadOut } from 'svelte/easing';
 	import type { Readable } from 'svelte/store';
 	import { scale } from 'svelte/transition';
-	import { quadOut } from 'svelte/easing';
 
-	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
+	export let generationsQuery:
+		| CreateInfiniteQueryResult<InfiniteData<TGalleryFullOutputsPage, unknown>, unknown>
+		| undefined;
 	export let hasGridScrollContainer = false;
 	export let gridScrollContainer: HTMLDivElement | undefined = undefined;
 	export let gridScrollContainerHeight: number | undefined = undefined;
@@ -63,7 +65,7 @@
 
 	let extraHeight = 0;
 
-	$: onlyOutputs = $generationsQuery.data?.pages
+	$: onlyOutputs = $generationsQuery?.data?.pages
 		.flatMap((page) => page.outputs)
 		.filter((i) => i !== undefined);
 	let outputs: TGenerationFullOutput[] | undefined = undefined;
@@ -150,8 +152,7 @@
 	$: cardWidth = browser ? ($windowWidth - horizontalPadding) / cols : undefined;
 
 	async function onGridVirtualizerChanged() {
-		if (!$gridVirtualizer) return;
-		setExtraHeight();
+		if (!$gridVirtualizer || $gridVirtualizer.scrollOffset === null) return;
 		const href = window.location.href;
 		if (isInitialScrollPositionSet && mounted) {
 			gridScrollPositions.set(href, $gridVirtualizer.scrollOffset);
@@ -165,6 +166,7 @@
 		}
 		if (
 			!outputs ||
+			!$generationsQuery ||
 			!$generationsQuery.hasNextPage ||
 			$generationsQuery.isFetchingNextPage ||
 			overscanCount === undefined
@@ -233,7 +235,7 @@
 					estimateSize: (i) => {
 						const width = ((gridScrollContainerWidth as number) - horizontalPadding) / cols;
 						const height = (width * outputs![i].generation.height) / outputs![i].generation.width;
-						return height + extraHeightForInfo;
+						return height;
 					}
 				})
 			: createWindowVirtualizer({
@@ -241,20 +243,9 @@
 					estimateSize: (i) => {
 						const width = (window.innerWidth - horizontalPadding) / cols;
 						const height = (width * outputs![i].generation.height) / outputs![i].generation.width;
-						return height + extraHeightForInfo;
+						return height;
 					}
 				});
-	}
-
-	function setExtraHeight() {
-		if (!$gridVirtualizer || !outputs) return;
-		if ($gridVirtualizer.scrollOffset < $gridVirtualizer.getTotalSize() - $windowHeight) return;
-		const items = $gridVirtualizer.getVirtualItems();
-		const lastRowSizes = items.slice(-cols).map((i) => i.size);
-		const maxSize = Math.max(...lastRowSizes);
-		const minSize = Math.min(...lastRowSizes);
-		const diff = maxSize - minSize;
-		extraHeight = diff;
 	}
 
 	onMount(() => {
@@ -262,7 +253,7 @@
 	});
 </script>
 
-{#if $generationsQuery.isInitialLoading}
+{#if $generationsQuery?.isLoading}
 	<div
 		class="flex h-full w-full flex-1 flex-col items-center justify-center px-4 py-6 text-center text-c-on-bg/60"
 	>
@@ -270,12 +261,13 @@
 		<p class="mt-2 opacity-0">{$LL.Gallery.SearchingTitle()}</p>
 		<div class="h-[2vh] {noLoadingSpinnerAlignmentAdjustment ? 'hidden' : ''}" />
 	</div>
-{:else if hasPlaceholder && $generationsQuery.isSuccess && outputs !== undefined && outputs.length === 0}
+{:else if hasPlaceholder && $generationsQuery?.isSuccess && outputs !== undefined && outputs.length === 0}
 	<GenerateGridPlaceholder text={$LL.Generate.Grid.NoGeneration.Paragraph()} />
-{:else if $generationsQuery.isSuccess && $generationsQuery.data.pages.length > 0 && outputs !== undefined}
+{:else if $generationsQuery?.isSuccess && $generationsQuery.data.pages.length > 0 && outputs !== undefined}
 	{#if $gridVirtualizer}
 		{@const showScrollToTopChevron =
 			$gridVirtualizer &&
+			$gridVirtualizer.scrollOffset !== null &&
 			($gridVirtualizer.scrollOffset > $windowHeight * 2 ||
 				$gridVirtualizer.scrollOffset > $gridVirtualizer.getTotalSize() - $windowHeight)}
 		{@const isGridLongEnoughForScrollToTopChevron =

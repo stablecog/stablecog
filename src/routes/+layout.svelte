@@ -177,7 +177,7 @@
 			// @ts-ignore
 			const { getFingerprint } = await import('@thumbmarkjs/thumbmarkjs');
 			const thumbmark = await getFingerprint();
-			if (thumbmark) thumbmarkId.set(thumbmark);
+			if (thumbmark) thumbmarkId.set(thumbmark as string);
 		} catch (error) {
 			console.log('ThumbmarkJS error:', error);
 		} finally {

@@ -23,7 +23,8 @@
 
 	$: userSummaryQuery =
 		browser && userId
-			? createQuery(getUserSummaryQueryKey(userId), {
+			? createQuery({
+					queryKey: getUserSummaryQueryKey(userId),
 					queryFn: () => getUserSummary(accessToken)
 				})
 			: undefined;
@@ -46,21 +47,19 @@
 	};
 	$: wantsEmailQueryKey = ['set_wants_email', userId];
 	$: wantsEmailMutation = browser
-		? createMutation(
-				wantsEmailQueryKey,
-				({ wantsEmail }: { wantsEmail: boolean }) => {
-					queryClient.cancelQueries(wantsEmailQueryKey);
+		? createMutation({
+				mutationKey: wantsEmailQueryKey,
+				mutationFn: ({ wantsEmail }: { wantsEmail: boolean }) => {
+					queryClient.cancelQueries({ queryKey: wantsEmailQueryKey });
 					return setWantsEmail({
 						access_token: accessToken || '',
 						wants_email: wantsEmail
 					});
 				},
-				{
-					onSuccess: () => {
-						queryClient.invalidateQueries(getUserSummaryQueryKey(userId));
-					}
+				onSuccess: () => {
+					queryClient.invalidateQueries({ queryKey: getUserSummaryQueryKey(userId) });
 				}
-			)
+			})
 		: undefined;
 	$: [$userSummary, $wantsEmail, $page], setWantsEmailIfNeeded();
 

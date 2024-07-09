@@ -5,7 +5,7 @@
 	import LL from '$i18n/i18n-svelte';
 	import type { TUserVoiceoverFullOutputsPage } from '$ts/queries/userVoiceovers';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
-	import type { CreateInfiniteQueryResult } from '@tanstack/svelte-query';
+	import type { CreateInfiniteQueryResult, InfiniteData } from '@tanstack/svelte-query';
 	import { createVirtualizer, type SvelteVirtualizer } from '@tanstack/svelte-virtual';
 	import type { Readable } from 'svelte/store';
 	import {
@@ -16,7 +16,9 @@
 	import type { TVoiceoverFullOutput } from '$ts/stores/user/voiceovers';
 	import { removeRepeatingOutputsForVoiceover } from '$ts/helpers/removeRepeatingOutputs';
 
-	export let query: CreateInfiniteQueryResult<TUserVoiceoverFullOutputsPage, unknown>;
+	export let query:
+		| CreateInfiniteQueryResult<InfiniteData<TUserVoiceoverFullOutputsPage, unknown>, Error>
+		| undefined;
 	export let pinnedFullOutputs: TVoiceoverFullOutput[] | undefined;
 	export let horizontal = false;
 	export let listScrollContainer: HTMLElement | undefined = undefined;
@@ -32,7 +34,7 @@
 
 	let listVirtualizer: Readable<SvelteVirtualizer<HTMLDivElement, Element>> | undefined;
 
-	$: onlyOutputs = $query.data?.pages
+	$: onlyOutputs = $query?.data?.pages
 		.flatMap((page) => page.outputs)
 		.filter((i) => i !== undefined);
 	let outputs: TVoiceoverFullOutput[] | undefined = undefined;
@@ -71,12 +73,15 @@
 		? Math.round(estimatedItemCountInAWindow * 2)
 		: undefined;
 
-	$: listAtStart = $listVirtualizer ? $listVirtualizer.scrollOffset <= 0 : true;
+	$: listAtStart =
+		$listVirtualizer && $listVirtualizer.scrollOffset !== null
+			? $listVirtualizer.scrollOffset <= 0
+			: true;
 	$: listAtEnd = horizontal
-		? $listVirtualizer && listScrollContainerWidth
+		? $listVirtualizer && $listVirtualizer.scrollOffset !== null && listScrollContainerWidth
 			? $listVirtualizer.scrollOffset >= $listVirtualizer.getTotalSize() - listScrollContainerWidth
 			: false
-		: $listVirtualizer && listScrollContainerHeight
+		: $listVirtualizer && $listVirtualizer.scrollOffset !== null && listScrollContainerHeight
 			? $listVirtualizer.scrollOffset >= $listVirtualizer.getTotalSize() - listScrollContainerHeight
 			: false;
 
@@ -118,6 +123,7 @@
 		if (
 			!outputs ||
 			!$listVirtualizer ||
+			$query === undefined ||
 			!$query.hasNextPage ||
 			$query.isFetchingNextPage ||
 			overscanCount === undefined
@@ -157,16 +163,16 @@
 	}
 </script>
 
-{#if $query.isInitialLoading}
+{#if $query?.isLoading}
 	<div
 		class="flex h-full w-full flex-1 flex-col items-center justify-center px-4 text-center text-c-on-bg/60 md:py-6"
 	>
 		<IconAnimatedSpinner class="h-7 w-7 md:h-12 md:w-12" />
 		<p class="mt-2 opacity-0 {horizontal ? 'hidden' : ''}">{$LL.Gallery.SearchingTitle()}</p>
 	</div>
-{:else if $query.isSuccess && outputs !== undefined && outputs.length === 0}
+{:else if $query?.isSuccess && outputs !== undefined && outputs.length === 0}
 	<VoiceoverListPlaceholder {horizontal} text={$LL.Voiceover.List.NoVoiceovers.Paragraph()} />
-{:else if $query.isSuccess && $query.data.pages.length > 0 && outputs !== undefined}
+{:else if $query?.isSuccess && $query.data.pages.length > 0 && outputs !== undefined}
 	{#if $listVirtualizer}
 		<div
 			style="{horizontal ? 'width' : 'height'}: {$listVirtualizer.getTotalSize() +

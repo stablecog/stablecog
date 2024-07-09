@@ -46,8 +46,6 @@ export async function getGalleryFullOutputs({
 	query.append('per_page', per_page.toString());
 	query.append('oversampling', oversampling.toString());
 
-	query.append('test', 'true');
-
 	if (cursor) {
 		query.append('cursor', cursor);
 	}

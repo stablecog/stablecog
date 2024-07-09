@@ -1,10 +1,12 @@
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 import type { TAvailableAspectRatio } from '$ts/constants/generationSize';
 import { getAdminFullOutputs } from '$ts/queries/galleryLike/adminOutputs';
-import type { TGalleryFullOutputsPage } from '$ts/queries/galleryLike/types';
+import type {
+	TGalleryFullOutputsPage,
+	TGalleryLikeQueryProps
+} from '$ts/queries/galleryLike/types';
 import { sessionAndUrlParamWritable } from '$ts/stores/sessionAndUrlParamStore';
 import type { TGalleryStatus } from '$ts/stores/user/generation';
-import type { CreateInfiniteQueryOptions } from '@tanstack/svelte-query';
 
 export const adminGallerySearchString = sessionAndUrlParamWritable<string>(
 	'adminGallerySearchString',
@@ -64,13 +66,7 @@ export function getAdminFullOutputsQueryProps({
 	aspectRatioFilters?: TAvailableAspectRatio[];
 	usernameFilters?: string[];
 	session: Session;
-}): CreateInfiniteQueryOptions<
-	TGalleryFullOutputsPage,
-	unknown,
-	TGalleryFullOutputsPage,
-	TGalleryFullOutputsPage,
-	string[]
-> {
+}): TGalleryLikeQueryProps {
 	return {
 		queryKey: getAdminFullOutputsQueryKey({
 			adminGalleryCurrentFilter,
@@ -79,10 +75,10 @@ export function getAdminFullOutputsQueryProps({
 			aspectRatioFilters,
 			usernameFilters
 		}),
-		queryFn: (lastPage) => {
+		queryFn: ({ pageParam }) => {
 			return getAdminFullOutputs({
 				access_token: session?.access_token || '',
-				cursor: lastPage?.pageParam,
+				cursor: pageParam === undefined ? undefined : String(pageParam),
 				gallery_status: adminGalleryCurrentFilter,
 				order_by:
 					adminGalleryCurrentFilter === 'approved' || adminGalleryCurrentFilter === 'rejected'
@@ -97,6 +93,7 @@ export function getAdminFullOutputsQueryProps({
 		getNextPageParam: (lastPage: TGalleryFullOutputsPage) => {
 			if (!lastPage.next) return undefined;
 			return lastPage.next;
-		}
+		},
+		initialPageParam: undefined
 	};
 }

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { CreateInfiniteQueryResult } from '@tanstack/svelte-query';
+	import type { CreateInfiniteQueryResult, InfiniteData } from '@tanstack/svelte-query';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import IconSadFaceOutline from '$components/icons/IconSadFaceOutline.svelte';
@@ -15,7 +15,7 @@
 	} from '$ts/helpers/user/operations';
 
 	export let operationsQuery:
-		| CreateInfiniteQueryResult<TUserOperationsPageExtended, unknown>
+		| CreateInfiniteQueryResult<InfiniteData<TUserOperationsPageExtended, unknown>, Error>
 		| undefined;
 
 	let listVirtualizer: Readable<SvelteVirtualizer<Window, Element>> | undefined;

@@ -28,23 +28,23 @@
 	let tokenToDelete: string | undefined = undefined;
 
 	$: tokensQuery = browser
-		? createQuery(['user_apps'], () =>
-				getUserTokens({ access_token: $sessionStore?.access_token || '', type: 'client' })
-			)
+		? createQuery({
+				queryKey: ['user_apps'],
+				queryFn: () =>
+					getUserTokens({ access_token: $sessionStore?.access_token || '', type: 'client' })
+			})
 		: undefined;
 
 	$: deleteTokenMutation = browser
-		? createMutation(
-				['user_delete_token'],
-				({ id }: { id: string }) =>
+		? createMutation({
+				mutationKey: ['user_delete_token'],
+				mutationFn: ({ id }: { id: string }) =>
 					deleteUserToken({ access_token: $sessionStore?.access_token || '', id }),
-				{
-					onSuccess: () => {
-						$tokensQuery?.refetch();
-						resetModal();
-					}
+				onSuccess: () => {
+					$tokensQuery?.refetch();
+					resetModal();
 				}
-			)
+			})
 		: undefined;
 
 	$: dateFormatter = new Intl.DateTimeFormat($locale, {
@@ -182,7 +182,7 @@
 	<ModalWrapper>
 		<div
 			use:clickoutside={{
-				callback: () => ($deleteTokenMutation?.isLoading ? null : resetModal())
+				callback: () => ($deleteTokenMutation?.isPending ? null : resetModal())
 			}}
 			class="my-auto max-w-full"
 		>
@@ -226,7 +226,7 @@
 				>
 					<div class="mt-6 flex w-full flex-wrap items-stretch justify-end gap-2">
 						<Button
-							disabled={$deleteTokenMutation?.isLoading}
+							disabled={$deleteTokenMutation?.isPending}
 							onClick={resetModal}
 							size="sm"
 							type="no-bg-on-bg"
@@ -236,7 +236,7 @@
 						</Button>
 						<Button
 							withSpinner
-							loading={$deleteTokenMutation?.isLoading}
+							loading={$deleteTokenMutation?.isPending}
 							size="sm"
 							type="danger"
 							buttonType="submit"

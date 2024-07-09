@@ -162,7 +162,6 @@
 		createCanvas({ reset: $historyGenerationId === baseOutput.id ? false : true });
 
 	function createCanvas({ reset = false }: { reset: boolean }) {
-		console.log('test');
 		if (!$KonvaInstance) return;
 		if (!canvasWidth || !canvasHeight) return;
 

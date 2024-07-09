@@ -1,4 +1,4 @@
-import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
+import type { TGalleryFullOutputsPage } from '$ts/queries/galleryLike/types';
 import type { TGenerationOutput } from '$ts/stores/user/generation';
 import type { QueryClient } from '@tanstack/svelte-query';
 
@@ -12,7 +12,7 @@ export async function replaceOutputInUserQueryData(
 	if (!data) return;
 	queryClient.setQueryData(queryKey, (data: any) => ({
 		...data,
-		pages: data.pages.map((page: TUserGenerationFullOutputsPage) => {
+		pages: data.pages.map((page: TGalleryFullOutputsPage) => {
 			return {
 				...page,
 				outputs: page.outputs.map((o) =>

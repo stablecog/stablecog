@@ -1,54 +1,53 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import AutoSize from '$components/utils/AutoSize.svelte';
+	import { browser } from '$app/environment';
 	import LowOnCreditsCard from '$components/cards/LowOnCreditsCard.svelte';
 	import SidebarCollapseButton from '$components/generate/SidebarCollapseButton.svelte';
 	import SidebarWrapper from '$components/generate/SidebarWrapper.svelte';
 	import { mdBreakpoint, xlBreakpoint } from '$components/generationFullScreen/constants.js';
-	import { clickoutside } from '$ts/actions/clickoutside.js';
-	import { expandCollapse } from '$ts/animation/transitions.js';
-	import { isLeftSidebarHidden, isLeftSidebarHiddenApp } from '$ts/stores/sidebars.js';
-	import { userSummary } from '$ts/stores/user/summary.js';
-	import { windowWidth } from '$ts/stores/window.js';
-	import { quadOut } from 'svelte/easing';
-	import { fade, fly } from 'svelte/transition';
-	import {
-		voiceovers,
-		type TVoiceoverOutput,
-		type TVoiceover
-	} from '$ts/stores/user/voiceovers.js';
-	import { browser } from '$app/environment';
-	import { createInfiniteQuery } from '@tanstack/svelte-query';
-	import {
-		getUserVoiceoverFullOutputs,
-		type TUserVoiceoverFullOutputsPage
-	} from '$ts/queries/userVoiceovers';
+	import IllustrationDeprecated from '$components/illustrations/IllustrationDeprecated.svelte';
+	import AutoSize from '$components/utils/AutoSize.svelte';
+	import MetaTag from '$components/utils/MetaTag.svelte';
+	import VoiceoverPromptBar from '$components/voiceover/generate/VoiceoverPromptBar.svelte';
 	import VoiceoverSettingsPanel from '$components/voiceover/generate/VoiceoverSettingsPanel.svelte';
 	import VoiceoverSettingsProvider from '$components/voiceover/generate/VoiceoverSettingsProvider.svelte';
-	import VoiceoverPromptBar from '$components/voiceover/generate/VoiceoverPromptBar.svelte';
-	import VoiceoverListInfinite from '$components/voiceover/lists/VoiceoverListInfinite.svelte';
-	import VoiceoverListPlaceholder from '$components/voiceover/lists/VoiceoverListPlaceholder.svelte';
-	import LL from '$i18n/i18n-svelte.js';
+	import VoiceoverSettingsSheet from '$components/voiceover/generate/VoiceoverSettingsSheet.svelte';
 	import {
 		listItemGap,
 		listItemHeight,
 		listItemWidth,
 		listPadding
 	} from '$components/voiceover/lists/constants.js';
+	import VoiceoverListInfinite from '$components/voiceover/lists/VoiceoverListInfinite.svelte';
+	import VoiceoverListPlaceholder from '$components/voiceover/lists/VoiceoverListPlaceholder.svelte';
+	import LL from '$i18n/i18n-svelte.js';
+	import { clickoutside } from '$ts/actions/clickoutside.js';
+	import { expandCollapse } from '$ts/animation/transitions.js';
+	import { lowOnCreditsThreshold } from '$ts/constants/credits.js';
+	import { canonicalUrl } from '$ts/constants/main.js';
+	import { sessionStore } from '$ts/constants/supabase';
+	import { voiceoverLocale, voiceoverModelId } from '$ts/constants/voiceover/models.js';
+	import {
+		getUserVoiceoverFullOutputs,
+		type TUserVoiceoverFullOutputsPage
+	} from '$ts/queries/userVoiceovers';
+	import { isSignInModalOpen } from '$ts/stores/isSignInModalOpen.js';
+	import { isLeftSidebarHidden, isLeftSidebarHiddenApp } from '$ts/stores/sidebars.js';
+	import { userSummary } from '$ts/stores/user/summary.js';
+	import {
+		voiceovers,
+		type TVoiceover,
+		type TVoiceoverOutput
+	} from '$ts/stores/user/voiceovers.js';
 	import {
 		voiceoverDenoiseAudio,
 		voiceoverRemoveSilence,
 		voiceoverSpeakerId,
 		voiceoverStability
 	} from '$ts/stores/voiceover/voiceoverSettings.js';
-	import { voiceoverLocale, voiceoverModelId } from '$ts/constants/voiceover/models.js';
-	import MetaTag from '$components/utils/MetaTag.svelte';
-	import { canonicalUrl } from '$ts/constants/main.js';
-	import { lowOnCreditsThreshold } from '$ts/constants/credits.js';
-	import VoiceoverSettingsSheet from '$components/voiceover/generate/VoiceoverSettingsSheet.svelte';
-	import { isSignInModalOpen } from '$ts/stores/isSignInModalOpen.js';
-	import IllustrationDeprecated from '$components/illustrations/IllustrationDeprecated.svelte';
-	import { sessionStore } from '$ts/constants/supabase';
+	import { windowWidth } from '$ts/stores/window.js';
+	import { createInfiniteQuery } from '@tanstack/svelte-query';
+	import { quadOut } from 'svelte/easing';
+	import { fade, fly } from 'svelte/transition';
 
 	export let data;
 
@@ -84,17 +83,18 @@
 		browser && $sessionStore?.user.id && $userSummary
 			? createInfiniteQuery({
 					queryKey: userVoiceoverFullOutputsQueryKey,
-					queryFn: async (lastPage) => {
+					queryFn: async ({ pageParam }) => {
 						let outputsPage = await getUserVoiceoverFullOutputs({
 							access_token: $sessionStore?.access_token || '',
-							cursor: lastPage?.pageParam
+							cursor: pageParam !== undefined ? String(pageParam) : undefined
 						});
 						return outputsPage;
 					},
 					getNextPageParam: (lastPage: TUserVoiceoverFullOutputsPage) => {
 						if (!lastPage.next) return undefined;
 						return lastPage.next;
-					}
+					},
+					initialPageParam: undefined
 				})
 			: undefined;
 

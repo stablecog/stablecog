@@ -1,10 +1,12 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
+	import SignInCard from '$components/cards/SignInCard.svelte';
 	import BatchEditBar from '$components/galleryLike/BatchEditBar.svelte';
 	import GalleryLikeGridWrapper from '$components/galleryLike/GalleryLikeGridWrapper.svelte';
 	import GalleryLikePageWrapper from '$components/galleryLike/GalleryLikePageWrapper.svelte';
 	import GalleryLikeTitleSection from '$components/galleryLike/GalleryLikeTitleSection.svelte';
+	import SearchAndFilterBar from '$components/galleryLike/SearchAndFilterBar.svelte';
 	import {
 		lgBreakpoint,
 		mdBreakpoint,
@@ -14,30 +16,31 @@
 	} from '$components/generationFullScreen/constants';
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
+	import GenerationGridInfiniteWrapper from '$components/grids/GenerationGridInfiniteWrapper.svelte';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconFunnel from '$components/icons/IconFunnel.svelte';
 	import IconSadFace from '$components/icons/IconSadFace.svelte';
 	import IconTick from '$components/icons/IconTick.svelte';
-	import MetaTag from '$components/utils/MetaTag.svelte';
-	import SearchAndFilterBar from '$components/galleryLike/SearchAndFilterBar.svelte';
-	import SignInCard from '$components/cards/SignInCard.svelte';
 	import TabLikeDropdown from '$components/primitives/tabBars/TabLikeDropdown.svelte';
+	import MetaTag from '$components/utils/MetaTag.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import {
-		adminGalleryModelIdFilters,
 		adminGalleryAspectRatioFilters,
+		adminGalleryModelIdFilters,
 		adminGallerySearchString,
+		adminGalleryUsernameFilters,
 		getAdminFullOutputsQueryKey,
-		getAdminFullOutputsQueryProps,
-		adminGalleryUsernameFilters
+		getAdminFullOutputsQueryProps
 	} from '$routes/(app)/admin/gallery/constants';
 	import type { TRequestNavigationEventParams } from '$routes/(app)/admin/gallery/types.js';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
+	import { sessionStore } from '$ts/constants/supabase';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
+	import type { TGalleryLikeCreateInfiniteQueryResult } from '$ts/queries/galleryLike/types.js';
 	import {
-		adminGalleryCurrentFilter,
 		adminFullOutputsQueryKey,
+		adminGalleryCurrentFilter,
 		isAdminGalleryEditActive
 	} from '$ts/stores/admin/gallery';
 	import { hydrated, updateHydrated } from '$ts/stores/hydrated.js';
@@ -48,11 +51,8 @@
 		type TGalleryStatus,
 		type TGenerationWithSelectedOutput
 	} from '$userStores/generation';
-	import { createInfiniteQuery, type CreateInfiniteQueryResult } from '@tanstack/svelte-query';
+	import { createInfiniteQuery } from '@tanstack/svelte-query';
 	import { onMount } from 'svelte';
-	import { sessionStore } from '$ts/constants/supabase';
-	import GenerationGridInfiniteWrapper from '$components/grids/GenerationGridInfiniteWrapper.svelte';
-	import type { TGalleryFullOutputsPage } from '$ts/queries/galleryLike/types.js';
 
 	export let data;
 
@@ -69,9 +69,7 @@
 	let prevGeneration: TGenerationWithSelectedOutput | undefined = undefined;
 	let nextGeneration: TGenerationWithSelectedOutput | undefined = undefined;
 
-	let adminFullOutputsQuery:
-		| CreateInfiniteQueryResult<TGalleryFullOutputsPage, unknown>
-		| undefined;
+	let adminFullOutputsQuery: TGalleryLikeCreateInfiniteQueryResult | undefined;
 
 	$: adminFullOutputsQueryKey.set(
 		getAdminFullOutputsQueryKey({

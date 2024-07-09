@@ -35,8 +35,6 @@ export async function getHistoryFullOutputs({
 	const query = new URLSearchParams();
 	query.append('per_page', per_page.toString());
 
-	query.append('test', 'true');
-
 	if (cursor) {
 		query.append('cursor', cursor.toString());
 	}

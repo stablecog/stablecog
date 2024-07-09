@@ -37,8 +37,6 @@ export async function getUserProfileFullOutputs({
 	console.log('getUserProfileFullOutputs');
 	const query = new URLSearchParams();
 
-	query.append('test', 'true');
-
 	if (cursor) {
 		query.append('cursor', cursor);
 	}

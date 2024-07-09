@@ -35,7 +35,7 @@
 	import { sessionStore } from '$ts/constants/supabase';
 	import { setActiveGenerationToOutputIndex } from '$ts/helpers/goToOutputIndex';
 	import { logBatchEditActived, logBatchEditDeactivated } from '$ts/helpers/loggers';
-	import type { TGalleryFullOutputsPage } from '$ts/queries/galleryLike/types.js';
+	import type { TGalleryLikeCreateInfiniteQueryResult } from '$ts/queries/galleryLike/types.js';
 	import { appVersion } from '$ts/stores/appVersion';
 	import { hydrated, updateHydrated } from '$ts/stores/hydrated.js';
 	import { searchParamsString } from '$ts/stores/searchParamsString';
@@ -51,16 +51,14 @@
 	import { windowWidth } from '$ts/stores/window';
 	import type { TTab } from '$ts/types/main';
 	import { activeGeneration } from '$userStores/generation';
-	import { createInfiniteQuery, type CreateInfiniteQueryResult } from '@tanstack/svelte-query';
+	import { createInfiniteQuery } from '@tanstack/svelte-query';
 	import { onMount } from 'svelte';
 
 	export let data;
 
 	let totalOutputs: number;
 
-	let historyFullOutputsQuery:
-		| CreateInfiniteQueryResult<TGalleryFullOutputsPage, unknown>
-		| undefined;
+	let historyFullOutputsQuery: TGalleryLikeCreateInfiniteQueryResult | undefined;
 
 	let searchInputIsFocused = false;
 

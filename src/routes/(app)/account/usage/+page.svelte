@@ -1,30 +1,29 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import { page } from '$app/stores';
-	import MetaTag from '$components/utils/MetaTag.svelte';
-	import LL from '$i18n/i18n-svelte';
 	import AccountPageCard from '$approutes/account/AccountPageCard.svelte';
 	import UsageInfiniteList from '$approutes/account/usage/UsageInfiniteList.svelte';
+	import MetaTag from '$components/utils/MetaTag.svelte';
+	import LL from '$i18n/i18n-svelte';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
+	import { sessionStore } from '$ts/constants/supabase';
 	import { getUserOperations, type TUserOperationsPageExtended } from '$ts/queries/operations';
 	import { createInfiniteQuery } from '@tanstack/svelte-query';
-	import { sessionStore } from '$ts/constants/supabase';
 
 	$: userOperationsQuery = browser
 		? createInfiniteQuery({
 				queryKey: ['user_operations'],
-				queryFn: (lastPage) => {
+				queryFn: ({ pageParam }) => {
 					return getUserOperations({
 						access_token: $sessionStore?.access_token || '',
-						cursor: lastPage?.pageParam
+						cursor: pageParam !== undefined ? String(pageParam) : undefined
 					});
 				},
 				getNextPageParam: (lastPage: TUserOperationsPageExtended) => {
 					if (!lastPage.next) return undefined;
 					return lastPage.next;
 				},
-				onSuccess: () => {}
+				initialPageParam: undefined
 			})
 		: undefined;
 </script>

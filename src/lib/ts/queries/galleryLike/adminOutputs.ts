@@ -32,8 +32,6 @@ export async function getAdminFullOutputs({
 	const query = new URLSearchParams();
 	query.append('per_page', PER_PAGE_DEFAULT.toString());
 
-	query.append('test', 'true');
-
 	if (cursor) {
 		query.append('cursor', cursor);
 	}

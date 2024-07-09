@@ -33,18 +33,24 @@
 
 	$: similarOutputsQuery = browser
 		? modalType === 'user-profile'
-			? createQuery(['user_profile_similar_outputs_short', outputId], () => {
-					return getUserProfileFullOutputs({
-						search: outputId,
-						per_page: similarOutputsCount + 1,
-						username: generation.user.username
-					});
+			? createQuery({
+					queryKey: ['user_profile_similar_outputs_short', outputId],
+					queryFn: () => {
+						return getUserProfileFullOutputs({
+							search: outputId,
+							per_page: similarOutputsCount + 1,
+							username: generation.user.username
+						});
+					}
 				})
-			: createQuery(['gallery_similar_outputs_short', outputId], () => {
-					return getGalleryFullOutputs({
-						search: outputId,
-						per_page: similarOutputsCount + 1
-					});
+			: createQuery({
+					queryKey: ['gallery_similar_outputs_short', outputId],
+					queryFn: () => {
+						return getGalleryFullOutputs({
+							search: outputId,
+							per_page: similarOutputsCount + 1
+						});
+					}
 				})
 		: undefined;
 

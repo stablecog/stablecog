@@ -91,17 +91,18 @@
 		$sessionStore?.user.id && $userSummary
 			? createInfiniteQuery({
 					queryKey: $generatePageHistoryFullOutputsQueryKey,
-					queryFn: async (lastPage) => {
+					queryFn: async ({ pageParam }) => {
 						let outputsPage = await getHistoryFullOutputs({
 							access_token: $sessionStore?.access_token || '',
-							cursor: lastPage?.pageParam
+							cursor: pageParam !== undefined ? String(pageParam) : undefined
 						});
 						return outputsPage;
 					},
 					getNextPageParam: (lastPage: TGalleryFullOutputsPage) => {
 						if (!lastPage.next) return undefined;
 						return lastPage.next;
-					}
+					},
+					initialPageParam: undefined
 				})
 			: undefined;
 

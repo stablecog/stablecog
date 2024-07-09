@@ -14,7 +14,6 @@
 		logGenerationOutputMadePrivate,
 		logGenerationOutputMadePublic
 	} from '$ts/helpers/loggers';
-	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { appVersion } from '$ts/stores/appVersion';
 	import {
@@ -30,6 +29,7 @@
 	import { useQueryClient } from '@tanstack/svelte-query';
 	import { writable } from 'svelte/store';
 	import { sessionStore } from '$ts/constants/supabase';
+	import type { TGalleryFullOutputsPage } from '$ts/queries/galleryLike/types';
 
 	export let modalType: TGenerationFullScreenModalType;
 	export let generation: TGenerationWithSelectedOutput;
@@ -103,7 +103,7 @@
 				const updateFunction = (data: any) => {
 					return {
 						...data,
-						pages: data.pages.map((page: TUserGenerationFullOutputsPage) => {
+						pages: data.pages.map((page: TGalleryFullOutputsPage) => {
 							return {
 								...page,
 								outputs: page.outputs.map((output) =>

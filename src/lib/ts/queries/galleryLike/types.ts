@@ -2,6 +2,11 @@ import type {
 	TGenerationFullOutput,
 	TGenerationFullOutputShallow
 } from '$ts/stores/user/generation';
+import type {
+	CreateInfiniteQueryResult,
+	InfiniteData,
+	InfiniteQueryObserverOptions
+} from '@tanstack/svelte-query';
 
 export interface TGalleryFullOutputsPage {
 	outputs: TGenerationFullOutput[];
@@ -31,3 +36,14 @@ export interface TUserProfileFullOutputsPageShallow {
 		username: string;
 	};
 }
+
+export type TGalleryLikeQueryProps = InfiniteQueryObserverOptions<
+	TGalleryFullOutputsPage,
+	unknown,
+	InfiniteData<TGalleryFullOutputsPage, unknown>
+>;
+
+export type TGalleryLikeCreateInfiniteQueryResult = CreateInfiniteQueryResult<
+	InfiniteData<TGalleryFullOutputsPage, unknown>,
+	unknown
+>;

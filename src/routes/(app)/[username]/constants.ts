@@ -1,7 +1,10 @@
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 import type { TAvailableAspectRatio } from '$ts/constants/generationSize';
 import { getUserProfileFullOutputs } from '$ts/queries/galleryLike/userProfileOutputs';
-import type { TGalleryFullOutputsPage } from '$ts/queries/galleryLike/types';
+import type {
+	TGalleryFullOutputsPage,
+	TGalleryLikeQueryProps
+} from '$ts/queries/galleryLike/types';
 import { sessionAndUrlParamWritable } from '$ts/stores/sessionAndUrlParamStore';
 import type { FetchInfiniteQueryOptions } from '@tanstack/svelte-query';
 
@@ -53,7 +56,7 @@ export function getUserProfileProfileInfiniteQueryProps({
 	aspectRatioFilters?: TAvailableAspectRatio[];
 	username: string;
 	accessToken?: string;
-}): FetchInfiniteQueryOptions<TGalleryFullOutputsPage, unknown, TGalleryFullOutputsPage, any> {
+}): TGalleryLikeQueryProps {
 	return {
 		queryKey: getUserProfileInfiniteQueryKey({
 			searchString,
@@ -61,9 +64,9 @@ export function getUserProfileProfileInfiniteQueryProps({
 			aspectRatioFilters,
 			username
 		}),
-		queryFn: async (lastPage) => {
+		queryFn: async ({ pageParam }) => {
 			return getUserProfileFullOutputs({
-				cursor: lastPage?.pageParam,
+				cursor: pageParam === undefined ? undefined : String(pageParam),
 				search: searchString,
 				model_ids: modelIdFilters,
 				aspect_ratios: aspectRatioFilters,
@@ -74,6 +77,8 @@ export function getUserProfileProfileInfiniteQueryProps({
 		getNextPageParam: (lastPage: TGalleryFullOutputsPage) => {
 			if (!lastPage.next) return undefined;
 			return lastPage.next;
-		}
+		},
+		initialPageParam: undefined,
+		refetchOnMount: false
 	};
 }

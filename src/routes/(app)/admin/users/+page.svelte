@@ -104,7 +104,8 @@
 				getNextPageParam: (lastPage: TAllUsersPage) => {
 					if (!lastPage.next) return undefined;
 					return lastPage.next;
-				}
+				},
+				initialPageParam: undefined
 			})
 		: undefined;
 

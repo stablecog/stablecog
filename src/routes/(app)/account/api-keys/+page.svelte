@@ -39,41 +39,39 @@
 	let isCopiedOnce = false;
 
 	$: tokensQuery = browser
-		? createQuery(['user_tokens'], () =>
-				getUserTokens({ access_token: $sessionStore?.access_token || '', type: 'manual' })
-			)
+		? createQuery({
+				queryKey: ['user_tokens'],
+				queryFn: () =>
+					getUserTokens({ access_token: $sessionStore?.access_token || '', type: 'manual' })
+			})
 		: undefined;
 
 	$: createTokenMutation = browser
-		? createMutation(
-				['user_create_token'],
-				({ name }: { name: string }) =>
+		? createMutation({
+				mutationKey: ['user_create_token'],
+				mutationFn: ({ name }: { name: string }) =>
 					createUserToken({ access_token: $sessionStore?.access_token || '', name }),
-				{
-					onSuccess: (d) => {
-						$tokensQuery?.refetch();
-						modalType = 'created';
-						tokenInputValue = d.token;
-					},
-					onMutate: (d) => {
-						lastTokenName = d.name;
-					}
+				onSuccess: (d) => {
+					$tokensQuery?.refetch();
+					modalType = 'created';
+					tokenInputValue = d.token;
+				},
+				onMutate: (d) => {
+					lastTokenName = d.name;
 				}
-			)
+			})
 		: undefined;
 
 	$: deleteTokenMutation = browser
-		? createMutation(
-				['user_delete_token'],
-				({ id }: { id: string }) =>
+		? createMutation({
+				mutationKey: ['user_delete_token'],
+				mutationFn: ({ id }: { id: string }) =>
 					deleteUserToken({ access_token: $sessionStore?.access_token || '', id }),
-				{
-					onSuccess: () => {
-						$tokensQuery?.refetch();
-						resetModal();
-					}
+				onSuccess: () => {
+					$tokensQuery?.refetch();
+					resetModal();
 				}
-			)
+			})
 		: undefined;
 
 	$: isMaxAllowedTokenCountReached = $tokensQuery?.data?.length
@@ -250,8 +248,8 @@
 		<div
 			use:clickoutside={{
 				callback: () =>
-					$createTokenMutation?.isLoading ||
-					$deleteTokenMutation?.isLoading ||
+					$createTokenMutation?.isPending ||
+					$deleteTokenMutation?.isPending ||
 					(modalType === 'created' && !isCopiedOnce)
 						? null
 						: resetModal()
@@ -341,7 +339,7 @@
 					<div class="mt-6 flex w-full flex-wrap items-stretch justify-end gap-2">
 						{#if modalType !== 'created'}
 							<Button
-								disabled={$createTokenMutation?.isLoading || $deleteTokenMutation?.isLoading}
+								disabled={$createTokenMutation?.isPending || $deleteTokenMutation?.isPending}
 								onClick={resetModal}
 								size="sm"
 								type="no-bg-on-bg"
@@ -352,7 +350,7 @@
 						{/if}
 						<Button
 							withSpinner
-							loading={$createTokenMutation?.isLoading || $deleteTokenMutation?.isLoading}
+							loading={$createTokenMutation?.isPending || $deleteTokenMutation?.isPending}
 							size="sm"
 							type={modalType === 'delete' ? 'danger' : 'primary'}
 							buttonType="submit"

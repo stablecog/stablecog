@@ -1,11 +1,10 @@
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 import type { TAvailableAspectRatio } from '$ts/constants/generationSize';
 import { getHistoryFullOutputs } from '$ts/queries/galleryLike/historyOutputs';
-import type { TGalleryFullOutputsPage } from '$ts/queries/galleryLike/types';
+import type { TGalleryLikeQueryProps } from '$ts/queries/galleryLike/types';
 import { sessionAndUrlParamWritable } from '$ts/stores/sessionAndUrlParamStore';
 import type { TUserGalleryView } from '$ts/stores/user/gallery';
 import type { Session } from '@supabase/supabase-js';
-import type { CreateInfiniteQueryOptions } from '@tanstack/svelte-query';
 
 export const userGallerySearchString = sessionAndUrlParamWritable<string>(
 	'userGallerySearchString',
@@ -45,13 +44,7 @@ export function getHistoryInfiniteQueryProps({
 	modelIdFilters?: TAvailableGenerationModelId[];
 	aspectRatioFilters?: TAvailableAspectRatio[];
 	session: Session;
-}): CreateInfiniteQueryOptions<
-	TGalleryFullOutputsPage,
-	unknown,
-	TGalleryFullOutputsPage,
-	TGalleryFullOutputsPage,
-	string[]
-> {
+}): TGalleryLikeQueryProps {
 	return {
 		queryKey: getHistoryInfiniteQueryKey({
 			userGalleryCurrentView,
@@ -59,10 +52,10 @@ export function getHistoryInfiniteQueryProps({
 			modelIdFilters,
 			aspectRatioFilters
 		}),
-		queryFn: (lastPage) => {
+		queryFn: ({ pageParam }) => {
 			return getHistoryFullOutputs({
 				access_token: session.access_token || '',
-				cursor: lastPage?.pageParam,
+				cursor: pageParam === undefined ? undefined : String(pageParam),
 				is_favorited: userGalleryCurrentView === 'favorites' ? true : undefined,
 				is_liked: userGalleryCurrentView === 'likes' ? true : undefined,
 				search: searchString,
@@ -70,9 +63,11 @@ export function getHistoryInfiniteQueryProps({
 				aspect_ratios: aspectRatioFilters
 			});
 		},
-		getNextPageParam: (lastPage: TGalleryFullOutputsPage) => {
+		getNextPageParam: (lastPage) => {
 			if (!lastPage.next) return undefined;
 			return lastPage.next;
-		}
+		},
+		initialPageParam: undefined,
+		refetchOnMount: false
 	};
 }

@@ -266,7 +266,7 @@
 		</div>
 	</div>
 	<div class="relative flex w-full flex-1 flex-col pb-3 pt-1 md:pt-3">
-		{#if $galleryGenerationFullOutputsQuery?.isInitialLoading}
+		{#if $galleryGenerationFullOutputsQuery?.isLoading}
 			<div
 				class="flex w-full flex-1 flex-col items-center justify-center px-4 py-6 text-center text-c-on-bg/60"
 			>

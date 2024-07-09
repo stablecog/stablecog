@@ -2,13 +2,12 @@
 	import GenerationImage from '$components/generationImage/GenerationImage.svelte';
 	import type { TGenerationImageCardType } from '$components/generationImage/types';
 	import ImagePlaceholder from '$components/utils/image/ImagePlaceholder.svelte';
-	import type { CreateInfiniteQueryResult } from '@tanstack/svelte-query';
+	import type { CreateInfiniteQueryResult, InfiniteData } from '@tanstack/svelte-query';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import type { TGenerationFullOutput } from '$ts/stores/user/generation';
 	import GenerationAnimation from '$components/generate/GenerationAnimation.svelte';
 	import { fade } from 'svelte/transition';
 	import { quadIn, quadOut } from 'svelte/easing';
-	import type { TUserGenerationFullOutputsPage } from '$ts/queries/userGenerations';
 	import LL from '$i18n/i18n-svelte';
 	import GenerateHorizontalListPlaceholder from '$components/generate/GenerateHorizontalListPlaceholder.svelte';
 	import IconEyeSlashOutline from '$components/icons/IconEyeSlashOutline.svelte';
@@ -18,8 +17,11 @@
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import { removeRepeatingOutputs } from '$ts/helpers/removeRepeatingOutputs';
 	import IconNsfwPrompt from '$components/icons/IconNSFWPrompt.svelte';
+	import type { TGalleryFullOutputsPage } from '$ts/queries/galleryLike/types';
 
-	export let generationsQuery: CreateInfiniteQueryResult<TUserGenerationFullOutputsPage, unknown>;
+	export let generationsQuery:
+		| CreateInfiniteQueryResult<InfiniteData<TGalleryFullOutputsPage, unknown>, Error>
+		| undefined;
 	export let pinnedFullOutputs: TGenerationFullOutput[] | undefined = undefined;
 	export let cardType: TGenerationImageCardType;
 	export let listScrollContainer: HTMLDivElement | undefined;
@@ -31,7 +33,7 @@
 	let listVirtualizer: Readable<SvelteVirtualizer<HTMLDivElement, Element>> | undefined;
 	let placeholderInnerContainerHeight: number;
 
-	$: onlyOutputs = $generationsQuery.data?.pages
+	$: onlyOutputs = $generationsQuery?.data?.pages
 		.flatMap((page) => page.outputs)
 		.filter((i) => i !== undefined);
 	let outputs: TGenerationFullOutput[] | undefined;
@@ -58,9 +60,12 @@
 	$: $listVirtualizer, onListVirtualizerChanged();
 	$: [outputs, overscanCount], onParamsChanged();
 
-	$: listAtStart = $listVirtualizer ? $listVirtualizer.scrollOffset <= 0 : true;
+	$: listAtStart =
+		$listVirtualizer && $listVirtualizer.scrollOffset !== null
+			? $listVirtualizer.scrollOffset <= 0
+			: true;
 	$: listAtEnd =
-		$listVirtualizer && listScrollContainerWidth
+		$listVirtualizer && listScrollContainerWidth && $listVirtualizer.scrollOffset !== null
 			? $listVirtualizer.scrollOffset >= $listVirtualizer.getTotalSize() - listScrollContainerWidth
 			: false;
 
@@ -94,7 +99,7 @@
 		if (
 			!outputs ||
 			!$listVirtualizer ||
-			!$generationsQuery.hasNextPage ||
+			!$generationsQuery?.hasNextPage ||
 			$generationsQuery.isFetchingNextPage ||
 			overscanCount === undefined
 		)
@@ -127,7 +132,7 @@
 	}
 </script>
 
-{#if $generationsQuery.isInitialLoading}
+{#if $generationsQuery?.isLoading}
 	<div class="h-full w-full">
 		<div
 			bind:clientHeight={placeholderInnerContainerHeight}
@@ -146,9 +151,9 @@
 			</div>
 		</div>
 	</div>
-{:else if $generationsQuery.isSuccess && outputs !== undefined && outputs.length === 0}
+{:else if $generationsQuery?.isSuccess && outputs !== undefined && outputs.length === 0}
 	<GenerateHorizontalListPlaceholder text={$LL.Generate.Grid.NoGeneration.Paragraph()} />
-{:else if $generationsQuery.isSuccess && outputs !== undefined && outputs.length > 0}
+{:else if $generationsQuery?.isSuccess && outputs !== undefined && outputs.length > 0}
 	{#if listScrollContainer && $listVirtualizer}
 		<div
 			style="width: {$listVirtualizer.getTotalSize() +
