@@ -385,7 +385,7 @@
 		class="z-0 -mx-3.5 my-auto mt-2 flex w-[calc(100%+1.75rem)] flex-col items-center gap-8 pb-2"
 	>
 		<div class="flex w-full flex-col items-center justify-center gap-2 md:max-w-4xl">
-			{#if !$allUsersQuery || $allUsersQuery.isInitialLoading}
+			{#if !$allUsersQuery || $allUsersQuery.isLoading}
 				<div
 					class="flex w-full flex-1 flex-col items-center justify-center px-4 py-6 text-center text-c-on-bg/50"
 				>

@@ -199,7 +199,7 @@
 		</div>
 	</GalleryLikeTitleSection>
 	<GalleryLikeGridWrapper>
-		{#if $galleryGenerationFullOutputsQuery?.isInitialLoading}
+		{#if $galleryGenerationFullOutputsQuery?.isLoading}
 			<div
 				class="flex w-full flex-1 flex-col items-center justify-center px-4 py-6 text-center text-c-on-bg/60"
 			>
@@ -266,7 +266,7 @@
 	</GalleryLikeGridWrapper>
 </GalleryLikePageWrapper>
 
-{#if $activeGeneration && $galleryGenerationFullOutputsQuery?.isInitialLoading === false}
+{#if $activeGeneration && $galleryGenerationFullOutputsQuery?.isLoading === false}
 	<GenerationFullScreen
 		onLeftButtonClicked={leftIndex !== -1
 			? () => setActiveGenerationToOutputIndex(outputs, leftIndex)

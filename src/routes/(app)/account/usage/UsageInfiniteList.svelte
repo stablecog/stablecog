@@ -89,7 +89,7 @@
 			{$LL.Error.SomethingWentWrong()}
 		</p>
 	</div>
-{:else if operations === undefined || $operationsQuery === undefined || $operationsQuery.data === undefined || $operationsQuery?.isInitialLoading}
+{:else if operations === undefined || $operationsQuery === undefined || $operationsQuery.data === undefined || $operationsQuery?.isLoading}
 	<div class="flex w-full flex-col items-center justify-center px-5 py-8 md:px-12">
 		<IconAnimatedSpinner class="h-10 w-10 text-c-on-bg/50" />
 		<p class="text-c-on-surface-secondary mt-2 text-center text-c-on-bg/50">

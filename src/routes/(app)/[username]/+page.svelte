@@ -328,7 +328,7 @@
 	</div>
 </div>
 
-{#if $activeGeneration && $galleryGenerationFullOutputsQuery?.isInitialLoading === false}
+{#if $activeGeneration && $galleryGenerationFullOutputsQuery?.isLoading === false}
 	<GenerationFullScreen
 		onLeftButtonClicked={leftIndex !== -1
 			? () => setActiveGenerationToOutputIndex(outputs, leftIndex)

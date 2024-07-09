@@ -269,7 +269,7 @@
 			</div>
 		{/if}
 		<GalleryLikeGridWrapper>
-			{#if adminFullOutputsQuery === undefined || $adminFullOutputsQuery === undefined || $adminFullOutputsQuery.isInitialLoading}
+			{#if adminFullOutputsQuery === undefined || $adminFullOutputsQuery === undefined || $adminFullOutputsQuery.isLoading}
 				<div
 					class="flex w-full flex-1 flex-col items-center justify-center px-4 py-6 text-center text-c-on-bg/60"
 				>
