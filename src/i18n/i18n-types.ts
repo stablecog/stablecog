@@ -1176,6 +1176,12 @@ type RootTranslation = {
 				 */
 				realName: string
 			}
+			'986d447d-c38b-4218-a2c8-6e0b691f47ec': {
+				/**
+				 * S​t​a​b​l​e​ ​D​i​f​f​u​s​i​o​n​ ​3
+				 */
+				realName: string
+			}
 			'9fa49c00-109d-430f-9ddd-449f02e2c71a': {
 				/**
 				 * K​a​n​d​i​n​s​k​y​ ​2​.​2
@@ -4518,6 +4524,12 @@ export type TranslationFunctions = {
 			'22b0857d-7edc-4d00-9cd9-45aa509db093': {
 				/**
 				 * Kandinsky
+				 */
+				realName: () => LocalizedString
+			}
+			'986d447d-c38b-4218-a2c8-6e0b691f47ec': {
+				/**
+				 * Stable Diffusion 3
 				 */
 				realName: () => LocalizedString
 			}

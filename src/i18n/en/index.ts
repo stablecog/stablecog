@@ -384,6 +384,7 @@ const en: BaseTranslation = {
 			'22b0857d-7edc-4d00-9cd9-45aa509db093': {
 				realName: 'Kandinsky'
 			},
+			'986d447d-c38b-4218-a2c8-6e0b691f47ec': { realName: 'Stable Diffusion 3' },
 			'9fa49c00-109d-430f-9ddd-449f02e2c71a': { realName: 'Kandinsky 2.2' },
 			'8002bc51-7260-468f-8840-cf1e6dbe3f8a': { realName: 'SDXL' },
 			'3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7': { realName: 'Waifu Diffusion XL' },

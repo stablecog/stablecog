@@ -1,6 +1,6 @@
 <script lang="ts">
-	import IconNewAlt from '$components/icons/IconNewAlt.svelte';
 	import { modelImageVersion } from '$components/cards/modelCard/constants';
+	import IconNewAlt from '$components/icons/IconNewAlt.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 	import { aspectRatioToImageSize } from '$ts/constants/generationSize';

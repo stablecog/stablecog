@@ -265,67 +265,39 @@ export const aspectRatioToImageSize: {
 	};
 } = {
 	'1:1': {
-		'8002bc51-7260-468f-8840-cf1e6dbe3f8a': square.large,
-		'9fa49c00-109d-430f-9ddd-449f02e2c71a': square.large,
-		'3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7': square.large,
-		'4e54440f-ee17-4712-b4b6-0671b94d685d': square.large,
 		'b6c1372f-31a7-457c-907c-d292a6ffef97': square.medium,
-		'22b0857d-7edc-4d00-9cd9-45aa509db093': square.medium,
-		default: square.small
+		'f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9': square.small,
+		default: square.large
 	},
 	'4:5': {
-		'8002bc51-7260-468f-8840-cf1e6dbe3f8a': squarish.large,
-		'9fa49c00-109d-430f-9ddd-449f02e2c71a': squarish.large,
-		'3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7': squarish.large,
-		'4e54440f-ee17-4712-b4b6-0671b94d685d': squarish.large,
 		'b6c1372f-31a7-457c-907c-d292a6ffef97': squarish.medium,
-		'22b0857d-7edc-4d00-9cd9-45aa509db093': squarish.medium,
-		default: squarish.small
+		'f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9': squarish.small,
+		default: squarish.large
 	},
 	'2:3': {
-		'8002bc51-7260-468f-8840-cf1e6dbe3f8a': portrait.large,
-		'9fa49c00-109d-430f-9ddd-449f02e2c71a': portrait.large,
-		'3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7': portrait.large,
-		'4e54440f-ee17-4712-b4b6-0671b94d685d': portrait.large,
 		'b6c1372f-31a7-457c-907c-d292a6ffef97': portrait.medium,
-		'22b0857d-7edc-4d00-9cd9-45aa509db093': portrait.medium,
-		default: portrait.small
+		'f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9': portrait.small,
+		default: portrait.large
 	},
 	'3:2': {
-		'8002bc51-7260-468f-8840-cf1e6dbe3f8a': landscape.large,
-		'9fa49c00-109d-430f-9ddd-449f02e2c71a': landscape.large,
-		'3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7': landscape.large,
-		'4e54440f-ee17-4712-b4b6-0671b94d685d': landscape.large,
 		'b6c1372f-31a7-457c-907c-d292a6ffef97': landscape.medium,
-		'22b0857d-7edc-4d00-9cd9-45aa509db093': landscape.medium,
-		default: landscape.small
+		'f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9': landscape.small,
+		default: landscape.large
 	},
 	'9:16': {
-		'8002bc51-7260-468f-8840-cf1e6dbe3f8a': mobile.large,
-		'9fa49c00-109d-430f-9ddd-449f02e2c71a': mobile.large,
-		'3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7': mobile.large,
-		'4e54440f-ee17-4712-b4b6-0671b94d685d': mobile.large,
 		'b6c1372f-31a7-457c-907c-d292a6ffef97': mobile.medium,
-		'22b0857d-7edc-4d00-9cd9-45aa509db093': mobile.medium,
-		default: mobile.small
+		'f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9': mobile.small,
+		default: mobile.large
 	},
 	'16:9': {
-		'8002bc51-7260-468f-8840-cf1e6dbe3f8a': desktop.large,
-		'9fa49c00-109d-430f-9ddd-449f02e2c71a': desktop.large,
-		'3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7': desktop.large,
-		'4e54440f-ee17-4712-b4b6-0671b94d685d': desktop.large,
 		'b6c1372f-31a7-457c-907c-d292a6ffef97': desktop.medium,
-		'22b0857d-7edc-4d00-9cd9-45aa509db093': desktop.medium,
-		default: desktop.small
+		'f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9': desktop.small,
+		default: desktop.large
 	},
 	'2.4:1': {
-		'8002bc51-7260-468f-8840-cf1e6dbe3f8a': anamorphic.large,
-		'9fa49c00-109d-430f-9ddd-449f02e2c71a': anamorphic.large,
-		'3fb1f6d9-c0d3-4ae4-adf4-77f8da78a6f7': anamorphic.large,
-		'4e54440f-ee17-4712-b4b6-0671b94d685d': anamorphic.large,
 		'b6c1372f-31a7-457c-907c-d292a6ffef97': anamorphic.medium,
-		'22b0857d-7edc-4d00-9cd9-45aa509db093': anamorphic.medium,
-		default: anamorphic.small
+		'f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9': anamorphic.small,
+		default: anamorphic.large
 	}
 };
 

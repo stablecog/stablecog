@@ -42,11 +42,13 @@ export const generationModels: {
 	},
 	'8acfe4c8-751d-4aa6-8c3c-844e3ef478e0': {
 		name: 'Openjourney',
-		supportedSchedulerIds: sdSharedSchedulerIds
+		supportedSchedulerIds: sdSharedSchedulerIds,
+		active: false
 	},
 	'eaa438e1-dbf9-48fd-be71-206f0f257617': {
 		name: 'Redshift Diffusion',
-		supportedSchedulerIds: sdSharedSchedulerIds
+		supportedSchedulerIds: sdSharedSchedulerIds,
+		active: false
 	},
 	'8002bc51-7260-468f-8840-cf1e6dbe3f8a': {
 		name: 'SDXL',
@@ -54,7 +56,8 @@ export const generationModels: {
 	},
 	'22b0857d-7edc-4d00-9cd9-45aa509db093': {
 		name: 'Kandinsky',
-		supportedSchedulerIds: kandinskySchedulerIds
+		supportedSchedulerIds: kandinskySchedulerIds,
+		active: false
 	},
 	'9fa49c00-109d-430f-9ddd-449f02e2c71a': {
 		name: 'Kandinsky 2.2',
@@ -80,6 +83,10 @@ export const generationModels: {
 	},
 	'4e54440f-ee17-4712-b4b6-0671b94d685d': {
 		name: 'SSD-1B',
+		supportedSchedulerIds: sdSharedSchedulerIds
+	},
+	'986d447d-c38b-4218-a2c8-6e0b691f47ec': {
+		name: 'Stable Diffusion 3',
 		supportedSchedulerIds: sdSharedSchedulerIds
 	}
 } as const;
@@ -108,6 +115,11 @@ export const availableModelIdDropdownItems = derived(
 	($modelIdToDisplayName) => {
 		const items: TTab<TAvailableGenerationModelId>[] = [
 			{
+				label: $modelIdToDisplayName['986d447d-c38b-4218-a2c8-6e0b691f47ec'],
+				value: '986d447d-c38b-4218-a2c8-6e0b691f47ec',
+				isNew: true
+			},
+			{
 				label: $modelIdToDisplayName['9fa49c00-109d-430f-9ddd-449f02e2c71a'],
 				value: '9fa49c00-109d-430f-9ddd-449f02e2c71a'
 			},
@@ -117,8 +129,7 @@ export const availableModelIdDropdownItems = derived(
 			},
 			{
 				label: $modelIdToDisplayName['4e54440f-ee17-4712-b4b6-0671b94d685d'],
-				value: '4e54440f-ee17-4712-b4b6-0671b94d685d',
-				isNew: true
+				value: '4e54440f-ee17-4712-b4b6-0671b94d685d'
 			},
 			{
 				label: $modelIdToDisplayName['b6c1372f-31a7-457c-907c-d292a6ffef97'],
