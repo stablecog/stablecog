@@ -92,7 +92,7 @@ export const generationModels: {
 } as const;
 
 export const generationModelIdDefault: TAvailableGenerationModelId =
-	'9fa49c00-109d-430f-9ddd-449f02e2c71a';
+	'986d447d-c38b-4218-a2c8-6e0b691f47ec';
 
 export const availableGenerationModelIds = Object.keys(generationModels).filter(
 	(k) => generationModels[k].active !== false
