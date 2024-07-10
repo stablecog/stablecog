@@ -267,36 +267,43 @@ export const aspectRatioToImageSize: {
 	'1:1': {
 		'b6c1372f-31a7-457c-907c-d292a6ffef97': square.medium,
 		'f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9': square.small,
+		'fc06f6ab-ed14-4186-a7c0-aaec288d4f38': square.small,
 		default: square.large
 	},
 	'4:5': {
 		'b6c1372f-31a7-457c-907c-d292a6ffef97': squarish.medium,
 		'f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9': squarish.small,
+		'fc06f6ab-ed14-4186-a7c0-aaec288d4f38': squarish.small,
 		default: squarish.large
 	},
 	'2:3': {
 		'b6c1372f-31a7-457c-907c-d292a6ffef97': portrait.medium,
 		'f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9': portrait.small,
+		'fc06f6ab-ed14-4186-a7c0-aaec288d4f38': portrait.small,
 		default: portrait.large
 	},
 	'3:2': {
 		'b6c1372f-31a7-457c-907c-d292a6ffef97': landscape.medium,
 		'f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9': landscape.small,
+		'fc06f6ab-ed14-4186-a7c0-aaec288d4f38': landscape.small,
 		default: landscape.large
 	},
 	'9:16': {
 		'b6c1372f-31a7-457c-907c-d292a6ffef97': mobile.medium,
 		'f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9': mobile.small,
+		'fc06f6ab-ed14-4186-a7c0-aaec288d4f38': mobile.small,
 		default: mobile.large
 	},
 	'16:9': {
 		'b6c1372f-31a7-457c-907c-d292a6ffef97': desktop.medium,
 		'f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9': desktop.small,
+		'fc06f6ab-ed14-4186-a7c0-aaec288d4f38': desktop.small,
 		default: desktop.large
 	},
 	'2.4:1': {
 		'b6c1372f-31a7-457c-907c-d292a6ffef97': anamorphic.medium,
 		'f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9': anamorphic.small,
+		'fc06f6ab-ed14-4186-a7c0-aaec288d4f38': anamorphic.small,
 		default: anamorphic.large
 	}
 };

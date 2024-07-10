@@ -84,11 +84,11 @@ export const generationModels: {
 	'4e54440f-ee17-4712-b4b6-0671b94d685d': {
 		name: 'SSD-1B',
 		supportedSchedulerIds: sdSharedSchedulerIds
-	}
-	/* '986d447d-c38b-4218-a2c8-6e0b691f47ec': {
+	},
+	'986d447d-c38b-4218-a2c8-6e0b691f47ec': {
 		name: 'Stable Diffusion 3',
 		supportedSchedulerIds: sdSharedSchedulerIds
-	} */
+	}
 } as const;
 
 export const generationModelIdDefault: TAvailableGenerationModelId =
@@ -114,6 +114,10 @@ export const availableModelIdDropdownItems = derived(
 	modelIdToDisplayName,
 	($modelIdToDisplayName) => {
 		const items: TTab<TAvailableGenerationModelId>[] = [
+			{
+				label: $modelIdToDisplayName['986d447d-c38b-4218-a2c8-6e0b691f47ec'],
+				value: '986d447d-c38b-4218-a2c8-6e0b691f47ec'
+			},
 			{
 				label: $modelIdToDisplayName['9fa49c00-109d-430f-9ddd-449f02e2c71a'],
 				value: '9fa49c00-109d-430f-9ddd-449f02e2c71a'
