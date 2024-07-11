@@ -118,7 +118,6 @@ export function getGalleryInfiniteQueryProps({
 			if (!lastPage.next) return undefined;
 			return lastPage.next;
 		},
-		initialPageParam: undefined,
-		refetchOnMount: false
+		initialPageParam: undefined
 	};
 }

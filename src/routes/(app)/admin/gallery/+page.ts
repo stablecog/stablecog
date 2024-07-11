@@ -1,24 +1,8 @@
-import type { QueryClient } from '@tanstack/svelte-query';
-import type { Session } from '@supabase/supabase-js';
-import type { TUserSummary } from '$ts/stores/user/summary';
-import type { PageLoad } from './$types';
-import { isSuperAdmin } from '$ts/helpers/admin/roles';
-import {
-	getAdminFullOutputsQueryKey,
-	getAdminFullOutputsQueryProps
-} from '$routes/(app)/admin/gallery/constants';
-import { TGalleryStatusSchema } from '$ts/stores/user/generation';
-import { adminGalleryCurrentFilterDefault } from '$ts/stores/admin/gallery';
 import { getGalleryLikeParamsFromSearchParams } from '$ts/helpers/galleryLike';
+import { adminGalleryCurrentFilterDefault } from '$ts/stores/admin/gallery';
+import { TGalleryStatusSchema } from '$ts/stores/user/generation';
 
-interface TParent {
-	queryClient: QueryClient;
-	session: Session | null | undefined;
-	userSummary: TUserSummary | null | undefined;
-}
-
-export const load: PageLoad = async ({ parent, url }) => {
-	const { queryClient, session, userSummary } = (await parent()) as TParent;
+export const load = async ({ url }) => {
 	const viewParam = url.searchParams.get('view');
 	const view = TGalleryStatusSchema.safeParse(viewParam).success
 		? TGalleryStatusSchema.parse(viewParam)
@@ -26,29 +10,6 @@ export const load: PageLoad = async ({ parent, url }) => {
 	const usernameFiltersQuery = url.searchParams.get('un');
 	const usernameFilters = usernameFiltersQuery?.split(',') || [];
 	const galleryLikeParams = getGalleryLikeParamsFromSearchParams(url.searchParams);
-	const sharedQueryParams = {
-		...galleryLikeParams,
-		usernameFilters,
-		adminGalleryCurrentFilter: view
-	};
-	const hasInitialData =
-		queryClient.getQueryData(
-			getAdminFullOutputsQueryKey({
-				...sharedQueryParams
-			})
-		) !== undefined;
-	if (session && userSummary && !hasInitialData && isSuperAdmin(userSummary.roles)) {
-		try {
-			await queryClient.prefetchInfiniteQuery(
-				getAdminFullOutputsQueryProps({
-					...sharedQueryParams,
-					session
-				})
-			);
-		} catch (error) {
-			console.log(error);
-		}
-	}
 	return {
 		...galleryLikeParams,
 		usernameFilters,

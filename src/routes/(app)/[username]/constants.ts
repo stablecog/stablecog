@@ -78,7 +78,6 @@ export function getUserProfileProfileInfiniteQueryProps({
 			if (!lastPage.next) return undefined;
 			return lastPage.next;
 		},
-		initialPageParam: undefined,
-		refetchOnMount: false
+		initialPageParam: undefined
 	};
 }
