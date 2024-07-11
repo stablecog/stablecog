@@ -235,7 +235,7 @@
 					estimateSize: (i) => {
 						const width = ((gridScrollContainerWidth as number) - horizontalPadding) / cols;
 						const height = (width * outputs![i].generation.height) / outputs![i].generation.width;
-						return height;
+						return height + extraHeightForInfo;
 					}
 				})
 			: createWindowVirtualizer({
@@ -243,7 +243,7 @@
 					estimateSize: (i) => {
 						const width = (window.innerWidth - horizontalPadding) / cols;
 						const height = (width * outputs![i].generation.height) / outputs![i].generation.width;
-						return height;
+						return height + extraHeightForInfo;
 					}
 				});
 	}

@@ -65,7 +65,9 @@
 	<div class="flex w-full flex-row items-start justify-between">
 		<ToC toc={data.metadata.toc} {activeId} />
 		<article class="flex min-w-0 flex-1 flex-col items-center justify-start pt-8 lg:px-16">
-			<h1 class="w-full max-w-2.5xl px-3 text-center text-[2rem] font-bold leading-[1.35] md:px-5">
+			<h1
+				class="w-full max-w-2.5xl text-balance px-3 text-center text-[2rem] font-bold leading-[1.35] md:px-5"
+			>
 				{data.metadata.title}
 			</h1>
 			<time

@@ -1,17 +1,16 @@
 <script lang="ts">
 	import { afterNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
+	import IconBolt from '$components/icons/IconBolt.svelte';
 	import Banner from '$components/navigation/navbar/Banner.svelte';
+	import { canonicalUrl } from '$ts/constants/main';
 	import { lastClosedNotification } from '$ts/stores/lastClosedNotification';
 	import { onMount } from 'svelte';
-	import IconCart from '$components/icons/IconCart.svelte';
-	import LL from '$i18n/i18n-svelte';
-	import { canonicalUrl } from '$ts/constants/main';
 
 	export let canShow = true;
 
-	const lastNotification = 'first-month-30-off';
-	const href = '/pricing#plan-starter';
+	const lastNotification = 'stable-diffusion-3-medium';
+	const href = '/blog/stable-diffusion-3-medium-the-successor-to-sdxl';
 	const pathname = new URL(canonicalUrl + href).pathname;
 
 	let mounted = false;
@@ -36,9 +35,9 @@
 		}}
 	>
 		<div class="flex items-center justify-center gap-2">
-			<IconCart class="h-6 w-6 flex-shrink-0" />
+			<IconBolt class="h-6 w-6 flex-shrink-0" />
 			<p class="min-w-0 flex-shrink overflow-hidden overflow-ellipsis">
-				{$LL.Pricing.Discounts.FirstMonth30OffParagraph()}
+				Stable Diffusion 3 is now available!
 			</p>
 		</div>
 	</Banner>

@@ -18,7 +18,7 @@
 
 <PageWrapper>
 	<div class="flex w-full max-w-7xl justify-center text-center">
-		<h1 class="text-4xl font-bold">{$LL.Blog.TitleAlt()}</h1>
+		<h1 class="text-balance text-4xl font-bold">{$LL.Blog.TitleAlt()}</h1>
 	</div>
 	<ul class="-mx-5 mt-6 flex w-[100%+2.5rem] max-w-6xl flex-wrap items-start justify-center">
 		<li class="w-full max-w-lg p-2 md:max-w-full">

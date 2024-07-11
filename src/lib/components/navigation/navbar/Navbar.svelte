@@ -67,7 +67,7 @@
 		: 'bg-c-bg shadow-navbar'}"
 >
 	{#if showBanner}
-		<BannerWrapper canShow={$userSummary && $userSummary.purchase_count > 0 ? false : true} />
+		<BannerWrapper />
 	{/if}
 	<div class="relative z-0 flex w-full flex-row items-center justify-between">
 		<PageLoadProgressBar />

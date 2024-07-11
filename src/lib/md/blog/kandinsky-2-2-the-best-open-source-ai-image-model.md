@@ -14,7 +14,7 @@ tags: Kandinsky 2.2, Kandinsky, Text to Image, Stable Diffusion, Models, AI
 
 The [team](https://github.com/ai-forever/Kandinsky-2#authors) behind Kandinsky released their latest model 2 days ago: [Kandinsky 2.2](https://github.com/ai-forever/Kandinsky-2). Kandinsky is known for its creativity and artistic results but with the new update, it seems to be going more towards realism by default. It offers a higher base resolution (1024x1024), supports [ControlNet](https://github.com/lllyasviel/ControlNet), produces wider scenes, and more detail in general. All while being released under a permissive, open-source license. Let's take a look at what it offers.
 
-## More Realistic 2.1
+## More Realistic
 
 [Kandinsky 2.1](https://stablecog.com/blog/kandinsky-v2-1-open-source-midjourney-alternative) is a very creative model that produces interesting art. Although it can produce realistic images, it is not its strong suit. [Kandinsky 2.2](https://github.com/ai-forever/Kandinsky-2) takes a similar approach to Midjourney v5 and goes more towards realism. It is still capable of producing creative images, but if you give no direction, it tends to produce realistic images by default.
 
