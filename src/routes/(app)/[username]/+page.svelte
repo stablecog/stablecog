@@ -2,6 +2,8 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import Avatar from '$components/avatar/Avatar.svelte';
+	import GalleryLikeGridWrapper from '$components/galleryLike/GalleryLikeGridWrapper.svelte';
+	import GalleryLikeLoadingPlaceholder from '$components/galleryLike/GalleryLikeLoadingPlaceholder.svelte';
 	import SearchAndFilterBar from '$components/galleryLike/SearchAndFilterBar.svelte';
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import {
@@ -265,27 +267,12 @@
 			/>
 		</div>
 	</div>
-	<div class="relative flex w-full flex-1 flex-col pb-3 pt-1 md:pt-3">
+	<GalleryLikeGridWrapper
+		class="relative flex w-full flex-1 flex-col pb-3 pt-1 md:pt-3"
+		let:canShowLoader
+	>
 		{#if $galleryGenerationFullOutputsQuery?.isLoading}
-			<div
-				class="flex w-full flex-1 flex-col items-center justify-center px-4 py-6 text-center text-c-on-bg/60"
-			>
-				<div
-					in:scale={{
-						duration: 200,
-						easing: quadOut,
-						opacity: 0,
-						start: 0.5
-					}}
-					class="h-12 w-12"
-				>
-					<IconAnimatedSpinner class="h-full w-full" />
-				</div>
-				<p class="mt-2 opacity-0">
-					{$LL.Gallery.SearchingTitle()}
-				</p>
-				<div class="h-[2vh]" />
-			</div>
+			<GalleryLikeLoadingPlaceholder {canShowLoader} />
 		{:else if $galleryGenerationFullOutputsQuery?.isError || ($galleryGenerationFullOutputsQuery?.data && !$galleryGenerationFullOutputsQuery?.data?.pages)}
 			<div class="flex w-full flex-1 flex-col items-center px-5 py-8">
 				<div class="my-auto flex flex-col items-center gap-2">
@@ -325,7 +312,7 @@
 				/>
 			</div>
 		{/if}
-	</div>
+	</GalleryLikeGridWrapper>
 </div>
 
 {#if $activeGeneration && $galleryGenerationFullOutputsQuery?.isLoading === false}

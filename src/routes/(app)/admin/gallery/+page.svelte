@@ -4,6 +4,7 @@
 	import SignInCard from '$components/cards/SignInCard.svelte';
 	import BatchEditBar from '$components/galleryLike/BatchEditBar.svelte';
 	import GalleryLikeGridWrapper from '$components/galleryLike/GalleryLikeGridWrapper.svelte';
+	import GalleryLikeLoadingPlaceholder from '$components/galleryLike/GalleryLikeLoadingPlaceholder.svelte';
 	import GalleryLikePageWrapper from '$components/galleryLike/GalleryLikePageWrapper.svelte';
 	import GalleryLikeTitleSection from '$components/galleryLike/GalleryLikeTitleSection.svelte';
 	import SearchAndFilterBar from '$components/galleryLike/SearchAndFilterBar.svelte';
@@ -268,15 +269,9 @@
 				<BatchEditBar type="admin-gallery" />
 			</div>
 		{/if}
-		<GalleryLikeGridWrapper>
+		<GalleryLikeGridWrapper let:canShowLoader>
 			{#if adminFullOutputsQuery === undefined || $adminFullOutputsQuery === undefined || $adminFullOutputsQuery.isLoading}
-				<div
-					class="flex w-full flex-1 flex-col items-center justify-center px-4 py-6 text-center text-c-on-bg/60"
-				>
-					<IconAnimatedSpinner class="h-12 w-12" />
-					<p class="mt-2 opacity-0">{$LL.Gallery.SearchingTitle()}</p>
-					<div class="h-[2vh]" />
-				</div>
+				<GalleryLikeLoadingPlaceholder {canShowLoader} />
 			{:else if $adminFullOutputsQuery?.data?.pages?.length === 1 && $adminFullOutputsQuery.data.pages[0].outputs.length === 0}
 				<div class="flex w-full flex-1 flex-col items-center px-5 py-8">
 					<div class="my-auto flex flex-col items-center gap-2 text-center text-c-on-bg/50">

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import GalleryLikeGridWrapper from '$components/galleryLike/GalleryLikeGridWrapper.svelte';
+	import GalleryLikeLoadingPlaceholder from '$components/galleryLike/GalleryLikeLoadingPlaceholder.svelte';
 	import GalleryLikePageWrapper from '$components/galleryLike/GalleryLikePageWrapper.svelte';
 	import GalleryLikeTitleSection from '$components/galleryLike/GalleryLikeTitleSection.svelte';
 	import SearchAndFilterBar from '$components/galleryLike/SearchAndFilterBar.svelte';
@@ -198,27 +199,9 @@
 			/>
 		</div>
 	</GalleryLikeTitleSection>
-	<GalleryLikeGridWrapper>
+	<GalleryLikeGridWrapper let:canShowLoader>
 		{#if $galleryGenerationFullOutputsQuery?.isLoading}
-			<div
-				class="flex w-full flex-1 flex-col items-center justify-center px-4 py-6 text-center text-c-on-bg/60"
-			>
-				<div
-					in:scale={{
-						duration: 200,
-						easing: quadOut,
-						opacity: 0,
-						start: 0.5
-					}}
-					class="h-12 w-12"
-				>
-					<IconAnimatedSpinner class="h-full w-full" />
-				</div>
-				<p class="mt-2 opacity-0">
-					{$LL.Gallery.SearchingTitle()}
-				</p>
-				<div class="h-[2vh]" />
-			</div>
+			<GalleryLikeLoadingPlaceholder {canShowLoader} />
 		{:else if $galleryGenerationFullOutputsQuery?.isError || ($galleryGenerationFullOutputsQuery?.data && !$galleryGenerationFullOutputsQuery?.data?.pages)}
 			<div class="flex w-full flex-1 flex-col items-center px-5 py-8">
 				<div class="my-auto flex flex-col items-center gap-2">

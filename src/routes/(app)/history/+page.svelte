@@ -3,6 +3,7 @@
 	import SignInCard from '$components/cards/SignInCard.svelte';
 	import BatchEditBar from '$components/galleryLike/BatchEditBar.svelte';
 	import GalleryLikeGridWrapper from '$components/galleryLike/GalleryLikeGridWrapper.svelte';
+	import GalleryLikeLoadingPlaceholder from '$components/galleryLike/GalleryLikeLoadingPlaceholder.svelte';
 	import GalleryLikePageWrapper from '$components/galleryLike/GalleryLikePageWrapper.svelte';
 	import GalleryLikeTitleSection from '$components/galleryLike/GalleryLikeTitleSection.svelte';
 	import SearchAndFilterBar from '$components/galleryLike/SearchAndFilterBar.svelte';
@@ -243,65 +244,65 @@
 				<BatchEditBar type="history" />
 			</div>
 		{/if}
-		<GalleryLikeGridWrapper>
-			{#if historyFullOutputsQuery !== undefined}
-				{#if $historyFullOutputsQuery?.isError || ($historyFullOutputsQuery?.data && !$historyFullOutputsQuery?.data?.pages)}
-					<div class="flex w-full flex-1 flex-col items-center px-5 py-8">
-						<div class="my-auto flex flex-col items-center gap-2">
-							<IconSadFace class="h-16 w-16 text-c-on-bg/50" />
-							<p class="text-c-on-bg/50">{$LL.Error.SomethingWentWrong()}</p>
-						</div>
+		<GalleryLikeGridWrapper let:canShowLoader>
+			{#if $historyFullOutputsQuery?.isLoading}
+				<GalleryLikeLoadingPlaceholder {canShowLoader} />
+			{:else if $historyFullOutputsQuery?.isError || ($historyFullOutputsQuery?.data && !$historyFullOutputsQuery?.data?.pages)}
+				<div class="flex w-full flex-1 flex-col items-center px-5 py-8">
+					<div class="my-auto flex flex-col items-center gap-2">
+						<IconSadFace class="h-16 w-16 text-c-on-bg/50" />
+						<p class="text-c-on-bg/50">{$LL.Error.SomethingWentWrong()}</p>
 					</div>
-				{:else if $historyFullOutputsQuery?.data?.pages.length === 1 && $historyFullOutputsQuery.data.pages[0].outputs.length === 0}
-					<div class="flex w-full flex-1 flex-col items-center px-5 py-8">
-						<div class="my-auto flex flex-col items-center gap-6">
-							<div class="-mb-3 flex items-center justify-center">
-								{#if $userGalleryCurrentView === 'likes'}
-									<IconHeartOutlined class="h-16 w-16 text-c-on-bg/50" />
-								{:else if $userGalleryCurrentView === 'favorites'}
-									<IconStarOutlined class="h-16 w-16 text-c-on-bg/50" />
-								{:else}
-									<IconImage class="h-16 w-16 text-c-on-bg/50" />
-								{/if}
-							</div>
-							<p class="text-center text-c-on-bg/50">
-								{$userGalleryCurrentView === 'likes'
-									? $LL.History.NoLikesYet()
-									: $userGalleryCurrentView === 'favorites'
-										? $LL.History.NoFavoritesYet()
-										: $LL.History.NoGenerationsYet()}
-							</p>
-							{#if $userGalleryCurrentView === 'all'}
-								<Button href="/generate">{$LL.Shared.StartGeneratingButton()}</Button>
+				</div>
+			{:else if $historyFullOutputsQuery?.data?.pages.length === 1 && $historyFullOutputsQuery.data.pages[0].outputs.length === 0}
+				<div class="flex w-full flex-1 flex-col items-center px-5 py-8">
+					<div class="my-auto flex flex-col items-center gap-6">
+						<div class="-mb-3 flex items-center justify-center">
+							{#if $userGalleryCurrentView === 'likes'}
+								<IconHeartOutlined class="h-16 w-16 text-c-on-bg/50" />
+							{:else if $userGalleryCurrentView === 'favorites'}
+								<IconStarOutlined class="h-16 w-16 text-c-on-bg/50" />
+							{:else}
+								<IconImage class="h-16 w-16 text-c-on-bg/50" />
 							{/if}
-							<div class="h-[1vh]" />
 						</div>
+						<p class="text-center text-c-on-bg/50">
+							{$userGalleryCurrentView === 'likes'
+								? $LL.History.NoLikesYet()
+								: $userGalleryCurrentView === 'favorites'
+									? $LL.History.NoFavoritesYet()
+									: $LL.History.NoGenerationsYet()}
+						</p>
+						{#if $userGalleryCurrentView === 'all'}
+							<Button href="/generate">{$LL.Shared.StartGeneratingButton()}</Button>
+						{/if}
+						<div class="h-[1vh]" />
 					</div>
-				{:else if $windowWidth}
-					{#key $userGalleryCurrentView}
-						<GenerationGridInfiniteWrapper
-							key={$userGallerySearchString +
-								$userGalleryModelIdFilters.join(',') +
-								$userGalleryAspectRatioFilters.join(',')}
-						>
-							<GenerationGridInfinite
-								generationsQuery={historyFullOutputsQuery}
-								cardType="history"
-								cols={$windowWidth > xl3Breakpoint
-									? 7
-									: $windowWidth > xl2Breakpoint
-										? 6
-										: $windowWidth > xlBreakpoint
-											? 5
-											: $windowWidth > lgBreakpoint
-												? 4
-												: $windowWidth > mdBreakpoint
-													? 3
-													: 2}
-							/>
-						</GenerationGridInfiniteWrapper>
-					{/key}
-				{/if}
+				</div>
+			{:else if $windowWidth}
+				{#key $userGalleryCurrentView}
+					<GenerationGridInfiniteWrapper
+						key={$userGallerySearchString +
+							$userGalleryModelIdFilters.join(',') +
+							$userGalleryAspectRatioFilters.join(',')}
+					>
+						<GenerationGridInfinite
+							generationsQuery={historyFullOutputsQuery}
+							cardType="history"
+							cols={$windowWidth > xl3Breakpoint
+								? 7
+								: $windowWidth > xl2Breakpoint
+									? 6
+									: $windowWidth > xlBreakpoint
+										? 5
+										: $windowWidth > lgBreakpoint
+											? 4
+											: $windowWidth > mdBreakpoint
+												? 3
+												: 2}
+						/>
+					</GenerationGridInfiniteWrapper>
+				{/key}
 			{/if}
 		</GalleryLikeGridWrapper>
 	{/if}
