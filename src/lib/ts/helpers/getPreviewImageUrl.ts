@@ -9,7 +9,7 @@ export const getUserProfilePreviewImageUrlFromOutputId = (outputId: string, user
 };
 
 export const getPreviewImageUrlForUserProfile = (username: string) => {
-	return `${PUBLIC_OG_IMAGE_API_URL}/api/user/${username}/profile_preview.png`;
+	return `${PUBLIC_OG_IMAGE_API_URL}/api/user/${username}/profile-preview.png`;
 };
 
 export const getModelPreviewImageUrl = (modelId: string) => {
