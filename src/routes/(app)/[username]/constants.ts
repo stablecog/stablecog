@@ -1,12 +1,11 @@
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 import type { TAvailableAspectRatio } from '$ts/constants/generationSize';
-import { getUserProfileFullOutputs } from '$ts/queries/galleryLike/userProfileOutputs';
 import type {
 	TGalleryFullOutputsPage,
 	TGalleryLikeQueryProps
 } from '$ts/queries/galleryLike/types';
+import { getUserProfileFullOutputs } from '$ts/queries/galleryLike/userProfileOutputs';
 import { sessionAndUrlParamWritable } from '$ts/stores/sessionAndUrlParamStore';
-import type { FetchInfiniteQueryOptions } from '@tanstack/svelte-query';
 
 export const userProfileSearchString = sessionAndUrlParamWritable<string>(
 	'userProfileSearchString',

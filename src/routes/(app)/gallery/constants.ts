@@ -1,16 +1,8 @@
-import { getGalleryFullOutputs } from '$ts/queries/galleryLike/galleryOutputs';
-import type {
-	FetchInfiniteQueryOptions,
-	InfiniteData,
-	InfiniteQueryObserverOptions
-} from '@tanstack/svelte-query';
-import { sessionAndUrlParamWritable } from '$ts/stores/sessionAndUrlParamStore';
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 import type { TAvailableAspectRatio } from '$ts/constants/generationSize';
-import type {
-	TGalleryFullOutputsPage,
-	TGalleryLikeQueryProps
-} from '$ts/queries/galleryLike/types';
+import { getGalleryFullOutputs } from '$ts/queries/galleryLike/galleryOutputs';
+import type { TGalleryLikeQueryProps } from '$ts/queries/galleryLike/types';
+import { sessionAndUrlParamWritable } from '$ts/stores/sessionAndUrlParamStore';
 
 export const gallerySearchString = sessionAndUrlParamWritable<string>(
 	'gallerySearchString',

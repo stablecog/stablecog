@@ -15,7 +15,6 @@
 	} from '$components/generationFullScreen/constants';
 	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
 	import GenerationGridInfiniteWrapper from '$components/grids/GenerationGridInfiniteWrapper.svelte';
-	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconDocumentSearch from '$components/icons/IconDocumentSearch.svelte';
 	import IconMainSortView from '$components/icons/IconMainSortView.svelte';
 	import IconSadFace from '$components/icons/IconSadFace.svelte';
@@ -50,8 +49,6 @@
 	import type { TTab } from '$ts/types/main.js';
 	import { createInfiniteQuery } from '@tanstack/svelte-query';
 	import { onMount } from 'svelte';
-	import { quadOut } from 'svelte/easing';
-	import { scale } from 'svelte/transition';
 
 	export let data;
 
