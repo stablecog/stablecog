@@ -1,40 +1,39 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
+	import IconBrain from '$components/icons/IconBrain.svelte';
+	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
+	import IconDimensions from '$components/icons/IconDimensions.svelte';
+	import IconFilter from '$components/icons/IconFilter.svelte';
+	import IconImageSearch from '$components/icons/IconImageSearch.svelte';
+	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
+	import IconUserAlt from '$components/icons/IconUserAlt.svelte';
 	import SubtleButton from '$components/primitives/buttons/SubtleButton.svelte';
-	import LL, { locale } from '$i18n/i18n-svelte';
-	import { logGallerySearch, logHistorySearch } from '$ts/helpers/loggers';
-	import { advancedModeApp } from '$ts/stores/advancedMode';
-	import { appVersion } from '$ts/stores/appVersion';
-	import { isTouchscreen } from '$ts/stores/isTouchscreen';
-	import { userSummary } from '$ts/stores/user/summary';
-	import Input from '../primitives/Input.svelte';
-	import IconSearch from '../icons/IconSearch.svelte';
+	import TagButton from '$components/primitives/buttons/TagButton.svelte';
 	import TabLikeFilterDropdown from '$components/primitives/tabBars/TabLikeFilterDropdown.svelte';
+	import TabLikeInput from '$components/primitives/tabBars/TabLikeInput.svelte';
+	import Morpher from '$components/utils/Morpher.svelte';
+	import LL, { locale } from '$i18n/i18n-svelte';
 	import {
 		availableModelIdDropdownItems,
 		modelIdToDisplayName,
 		type TAvailableGenerationModelId
 	} from '$ts/constants/generationModels';
-	import Morpher from '$components/utils/Morpher.svelte';
-	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
-	import TagButton from '$components/primitives/buttons/TagButton.svelte';
-	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
-	import IconBrain from '$components/icons/IconBrain.svelte';
-	import { browser } from '$app/environment';
-	import { isUUID } from '$ts/helpers/uuid';
-	import IconImageSearch from '$components/icons/IconImageSearch.svelte';
-	import { quadOut } from 'svelte/easing';
-	import { fly } from 'svelte/transition';
-	import TabLikeInput from '$components/primitives/tabBars/TabLikeInput.svelte';
-	import IconUserAlt from '$components/icons/IconUserAlt.svelte';
-	import IconFilter from '$components/icons/IconFilter.svelte';
 	import {
 		aspectRatioDropdownItems,
-		aspectRatioTabs,
 		type TAvailableAspectRatio
 	} from '$ts/constants/generationSize';
-	import IconDimensions from '$components/icons/IconDimensions.svelte';
 	import { sessionStore } from '$ts/constants/supabase';
+	import { logGallerySearch, logHistorySearch } from '$ts/helpers/loggers';
+	import { isUUID } from '$ts/helpers/uuid';
+	import { advancedModeApp } from '$ts/stores/advancedMode';
+	import { appVersion } from '$ts/stores/appVersion';
+	import { isTouchscreen } from '$ts/stores/isTouchscreen';
+	import { userSummary } from '$ts/stores/user/summary';
+	import { quadOut } from 'svelte/easing';
+	import { fly } from 'svelte/transition';
+	import IconSearch from '../icons/IconSearch.svelte';
+	import Input from '../primitives/Input.svelte';
 
 	export let disabled = false;
 	export let searchString: string;

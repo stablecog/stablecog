@@ -395,7 +395,7 @@
 		{/if}
 	</div>
 {/if}
-{#if cardType === 'admin-gallery' && generation.init_image_url}
+{#if cardType === 'admin-gallery' && generation.prompt_strength !== undefined}
 	<!-- Admin gallery init image indicator -->
 	<div class="absolute -right-px -top-px rounded-bl-lg bg-c-bg-secondary pb-1.5 pl-1.5 pr-1 pt-1">
 		<IconGalleryFilled class="text-c-danger" />

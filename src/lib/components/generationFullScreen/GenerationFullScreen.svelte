@@ -477,7 +477,7 @@
 							cardType={modalType}
 						/>
 					{/key}
-					{#if modalType === 'admin-gallery' && generation.init_image_url}
+					{#if modalType === 'admin-gallery' && generation.prompt_strength !== undefined}
 						<div
 							class="absolute -left-px -top-px rounded-br-lg bg-c-bg-secondary pb-2 pl-1.75 pr-2 pt-1.75"
 						>
