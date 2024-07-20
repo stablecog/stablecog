@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import IconMinus from '$components/icons/IconMinus.svelte';
+	import Button from '$components/primitives/buttons/Button.svelte';
 	import MetaTag from '$components/utils/MetaTag.svelte';
 	import PageWrapper from '$components/wrappers/PageWrapper.svelte';
-	import Button from '$components/primitives/buttons/Button.svelte';
-	import IconMinus from '$components/icons/IconMinus.svelte';
 	import {
 		PUBLIC_STRIPE_PRICE_ID_LARGE_PACK,
 		PUBLIC_STRIPE_PRICE_ID_MEDIUM_PACK,
@@ -16,8 +16,7 @@
 		PUBLIC_STRIPE_PRODUCT_ID_MEGA_PACK,
 		PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION,
 		PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION,
-		PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION,
-		PUBLIC_STRIPE_PROMOTION_CODE_ID_FIRST_PURCHASE_30_OFF
+		PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
 	} from '$env/static/public';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import PlanCard from '$routes/(app)/pricing/PlanCard.svelte';
@@ -31,18 +30,19 @@
 		STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO,
 		freeDailyImageCount
 	} from '$ts/constants/stripePublic';
+	import { sessionStore } from '$ts/constants/supabase';
 	import { getCustomerPortalUrl } from '$ts/helpers/user/getCustomerPortalUrl.js';
 	import { isSignInModalOpen } from '$ts/stores/isSignInModalOpen.js';
 	import { userSummary } from '$ts/stores/user/summary';
-	import { sessionStore } from '$ts/constants/supabase';
-	import type { Readable } from 'svelte/motion';
 
 	export let data;
 
-	$: isFirstPurchase30Off = $userSummary && $userSummary.purchase_count > 0 ? false : true;
+	/* $: isFirstPurchase30Off = $userSummary && $userSummary.purchase_count > 0 ? false : true;
 	$: promotionCodeId = isFirstPurchase30Off
 		? PUBLIC_STRIPE_PROMOTION_CODE_ID_FIRST_PURCHASE_30_OFF
-		: undefined;
+		: undefined; */
+	$: isFirstPurchase30Off = false;
+	$: promotionCodeId = undefined;
 
 	let subscriptionCards: TSubscriptionCard[];
 	const getPaidSubscriptionFeatures = ({
@@ -380,6 +380,15 @@
 		promotionCodeId?: string;
 	}) {
 		selectedPriceId = priceId;
+		let body: Record<string, string> = {
+			target_price_id: priceId,
+			success_url: `${window.location.origin}/pricing/purchase/succeeded`,
+			cancel_url: `${window.location.origin}/pricing/purchase/cancelled`,
+			currency
+		};
+		if (promotionCodeId) {
+			body.promotion_code_id = promotionCodeId;
+		}
 		try {
 			checkoutCreationStatus = 'loading';
 			const res = await fetch(`${apiUrl.origin}/v1/user/subscription/checkout`, {
@@ -388,13 +397,7 @@
 					'Content-Type': 'application/json',
 					Authorization: `Bearer ${$sessionStore?.access_token}`
 				},
-				body: JSON.stringify({
-					target_price_id: priceId,
-					success_url: `${window.location.origin}/pricing/purchase/succeeded`,
-					cancel_url: `${window.location.origin}/pricing/purchase/cancelled`,
-					promotion_code_id: promotionCodeId,
-					currency
-				})
+				body: JSON.stringify(body)
 			});
 			const resJson: TCheckoutSessionRes = await res.json();
 			if (resJson.error) {
