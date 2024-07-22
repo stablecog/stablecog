@@ -1,8 +1,14 @@
 <script lang="ts">
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
+	import IconCancel from '$components/icons/IconCancel.svelte';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
+	import IconFilter from '$components/icons/IconFilter.svelte';
+	import IconSettings from '$components/icons/IconSettings.svelte';
 	import SubtleButton from '$components/primitives/buttons/SubtleButton.svelte';
+	import TabLikeFilterDropdown from '$components/primitives/tabBars/TabLikeFilterDropdown.svelte';
+	import TabLikeToggle from '$components/primitives/tabBars/TabLikeToggle.svelte';
 	import { PUBLIC_LOKI_HOST } from '$env/static/public';
+	import type { TTab } from '$ts/types/main';
 	import { onMount } from 'svelte';
 	import {
 		ArrayQueue,
@@ -17,8 +23,37 @@
 	let ws: Websocket | undefined;
 	const lokiWebsocketEndpoint = `wss://${PUBLIC_LOKI_HOST}/loki/api/v1/tail?query={logger="root"}&limit=${initialMessageCount}`;
 	let messages: ReceivedMessage[] = [];
+	let workerNames: string[] = [];
 	let scrollContainer: HTMLDivElement;
-	const isAtTheBottomThreshold = 50;
+	const isAtTheEdgeThreshold = 50;
+	let showWorkerNames = false;
+	let showSettings = false;
+
+	let filterOptions: TTab<string>[];
+	let filterValues: string[] = [];
+
+	$: filterOptions = [
+		...workerNames.map((workerName) => ({ value: workerName, label: workerName }))
+	];
+
+	$: filteredMessages =
+		filterValues.length === 0 ||
+		arrayIncludesAll(
+			filterValues,
+			filterOptions.map((option) => option.value)
+		)
+			? messages
+			: messages
+					.map((message) => {
+						const filteredStreams = message.streams.filter((stream) => {
+							return filterValues.includes(stream.stream.worker_name);
+						});
+						if (filteredStreams.length === 0) {
+							return null;
+						}
+						return { ...message, streams: filteredStreams };
+					})
+					.filter((message) => message !== null);
 
 	type Stream = {
 		logger: string;
@@ -43,7 +78,15 @@
 		}
 	}
 
+	function scrollToTop() {
+		if (scrollContainer) {
+			scrollContainer.scrollTop = 0;
+			scrollContainer.scrollLeft = 0;
+		}
+	}
+
 	let isAtBottom = true;
+	let isAtTheTop = false;
 	let lastSeenItemTimestamp = 0;
 	let lastTimestamp = 0;
 
@@ -51,13 +94,22 @@
 		if (scrollContainer) {
 			const maxScroll = scrollContainer.scrollHeight - scrollContainer.clientHeight;
 			const currentScroll = scrollContainer.scrollTop;
-			return maxScroll - currentScroll < isAtTheBottomThreshold;
+			return maxScroll - currentScroll < isAtTheEdgeThreshold;
+		}
+		return true;
+	}
+
+	function getIsAtTop() {
+		if (scrollContainer) {
+			const currentScroll = scrollContainer.scrollTop;
+			return currentScroll < isAtTheEdgeThreshold;
 		}
 		return true;
 	}
 
 	function scrollContainerOnScroll() {
 		isAtBottom = getIsAtBottom();
+		isAtTheTop = getIsAtTop();
 		if (isAtBottom) {
 			lastSeenItemTimestamp = getLastTimestamp(messages);
 		}
@@ -87,6 +139,14 @@
 		return Number(lastValue[0]);
 	}
 
+	function arrayIncludesAll<T>(array: T[], subset: T[]): boolean {
+		return subset.every((element) => array.includes(element));
+	}
+
+	function toggleSettings() {
+		showSettings = !showSettings;
+	}
+
 	onMount(() => {
 		ws = new WebsocketBuilder(lokiWebsocketEndpoint)
 			.withBuffer(new ArrayQueue()) // buffer messages when disconnected
@@ -101,6 +161,12 @@
 				return;
 			}
 			let wasAtBottom = getIsAtBottom();
+			for (let i = 0; i < messageAsReceived.streams.length; i++) {
+				const stream = messageAsReceived.streams[i];
+				if (!workerNames.includes(stream.stream.worker_name)) {
+					workerNames = [...workerNames, stream.stream.worker_name];
+				}
+			}
 			messages = [...messages, messageAsReceived].slice(-maxMessages);
 			lastTimestamp = getLastTimestamp(messages);
 			if (wasAtBottom) {
@@ -129,6 +195,19 @@
 <div
 	class="z-10 flex flex-1 flex-col items-center justify-start px-2 pb-6 pt-2 md:px-6 md:pb-6 md:pt-4"
 >
+	<div
+		class="mb-3.5 flex w-full flex-wrap items-center justify-center gap-3 {!showSettings &&
+			'hidden'}"
+	>
+		<TabLikeFilterDropdown
+			nameIcon={IconFilter}
+			name="Filter Workers"
+			bind:values={filterValues}
+			items={filterOptions}
+			class="w-full md:w-auto"
+		/>
+		<TabLikeToggle class="w-full md:w-auto" text="Worker Names" bind:isToggled={showWorkerNames} />
+	</div>
 	<div class="relative flex w-full max-w-4xl flex-1 flex-col items-center justify-start">
 		<div
 			class="absolute left-0 top-0 flex h-full w-full flex-col overflow-hidden rounded-lg bg-c-bg ring-2 ring-c-bg-secondary"
@@ -138,30 +217,73 @@
 				bind:this={scrollContainer}
 				class="flex w-full flex-1 flex-col overflow-auto px-4 py-3"
 			>
-				{#each messages as message}
-					{#each message.streams as stream}
-						{#each stream.values as value}
-							<p class="flex w-full whitespace-pre py-0.5 text-left font-mono text-xs">
-								<span class="pr-4 text-c-on-bg/50">
-									{getTimeString(value[0])}
-								</span>
-								{value[1]}
-							</p>
+				{#if messages.length > 0}
+					{#each filteredMessages as message}
+						{#each message.streams as stream}
+							{#each stream.values as value}
+								<p class="flex w-full whitespace-pre py-0.5 text-left font-mono text-xs">
+									<span class="pr-4 text-c-on-bg/50">
+										{getTimeString(value[0])}
+									</span>
+									{#if showWorkerNames}
+										<span class="pr-4 text-c-secondary/75">
+											{stream.stream.worker_name}
+										</span>
+									{/if}
+									{value[1]}
+								</p>
+							{/each}
 						{/each}
+					{:else}
+						<p class="m-auto text-c-on-bg/50">No matching logs.</p>
 					{/each}
 				{:else}
 					<IconAnimatedSpinner class="m-auto size-10 text-c-on-bg/50" />
-				{/each}
+				{/if}
 			</div>
-			<!-- Buttons -->
+			<!-- Settings Button -->
 			<div
-				class="pointer-events-none absolute bottom-0 left-0 flex w-full transform items-end justify-center bg-gradient-to-b from-c-bg/0 to-c-bg p-2 transition {isAtBottom
-					? 'translate-y-15'
+				class="pointer-events-none absolute left-0 top-0 z-10 flex w-full transform items-start justify-end p-2"
+			>
+				<SubtleButton
+					size="sm"
+					noPadding
+					class="pointer-events-auto p-1.5"
+					onClick={toggleSettings}
+				>
+					<div class="size-5">
+						<IconSettings
+							class="h-full w-full transition {showSettings
+								? 'rotate-90 opacity-0'
+								: 'rotate-0 opacity-100'}"
+						/>
+						<IconCancel
+							class="absolute left-0 top-0 h-full w-full transition {showSettings
+								? 'rotate-90 opacity-100'
+								: 'rotate-0 opacity-0'}"
+						/>
+					</div>
+				</SubtleButton>
+			</div>
+			<!-- Top Buttons -->
+			<div
+				class="pointer-events-none absolute left-0 top-0 flex w-full transform items-end justify-center bg-gradient-to-t from-c-bg/0 from-[50%] to-c-bg p-2 transition {isAtTheTop
+					? '-translate-y-13'
+					: ''}"
+			>
+				<SubtleButton noPadding class="pointer-events-auto p-1.5" onClick={scrollToTop}>
+					<IconChevronDown class="size-5 rotate-180" />
+				</SubtleButton>
+			</div>
+			<!-- Bottom Buttons -->
+			<div
+				class="pointer-events-none absolute bottom-0 left-0 flex w-full transform items-end justify-center bg-gradient-to-b from-c-bg/0 from-[50%] to-c-bg p-2 transition {isAtBottom
+					? 'translate-y-13'
 					: ''}"
 			>
 				<div class="relative">
 					<SubtleButton noPadding class="pointer-events-auto p-1.5" onClick={scrollToBottom}>
-						<IconChevronDown class="size-6" />
+						<IconChevronDown class="size-5" />
 					</SubtleButton>
 					<div
 						class="pointer-events-none absolute -right-1 -top-1 size-2.5 transform rounded-full bg-c-danger transition {lastTimestamp >
