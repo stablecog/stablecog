@@ -138,24 +138,20 @@
 				bind:this={scrollContainer}
 				class="flex w-full flex-1 flex-col overflow-auto px-4 py-3"
 			>
-				{#if messages.length > 0}
-					{#each messages as message}
-						{#each message.streams as stream}
-							{#each stream.values as value}
-								<div class="flex w-full whitespace-pre text-left font-mono text-xs">
-									<div class="pr-4 text-c-on-bg/50">
-										{getTimeString(value[0])}
-									</div>
-									<div class="w-full py-0.5">
-										{value[1]}
-									</div>
-								</div>
-							{/each}
+				{#each messages as message}
+					{#each message.streams as stream}
+						{#each stream.values as value}
+							<p class="flex w-full whitespace-pre py-0.5 text-left font-mono text-xs">
+								<span class="pr-4 text-c-on-bg/50">
+									{getTimeString(value[0])}
+								</span>
+								{value[1]}
+							</p>
 						{/each}
 					{/each}
 				{:else}
 					<IconAnimatedSpinner class="m-auto size-10 text-c-on-bg/50" />
-				{/if}
+				{/each}
 			</div>
 			<!-- Buttons -->
 			<div
