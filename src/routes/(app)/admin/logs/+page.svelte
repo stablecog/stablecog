@@ -12,7 +12,7 @@
 		WebsocketEvent
 	} from 'websocket-ts';
 
-	const maxMessages = 3000;
+	const maxMessages = 5000;
 	const initialMessageCount = 1000;
 	let ws: Websocket | undefined;
 	const lokiWebsocketEndpoint = `wss://${PUBLIC_LOKI_HOST}/loki/api/v1/tail?query={logger="root"}&limit=${initialMessageCount}`;
@@ -146,7 +146,7 @@
 									<div class="pr-4 text-c-on-bg/50">
 										{getTimeString(value[0])}
 									</div>
-									<div class="w-full">
+									<div class="w-full py-0.5">
 										{value[1]}
 									</div>
 								</div>
@@ -154,21 +154,21 @@
 						{/each}
 					{/each}
 				{:else}
-					<IconAnimatedSpinner class="m-auto size-7 text-c-on-bg/50" />
+					<IconAnimatedSpinner class="m-auto size-10 text-c-on-bg/50" />
 				{/if}
 			</div>
 			<!-- Buttons -->
 			<div
-				class="pointer-events-none absolute bottom-0 right-0 flex transform items-center justify-end p-3 transition {isAtBottom
-					? 'translate-y-13'
+				class="pointer-events-none absolute bottom-0 left-0 flex w-full transform items-end justify-center bg-gradient-to-b from-c-bg/0 to-c-bg p-2 transition {isAtBottom
+					? 'translate-y-15'
 					: ''}"
 			>
 				<div class="relative">
 					<SubtleButton noPadding class="pointer-events-auto p-1.5" onClick={scrollToBottom}>
-						<IconChevronDown class="size-5" />
+						<IconChevronDown class="size-6" />
 					</SubtleButton>
 					<div
-						class="pointer-events-none absolute -left-1 -top-1 size-2.5 transform rounded-full bg-c-danger transition {lastTimestamp >
+						class="pointer-events-none absolute -right-1 -top-1 size-2.5 transform rounded-full bg-c-danger transition {lastTimestamp >
 						lastSeenItemTimestamp
 							? 'scale-100'
 							: 'scale-0'}"
