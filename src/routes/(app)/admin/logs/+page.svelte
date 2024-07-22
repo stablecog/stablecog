@@ -1,7 +1,7 @@
 <script lang="ts">
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
+	import IconArrowRight from '$components/icons/IconArrowRight.svelte';
 	import IconCancel from '$components/icons/IconCancel.svelte';
-	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import IconFilter from '$components/icons/IconFilter.svelte';
 	import IconSettings from '$components/icons/IconSettings.svelte';
 	import SubtleButton from '$components/primitives/buttons/SubtleButton.svelte';
@@ -210,7 +210,7 @@
 	</div>
 	<div class="relative flex w-full max-w-4xl flex-1 flex-col items-center justify-start">
 		<div
-			class="absolute left-0 top-0 flex h-full w-full flex-col overflow-hidden rounded-lg bg-c-bg ring-2 ring-c-bg-secondary"
+			class="absolute left-0 top-0 flex h-full w-full flex-col overflow-hidden rounded-2xl bg-c-bg ring-2 ring-c-bg-secondary"
 		>
 			<div
 				on:scroll={scrollContainerOnScroll}
@@ -221,12 +221,12 @@
 					{#each filteredMessages as message}
 						{#each message.streams as stream}
 							{#each stream.values as value}
-								<p class="flex w-full whitespace-pre py-0.5 text-left font-mono text-xs">
-									<span class="pr-4 text-c-on-bg/50">
+								<p class="flex w-full gap-4 whitespace-pre py-0.5 text-left font-mono text-xs">
+									<span class="text-c-on-bg/50">
 										{getTimeString(value[0])}
 									</span>
 									{#if showWorkerNames}
-										<span class="pr-4 text-c-secondary/75">
+										<span class="text-c-secondary/75">
 											{stream.stream.worker_name}
 										</span>
 									{/if}
@@ -241,12 +241,14 @@
 					<IconAnimatedSpinner class="m-auto size-10 text-c-on-bg/50" />
 				{/if}
 			</div>
-			<!-- Settings Button -->
+			<!-- Top Buttons -->
 			<div
-				class="pointer-events-none absolute left-0 top-0 z-10 flex w-full transform items-start justify-end p-2"
+				class="pointer-events-none absolute left-0 top-0 flex w-full transform items-end justify-end gap-2 bg-gradient-to-t from-c-bg/0 from-[60%] to-c-bg p-2 transition {isAtTheTop
+					? '-translate-y-13'
+					: ''}"
 			>
 				<SubtleButton
-					size="sm"
+					rounding="rounded-full"
 					noPadding
 					class="pointer-events-auto p-1.5"
 					onClick={toggleSettings}
@@ -264,29 +266,32 @@
 						/>
 					</div>
 				</SubtleButton>
-			</div>
-			<!-- Top Buttons -->
-			<div
-				class="pointer-events-none absolute left-0 top-0 flex w-full transform items-end justify-center bg-gradient-to-t from-c-bg/0 from-[50%] to-c-bg p-2 transition {isAtTheTop
-					? '-translate-y-13'
-					: ''}"
-			>
-				<SubtleButton noPadding class="pointer-events-auto p-1.5" onClick={scrollToTop}>
-					<IconChevronDown class="size-5 rotate-180" />
+				<SubtleButton
+					rounding="rounded-full"
+					noPadding
+					class="pointer-events-auto p-1.5"
+					onClick={scrollToTop}
+				>
+					<IconArrowRight class="size-5 -rotate-90" />
 				</SubtleButton>
 			</div>
 			<!-- Bottom Buttons -->
 			<div
-				class="pointer-events-none absolute bottom-0 left-0 flex w-full transform items-end justify-center bg-gradient-to-b from-c-bg/0 from-[50%] to-c-bg p-2 transition {isAtBottom
+				class="pointer-events-none absolute bottom-0 left-0 flex w-full transform items-end justify-end bg-gradient-to-b from-c-bg/0 from-[60%] to-c-bg p-2 transition {isAtBottom
 					? 'translate-y-13'
 					: ''}"
 			>
 				<div class="relative">
-					<SubtleButton noPadding class="pointer-events-auto p-1.5" onClick={scrollToBottom}>
-						<IconChevronDown class="size-5" />
+					<SubtleButton
+						rounding="rounded-full"
+						noPadding
+						class="pointer-events-auto p-1.5"
+						onClick={scrollToBottom}
+					>
+						<IconArrowRight class="size-5 rotate-90" />
 					</SubtleButton>
 					<div
-						class="pointer-events-none absolute -right-1 -top-1 size-2.5 transform rounded-full bg-c-danger transition {lastTimestamp >
+						class="pointer-events-none absolute right-0 top-0 size-2 transform rounded-full bg-c-danger transition {lastTimestamp >
 						lastSeenItemTimestamp
 							? 'scale-100'
 							: 'scale-0'}"
