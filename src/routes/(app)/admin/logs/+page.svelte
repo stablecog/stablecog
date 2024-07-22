@@ -25,7 +25,7 @@
 	let messages: ReceivedMessage[] = [];
 	let workerNames: string[] = [];
 	let scrollContainer: HTMLDivElement;
-	const isAtTheEdgeThreshold = 50;
+	const isAtTheEdgeThreshold = 32;
 	let showWorkerNames = false;
 	let showSettings = false;
 
