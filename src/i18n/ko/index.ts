@@ -493,6 +493,7 @@ const ko: Translation = {
 		AdminTab: '관리자',
 		ServersTab: '서버',
 		AdminGalleryTab: '갤러리',
+		LogsTab: 'Logs',
 		UsersTab: '사용자',
 		Users: {
 			ConfirmAction: {

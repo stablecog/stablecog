@@ -1512,6 +1512,10 @@ type RootTranslation = {
 		 */
 		AdminGalleryTab: string
 		/**
+		 * L​o​g​s
+		 */
+		LogsTab: string
+		/**
 		 * U​s​e​r​s
 		 */
 		UsersTab: string
@@ -4862,6 +4866,10 @@ export type TranslationFunctions = {
 		 * Admin Gallery
 		 */
 		AdminGalleryTab: () => LocalizedString
+		/**
+		 * Logs
+		 */
+		LogsTab: () => LocalizedString
 		/**
 		 * Users
 		 */

@@ -27,6 +27,12 @@
 			href: '/admin/users',
 			show: isSuperAdmin($userSummary?.roles || []),
 			icon: 'users'
+		},
+		{
+			title: $LL.Admin.LogsTab(),
+			href: '/admin/logs',
+			show: isSuperAdmin($userSummary?.roles || []),
+			icon: 'logs'
 		}
 	];
 </script>

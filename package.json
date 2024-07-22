@@ -95,6 +95,7 @@
 		"svelte-inview": "^4.0.2",
 		"svelte-meta-tags": "^3.1.0",
 		"typesafe-i18n": "^5.26.2",
-		"uuid": "^9.0.1"
+		"uuid": "^9.0.1",
+		"websocket-ts": "^2.1.5"
 	}
 }

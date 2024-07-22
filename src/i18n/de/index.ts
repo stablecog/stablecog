@@ -492,6 +492,7 @@ const de: Translation = {
 		AdminTab: 'Admin',
 		ServersTab: 'Server',
 		AdminGalleryTab: 'Galerie',
+		LogsTab: 'Logs',
 		UsersTab: 'Benutzer',
 		Users: {
 			ConfirmAction: {

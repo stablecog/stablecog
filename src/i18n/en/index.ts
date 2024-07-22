@@ -493,6 +493,7 @@ const en: BaseTranslation = {
 		AdminTab: 'Admin',
 		ServersTab: 'Servers',
 		AdminGalleryTab: 'Admin Gallery',
+		LogsTab: 'Logs',
 		UsersTab: 'Users',
 		Users: {
 			ConfirmAction: {

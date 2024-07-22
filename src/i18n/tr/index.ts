@@ -520,6 +520,7 @@ const tr: Translation = {
 		AdminTab: 'Admin',
 		ServersTab: 'Sunucular',
 		AdminGalleryTab: 'Admin Galerisi',
+		LogsTab: 'Logs',
 		UsersTab: 'Kullanıcılar',
 		Users: {
 			ConfirmAction: {
