@@ -1,10 +1,9 @@
 <script lang="ts">
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
-	import IconButton from '$components/primitives/buttons/IconButton.svelte';
 	import SubtleButton from '$components/primitives/buttons/SubtleButton.svelte';
 	import { PUBLIC_LOKI_HOST } from '$env/static/public';
-	import { onMount, tick } from 'svelte';
+	import { onMount } from 'svelte';
 	import {
 		ArrayQueue,
 		ConstantBackoff,
