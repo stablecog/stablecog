@@ -39,6 +39,7 @@
 	function scrollToBottom() {
 		if (scrollContainer) {
 			scrollContainer.scrollTop = scrollContainer.scrollHeight;
+			scrollContainer.scrollLeft = 0;
 		}
 	}
 
@@ -125,7 +126,9 @@
 	});
 </script>
 
-<div class="z-10 flex flex-1 flex-col items-center justify-start px-2 pt-2 md:px-6 md:pt-4">
+<div
+	class="z-10 flex flex-1 flex-col items-center justify-start px-2 pb-6 pt-2 md:px-6 md:pb-6 md:pt-4"
+>
 	<div class="relative flex w-full max-w-4xl flex-1 flex-col items-center justify-start">
 		<div
 			class="absolute left-0 top-0 flex h-full w-full flex-col overflow-hidden rounded-lg bg-c-bg ring-2 ring-c-bg-secondary"

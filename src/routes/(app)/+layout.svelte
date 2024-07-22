@@ -40,6 +40,8 @@
 		!$page.url.pathname.startsWith('/admin') &&
 		!$page.url.pathname.startsWith('/auth') &&
 		!$page.url.pathname.startsWith('/sign-in');
+
+	const hideFooterRoutes = ['/admin/logs'];
 </script>
 
 <QueryClientProvider client={data.queryClient}>
@@ -68,7 +70,9 @@
 								<main class="relative flex w-full flex-1 flex-col break-words">
 									<slot />
 								</main>
-								<Footer />
+								{#if !hideFooterRoutes.includes($page.url.pathname)}
+									<Footer />
+								{/if}
 							{/if}
 						{/if}
 					</LayoutWrapper>
