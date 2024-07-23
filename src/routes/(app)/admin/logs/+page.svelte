@@ -21,13 +21,10 @@
 		WebsocketEvent
 	} from 'websocket-ts';
 
-	export let data;
-
 	const maxMessages = 5000;
 	const initialMessageCount = 1000;
 	let ws: Websocket | undefined;
 	const lokiWebsocketEndpoint = `wss://${PUBLIC_LOKI_HOST}/loki/api/v1/tail?query={logger="root"}&limit=${initialMessageCount}`;
-	const lokiUrl = `https://${PUBLIC_LOKI_HOST}`;
 	let messages: ReceivedMessage[] = [];
 	let workerNames: string[] = [];
 	let scrollContainer: HTMLDivElement;
@@ -212,15 +209,6 @@
 	}
 
 	async function setupWebsocket() {
-		const res = await fetch(`${lokiUrl}/ready`, {
-			headers: { Authorization: `Basic ${data.lokiBasicAuthToken}` }
-		});
-		if (!res.ok) {
-			console.error('Loki error');
-			isError = true;
-			return;
-		}
-
 		ws = new WebsocketBuilder(lokiWebsocketEndpoint)
 			.withBuffer(new ArrayQueue()) // buffer messages when disconnected
 			.withBackoff(new ConstantBackoff(1000)) // retry every 1s
