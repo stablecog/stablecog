@@ -242,7 +242,7 @@
 		/>
 		<TabLikeToggle
 			class="w-full flex-auto md:flex-1"
-			text="Labels"
+			text="Worker Names"
 			bind:isToggled={showWorkerNames}
 		/>
 	</div>
