@@ -3,9 +3,11 @@
 	import IconArrowRight from '$components/icons/IconArrowRight.svelte';
 	import IconCancel from '$components/icons/IconCancel.svelte';
 	import IconFilter from '$components/icons/IconFilter.svelte';
+	import IconSearch from '$components/icons/IconSearch.svelte';
 	import IconSettings from '$components/icons/IconSettings.svelte';
 	import SubtleButton from '$components/primitives/buttons/SubtleButton.svelte';
 	import TabLikeFilterDropdown from '$components/primitives/tabBars/TabLikeFilterDropdown.svelte';
+	import TabLikeInput from '$components/primitives/tabBars/TabLikeInput.svelte';
 	import TabLikeToggle from '$components/primitives/tabBars/TabLikeToggle.svelte';
 	import { PUBLIC_LOKI_HOST } from '$env/static/public';
 	import type { TTab } from '$ts/types/main';
@@ -28,6 +30,7 @@
 	const isAtTheEdgeThreshold = 8;
 	let showWorkerNames = false;
 	let showSettings = false;
+	let searchValue = '';
 
 	let filterOptions: TTab<string>[];
 	let filterValues: string[] = [];
@@ -52,6 +55,29 @@
 							return null;
 						}
 						return { ...message, streams: filteredStreams };
+					})
+					.filter((message) => message !== null);
+
+	$: filteredAndSearchedMessages =
+		searchValue === '' || searchValue === undefined || searchValue === null
+			? filteredMessages
+			: filteredMessages
+					.map((message) => {
+						const newStreams = message.streams
+							.map((stream) => {
+								const newValues = stream.values.filter((value) => {
+									return value[1].toLowerCase().includes(searchValue.toLowerCase());
+								});
+								if (newValues.length === 0) {
+									return null;
+								}
+								return { ...stream, values: newValues };
+							})
+							.filter((stream) => stream !== null);
+						if (newStreams.length === 0) {
+							return null;
+						}
+						return { ...message, streams: newStreams };
 					})
 					.filter((message) => message !== null);
 
@@ -207,6 +233,14 @@
 			class="w-full md:w-auto"
 		/>
 		<TabLikeToggle class="w-full md:w-auto" text="Worker Names" bind:isToggled={showWorkerNames} />
+		<TabLikeInput
+			class="w-full md:w-52"
+			bind:value={searchValue}
+			type="text"
+			name="Search"
+			placeholder="Search"
+			icon={IconSearch}
+		/>
 	</div>
 	<div class="relative flex w-full max-w-4xl flex-1 flex-col items-center justify-start">
 		<div
@@ -218,7 +252,7 @@
 				class="flex w-full flex-1 flex-col overflow-auto px-4 py-3"
 			>
 				{#if messages.length > 0}
-					{#each filteredMessages as message}
+					{#each filteredAndSearchedMessages as message}
 						{#each message.streams as stream}
 							{#each stream.values as value}
 								<p class="flex w-full gap-4 whitespace-pre py-0.5 text-left font-mono text-xs">
