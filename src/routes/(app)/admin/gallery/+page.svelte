@@ -214,7 +214,7 @@
 </script>
 
 <MetaTag
-	title="Gallery | Stablecog"
+	title="Admin Gallery | Stablecog"
 	description="Stablecog admin panel. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
 	image_url="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 />
