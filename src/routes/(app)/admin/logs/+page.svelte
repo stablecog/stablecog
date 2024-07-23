@@ -326,11 +326,11 @@
 						{#each message.streams as stream}
 							{#each stream.values as value}
 								<div
-									class="flex w-full items-start justify-start py-0.75 text-left font-mono {$adminLogsLayout.includes(
+									class="flex w-full items-start justify-start text-left font-mono {$adminLogsLayout.includes(
 										'mobile'
 									)
-										? `flex-col text-xxs`
-										: 'text-xs'}"
+										? `flex-col gap-0.5 py-1 text-xxs`
+										: 'py-0.75 text-xs'}"
 								>
 									{#if $adminLogsLayout.includes('time') || $adminLogsLayout.includes('name')}
 										<p
@@ -344,13 +344,15 @@
 											{/if}
 											{#if $adminLogsLayout.includes('name')}
 												<span
-													class={workerNames.indexOf(stream.stream.worker_name) % 4 === 0
+													class="{workerNames.indexOf(stream.stream.worker_name) % 4 === 0
 														? 'text-c-secondary/75'
 														: workerNames.indexOf(stream.stream.worker_name) % 4 === 1
 															? 'text-c-primary/75'
 															: workerNames.indexOf(stream.stream.worker_name) % 4 === 2
 																? 'text-c-success/75'
-																: 'text-c-danger/75'}
+																: 'text-c-danger/75'} {$adminLogsLayout.includes('desktop')
+														? 'w-[8ch] overflow-hidden overflow-ellipsis'
+														: ''}"
 												>
 													{stream.stream.worker_name}
 												</span>
