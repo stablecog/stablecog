@@ -321,7 +321,7 @@
 										'mobile'
 									)
 										? `flex-col py-1 text-xxs`
-										: 'py-0.5 text-xs'}"
+										: 'py-0.75 text-xs'}"
 								>
 									{#if $adminLogsLayout.includes('time') || $adminLogsLayout.includes('name')}
 										<p
@@ -365,12 +365,12 @@
 			</div>
 			<!-- Bottom Buttons -->
 			<div
-				class="pointer-events-none absolute bottom-0 left-0 flex w-full transform items-end justify-end gap-2.5 bg-gradient-to-b from-c-bg/0 from-[60%] to-c-bg p-2 transition {isAtBottom
+				class="pointer-events-none absolute bottom-0 left-0 flex w-full transform items-end justify-end
+				gap-2.5 bg-gradient-to-b from-c-bg/0 from-[60%] to-c-bg p-2.5 transition {isAtBottom
 					? 'translate-y-14'
 					: ''}"
 			>
 				<SubtleButton
-					rounding="rounded-full"
 					noPadding
 					class="pointer-events-auto p-2  {isAtTop ? 'translate-y-13' : ''}"
 					onClick={scrollToTop}
@@ -378,16 +378,11 @@
 					<IconArrowRight class="size-6 -rotate-90" />
 				</SubtleButton>
 				<div class="relative">
-					<SubtleButton
-						rounding="rounded-full"
-						noPadding
-						class="pointer-events-auto p-2"
-						onClick={scrollToBottom}
-					>
+					<SubtleButton noPadding class="pointer-events-auto p-2" onClick={scrollToBottom}>
 						<IconArrowRight class="size-6 rotate-90" />
 					</SubtleButton>
 					<div
-						class="pointer-events-none absolute right-0 top-0 size-2.5 transform rounded-full bg-c-danger transition {lastTimestamp >
+						class="pointer-events-none absolute -right-0.75 -top-0.75 size-2.5 transform rounded-full bg-c-danger transition {lastTimestamp >
 						lastSeenItemTimestamp
 							? 'scale-100'
 							: 'scale-0'}"
@@ -395,19 +390,15 @@
 				</div>
 			</div>
 			<div
-				class="pointer-events-none absolute left-0 top-0 flex w-full transform items-end justify-end gap-2 bg-gradient-to-t from-c-bg/0 from-[60%] to-c-bg p-2 transition {isAtTop &&
+				class="pointer-events-none absolute left-0 top-0 flex w-full transform items-end justify-end gap-2
+				bg-gradient-to-t from-c-bg/0 from-[60%] to-c-bg p-2.5 transition {isAtTop &&
 				messages.length !== 0 &&
 				!isError &&
 				filteredAndSearchedMessages.length !== 0
 					? '-translate-y-14'
 					: ''}"
 			>
-				<SubtleButton
-					rounding="rounded-full"
-					noPadding
-					class="pointer-events-auto p-2"
-					onClick={toggleSettings}
-				>
+				<SubtleButton noPadding class="pointer-events-auto p-2" onClick={toggleSettings}>
 					<div class="size-6">
 						<IconSettings
 							class="h-full w-full transition {isSettingsOpen
