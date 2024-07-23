@@ -375,11 +375,11 @@
 					class="pointer-events-auto p-2  {isAtTop ? 'translate-y-13' : ''}"
 					onClick={scrollToTop}
 				>
-					<IconArrowRight class="size-6 -rotate-90" />
+					<IconArrowRight class="size-5 -rotate-90" />
 				</SubtleButton>
 				<div class="relative">
 					<SubtleButton noPadding class="pointer-events-auto p-2" onClick={scrollToBottom}>
-						<IconArrowRight class="size-6 rotate-90" />
+						<IconArrowRight class="size-5 rotate-90" />
 					</SubtleButton>
 					<div
 						class="pointer-events-none absolute -right-0.75 -top-0.75 size-2.5 transform rounded-full bg-c-danger transition {lastTimestamp >
@@ -400,7 +400,7 @@
 					: ''}"
 			>
 				<SubtleButton noPadding class="pointer-events-auto p-2" onClick={toggleSettings}>
-					<div class="size-6">
+					<div class="size-5">
 						<IconSettings
 							class="h-full w-full transition {isSettingsOpen
 								? 'rotate-90 opacity-0'
