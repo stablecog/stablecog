@@ -222,7 +222,7 @@
 	class="z-10 flex flex-1 flex-col items-center justify-start px-2 pb-6 pt-2 md:px-6 md:pb-6 md:pt-4"
 >
 	<div
-		class="mb-3.5 flex w-full flex-wrap items-center justify-center gap-3 {!showSettings &&
+		class="mb-3.5 flex w-full max-w-4xl flex-wrap items-center justify-center gap-3 {!showSettings &&
 			'hidden'}"
 	>
 		<TabLikeFilterDropdown
@@ -230,16 +230,20 @@
 			name="Filter Workers"
 			bind:values={filterValues}
 			items={filterOptions}
-			class="w-full md:w-auto"
+			class="w-full flex-auto md:flex-1"
 		/>
-		<TabLikeToggle class="w-full md:w-auto" text="Worker Names" bind:isToggled={showWorkerNames} />
 		<TabLikeInput
-			class="w-full md:w-52"
+			class="w-full flex-auto md:flex-1"
 			bind:value={searchValue}
 			type="text"
 			name="Search"
 			placeholder="Search"
 			icon={IconSearch}
+		/>
+		<TabLikeToggle
+			class="w-full flex-auto md:flex-1"
+			text="Labels"
+			bind:isToggled={showWorkerNames}
 		/>
 	</div>
 	<div class="relative flex w-full max-w-4xl flex-1 flex-col items-center justify-start">
