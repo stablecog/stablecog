@@ -317,11 +317,11 @@
 						{#each message.streams as stream}
 							{#each stream.values as value}
 								<div
-									class="flex w-full items-start justify-start text-left font-mono {$adminLogsLayout.includes(
+									class="flex w-full items-start justify-start py-0.75 text-left font-mono {$adminLogsLayout.includes(
 										'mobile'
 									)
-										? `flex-col py-1 text-xxs`
-										: 'py-0.75 text-xs'}"
+										? `flex-col text-xxs`
+										: 'text-xs'}"
 								>
 									{#if $adminLogsLayout.includes('time') || $adminLogsLayout.includes('name')}
 										<p
