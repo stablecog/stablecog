@@ -10,12 +10,15 @@
 	import TabLikeDropdown from '$components/primitives/tabBars/TabLikeDropdown.svelte';
 	import TabLikeFilterDropdown from '$components/primitives/tabBars/TabLikeFilterDropdown.svelte';
 	import TabLikeInput from '$components/primitives/tabBars/TabLikeInput.svelte';
+	import MetaTag from '$components/utils/MetaTag.svelte';
 	import { PUBLIC_LOKI_HOST } from '$env/static/public';
 	import {
 		adminLogsLayout,
 		adminLogsSearch,
 		type TLayout
 	} from '$routes/(app)/admin/logs/constants';
+	import { canonicalUrl } from '$ts/constants/main.js';
+	import { previewImageVersion } from '$ts/constants/previewImageVersion.js';
 	import type { TTab } from '$ts/types/main';
 	import { onMount } from 'svelte';
 	import {
@@ -273,6 +276,12 @@
 		};
 	});
 </script>
+
+<MetaTag
+	title="Logs | Admin"
+	description="Stablecog admin panel. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
+	image_url="{canonicalUrl}/previews/home-{previewImageVersion}.png"
+/>
 
 <div
 	class="z-10 flex flex-1 flex-col items-center justify-start px-2 pb-6 pt-2 md:px-6 md:pb-6 md:pt-4"
