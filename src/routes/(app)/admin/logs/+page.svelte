@@ -25,7 +25,7 @@
 	let messages: ReceivedMessage[] = [];
 	let workerNames: string[] = [];
 	let scrollContainer: HTMLDivElement;
-	const isAtTheEdgeThreshold = 24;
+	const isAtTheEdgeThreshold = 8;
 	let showWorkerNames = false;
 	let showSettings = false;
 
@@ -86,7 +86,7 @@
 	}
 
 	let isAtBottom = true;
-	let isAtTheTop = false;
+	let isAtTop = false;
 	let lastSeenItemTimestamp = 0;
 	let lastTimestamp = 0;
 
@@ -109,7 +109,7 @@
 
 	function scrollContainerOnScroll() {
 		isAtBottom = getIsAtBottom();
-		isAtTheTop = getIsAtTop();
+		isAtTop = getIsAtTop();
 		if (isAtBottom) {
 			lastSeenItemTimestamp = getLastTimestamp(messages);
 		}
@@ -243,17 +243,17 @@
 			</div>
 			<!-- Top Buttons -->
 			<div
-				class="pointer-events-none absolute left-0 top-0 flex w-full transform items-end justify-end gap-2 bg-gradient-to-t from-c-bg/0 from-[60%] to-c-bg p-2 transition {isAtTheTop
-					? '-translate-y-13'
+				class="pointer-events-none absolute left-0 top-0 flex w-full transform items-end justify-end gap-2 bg-gradient-to-t from-c-bg/0 from-[60%] to-c-bg p-2 transition {isAtTop
+					? '-translate-y-14'
 					: ''}"
 			>
 				<SubtleButton
 					rounding="rounded-full"
 					noPadding
-					class="pointer-events-auto p-1.5"
+					class="pointer-events-auto p-2"
 					onClick={toggleSettings}
 				>
-					<div class="size-5">
+					<div class="size-6">
 						<IconSettings
 							class="h-full w-full transition {showSettings
 								? 'rotate-90 opacity-0'
@@ -266,32 +266,32 @@
 						/>
 					</div>
 				</SubtleButton>
-				<SubtleButton
-					rounding="rounded-full"
-					noPadding
-					class="pointer-events-auto p-1.5"
-					onClick={scrollToTop}
-				>
-					<IconArrowRight class="size-5 -rotate-90" />
-				</SubtleButton>
 			</div>
 			<!-- Bottom Buttons -->
 			<div
-				class="pointer-events-none absolute bottom-0 left-0 flex w-full transform items-end justify-end bg-gradient-to-b from-c-bg/0 from-[60%] to-c-bg p-2 transition {isAtBottom
-					? 'translate-y-13'
+				class="pointer-events-none absolute bottom-0 left-0 flex w-full transform items-end justify-end gap-2.5 bg-gradient-to-b from-c-bg/0 from-[60%] to-c-bg p-2 transition {isAtBottom
+					? 'translate-y-14'
 					: ''}"
 			>
+				<SubtleButton
+					rounding="rounded-full"
+					noPadding
+					class="pointer-events-auto p-2  {isAtTop ? 'translate-y-13' : ''}"
+					onClick={scrollToTop}
+				>
+					<IconArrowRight class="size-6 -rotate-90" />
+				</SubtleButton>
 				<div class="relative">
 					<SubtleButton
 						rounding="rounded-full"
 						noPadding
-						class="pointer-events-auto p-1.5"
+						class="pointer-events-auto p-2"
 						onClick={scrollToBottom}
 					>
-						<IconArrowRight class="size-5 rotate-90" />
+						<IconArrowRight class="size-6 rotate-90" />
 					</SubtleButton>
 					<div
-						class="pointer-events-none absolute right-0 top-0 size-2 transform rounded-full bg-c-danger transition {lastTimestamp >
+						class="pointer-events-none absolute right-0 top-0 size-2.5 transform rounded-full bg-c-danger transition {lastTimestamp >
 						lastSeenItemTimestamp
 							? 'scale-100'
 							: 'scale-0'}"
