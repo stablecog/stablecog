@@ -278,7 +278,7 @@
 	class="z-10 flex flex-1 flex-col items-center justify-start px-2 pb-6 pt-2 md:px-6 md:pb-6 md:pt-4"
 >
 	<div
-		class="mb-3.5 flex w-full max-w-4xl flex-wrap items-center justify-center gap-3 {!isSettingsOpen &&
+		class="mb-3 flex w-full max-w-4xl flex-wrap items-center justify-center gap-3 {!isSettingsOpen &&
 			'hidden'}"
 	>
 		<TabLikeFilterDropdown
@@ -366,7 +366,7 @@
 			<!-- Bottom Buttons -->
 			<div
 				class="pointer-events-none absolute bottom-0 left-0 flex w-full transform items-end justify-end
-				gap-2.5 bg-gradient-to-b from-c-bg/0 from-[60%] to-c-bg p-2.5 transition {isAtBottom
+				gap-2.5 bg-gradient-to-b from-c-bg/0 from-[60%] to-c-bg p-2 transition {isAtBottom
 					? 'translate-y-14'
 					: ''}"
 			>
@@ -389,9 +389,10 @@
 					></div>
 				</div>
 			</div>
+			<!-- Top Buttons -->
 			<div
-				class="pointer-events-none absolute left-0 top-0 flex w-full transform items-end justify-end gap-2
-				bg-gradient-to-t from-c-bg/0 from-[60%] to-c-bg p-2.5 transition {isAtTop &&
+				class="pointer-events-none absolute left-0 top-0 flex w-full transform items-end justify-end gap-2.5
+				bg-gradient-to-t from-c-bg/0 from-[60%] to-c-bg p-2 transition {isAtTop &&
 				messages.length !== 0 &&
 				!isError &&
 				filteredAndSearchedMessages.length !== 0
