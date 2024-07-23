@@ -7,10 +7,16 @@
 	import IconSearch from '$components/icons/IconSearch.svelte';
 	import IconSettings from '$components/icons/IconSettings.svelte';
 	import SubtleButton from '$components/primitives/buttons/SubtleButton.svelte';
+	import TabLikeDropdown from '$components/primitives/tabBars/TabLikeDropdown.svelte';
 	import TabLikeFilterDropdown from '$components/primitives/tabBars/TabLikeFilterDropdown.svelte';
 	import TabLikeInput from '$components/primitives/tabBars/TabLikeInput.svelte';
-	import TabLikeToggle from '$components/primitives/tabBars/TabLikeToggle.svelte';
 	import { PUBLIC_LOKI_HOST } from '$env/static/public';
+	import {
+		adminLogsLayout,
+		adminLogsLayoutDefault,
+		adminLogsSearch,
+		type TLayout
+	} from '$routes/(app)/admin/logs/constants';
 	import type { TTab } from '$ts/types/main';
 	import { onMount } from 'svelte';
 	import {
@@ -21,6 +27,16 @@
 		WebsocketEvent
 	} from 'websocket-ts';
 
+	export let data;
+
+	if (data.search) {
+		adminLogsSearch.set(data.search);
+	}
+
+	if (data.layout) {
+		adminLogsLayout.set(data.layout);
+	}
+
 	const maxMessages = 5000;
 	const initialMessageCount = 1000;
 	let ws: Websocket | undefined;
@@ -29,10 +45,30 @@
 	let workerNames: string[] = [];
 	let scrollContainer: HTMLDivElement;
 	const isAtTheEdgeThreshold = 8;
-	let showWorkerNames = false;
-	let showSettings = false;
-	let searchValue = '';
 	let isError = false;
+	let isSettingsOpen = false;
+	let layouts: TTab<TLayout>[] = [
+		{
+			label: 'Desktop: Time Only',
+			value: 'desktop-time'
+		},
+		{
+			label: 'Desktop: Time & Name',
+			value: 'desktop-time-name'
+		},
+		{
+			label: 'Mobile: Time Only',
+			value: 'mobile-time'
+		},
+		{
+			label: 'Mobile: Time & Name',
+			value: 'mobile-time-name'
+		},
+		{
+			label: 'Logs Only',
+			value: 'logs-only'
+		}
+	];
 
 	let filterOptions: TTab<string>[];
 	let filterValues: string[] = [];
@@ -61,14 +97,18 @@
 					.filter((message) => message !== null);
 
 	$: filteredAndSearchedMessages =
-		searchValue === '' || searchValue === undefined || searchValue === null
+		$adminLogsSearch === '' || $adminLogsSearch === undefined || $adminLogsSearch === null
 			? filteredMessages
 			: filteredMessages
 					.map((message) => {
 						const newStreams = message.streams
 							.map((stream) => {
 								const newValues = stream.values.filter((value) => {
-									return value[1].toLowerCase().includes(searchValue.toLowerCase());
+									return $adminLogsSearch === '' ||
+										$adminLogsSearch === undefined ||
+										$adminLogsSearch === null
+										? true
+										: value[1].toLowerCase().includes($adminLogsSearch.toLowerCase());
 								});
 								if (newValues.length === 0) {
 									return null;
@@ -172,7 +212,7 @@
 	}
 
 	function toggleSettings() {
-		showSettings = !showSettings;
+		isSettingsOpen = !isSettingsOpen;
 	}
 
 	function onOpen() {
@@ -235,7 +275,7 @@
 	class="z-10 flex flex-1 flex-col items-center justify-start px-2 pb-6 pt-2 md:px-6 md:pb-6 md:pt-4"
 >
 	<div
-		class="mb-3.5 flex w-full max-w-4xl flex-wrap items-center justify-center gap-3 {!showSettings &&
+		class="mb-3.5 flex w-full max-w-4xl flex-wrap items-center justify-center gap-3 {!isSettingsOpen &&
 			'hidden'}"
 	>
 		<TabLikeFilterDropdown
@@ -247,16 +287,17 @@
 		/>
 		<TabLikeInput
 			class="w-full flex-auto md:flex-1"
-			bind:value={searchValue}
+			bind:value={$adminLogsSearch}
 			type="text"
 			name="Search"
 			placeholder="Search"
 			icon={IconSearch}
 		/>
-		<TabLikeToggle
+		<TabLikeDropdown
+			name="Layout"
 			class="w-full flex-auto md:flex-1"
-			text="Worker Names"
-			bind:isToggled={showWorkerNames}
+			items={layouts}
+			bind:value={$adminLogsLayout}
 		/>
 	</div>
 	<div class="relative flex w-full max-w-4xl flex-1 flex-col items-center justify-start">
@@ -272,17 +313,34 @@
 					{#each filteredAndSearchedMessages as message}
 						{#each message.streams as stream}
 							{#each stream.values as value}
-								<p class="flex w-full gap-4 whitespace-pre py-0.5 text-left font-mono text-xs">
-									<span class="text-c-on-bg/50">
-										{getTimeString(value[0])}
-									</span>
-									{#if showWorkerNames}
-										<span class="text-c-secondary/75">
-											{stream.stream.worker_name}
-										</span>
+								<div
+									class="flex w-full items-start justify-start text-left font-mono {$adminLogsLayout.includes(
+										'mobile'
+									)
+										? `flex-col py-1 text-xxs`
+										: 'py-0.5 text-xs'}"
+								>
+									{#if $adminLogsLayout.includes('time') || $adminLogsLayout.includes('name')}
+										<p
+											class="flex gap-4 whitespace-pre {$adminLogsLayout.includes('desktop') &&
+												'pr-4'}"
+										>
+											{#if $adminLogsLayout.includes('time')}
+												<span class="text-c-on-bg/50">
+													{getTimeString(value[0])}
+												</span>
+											{/if}
+											{#if $adminLogsLayout.includes('name')}
+												<span class="text-c-secondary/75">
+													{stream.stream.worker_name}
+												</span>
+											{/if}
+										</p>
 									{/if}
-									{value[1]}
-								</p>
+									<p class="flex w-full whitespace-pre">
+										{value[1]}
+									</p>
+								</div>
 							{/each}
 						{/each}
 					{:else}
@@ -293,32 +351,6 @@
 				{:else}
 					<IconAnimatedSpinner class="m-auto size-10 text-c-on-bg/50" />
 				{/if}
-			</div>
-			<!-- Top Buttons -->
-			<div
-				class="pointer-events-none absolute left-0 top-0 flex w-full transform items-end justify-end gap-2 bg-gradient-to-t from-c-bg/0 from-[60%] to-c-bg p-2 transition {isAtTop
-					? '-translate-y-14'
-					: ''}"
-			>
-				<SubtleButton
-					rounding="rounded-full"
-					noPadding
-					class="pointer-events-auto p-2"
-					onClick={toggleSettings}
-				>
-					<div class="size-6">
-						<IconSettings
-							class="h-full w-full transition {showSettings
-								? 'rotate-90 opacity-0'
-								: 'rotate-0 opacity-100'}"
-						/>
-						<IconCancel
-							class="absolute left-0 top-0 h-full w-full transition {showSettings
-								? 'rotate-90 opacity-100'
-								: 'rotate-0 opacity-0'}"
-						/>
-					</div>
-				</SubtleButton>
 			</div>
 			<!-- Bottom Buttons -->
 			<div
@@ -350,6 +382,34 @@
 							: 'scale-0'}"
 					></div>
 				</div>
+			</div>
+			<div
+				class="pointer-events-none absolute left-0 top-0 flex w-full transform items-end justify-end gap-2 bg-gradient-to-t from-c-bg/0 from-[60%] to-c-bg p-2 transition {isAtTop &&
+				messages.length !== 0 &&
+				!isError &&
+				filteredAndSearchedMessages.length !== 0
+					? '-translate-y-14'
+					: ''}"
+			>
+				<SubtleButton
+					rounding="rounded-full"
+					noPadding
+					class="pointer-events-auto p-2"
+					onClick={toggleSettings}
+				>
+					<div class="size-6">
+						<IconSettings
+							class="h-full w-full transition {isSettingsOpen
+								? 'rotate-90 opacity-0'
+								: 'rotate-0 opacity-100'}"
+						/>
+						<IconCancel
+							class="absolute left-0 top-0 h-full w-full transition {isSettingsOpen
+								? 'rotate-90 opacity-100'
+								: 'rotate-0 opacity-0'}"
+						/>
+					</div>
+				</SubtleButton>
 			</div>
 		</div>
 	</div>
