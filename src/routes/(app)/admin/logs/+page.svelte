@@ -331,7 +331,15 @@
 												</span>
 											{/if}
 											{#if $adminLogsLayout.includes('name')}
-												<span class="text-c-secondary/75">
+												<span
+													class={workerNames.indexOf(stream.stream.worker_name) % 4 === 0
+														? 'text-c-secondary/75'
+														: workerNames.indexOf(stream.stream.worker_name) % 4 === 1
+															? 'text-c-primary/75'
+															: workerNames.indexOf(stream.stream.worker_name) % 4 === 1
+																? 'text-c-success/75'
+																: 'text-c-danger/75'}
+												>
 													{stream.stream.worker_name}
 												</span>
 											{/if}
