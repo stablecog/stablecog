@@ -13,7 +13,6 @@
 	import { PUBLIC_LOKI_HOST } from '$env/static/public';
 	import {
 		adminLogsLayout,
-		adminLogsLayoutDefault,
 		adminLogsSearch,
 		type TLayout
 	} from '$routes/(app)/admin/logs/constants';
@@ -49,24 +48,28 @@
 	let isSettingsOpen = false;
 	let layouts: TTab<TLayout>[] = [
 		{
-			label: 'Desktop: Time Only',
-			value: 'desktop-time'
+			label: 'Desktop | Logs, Time, Name',
+			value: 'desktop-logs-time-name'
 		},
 		{
-			label: 'Desktop: Time & Name',
-			value: 'desktop-time-name'
+			label: 'Desktop | Logs, Time',
+			value: 'desktop-logs-time'
 		},
 		{
-			label: 'Mobile: Time Only',
-			value: 'mobile-time'
+			label: 'Desktop | Logs',
+			value: 'desktop-logs'
 		},
 		{
-			label: 'Mobile: Time & Name',
-			value: 'mobile-time-name'
+			label: 'Mobile | Logs, Time, Name',
+			value: 'mobile-logs-time-name'
 		},
 		{
-			label: 'Logs Only',
-			value: 'logs-only'
+			label: 'Mobile | Logs, Time',
+			value: 'mobile-logs-time'
+		},
+		{
+			label: 'Mobile | Logs',
+			value: 'mobile-logs'
 		}
 	];
 

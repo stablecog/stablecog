@@ -1,6 +1,6 @@
 import { sessionAndUrlParamWritable } from '$ts/stores/sessionAndUrlParamStore';
 
-export const adminLogsLayoutDefault: TLayout = 'desktop-time';
+export const adminLogsLayoutDefault: TLayout = 'desktop-logs-time';
 export const adminLogsLayout = sessionAndUrlParamWritable<TLayout>(
 	'adminLogsLayout',
 	'l',
@@ -14,11 +14,12 @@ export const adminLogsSearch = sessionAndUrlParamWritable<string | undefined | n
 );
 
 export const availableAdminLogLayouts = [
-	'desktop-time',
-	'desktop-time-name',
-	'mobile-time',
-	'mobile-time-name',
-	'logs-only'
+	'desktop-logs-time',
+	'desktop-logs',
+	'desktop-logs-time-name',
+	'mobile-logs-time',
+	'mobile-logs',
+	'mobile-logs-time-name'
 ] as const;
 
 export type TLayout = (typeof availableAdminLogLayouts)[number];
