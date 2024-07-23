@@ -336,7 +336,7 @@
 														? 'text-c-secondary/75'
 														: workerNames.indexOf(stream.stream.worker_name) % 4 === 1
 															? 'text-c-primary/75'
-															: workerNames.indexOf(stream.stream.worker_name) % 4 === 1
+															: workerNames.indexOf(stream.stream.worker_name) % 4 === 2
 																? 'text-c-success/75'
 																: 'text-c-danger/75'}
 												>
