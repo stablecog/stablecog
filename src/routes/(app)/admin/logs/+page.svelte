@@ -3,6 +3,7 @@
 	import IconArrowRight from '$components/icons/IconArrowRight.svelte';
 	import IconCancel from '$components/icons/IconCancel.svelte';
 	import IconFilter from '$components/icons/IconFilter.svelte';
+	import IconSadFace from '$components/icons/IconSadFace.svelte';
 	import IconSearch from '$components/icons/IconSearch.svelte';
 	import IconSettings from '$components/icons/IconSettings.svelte';
 	import SubtleButton from '$components/primitives/buttons/SubtleButton.svelte';
@@ -20,10 +21,13 @@
 		WebsocketEvent
 	} from 'websocket-ts';
 
+	export let data;
+
 	const maxMessages = 5000;
 	const initialMessageCount = 1000;
 	let ws: Websocket | undefined;
 	const lokiWebsocketEndpoint = `wss://${PUBLIC_LOKI_HOST}/loki/api/v1/tail?query={logger="root"}&limit=${initialMessageCount}`;
+	const lokiUrl = `https://${PUBLIC_LOKI_HOST}`;
 	let messages: ReceivedMessage[] = [];
 	let workerNames: string[] = [];
 	let scrollContainer: HTMLDivElement;
@@ -31,6 +35,7 @@
 	let showWorkerNames = false;
 	let showSettings = false;
 	let searchValue = '';
+	let isError = false;
 
 	let filterOptions: TTab<string>[];
 	let filterValues: string[] = [];
@@ -173,45 +178,65 @@
 		showSettings = !showSettings;
 	}
 
-	onMount(() => {
+	function onOpen() {
+		console.log('opened!');
+	}
+	function onClose() {
+		console.log('closed!');
+	}
+
+	function onMessage(i: Websocket, ev: MessageEvent<string>) {
+		const parsedResult = JSON.parse(ev.data);
+		let messageAsReceived = parsedResult as ReceivedMessage;
+		if (!messageAsReceived.streams || messageAsReceived.streams.length === 0) {
+			console.log('Message with unknown type:', parsedResult);
+			return;
+		}
+		let wasAtBottom = getIsAtBottom();
+		for (let i = 0; i < messageAsReceived.streams.length; i++) {
+			const stream = messageAsReceived.streams[i];
+			if (!workerNames.includes(stream.stream.worker_name)) {
+				workerNames = [...workerNames, stream.stream.worker_name];
+			}
+		}
+		messages = [...messages, messageAsReceived].slice(-maxMessages);
+		lastTimestamp = getLastTimestamp(messages);
+		if (wasAtBottom) {
+			lastSeenItemTimestamp = lastTimestamp;
+		}
+		setTimeout(() => {
+			if (wasAtBottom) {
+				scrollToBottom();
+			}
+		});
+	}
+
+	async function setupWebsocket() {
+		const res = await fetch(`${lokiUrl}/ready`, {
+			headers: { Authorization: `Basic ${data.lokiBasicAuthToken}` }
+		});
+		if (!res.ok) {
+			console.error('Loki error');
+			isError = true;
+			return;
+		}
+
 		ws = new WebsocketBuilder(lokiWebsocketEndpoint)
 			.withBuffer(new ArrayQueue()) // buffer messages when disconnected
 			.withBackoff(new ConstantBackoff(1000)) // retry every 1s
 			.build();
 
-		const onMessage = (i: Websocket, ev: MessageEvent<string>) => {
-			const parsedResult = JSON.parse(ev.data);
-			let messageAsReceived = parsedResult as ReceivedMessage;
-			if (!messageAsReceived.streams || messageAsReceived.streams.length === 0) {
-				console.log('Message with unknown type:', parsedResult);
-				return;
-			}
-			let wasAtBottom = getIsAtBottom();
-			for (let i = 0; i < messageAsReceived.streams.length; i++) {
-				const stream = messageAsReceived.streams[i];
-				if (!workerNames.includes(stream.stream.worker_name)) {
-					workerNames = [...workerNames, stream.stream.worker_name];
-				}
-			}
-			messages = [...messages, messageAsReceived].slice(-maxMessages);
-			lastTimestamp = getLastTimestamp(messages);
-			if (wasAtBottom) {
-				lastSeenItemTimestamp = lastTimestamp;
-			}
-			setTimeout(() => {
-				if (wasAtBottom) {
-					scrollToBottom();
-				}
-			});
-		};
-
-		ws.addEventListener(WebsocketEvent.open, () => console.log('opened!'));
-		ws.addEventListener(WebsocketEvent.close, () => console.log('closed!'));
+		ws.addEventListener(WebsocketEvent.open, onOpen);
+		ws.addEventListener(WebsocketEvent.close, onClose);
 		ws.addEventListener(WebsocketEvent.message, onMessage);
+	}
 
+	onMount(() => {
+		setupWebsocket();
+		scrollContainerOnScroll();
 		return () => {
-			ws?.removeEventListener(WebsocketEvent.open, () => console.log('opened!'));
-			ws?.removeEventListener(WebsocketEvent.close, () => console.log('closed!'));
+			ws?.removeEventListener(WebsocketEvent.open, onOpen);
+			ws?.removeEventListener(WebsocketEvent.close, onClose);
 			ws?.removeEventListener(WebsocketEvent.message, onMessage);
 			ws?.close();
 		};
@@ -275,6 +300,8 @@
 					{:else}
 						<p class="m-auto text-c-on-bg/50">No matching logs.</p>
 					{/each}
+				{:else if isError}
+					<IconSadFace class="m-auto size-10 text-c-on-bg/50" />
 				{:else}
 					<IconAnimatedSpinner class="m-auto size-10 text-c-on-bg/50" />
 				{/if}
