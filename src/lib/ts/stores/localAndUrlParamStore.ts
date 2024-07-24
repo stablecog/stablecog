@@ -4,7 +4,7 @@ import { localWritable as writable } from '@macfja/svelte-persistent-store';
 export function localAndUrlParamWritable<T>(key: string, paramKey: string, defaultValue: T) {
 	const {
 		set: _set,
-		delete: _del,
+		delete: _delete,
 		subscribe: _subscribe,
 		update: _update
 	} = writable<T>(key, defaultValue);
@@ -14,8 +14,8 @@ export function localAndUrlParamWritable<T>(key: string, paramKey: string, defau
 		setUrlSearchParam({ key: paramKey, value: params, defaultValue });
 	};
 
-	const del: typeof _del = () => {
-		_del();
+	const del: typeof _delete = () => {
+		_delete();
 	};
 
 	const subscribe: typeof _subscribe = (params) => {
@@ -28,7 +28,7 @@ export function localAndUrlParamWritable<T>(key: string, paramKey: string, defau
 
 	return {
 		set,
-		del,
+		delete: del,
 		subscribe,
 		update
 	};

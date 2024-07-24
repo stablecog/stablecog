@@ -28,7 +28,7 @@ export function sessionAndUrlParamWritable<T>(key: string, paramKey: string, def
 
 	return {
 		set,
-		del,
+		delete: del,
 		subscribe,
 		update
 	};
