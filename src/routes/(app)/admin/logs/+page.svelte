@@ -42,7 +42,7 @@
 	const maxMessages = 5000;
 	const initialMessageCount = 1000;
 	let ws: Websocket | undefined;
-	const lokiWebsocketEndpoint = `wss://${PUBLIC_LOKI_HOST}/ws?query={logger="root"}&limit=${initialMessageCount}&token=${data.lokiToken}`;
+	const lokiWebsocketEndpoint = `wss://${PUBLIC_LOKI_HOST}/loki/api/v1/tail?query={logger="root"}&limit=${initialMessageCount}&token=${data.lokiToken}`;
 	let messages: ReceivedMessage[] = [];
 	let workerNames: string[] = [];
 	let scrollContainer: HTMLDivElement;
