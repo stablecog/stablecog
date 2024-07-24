@@ -1,3 +1,4 @@
+import { LOKI_TOKEN } from '$env/static/private';
 import { availableAdminLogLayouts, type TLayout } from '$routes/(app)/admin/logs/constants.js';
 
 export function load({ url }) {
@@ -10,6 +11,7 @@ export function load({ url }) {
 
 	return {
 		search,
-		layout
+		layout,
+		lokiToken: LOKI_TOKEN
 	};
 }
