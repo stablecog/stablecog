@@ -51,27 +51,27 @@
 	let isSettingsOpen = false;
 	let layouts: TTab<TLayout>[] = [
 		{
-			label: 'Desktop | Logs, Time, Name',
+			label: 'Desktop 📜 🕦 🖥️',
 			value: 'desktop-logs-time-name'
 		},
 		{
-			label: 'Desktop | Logs, Time',
+			label: 'Desktop 📜 🕦',
 			value: 'desktop-logs-time'
 		},
 		{
-			label: 'Desktop | Logs',
+			label: 'Desktop 📜',
 			value: 'desktop-logs'
 		},
 		{
-			label: 'Mobile | Logs, Time, Name',
+			label: 'Mobile 📜 🕦 🖥️',
 			value: 'mobile-logs-time-name'
 		},
 		{
-			label: 'Mobile | Logs, Time',
+			label: 'Mobile 📜 🕦',
 			value: 'mobile-logs-time'
 		},
 		{
-			label: 'Mobile | Logs',
+			label: 'Mobile 📜',
 			value: 'mobile-logs'
 		}
 	];
