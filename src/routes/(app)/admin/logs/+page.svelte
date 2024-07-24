@@ -411,6 +411,7 @@
 			<div
 				class="pointer-events-none absolute left-0 top-0 flex w-full transform items-end justify-end gap-2.5
 				bg-gradient-to-t from-c-bg/0 from-[60%] to-c-bg p-2 transition {isAtTop &&
+				!isAtBottom &&
 				messages.length !== 0 &&
 				!isError &&
 				filteredAndSearchedMessages.length !== 0
