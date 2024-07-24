@@ -276,7 +276,7 @@ module.exports = {
 				'pulse-faster': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
 				'slide-up-and-fade': 'slide-up-and-fade 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
 				hourglass: 'hourglass 3s cubic-bezier(0.4, 0, 0.2, 1) infinite',
-				'log-entry': 'log-entry 1s ease-in',
+				'log-entry': 'log-entry 0.5s ease-in',
 				rock: 'rock 0.75s ease-out infinite'
 			},
 			ringWidth: {
@@ -409,10 +409,10 @@ module.exports = {
 				},
 				'log-entry': {
 					'0%': {
-						color: 'rgb(var(--c-success)/1)'
+						opacity: 0
 					},
 					'100%': {
-						color: 'rgb(var(--c-on-bg)/0.5)'
+						opacity: 1
 					}
 				}
 			}

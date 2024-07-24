@@ -381,32 +381,6 @@
 					<IconAnimatedSpinner class="m-auto size-10 text-c-on-bg/50" />
 				{/if}
 			</div>
-			<!-- Bottom Buttons -->
-			<div
-				class="pointer-events-none absolute bottom-0 left-0 flex w-full transform items-end justify-end
-				gap-2.5 bg-gradient-to-b from-c-bg/0 from-[60%] to-c-bg p-2 transition {isAtBottom
-					? 'translate-y-14'
-					: ''}"
-			>
-				<SubtleButton
-					noPadding
-					class="pointer-events-auto p-2  {isAtTop ? 'translate-y-13' : ''}"
-					onClick={scrollToTop}
-				>
-					<IconArrowRight class="size-5 -rotate-90" />
-				</SubtleButton>
-				<div class="relative">
-					<SubtleButton noPadding class="pointer-events-auto p-2" onClick={scrollToBottom}>
-						<IconArrowRight class="size-5 rotate-90" />
-					</SubtleButton>
-					<div
-						class="pointer-events-none absolute -right-0.75 -top-0.75 size-2.5 transform rounded-full bg-c-danger transition {lastTimestamp >
-						lastSeenItemTimestamp
-							? 'scale-100'
-							: 'scale-0'}"
-					></div>
-				</div>
-			</div>
 			<!-- Top Buttons -->
 			<div
 				class="pointer-events-none absolute left-0 top-0 flex w-full transform items-end justify-end gap-2.5
@@ -432,6 +406,32 @@
 						/>
 					</div>
 				</SubtleButton>
+			</div>
+			<!-- Bottom Buttons -->
+			<div
+				class="pointer-events-none absolute bottom-0 left-0 flex w-full transform items-end justify-end
+				gap-2.5 bg-gradient-to-b from-c-bg/0 from-[60%] to-c-bg p-2 transition {isAtBottom
+					? 'translate-y-14'
+					: ''}"
+			>
+				<SubtleButton
+					noPadding
+					class="pointer-events-auto p-2  {isAtTop ? 'translate-y-13' : ''}"
+					onClick={scrollToTop}
+				>
+					<IconArrowRight class="size-5 -rotate-90" />
+				</SubtleButton>
+				<div class="relative">
+					<SubtleButton noPadding class="pointer-events-auto p-2" onClick={scrollToBottom}>
+						<IconArrowRight class="size-5 rotate-90" />
+					</SubtleButton>
+					<div
+						class="pointer-events-none absolute -right-0.75 -top-0.75 size-2.5 transform rounded-full bg-c-danger transition {lastTimestamp >
+						lastSeenItemTimestamp
+							? 'scale-100'
+							: 'scale-0'}"
+					></div>
+				</div>
 			</div>
 		</div>
 	</div>
