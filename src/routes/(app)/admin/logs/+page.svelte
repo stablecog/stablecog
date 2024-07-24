@@ -3,19 +3,19 @@
 	import IconArrowRight from '$components/icons/IconArrowRight.svelte';
 	import IconCancel from '$components/icons/IconCancel.svelte';
 	import IconFilter from '$components/icons/IconFilter.svelte';
+	import IconPreferences from '$components/icons/IconPreferences.svelte';
 	import IconSadFace from '$components/icons/IconSadFace.svelte';
 	import IconSearch from '$components/icons/IconSearch.svelte';
 	import IconSettings from '$components/icons/IconSettings.svelte';
 	import SubtleButton from '$components/primitives/buttons/SubtleButton.svelte';
-	import TabLikeDropdown from '$components/primitives/tabBars/TabLikeDropdown.svelte';
 	import TabLikeFilterDropdown from '$components/primitives/tabBars/TabLikeFilterDropdown.svelte';
 	import TabLikeInput from '$components/primitives/tabBars/TabLikeInput.svelte';
 	import MetaTag from '$components/utils/MetaTag.svelte';
 	import { PUBLIC_LOKI_HOST } from '$env/static/public';
 	import {
-		adminLogsLayout,
+		adminLogsLayoutOptions,
 		adminLogsSearch,
-		type TLayout
+		type TLayoutOption
 	} from '$routes/(app)/admin/logs/constants';
 	import { canonicalUrl } from '$ts/constants/main.js';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion.js';
@@ -35,8 +35,8 @@
 		adminLogsSearch.set(data.search);
 	}
 
-	if (data.layout) {
-		adminLogsLayout.set(data.layout);
+	if (data.layoutOptions) {
+		adminLogsLayoutOptions.set(data.layoutOptions);
 	}
 
 	const maxMessages = 5000;
@@ -49,30 +49,15 @@
 	const isAtTheEdgeThreshold = 8;
 	let isError = false;
 	let isSettingsOpen = false;
-	let layouts: TTab<TLayout>[] = [
+	let mounted = false;
+	let layoutOptions: TTab<TLayoutOption>[] = [
 		{
-			label: 'Desktop | Logs | Time | Name',
-			value: 'desktop-logs-time-name'
+			label: 'Timestamp',
+			value: 'timestamp'
 		},
 		{
-			label: 'Desktop | Logs | Time',
-			value: 'desktop-logs-time'
-		},
-		{
-			label: 'Desktop | Logs',
-			value: 'desktop-logs'
-		},
-		{
-			label: 'Mobile | Logs | Time | Name',
-			value: 'mobile-logs-time-name'
-		},
-		{
-			label: 'Mobile | Logs | Time',
-			value: 'mobile-logs-time'
-		},
-		{
-			label: 'Mobile | Logs',
-			value: 'mobile-logs'
+			label: 'Worker Name',
+			value: 'worker-name'
 		}
 	];
 
@@ -82,6 +67,8 @@
 	$: filterOptions = [
 		...workerNames.map((workerName) => ({ value: workerName, label: workerName }))
 	];
+
+	$: $adminLogsLayoutOptions, setLayoutOptionNoneIfNeeded();
 
 	$: filteredMessages =
 		filterValues.length === 0 ||
@@ -128,6 +115,14 @@
 						return { ...message, streams: newStreams };
 					})
 					.filter((message) => message !== null);
+
+	function setLayoutOptionNoneIfNeeded() {
+		if (!mounted) return;
+		if ($adminLogsLayoutOptions.length === 0) {
+			adminLogsLayoutOptions.set(['none']);
+			console.log($adminLogsLayoutOptions);
+		}
+	}
 
 	function waitAndScrollContainerOnScroll() {
 		setTimeout(() => {
@@ -200,8 +195,12 @@
 		const date = new Date(Number(val) / 1000000);
 		// if date is more than 24 hour ago, show date and time
 		const now = new Date();
+		const timeString =
+			date.toLocaleTimeString(undefined, { hour12: false }) +
+			'.' +
+			date.getMilliseconds().toString().slice(0, 2).padEnd(2, '0');
 		if (now.getTime() - date.getTime() > 24 * 60 * 60 * 1000) {
-			return date.toLocaleString();
+			return date.toLocaleDateString() + ' ' + timeString;
 		}
 		return (
 			date.toLocaleTimeString(undefined, { hour12: false }) +
@@ -275,6 +274,7 @@
 	onMount(() => {
 		setupWebsocket();
 		scrollContainerOnScroll();
+		mounted = true;
 		return () => {
 			ws?.removeEventListener(WebsocketEvent.open, onOpen);
 			ws?.removeEventListener(WebsocketEvent.close, onClose);
@@ -312,11 +312,12 @@
 			placeholder="Search"
 			icon={IconSearch}
 		/>
-		<TabLikeDropdown
-			name="Layout"
+		<TabLikeFilterDropdown
+			nameIcon={IconPreferences}
+			name="Preferences"
 			class="w-full flex-auto md:flex-1"
-			items={layouts}
-			bind:value={$adminLogsLayout}
+			items={layoutOptions}
+			bind:values={$adminLogsLayoutOptions}
 		/>
 	</div>
 	<div class="relative flex w-full max-w-4xl flex-1 flex-col items-center justify-start">
@@ -333,23 +334,16 @@
 						{#each message.streams as stream}
 							{#each stream.values as value}
 								<div
-									class="flex w-full items-start justify-start text-left font-mono {$adminLogsLayout.includes(
-										'mobile'
-									)
-										? `flex-col gap-0.5 py-1 text-xxs`
-										: 'py-0.75 text-xs'}"
+									class="flex w-full flex-col items-start justify-start gap-0.5 py-1 text-left font-mono text-xxs md:flex-row md:gap-0 md:py-0.75 md:text-xs"
 								>
-									{#if $adminLogsLayout.includes('time') || $adminLogsLayout.includes('name')}
-										<p
-											class="flex gap-4 whitespace-pre {$adminLogsLayout.includes('desktop') &&
-												'pr-4'}"
-										>
-											{#if $adminLogsLayout.includes('time')}
+									{#if $adminLogsLayoutOptions.includes('timestamp') || $adminLogsLayoutOptions.includes('worker-name')}
+										<p class="flex gap-4 whitespace-pre pr-4">
+											{#if $adminLogsLayoutOptions.includes('timestamp')}
 												<span class="text-c-on-bg/50">
 													{getTimeString(value[0])}
 												</span>
 											{/if}
-											{#if $adminLogsLayout.includes('name')}
+											{#if $adminLogsLayoutOptions.includes('worker-name')}
 												<span
 													class="{workerNames.indexOf(stream.stream.worker_name) % 4 === 0
 														? 'text-c-secondary/75'
@@ -357,9 +351,7 @@
 															? 'text-c-primary/75'
 															: workerNames.indexOf(stream.stream.worker_name) % 4 === 2
 																? 'text-c-success/75'
-																: 'text-c-danger/75'} {$adminLogsLayout.includes('desktop')
-														? 'w-[8ch] overflow-hidden overflow-ellipsis'
-														: ''}"
+																: 'text-c-danger/75'} md:w-[8ch] md:overflow-hidden md:overflow-ellipsis"
 												>
 													{stream.stream.worker_name}
 												</span>

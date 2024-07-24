@@ -1,17 +1,26 @@
 import { LOKI_TOKEN } from '$env/static/private';
-import { availableAdminLogLayouts, type TLayout } from '$routes/(app)/admin/logs/constants.js';
+import {
+	availableAdminLogLayoutOptions,
+	type TLayoutOption
+} from '$routes/(app)/admin/logs/constants.js';
 
 export function load({ url }) {
 	const _search = url.searchParams.get('q');
-	const _layout = url.searchParams.get('l');
+	const _layoutOptions = url.searchParams.get('l');
 
 	const search = _search !== undefined && _search !== null ? _search : '';
-	const layout: TLayout | null =
-		_layout && availableAdminLogLayouts.includes(_layout as TLayout) ? (_layout as TLayout) : null;
+	const layoutOptions: TLayoutOption[] | null =
+		_layoutOptions !== undefined && _layoutOptions !== null
+			? (_layoutOptions
+					.split(',')
+					.filter((option) =>
+						availableAdminLogLayoutOptions.includes(option as TLayoutOption)
+					) as TLayoutOption[])
+			: [];
 
 	return {
 		search,
-		layout,
+		layoutOptions: layoutOptions.length > 0 ? layoutOptions : null,
 		lokiToken: LOKI_TOKEN
 	};
 }

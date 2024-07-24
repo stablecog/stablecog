@@ -1,10 +1,10 @@
 import { localAndUrlParamWritable } from '$ts/stores/localAndUrlParamStore';
 
-export const adminLogsLayoutDefault: TLayout = 'desktop-logs-time';
-export const adminLogsLayout = localAndUrlParamWritable<TLayout>(
-	'adminLogsLayout',
+export const adminLogsLayoutOptionsDefault: TLayoutOption[] = ['timestamp'];
+export const adminLogsLayoutOptions = localAndUrlParamWritable<TLayoutOption[]>(
+	'adminLogsLayoutOptions',
 	'l',
-	adminLogsLayoutDefault
+	adminLogsLayoutOptionsDefault
 );
 
 export const adminLogsSearch = localAndUrlParamWritable<string | undefined | null>(
@@ -13,13 +13,6 @@ export const adminLogsSearch = localAndUrlParamWritable<string | undefined | nul
 	''
 );
 
-export const availableAdminLogLayouts = [
-	'desktop-logs-time',
-	'desktop-logs',
-	'desktop-logs-time-name',
-	'mobile-logs-time',
-	'mobile-logs',
-	'mobile-logs-time-name'
-] as const;
+export const availableAdminLogLayoutOptions = ['timestamp', 'worker-name', 'none'] as const;
 
-export type TLayout = (typeof availableAdminLogLayouts)[number];
+export type TLayoutOption = (typeof availableAdminLogLayoutOptions)[number];
