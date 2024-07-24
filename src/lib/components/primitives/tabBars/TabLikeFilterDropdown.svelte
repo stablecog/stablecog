@@ -134,8 +134,8 @@
 					/>
 				{/if}
 				<p
-					class="relative z-0 max-w-full flex-shrink overflow-hidden overflow-ellipsis whitespace-nowrap text-base
-					font-medium text-c-on-bg transition not-touch:group-hover:text-c-primary"
+					class="relative z-0 max-w-full flex-shrink select-none overflow-hidden overflow-ellipsis whitespace-nowrap
+					text-base font-medium text-c-on-bg transition not-touch:group-hover:text-c-primary"
 				>
 					{name}
 				</p>
@@ -215,8 +215,8 @@
 											</div>
 										</div>
 										<p
-											class="relative z-0 max-w-full flex-shrink overflow-hidden overflow-ellipsis whitespace-nowrap text-base
-												font-medium text-c-on-bg transition not-touch:group-hover:text-c-primary"
+											class="relative z-0 max-w-full flex-shrink select-none overflow-hidden overflow-ellipsis whitespace-nowrap
+												text-base font-medium text-c-on-bg transition not-touch:group-hover:text-c-primary"
 										>
 											{item.label}
 										</p>

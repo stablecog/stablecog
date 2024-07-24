@@ -314,7 +314,7 @@
 		/>
 		<TabLikeFilterDropdown
 			nameIcon={IconPreferences}
-			name="Preferences"
+			name="Options"
 			class="w-full flex-auto md:flex-1"
 			items={layoutOptions}
 			bind:values={$adminLogsLayoutOptions}
