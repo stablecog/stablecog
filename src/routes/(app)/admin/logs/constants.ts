@@ -1,13 +1,13 @@
-import { sessionAndUrlParamWritable } from '$ts/stores/sessionAndUrlParamStore';
+import { localAndUrlParamWritable } from '$ts/stores/localAndUrlParamStore';
 
 export const adminLogsLayoutDefault: TLayout = 'desktop-logs-time';
-export const adminLogsLayout = sessionAndUrlParamWritable<TLayout>(
+export const adminLogsLayout = localAndUrlParamWritable<TLayout>(
 	'adminLogsLayout',
 	'l',
 	adminLogsLayoutDefault
 );
 
-export const adminLogsSearch = sessionAndUrlParamWritable<string | undefined | null>(
+export const adminLogsSearch = localAndUrlParamWritable<string | undefined | null>(
 	'adminLogsSearch',
 	'q',
 	''

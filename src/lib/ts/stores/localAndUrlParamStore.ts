@@ -1,10 +1,10 @@
 import { browser } from '$app/environment';
-import { sessionWritable as writable } from '@macfja/svelte-persistent-store';
+import { localWritable as writable } from '@macfja/svelte-persistent-store';
 
-export function sessionAndUrlParamWritable<T>(key: string, paramKey: string, defaultValue: T) {
+export function localAndUrlParamWritable<T>(key: string, paramKey: string, defaultValue: T) {
 	const {
 		set: _set,
-		delete: _delete,
+		delete: _del,
 		subscribe: _subscribe,
 		update: _update
 	} = writable<T>(key, defaultValue);
@@ -14,8 +14,8 @@ export function sessionAndUrlParamWritable<T>(key: string, paramKey: string, def
 		setUrlSearchParam({ key: paramKey, value: params, defaultValue });
 	};
 
-	const del: typeof _delete = () => {
-		_delete();
+	const del: typeof _del = () => {
+		_del();
 	};
 
 	const subscribe: typeof _subscribe = (params) => {
