@@ -129,6 +129,13 @@
 					})
 					.filter((message) => message !== null);
 
+	const waitAndScrollContainerOnScroll = () => {
+		setTimeout(() => {
+			scrollContainerOnScroll();
+		});
+	};
+	$: filteredAndSearchedMessages, waitAndScrollContainerOnScroll();
+
 	type Stream = {
 		logger: string;
 		severity: string;
