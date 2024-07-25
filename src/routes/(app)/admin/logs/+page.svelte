@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconArrowRight from '$components/icons/IconArrowRight.svelte';
 	import IconCancel from '$components/icons/IconCancel.svelte';
@@ -42,9 +43,15 @@
 	const maxMessages = 5000;
 	const initialMessageCount = 1000;
 	let ws: Websocket | undefined;
-	const lokiWebsocketEndpoint = `wss://${PUBLIC_LOKI_HOST}/loki/api/v1/tail?query={logger="root"}&limit=${initialMessageCount}&token=${data.lokiToken}`;
+	let loadingMessages = true;
 	let messages: ReceivedMessage[] = [];
 	let workerNames: string[] = [];
+	let start = Date.now() * 1_000_000 - 24 * 60 * 60 * 1_000 * 1_000_000;
+
+	let searchString: string | undefined;
+	let searchTimeout: NodeJS.Timeout;
+	let searchDebounceMs = 300;
+
 	let scrollContainer: HTMLDivElement;
 	const isAtTheEdgeThreshold = 8;
 	let isError = false;
@@ -63,89 +70,52 @@
 
 	let filterOptions: TTab<string>[];
 	let filterValues: string[] = [];
+	let filteredMessages: ReceivedMessage[] = [];
 
 	$: filterOptions = [
 		...workerNames.map((workerName) => ({ value: workerName, label: workerName }))
 	];
-
 	$: $adminLogsLayoutOptions, setLayoutOptionNoneIfNeeded();
 
-	$: filteredMessages =
-		filterValues.length === 0 ||
-		arrayIncludesAll(
-			filterValues,
-			filterOptions.map((option) => option.value)
-		)
-			? messages
-			: messages
-					.map((message) => {
-						const filteredStreams = message.streams.filter((stream) => {
-							return filterValues.includes(stream.stream.worker_name);
-						});
-						if (filteredStreams.length === 0) {
-							return null;
-						}
-						return { ...message, streams: filteredStreams };
-					})
-					.filter((message) => message !== null);
+	$: [searchString], setDebouncedSearch(searchString);
+	$: query =
+		$adminLogsSearch !== '' && $adminLogsSearch !== undefined && $adminLogsSearch !== null
+			? `{logger="root"}|~"(?i)${$adminLogsSearch}"`
+			: `{logger="root"}`;
+	$: lokiWebsocketEndpoint = `wss://${PUBLIC_LOKI_HOST}/loki/api/v1/tail?query=${query}&limit=${initialMessageCount}&start=${start}&token=${data.lokiToken}`;
+	$: [lokiWebsocketEndpoint, mounted], setupWebsocket();
+	$: [messages, $adminLogsLayoutOptions], setFilteredMessages();
 
-	$: filteredAndSearchedMessages =
-		$adminLogsSearch === '' || $adminLogsSearch === undefined || $adminLogsSearch === null
-			? filteredMessages
-			: filteredMessages
-					.map((message) => {
-						const newStreams = message.streams
-							.map((stream) => {
-								const newValues = stream.values.filter((value) => {
-									return $adminLogsSearch === '' ||
-										$adminLogsSearch === undefined ||
-										$adminLogsSearch === null
-										? true
-										: value[1].toLowerCase().includes($adminLogsSearch.toLowerCase());
-								});
-								if (newValues.length === 0) {
-									return null;
-								}
-								return { ...stream, values: newValues };
-							})
-							.filter((stream) => stream !== null);
-						if (newStreams.length === 0) {
-							return null;
-						}
-						return { ...message, streams: newStreams };
-					})
-					.filter((message) => message !== null);
+	function setFilteredMessages() {
+		filteredMessages =
+			filterValues.length === 0 ||
+			arrayIncludesAll(
+				filterValues,
+				filterOptions.map((option) => option.value)
+			)
+				? messages
+				: messages
+						.map((message) => {
+							const filteredStreams = message.streams.filter((stream) => {
+								return filterValues.includes(stream.stream.worker_name);
+							});
+							if (filteredStreams.length === 0) {
+								return null;
+							}
+							return { ...message, streams: filteredStreams };
+						})
+						.filter((message) => message !== null);
+		setTimeout(() => {
+			scrollContainerOnScroll();
+		});
+	}
 
 	function setLayoutOptionNoneIfNeeded() {
 		if (!mounted) return;
 		if ($adminLogsLayoutOptions.length === 0) {
 			adminLogsLayoutOptions.set(['none']);
-			console.log($adminLogsLayoutOptions);
 		}
 	}
-
-	function waitAndScrollContainerOnScroll() {
-		setTimeout(() => {
-			scrollContainerOnScroll();
-		});
-	}
-	$: filteredAndSearchedMessages, waitAndScrollContainerOnScroll();
-
-	type Stream = {
-		logger: string;
-		severity: string;
-		worker_name: string;
-		application: string;
-	};
-
-	type Value = [string, string];
-
-	type ReceivedMessage = {
-		streams: {
-			stream: Stream;
-			values: Value[];
-		}[];
-	};
 
 	function scrollToBottom() {
 		if (scrollContainer) {
@@ -227,14 +197,22 @@
 		isSettingsOpen = !isSettingsOpen;
 	}
 
+	let loadingMessagesTimeout: NodeJS.Timeout;
+
 	function onOpen() {
-		console.log('opened!');
+		console.log('🟢 Websocket opened');
+		clearTimeout(loadingMessagesTimeout);
+		loadingMessagesTimeout = setTimeout(() => {
+			loadingMessages = false;
+		}, 1000);
 	}
 	function onClose() {
-		console.log('closed!');
+		console.log('🔴 Websocket closed');
 	}
 
 	function onMessage(i: Websocket, ev: MessageEvent<string>) {
+		clearTimeout(loadingMessagesTimeout);
+		loadingMessages = false;
 		const parsedResult = JSON.parse(ev.data);
 		let messageAsReceived = parsedResult as ReceivedMessage;
 		if (!messageAsReceived.streams || messageAsReceived.streams.length === 0) {
@@ -260,7 +238,34 @@
 		});
 	}
 
+	async function setDebouncedSearch(searchString: string | undefined) {
+		if (!browser) return;
+		clearTimeout(searchTimeout);
+		if (!searchString) {
+			adminLogsSearch.set('');
+			return;
+		}
+		searchTimeout = setTimeout(async () => {
+			if (searchString) {
+				adminLogsSearch.set(searchString);
+			} else {
+				adminLogsSearch.set('');
+			}
+		}, searchDebounceMs);
+	}
+
 	async function setupWebsocket() {
+		if (!browser) return;
+		if (!lokiWebsocketEndpoint) return;
+
+		loadingMessages = true;
+		messages = [];
+
+		ws?.removeEventListener(WebsocketEvent.open, onOpen);
+		ws?.removeEventListener(WebsocketEvent.close, onClose);
+		ws?.removeEventListener(WebsocketEvent.message, onMessage);
+		ws?.close();
+
 		ws = new WebsocketBuilder(lokiWebsocketEndpoint)
 			.withBuffer(new ArrayQueue()) // buffer messages when disconnected
 			.withBackoff(new ConstantBackoff(1000)) // retry every 1s
@@ -271,9 +276,23 @@
 		ws.addEventListener(WebsocketEvent.message, onMessage);
 	}
 
+	type Stream = {
+		logger: string;
+		severity: string;
+		worker_name: string;
+		application: string;
+	};
+
+	type Value = [string, string];
+
+	type ReceivedMessage = {
+		streams: {
+			stream: Stream;
+			values: Value[];
+		}[];
+	};
+
 	onMount(() => {
-		setupWebsocket();
-		scrollContainerOnScroll();
 		mounted = true;
 		return () => {
 			ws?.removeEventListener(WebsocketEvent.open, onOpen);
@@ -304,7 +323,7 @@
 		/>
 		<TabLikeInput
 			class="w-full flex-auto md:flex-1"
-			bind:value={$adminLogsSearch}
+			bind:value={searchString}
 			type="text"
 			name="Search"
 			placeholder="Search"
@@ -327,8 +346,8 @@
 				bind:this={scrollContainer}
 				class="flex w-full flex-1 flex-col overflow-auto px-4 pb-3 pt-12"
 			>
-				{#if messages.length > 0}
-					{#each filteredAndSearchedMessages as message}
+				{#if !loadingMessages}
+					{#each filteredMessages as message}
 						{#each message.streams as stream}
 							{#each stream.values as value}
 								<div
@@ -377,10 +396,7 @@
 				bg-gradient-to-t from-c-bg/0 from-[60%] to-c-bg p-2 transition"
 			>
 				<p
-					class="{isAtTop &&
-					messages.length !== 0 &&
-					!isError &&
-					filteredAndSearchedMessages.length !== 0
+					class="{isAtTop && messages.length !== 0 && !isError && filteredMessages.length !== 0
 						? 'translate-y-0 opacity-100'
 						: '-translate-y-8 opacity-0'} shrink overflow-hidden overflow-ellipsis whitespace-nowrap px-2 font-semibold transition duration-150"
 				>
