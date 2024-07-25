@@ -290,9 +290,7 @@
 	image_url="{canonicalUrl}/previews/home-{previewImageVersion}.png"
 />
 
-<div
-	class="z-10 flex flex-1 flex-col items-center justify-start px-2 pb-6 pt-2 md:px-6 md:pb-6 md:pt-4"
->
+<div class="z-10 flex flex-1 flex-col items-center justify-start px-2 py-2 md:px-6 md:pb-6 md:pt-4">
 	<div
 		class="mb-3 flex w-full max-w-4xl flex-wrap items-center justify-center gap-3 {!isSettingsOpen &&
 			'hidden'}"
@@ -327,7 +325,7 @@
 			<div
 				on:scroll={scrollContainerOnScroll}
 				bind:this={scrollContainer}
-				class="flex w-full flex-1 flex-col overflow-auto px-4 py-3"
+				class="flex w-full flex-1 flex-col overflow-auto px-4 pb-3 pt-12"
 			>
 				{#if messages.length > 0}
 					{#each filteredAndSearchedMessages as message}
@@ -375,16 +373,20 @@
 			</div>
 			<!-- Top Buttons -->
 			<div
-				class="pointer-events-none absolute left-0 top-0 flex w-full transform items-end justify-end gap-2.5
-				bg-gradient-to-t from-c-bg/0 from-[60%] to-c-bg p-2 transition {isAtTop &&
-				!isAtBottom &&
-				messages.length !== 0 &&
-				!isError &&
-				filteredAndSearchedMessages.length !== 0
-					? '-translate-y-14'
-					: ''}"
+				class="pointer-events-none absolute left-0 top-0 flex w-full transform items-center justify-between gap-2.5
+				bg-gradient-to-t from-c-bg/0 from-[60%] to-c-bg p-2 transition"
 			>
-				<SubtleButton noPadding class="pointer-events-auto p-2" onClick={toggleSettings}>
+				<p
+					class="{isAtTop &&
+					messages.length !== 0 &&
+					!isError &&
+					filteredAndSearchedMessages.length !== 0
+						? 'translate-y-0 opacity-100'
+						: '-translate-y-8 opacity-0'} shrink overflow-hidden overflow-ellipsis whitespace-nowrap px-2 font-semibold transition duration-150"
+				>
+					Start of logs
+				</p>
+				<SubtleButton noPadding class="pointer-events-auto shrink-0 p-2" onClick={toggleSettings}>
 					<div class="size-5">
 						<IconSettings
 							class="h-full w-full transition {isSettingsOpen
