@@ -3,6 +3,8 @@
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconArrowRight from '$components/icons/IconArrowRight.svelte';
 	import IconCancel from '$components/icons/IconCancel.svelte';
+	import IconDocument from '$components/icons/IconDocument.svelte';
+	import IconFlag from '$components/icons/IconFlag.svelte';
 	import IconSadFace from '$components/icons/IconSadFace.svelte';
 	import IconSearch from '$components/icons/IconSearch.svelte';
 	import IconSettings from '$components/icons/IconSettings.svelte';
@@ -297,7 +299,14 @@
 				bind:this={scrollContainer}
 				class="flex w-full flex-1 flex-col overflow-auto px-4 py-3"
 			>
-				<p class="pb-3 font-semibold transition duration-150">Start of logs</p>
+				<div class="flex w-full items-center justify-start pb-3 pr-16">
+					<IconFlag class="mr-2 size-5 shrink-0" />
+					<p
+						class="min-w-0 shrink overflow-hidden overflow-ellipsis whitespace-nowrap font-semibold"
+					>
+						Start
+					</p>
+				</div>
 				{#if !loadingLogRows}
 					{#each logRows as logRow}
 						<div
@@ -370,11 +379,11 @@
 					class="pointer-events-auto p-2  {isAtTop ? 'translate-y-13' : ''}"
 					onClick={scrollToTop}
 				>
-					<IconArrowRight class="size-5 -rotate-90" />
+					<IconArrowRight strokeWidth={2} class="size-5 -rotate-90" />
 				</SubtleButton>
 				<div class="relative">
 					<SubtleButton noPadding class="pointer-events-auto p-2" onClick={scrollToBottom}>
-						<IconArrowRight class="size-5 rotate-90" />
+						<IconArrowRight strokeWidth={2} class="size-5 rotate-90" />
 					</SubtleButton>
 					<div
 						class="pointer-events-none absolute -right-0.75 -top-0.75 size-2.5 transform rounded-full bg-c-danger transition {lastTimestamp >
