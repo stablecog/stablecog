@@ -192,7 +192,10 @@
 				});
 			}
 		}
-		logRows = [...logRows, ...newLogRows].slice(-maxLogRows);
+		logRows =
+			logRows.length + newLogRows.length > maxLogRows
+				? [...logRows.slice(-initialMessageCount), ...newLogRows]
+				: [...logRows, ...newLogRows];
 		lastTimestamp = getLastTimestamp(logRows);
 		if (wasAtBottom) {
 			lastSeenItemTimestamp = lastTimestamp;
