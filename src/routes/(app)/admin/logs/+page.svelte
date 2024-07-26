@@ -184,8 +184,8 @@
 		}
 		let wasAtBottom = getIsAtBottom();
 		let newLogRows: TLogRow[] = [];
-		for (let stream of messageAsReceived.streams) {
-			for (let value of stream.values) {
+		for (const stream of messageAsReceived.streams) {
+			for (const value of stream.values) {
 				newLogRows.push({
 					stream: stream.stream,
 					value
