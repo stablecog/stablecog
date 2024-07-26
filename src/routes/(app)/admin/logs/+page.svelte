@@ -3,12 +3,11 @@
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconArrowRight from '$components/icons/IconArrowRight.svelte';
 	import IconCancel from '$components/icons/IconCancel.svelte';
-	import IconFilter from '$components/icons/IconFilter.svelte';
-	import IconPreferences from '$components/icons/IconPreferences.svelte';
 	import IconSadFace from '$components/icons/IconSadFace.svelte';
 	import IconSearch from '$components/icons/IconSearch.svelte';
 	import IconSettings from '$components/icons/IconSettings.svelte';
 	import SubtleButton from '$components/primitives/buttons/SubtleButton.svelte';
+	import TabLikeDropdown from '$components/primitives/tabBars/TabLikeDropdown.svelte';
 	import TabLikeFilterDropdown from '$components/primitives/tabBars/TabLikeFilterDropdown.svelte';
 	import TabLikeInput from '$components/primitives/tabBars/TabLikeInput.svelte';
 	import MetaTag from '$components/utils/MetaTag.svelte';
@@ -16,6 +15,7 @@
 	import {
 		adminLogsLayoutOptions,
 		adminLogsSearch,
+		adminLogsSelectedWorker,
 		type TLayoutOption
 	} from '$routes/(app)/admin/logs/constants';
 	import { canonicalUrl } from '$ts/constants/main.js';
@@ -40,12 +40,15 @@
 		adminLogsLayoutOptions.set(data.layoutOptions);
 	}
 
+	if (data.workerName) {
+		adminLogsSelectedWorker.set(data.workerName);
+	}
+
 	const maxMessages = 5000;
 	const initialMessageCount = 1000;
 	let ws: Websocket | undefined;
 	let loadingMessages = true;
 	let messages: ReceivedMessage[] = [];
-	let workerNames: string[] = [];
 	let start = Date.now() * 1_000_000 - 24 * 60 * 60 * 1_000 * 1_000_000;
 
 	let searchString: string | undefined;
@@ -68,48 +71,29 @@
 		}
 	];
 
-	let filterOptions: TTab<string>[];
-	let filterValues: string[] = [];
-	let filteredMessages: ReceivedMessage[] = [];
-
-	$: filterOptions = [
-		...workerNames.map((workerName) => ({ value: workerName, label: workerName }))
+	const workerOptions = [
+		{ value: 'all-workers', label: 'All Workers' },
+		...data.workerNames.map((workerName) => ({ value: workerName, label: workerName }))
 	];
 	$: $adminLogsLayoutOptions, setLayoutOptionNoneIfNeeded();
 
 	$: [searchString], setDebouncedSearch(searchString);
-	$: query =
-		$adminLogsSearch !== '' && $adminLogsSearch !== undefined && $adminLogsSearch !== null
-			? `{logger="root"}|~"(?i)${$adminLogsSearch}"`
-			: `{logger="root"}`;
+
+	let query = `{logger="root"}`;
+	$: [$adminLogsSearch, $adminLogsSelectedWorker], setQuery();
 	$: lokiWebsocketEndpoint = `wss://${PUBLIC_LOKI_HOST}/loki/api/v1/tail?query=${query}&limit=${initialMessageCount}&start=${start}&token=${data.lokiToken}`;
 	$: [lokiWebsocketEndpoint, mounted], setupWebsocket();
-	$: [messages, $adminLogsLayoutOptions], setFilteredMessages();
 
-	function setFilteredMessages() {
-		filteredMessages =
-			filterValues.length === 0 ||
-			arrayIncludesAll(
-				filterValues,
-				filterOptions.map((option) => option.value)
-			)
-				? messages
-				: messages
-						.map((message) => {
-							const filteredStreams = message.streams.filter((stream) => {
-								return filterValues.includes(stream.stream.worker_name);
-							});
-							if (filteredStreams.length === 0) {
-								return null;
-							}
-							return { ...message, streams: filteredStreams };
-						})
-						.filter((message) => message !== null);
-		setTimeout(() => {
-			scrollContainerOnScroll();
-		});
+	function setQuery() {
+		query = `{logger="root"`;
+		if ($adminLogsSelectedWorker !== 'all-workers') {
+			query += `,worker_name="${$adminLogsSelectedWorker}"`;
+		}
+		query += `}`;
+		if ($adminLogsSearch !== '' && $adminLogsSearch !== undefined && $adminLogsSearch !== null) {
+			query += `|~"(?i)${$adminLogsSearch}"`;
+		}
 	}
-
 	function setLayoutOptionNoneIfNeeded() {
 		if (!mounted) return;
 		if ($adminLogsLayoutOptions.length === 0) {
@@ -189,10 +173,6 @@
 		return Number(lastValue[0]);
 	}
 
-	function arrayIncludesAll<T>(array: T[], subset: T[]): boolean {
-		return subset.every((element) => array.includes(element));
-	}
-
 	function toggleSettings() {
 		isSettingsOpen = !isSettingsOpen;
 	}
@@ -220,12 +200,6 @@
 			return;
 		}
 		let wasAtBottom = getIsAtBottom();
-		for (let i = 0; i < messageAsReceived.streams.length; i++) {
-			const stream = messageAsReceived.streams[i];
-			if (!workerNames.includes(stream.stream.worker_name)) {
-				workerNames = [...workerNames, stream.stream.worker_name];
-			}
-		}
 		messages = [...messages, messageAsReceived].slice(-maxMessages);
 		lastTimestamp = getLastTimestamp(messages);
 		if (wasAtBottom) {
@@ -314,12 +288,17 @@
 		class="mb-3 flex w-full max-w-4xl flex-wrap items-center justify-center gap-3 {!isSettingsOpen &&
 			'hidden'}"
 	>
-		<TabLikeFilterDropdown
-			nameIcon={IconFilter}
-			name="Filter Workers"
-			bind:values={filterValues}
-			items={filterOptions}
+		<TabLikeDropdown
+			name="Worker"
+			bind:value={$adminLogsSelectedWorker}
+			items={workerOptions}
 			class="w-full flex-auto md:flex-1"
+		/>
+		<TabLikeFilterDropdown
+			name="Options"
+			class="w-full flex-auto md:flex-1"
+			items={layoutOptions}
+			bind:values={$adminLogsLayoutOptions}
 		/>
 		<TabLikeInput
 			class="w-full flex-auto md:flex-1"
@@ -329,13 +308,6 @@
 			placeholder="Search"
 			icon={IconSearch}
 		/>
-		<TabLikeFilterDropdown
-			nameIcon={IconPreferences}
-			name="Options"
-			class="w-full flex-auto md:flex-1"
-			items={layoutOptions}
-			bind:values={$adminLogsLayoutOptions}
-		/>
 	</div>
 	<div class="relative flex w-full max-w-4xl flex-1 flex-col items-center justify-start">
 		<div
@@ -344,10 +316,11 @@
 			<div
 				on:scroll={scrollContainerOnScroll}
 				bind:this={scrollContainer}
-				class="flex w-full flex-1 flex-col overflow-auto px-4 pb-3 pt-12"
+				class="flex w-full flex-1 flex-col overflow-auto px-4 py-3"
 			>
+				<p class="pb-3 font-semibold transition duration-150">Start of logs</p>
 				{#if !loadingMessages}
-					{#each filteredMessages as message}
+					{#each messages as message}
 						{#each message.streams as stream}
 							{#each stream.values as value}
 								<div
@@ -362,11 +335,11 @@
 											{/if}
 											{#if $adminLogsLayoutOptions.includes('worker-name')}
 												<span
-													class="{workerNames.indexOf(stream.stream.worker_name) % 4 === 0
+													class="{data.workerNames.indexOf(stream.stream.worker_name) % 4 === 0
 														? 'text-c-secondary/75'
-														: workerNames.indexOf(stream.stream.worker_name) % 4 === 1
+														: data.workerNames.indexOf(stream.stream.worker_name) % 4 === 1
 															? 'text-c-primary/75'
-															: workerNames.indexOf(stream.stream.worker_name) % 4 === 2
+															: data.workerNames.indexOf(stream.stream.worker_name) % 4 === 2
 																? 'text-c-success/75'
 																: 'text-c-danger/75'} md:w-[8ch] md:overflow-hidden md:overflow-ellipsis"
 												>
@@ -392,16 +365,9 @@
 			</div>
 			<!-- Top Buttons -->
 			<div
-				class="pointer-events-none absolute left-0 top-0 flex w-full transform items-center justify-between gap-2.5
-				bg-gradient-to-t from-c-bg/0 from-[60%] to-c-bg p-2 transition"
+				class="pointer-events-none absolute left-0 top-0 flex w-full transform items-center justify-end gap-2.5
+				bg-gradient-to-t from-c-bg/0 from-[70%] to-c-bg p-2 transition"
 			>
-				<p
-					class="{isAtTop && messages.length !== 0 && !isError && filteredMessages.length !== 0
-						? 'translate-y-0 opacity-100'
-						: '-translate-y-8 opacity-0'} shrink overflow-hidden overflow-ellipsis whitespace-nowrap px-2 font-semibold transition duration-150"
-				>
-					Start of logs
-				</p>
 				<SubtleButton noPadding class="pointer-events-auto shrink-0 p-2" onClick={toggleSettings}>
 					<div class="size-5">
 						<IconSettings
@@ -420,7 +386,7 @@
 			<!-- Bottom Buttons -->
 			<div
 				class="pointer-events-none absolute bottom-0 left-0 flex w-full transform items-end justify-end
-				gap-2.5 bg-gradient-to-b from-c-bg/0 from-[60%] to-c-bg p-2 transition {isAtBottom
+				gap-2.5 bg-gradient-to-b from-c-bg/0 from-[70%] to-c-bg p-2 transition {isAtBottom
 					? 'translate-y-14'
 					: ''}"
 			>

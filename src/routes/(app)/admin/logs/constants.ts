@@ -13,6 +13,12 @@ export const adminLogsSearch = localAndUrlParamWritable<string | undefined | nul
 	''
 );
 
+export const adminLogsSelectedWorker = localAndUrlParamWritable<string>(
+	'adminLogsSelectedWorker',
+	'w',
+	'all-workers'
+);
+
 export const availableAdminLogLayoutOptions = ['timestamp', 'worker-name', 'none'] as const;
 
 export type TLayoutOption = (typeof availableAdminLogLayoutOptions)[number];
