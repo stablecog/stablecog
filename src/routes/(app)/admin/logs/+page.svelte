@@ -3,7 +3,7 @@
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconArrowRight from '$components/icons/IconArrowRight.svelte';
 	import IconCancel from '$components/icons/IconCancel.svelte';
-	import IconDocument from '$components/icons/IconDocument.svelte';
+	import IconDocumentEmpty from '$components/icons/IconDocumentEmpty.svelte';
 	import IconFlag from '$components/icons/IconFlag.svelte';
 	import IconSadFace from '$components/icons/IconSadFace.svelte';
 	import IconSearch from '$components/icons/IconSearch.svelte';
@@ -40,18 +40,6 @@
 
 	export let data;
 
-	if (data.search) {
-		adminLogsSearch.set(data.search);
-	}
-
-	if (data.layoutOptions) {
-		adminLogsLayoutOptions.set(data.layoutOptions);
-	}
-
-	if (data.workerName) {
-		adminLogsSelectedWorker.set(data.workerName);
-	}
-
 	const maxLogRows = 5000;
 	const initialMessageCount = 1000;
 	let ws: Websocket | undefined;
@@ -78,11 +66,24 @@
 			value: 'worker-name'
 		}
 	];
-
 	const workerOptions = [
 		{ value: 'all-workers', label: 'All Workers' },
 		...data.workerNames.map((workerName) => ({ value: workerName, label: workerName }))
 	];
+
+	if (data.search) {
+		searchString = data.search;
+		adminLogsSearch.set(data.search);
+	}
+
+	if (data.layoutOptions) {
+		adminLogsLayoutOptions.set(data.layoutOptions);
+	}
+
+	if (data.workerName) {
+		adminLogsSelectedWorker.set(data.workerName);
+	}
+
 	$: $adminLogsLayoutOptions, setLayoutOptionNoneIfNeeded();
 
 	$: [searchString], setDebouncedSearch(searchString);
@@ -299,15 +300,24 @@
 				bind:this={scrollContainer}
 				class="flex w-full flex-1 flex-col overflow-auto px-4 py-3"
 			>
-				<div class="flex w-full items-center justify-start pb-3 pr-16">
-					<IconFlag class="mr-2 size-5 shrink-0" />
-					<p
-						class="min-w-0 shrink overflow-hidden overflow-ellipsis whitespace-nowrap font-semibold"
-					>
-						Start
-					</p>
-				</div>
-				{#if !loadingLogRows}
+				{#if isError}
+					<IconSadFace class="m-auto size-10 text-c-on-bg/50" />
+				{:else if loadingLogRows}
+					<IconAnimatedSpinner class="m-auto size-10 text-c-on-bg/50" />
+				{:else if logRows.length === 0}
+					<div class="m-auto flex flex-col items-center justify-center gap-2 text-c-on-bg/50">
+						<IconDocumentEmpty class="size-10" />
+						<p class="text-center">No matching logs</p>
+					</div>
+				{:else}
+					<div class="flex w-full items-center justify-start pb-3 pr-20">
+						<IconFlag class="mr-2 size-5 shrink-0" />
+						<p
+							class="min-w-0 shrink overflow-hidden overflow-ellipsis whitespace-nowrap font-semibold"
+						>
+							Start
+						</p>
+					</div>
 					{#each logRows as logRow}
 						<div
 							class="flex w-full flex-col items-start justify-start gap-0.5 py-1 text-left font-mono text-xxs md:flex-row md:gap-0 md:py-0.75 md:text-xs"
@@ -338,13 +348,7 @@
 								{logRow.value[1]}
 							</p>
 						</div>
-					{:else}
-						<p class="m-auto text-c-on-bg/50">No matching logs.</p>
 					{/each}
-				{:else if isError}
-					<IconSadFace class="m-auto size-10 text-c-on-bg/50" />
-				{:else}
-					<IconAnimatedSpinner class="m-auto size-10 text-c-on-bg/50" />
 				{/if}
 			</div>
 			<!-- Top Buttons -->
