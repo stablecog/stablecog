@@ -18,6 +18,12 @@
 		adminLogsSelectedWorker,
 		type TLayoutOption
 	} from '$routes/(app)/admin/logs/constants';
+	import {
+		getLastTimestamp,
+		getTimeString,
+		type ReceivedMessage,
+		type TLogRow
+	} from '$routes/(app)/admin/logs/helpers.js';
 	import { canonicalUrl } from '$ts/constants/main.js';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion.js';
 	import type { TTab } from '$ts/types/main';
@@ -44,11 +50,11 @@
 		adminLogsSelectedWorker.set(data.workerName);
 	}
 
-	const maxMessages = 5000;
+	const maxLogRows = 5000;
 	const initialMessageCount = 1000;
 	let ws: Websocket | undefined;
-	let loadingMessages = true;
-	let messages: ReceivedMessage[] = [];
+	let loadingLogRows = true;
+	let logRows: TLogRow[] = [];
 	let start = Date.now() * 1_000_000 - 24 * 60 * 60 * 1_000 * 1_000_000;
 
 	let searchString: string | undefined;
@@ -83,6 +89,7 @@
 	$: [$adminLogsSearch, $adminLogsSelectedWorker], setQuery();
 	$: lokiWebsocketEndpoint = `wss://${PUBLIC_LOKI_HOST}/loki/api/v1/tail?query=${query}&limit=${initialMessageCount}&start=${start}&token=${data.lokiToken}`;
 	$: [lokiWebsocketEndpoint, mounted], setupWebsocket();
+	$: [$adminLogsSearch, $adminLogsSelectedWorker], scrollToBottom();
 
 	function setQuery() {
 		query = `{logger="root"`;
@@ -103,15 +110,19 @@
 
 	function scrollToBottom() {
 		if (scrollContainer) {
-			scrollContainer.scrollTop = scrollContainer.scrollHeight;
-			scrollContainer.scrollLeft = 0;
+			setTimeout(() => {
+				scrollContainer.scrollTop = scrollContainer.scrollHeight;
+				scrollContainer.scrollLeft = 0;
+			});
 		}
 	}
 
 	function scrollToTop() {
 		if (scrollContainer) {
-			scrollContainer.scrollTop = 0;
-			scrollContainer.scrollLeft = 0;
+			setTimeout(() => {
+				scrollContainer.scrollTop = 0;
+				scrollContainer.scrollLeft = 0;
+			});
 		}
 	}
 
@@ -141,49 +152,21 @@
 		isAtBottom = getIsAtBottom();
 		isAtTop = getIsAtTop();
 		if (isAtBottom) {
-			lastSeenItemTimestamp = getLastTimestamp(messages);
+			lastSeenItemTimestamp = getLastTimestamp(logRows);
 		}
-	}
-
-	function getTimeString(val: string) {
-		const date = new Date(Number(val) / 1000000);
-		// if date is more than 24 hour ago, show date and time
-		const now = new Date();
-		const timeString =
-			date.toLocaleTimeString(undefined, { hour12: false }) +
-			'.' +
-			date.getMilliseconds().toString().slice(0, 2).padEnd(2, '0');
-		if (now.getTime() - date.getTime() > 24 * 60 * 60 * 1000) {
-			return date.toLocaleDateString() + ' ' + timeString;
-		}
-		return (
-			date.toLocaleTimeString(undefined, { hour12: false }) +
-			'.' +
-			date.getMilliseconds().toString().slice(0, 2).padEnd(2, '0')
-		);
-	}
-
-	function getLastTimestamp(messages: ReceivedMessage[]) {
-		if (messages.length === 0) {
-			return 0;
-		}
-		const streams = messages[messages.length - 1].streams;
-		const values = streams[streams.length - 1].values;
-		const lastValue = values[values.length - 1];
-		return Number(lastValue[0]);
 	}
 
 	function toggleSettings() {
 		isSettingsOpen = !isSettingsOpen;
 	}
 
-	let loadingMessagesTimeout: NodeJS.Timeout;
+	let loadingLogRowsTimeout: NodeJS.Timeout;
 
 	function onOpen() {
 		console.log('🟢 Websocket opened');
-		clearTimeout(loadingMessagesTimeout);
-		loadingMessagesTimeout = setTimeout(() => {
-			loadingMessages = false;
+		clearTimeout(loadingLogRowsTimeout);
+		loadingLogRowsTimeout = setTimeout(() => {
+			loadingLogRows = false;
 		}, 1000);
 	}
 	function onClose() {
@@ -191,8 +174,8 @@
 	}
 
 	function onMessage(i: Websocket, ev: MessageEvent<string>) {
-		clearTimeout(loadingMessagesTimeout);
-		loadingMessages = false;
+		clearTimeout(loadingLogRowsTimeout);
+		loadingLogRows = false;
 		const parsedResult = JSON.parse(ev.data);
 		let messageAsReceived = parsedResult as ReceivedMessage;
 		if (!messageAsReceived.streams || messageAsReceived.streams.length === 0) {
@@ -200,8 +183,17 @@
 			return;
 		}
 		let wasAtBottom = getIsAtBottom();
-		messages = [...messages, messageAsReceived].slice(-maxMessages);
-		lastTimestamp = getLastTimestamp(messages);
+		let newLogRows: TLogRow[] = [];
+		for (let stream of messageAsReceived.streams) {
+			for (let value of stream.values) {
+				newLogRows.push({
+					stream: stream.stream,
+					value
+				});
+			}
+		}
+		logRows = [...logRows, ...newLogRows].slice(-maxLogRows);
+		lastTimestamp = getLastTimestamp(logRows);
 		if (wasAtBottom) {
 			lastSeenItemTimestamp = lastTimestamp;
 		}
@@ -232,8 +224,8 @@
 		if (!browser) return;
 		if (!lokiWebsocketEndpoint) return;
 
-		loadingMessages = true;
-		messages = [];
+		loadingLogRows = true;
+		logRows = [];
 
 		ws?.removeEventListener(WebsocketEvent.open, onOpen);
 		ws?.removeEventListener(WebsocketEvent.close, onClose);
@@ -249,22 +241,6 @@
 		ws.addEventListener(WebsocketEvent.close, onClose);
 		ws.addEventListener(WebsocketEvent.message, onMessage);
 	}
-
-	type Stream = {
-		logger: string;
-		severity: string;
-		worker_name: string;
-		application: string;
-	};
-
-	type Value = [string, string];
-
-	type ReceivedMessage = {
-		streams: {
-			stream: Stream;
-			values: Value[];
-		}[];
-	};
 
 	onMount(() => {
 		mounted = true;
@@ -319,41 +295,37 @@
 				class="flex w-full flex-1 flex-col overflow-auto px-4 py-3"
 			>
 				<p class="pb-3 font-semibold transition duration-150">Start of logs</p>
-				{#if !loadingMessages}
-					{#each messages as message}
-						{#each message.streams as stream}
-							{#each stream.values as value}
-								<div
-									class="flex w-full flex-col items-start justify-start gap-0.5 py-1 text-left font-mono text-xxs md:flex-row md:gap-0 md:py-0.75 md:text-xs"
-								>
-									{#if $adminLogsLayoutOptions.includes('timestamp') || $adminLogsLayoutOptions.includes('worker-name')}
-										<p class="flex gap-4 whitespace-pre pr-4">
-											{#if $adminLogsLayoutOptions.includes('timestamp')}
-												<span class="text-c-on-bg/50">
-													{getTimeString(value[0])}
-												</span>
-											{/if}
-											{#if $adminLogsLayoutOptions.includes('worker-name')}
-												<span
-													class="{data.workerNames.indexOf(stream.stream.worker_name) % 4 === 0
-														? 'text-c-secondary/75'
-														: data.workerNames.indexOf(stream.stream.worker_name) % 4 === 1
-															? 'text-c-primary/75'
-															: data.workerNames.indexOf(stream.stream.worker_name) % 4 === 2
-																? 'text-c-success/75'
-																: 'text-c-danger/75'} md:w-[8ch] md:overflow-hidden md:overflow-ellipsis"
-												>
-													{stream.stream.worker_name}
-												</span>
-											{/if}
-										</p>
+				{#if !loadingLogRows}
+					{#each logRows as logRow}
+						<div
+							class="flex w-full flex-col items-start justify-start gap-0.5 py-1 text-left font-mono text-xxs md:flex-row md:gap-0 md:py-0.75 md:text-xs"
+						>
+							{#if $adminLogsLayoutOptions.includes('timestamp') || $adminLogsLayoutOptions.includes('worker-name')}
+								<p class="flex gap-4 whitespace-pre pr-4">
+									{#if $adminLogsLayoutOptions.includes('timestamp')}
+										<span class="text-c-on-bg/50">
+											{getTimeString(logRow.value[0])}
+										</span>
 									{/if}
-									<p class="flex w-full whitespace-pre">
-										{value[1]}
-									</p>
-								</div>
-							{/each}
-						{/each}
+									{#if $adminLogsLayoutOptions.includes('worker-name')}
+										<span
+											class="{data.workerNames.indexOf(logRow.stream.worker_name) % 4 === 0
+												? 'text-c-secondary/75'
+												: data.workerNames.indexOf(logRow.stream.worker_name) % 4 === 1
+													? 'text-c-primary/75'
+													: data.workerNames.indexOf(logRow.stream.worker_name) % 4 === 2
+														? 'text-c-success/75'
+														: 'text-c-danger/75'} md:w-[8ch] md:overflow-hidden md:overflow-ellipsis"
+										>
+											{logRow.stream.worker_name}
+										</span>
+									{/if}
+								</p>
+							{/if}
+							<p class="flex w-full whitespace-pre">
+								{logRow.value[1]}
+							</p>
+						</div>
 					{:else}
 						<p class="m-auto text-c-on-bg/50">No matching logs.</p>
 					{/each}
