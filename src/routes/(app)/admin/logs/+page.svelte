@@ -2,12 +2,15 @@
 	import { browser } from '$app/environment';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconArrowRight from '$components/icons/IconArrowRight.svelte';
+	import IconBroom from '$components/icons/IconBroom.svelte';
 	import IconCancel from '$components/icons/IconCancel.svelte';
 	import IconDocumentEmpty from '$components/icons/IconDocumentEmpty.svelte';
+	import IconFilter from '$components/icons/IconFilter.svelte';
 	import IconFlag from '$components/icons/IconFlag.svelte';
 	import IconSadFace from '$components/icons/IconSadFace.svelte';
 	import IconSearch from '$components/icons/IconSearch.svelte';
 	import IconSettings from '$components/icons/IconSettings.svelte';
+	import IconXMark from '$components/icons/IconXMark.svelte';
 	import SubtleButton from '$components/primitives/buttons/SubtleButton.svelte';
 	import TabLikeDropdown from '$components/primitives/tabBars/TabLikeDropdown.svelte';
 	import TabLikeFilterDropdown from '$components/primitives/tabBars/TabLikeFilterDropdown.svelte';
@@ -16,11 +19,14 @@
 	import { PUBLIC_LOKI_HOST } from '$env/static/public';
 	import {
 		adminLogsLayoutOptions,
+		adminLogsLayoutOptionsDefault,
 		adminLogsSearch,
 		adminLogsSelectedWorker,
+		adminLogsSelectedWorkerDefault,
 		type TLayoutOption
 	} from '$routes/(app)/admin/logs/constants';
 	import {
+		areArraysMatching,
 		getLastTimestamp,
 		getTimeString,
 		type ReceivedMessage,
@@ -67,7 +73,7 @@
 		}
 	];
 	const workerOptions = [
-		{ value: 'all-workers', label: 'All Workers' },
+		{ value: adminLogsSelectedWorkerDefault, label: 'All Workers' },
 		...data.workerNames.map((workerName) => ({ value: workerName, label: workerName }))
 	];
 
@@ -94,9 +100,23 @@
 	$: [lokiWebsocketEndpoint, mounted], setupWebsocket();
 	$: [$adminLogsSearch, $adminLogsSelectedWorker], scrollToBottom();
 
+	$: hasFilters =
+		($adminLogsSearch !== undefined && $adminLogsSearch !== null && $adminLogsSearch !== '') ||
+		$adminLogsSelectedWorker !== adminLogsSelectedWorkerDefault ||
+		areArraysMatching($adminLogsLayoutOptions, adminLogsLayoutOptionsDefault) === false;
+
+	function clearFilters() {
+		searchString = '';
+		adminLogsSearch.set('');
+		adminLogsSelectedWorker.set(adminLogsSelectedWorkerDefault);
+		adminLogsLayoutOptions.set(adminLogsLayoutOptionsDefault);
+		isSettingsOpen = false;
+		scrollToBottom();
+	}
+
 	function setQuery() {
 		query = `{logger="root"`;
-		if ($adminLogsSelectedWorker !== 'all-workers') {
+		if ($adminLogsSelectedWorker !== adminLogsSelectedWorkerDefault) {
 			query += `,worker_name="${$adminLogsSelectedWorker}"`;
 		}
 		query += `}`;
@@ -356,14 +376,21 @@
 				class="pointer-events-none absolute left-0 top-0 flex w-full transform items-center justify-end gap-2.5
 				bg-gradient-to-t from-c-bg/0 from-[70%] to-c-bg p-2 transition"
 			>
+				<SubtleButton
+					noPadding
+					class="pointer-events-auto shrink-0 p-2 transition {hasFilters ? '' : '-translate-y-14'}"
+					onClick={clearFilters}
+				>
+					<IconBroom class="size-5" />
+				</SubtleButton>
 				<SubtleButton noPadding class="pointer-events-auto shrink-0 p-2" onClick={toggleSettings}>
 					<div class="size-5">
-						<IconSettings
+						<IconFilter
 							class="h-full w-full transition {isSettingsOpen
 								? 'rotate-90 opacity-0'
 								: 'rotate-0 opacity-100'}"
 						/>
-						<IconCancel
+						<IconXMark
 							class="absolute left-0 top-0 h-full w-full transition {isSettingsOpen
 								? 'rotate-90 opacity-100'
 								: 'rotate-0 opacity-0'}"
@@ -383,11 +410,11 @@
 					class="pointer-events-auto p-2  {isAtTop ? 'translate-y-13' : ''}"
 					onClick={scrollToTop}
 				>
-					<IconArrowRight strokeWidth={2} class="size-5 -rotate-90" />
+					<IconArrowRight class="size-5 -rotate-90" />
 				</SubtleButton>
 				<div class="relative">
 					<SubtleButton noPadding class="pointer-events-auto p-2" onClick={scrollToBottom}>
-						<IconArrowRight strokeWidth={2} class="size-5 rotate-90" />
+						<IconArrowRight class="size-5 rotate-90" />
 					</SubtleButton>
 					<div
 						class="pointer-events-none absolute -right-0.75 -top-0.75 size-2.5 transform rounded-full bg-c-danger transition {lastTimestamp >

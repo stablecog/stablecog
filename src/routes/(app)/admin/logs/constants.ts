@@ -13,10 +13,11 @@ export const adminLogsSearch = localAndUrlParamWritable<string | undefined | nul
 	''
 );
 
+export const adminLogsSelectedWorkerDefault = 'all-workers';
 export const adminLogsSelectedWorker = localAndUrlParamWritable<string>(
 	'adminLogsSelectedWorker',
 	'w',
-	'all-workers'
+	adminLogsSelectedWorkerDefault
 );
 
 export const availableAdminLogLayoutOptions = ['timestamp', 'worker-name', 'none'] as const;
