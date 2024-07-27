@@ -10,6 +10,7 @@
 	import IconSadFace from '$components/icons/IconSadFace.svelte';
 	import IconSearch from '$components/icons/IconSearch.svelte';
 	import IconSettings from '$components/icons/IconSettings.svelte';
+	import IconUndo from '$components/icons/IconUndo.svelte';
 	import IconXMark from '$components/icons/IconXMark.svelte';
 	import SubtleButton from '$components/primitives/buttons/SubtleButton.svelte';
 	import TabLikeDropdown from '$components/primitives/tabBars/TabLikeDropdown.svelte';
@@ -380,7 +381,7 @@
 					class="pointer-events-auto shrink-0 p-2 transition {hasFilters ? '' : '-translate-y-14'}"
 					onClick={clearFilters}
 				>
-					<IconBroom class="size-5" />
+					<IconUndo class="size-5" />
 				</SubtleButton>
 				<SubtleButton noPadding class="pointer-events-auto shrink-0 p-2" onClick={toggleSettings}>
 					<div class="size-5">
