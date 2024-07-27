@@ -102,10 +102,12 @@
 	$: [lokiWebsocketEndpoint, mounted], setupWebsocket();
 	$: [$adminLogsSearch, $adminLogsSelectedWorker], scrollToBottom();
 
-	$: hasFilters =
+	$: hasQueryFilters =
 		($adminLogsSearch !== undefined && $adminLogsSearch !== null && $adminLogsSearch !== '') ||
-		$adminLogsSelectedWorker !== adminLogsSelectedWorkerDefault ||
+		$adminLogsSelectedWorker !== adminLogsSelectedWorkerDefault;
+	$: hasLayoutFilters =
 		areArraysMatching($adminLogsLayoutOptions, adminLogsLayoutOptionsDefault) === false;
+	$: hasFilters = hasQueryFilters || hasLayoutFilters;
 
 	function clearFilters() {
 		searchString = '';
@@ -378,16 +380,18 @@
 					class="pointer-events-auto shrink-0 p-2 transition {hasFilters ? '' : '-translate-y-14'}"
 					onClick={clearFilters}
 				>
-					<IconUndo class="size-5" />
+					<IconUndo strokeWidth={2} class="size-5" />
 				</SubtleButton>
 				<SubtleButton noPadding class="pointer-events-auto shrink-0 p-2" onClick={toggleSettings}>
 					<div class="size-5">
 						<IconFilter
+							strokeWidth={2}
 							class="h-full w-full transition {isSettingsOpen
 								? 'rotate-90 opacity-0'
 								: 'rotate-0 opacity-100'}"
 						/>
 						<IconXMark
+							strokeWidth={2}
 							class="absolute left-0 top-0 h-full w-full transition {isSettingsOpen
 								? 'rotate-90 opacity-100'
 								: 'rotate-0 opacity-0'}"
@@ -407,11 +411,11 @@
 					class="pointer-events-auto p-2  {isAtTop ? 'translate-y-13' : ''}"
 					onClick={scrollToTop}
 				>
-					<IconArrowRight class="size-5 -rotate-90" />
+					<IconArrowRight strokeWidth={2} class="size-5 -rotate-90" />
 				</SubtleButton>
 				<div class="relative">
 					<SubtleButton noPadding class="pointer-events-auto p-2" onClick={scrollToBottom}>
-						<IconArrowRight class="size-5 rotate-90" />
+						<IconArrowRight strokeWidth={2} class="size-5 rotate-90" />
 					</SubtleButton>
 					<div
 						class="pointer-events-none absolute -right-0.75 -top-0.75 size-2.5 transform rounded-full bg-c-danger transition {lastTimestamp >
