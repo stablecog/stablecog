@@ -76,6 +76,10 @@
 		{ value: adminLogsSelectedWorkerDefault, label: 'All Workers' },
 		...data.workerNames.map((workerName) => ({ value: workerName, label: workerName }))
 	];
+	let isAtBottom = true;
+	let isAtTop = false;
+	let lastSeenItemTimestamp = 0;
+	let lastTimestamp = 0;
 
 	if (data.search) {
 		searchString = data.search;
@@ -148,11 +152,6 @@
 			});
 		}
 	}
-
-	let isAtBottom = true;
-	let isAtTop = false;
-	let lastSeenItemTimestamp = 0;
-	let lastTimestamp = 0;
 
 	function getIsAtBottom() {
 		if (scrollContainer) {
