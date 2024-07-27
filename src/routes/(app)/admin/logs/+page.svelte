@@ -2,14 +2,11 @@
 	import { browser } from '$app/environment';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconArrowRight from '$components/icons/IconArrowRight.svelte';
-	import IconBroom from '$components/icons/IconBroom.svelte';
-	import IconCancel from '$components/icons/IconCancel.svelte';
 	import IconDocumentEmpty from '$components/icons/IconDocumentEmpty.svelte';
 	import IconFilter from '$components/icons/IconFilter.svelte';
 	import IconFlag from '$components/icons/IconFlag.svelte';
 	import IconSadFace from '$components/icons/IconSadFace.svelte';
 	import IconSearch from '$components/icons/IconSearch.svelte';
-	import IconSettings from '$components/icons/IconSettings.svelte';
 	import IconUndo from '$components/icons/IconUndo.svelte';
 	import IconXMark from '$components/icons/IconXMark.svelte';
 	import SubtleButton from '$components/primitives/buttons/SubtleButton.svelte';
