@@ -123,12 +123,12 @@ export const availableModelIdDropdownItems = derived(
 				value: '9fa49c00-109d-430f-9ddd-449f02e2c71a'
 			},
 			{
-				label: $modelIdToDisplayName['8002bc51-7260-468f-8840-cf1e6dbe3f8a'],
-				value: '8002bc51-7260-468f-8840-cf1e6dbe3f8a'
-			},
-			{
 				label: $modelIdToDisplayName['4e54440f-ee17-4712-b4b6-0671b94d685d'],
 				value: '4e54440f-ee17-4712-b4b6-0671b94d685d'
+			},
+			{
+				label: $modelIdToDisplayName['8002bc51-7260-468f-8840-cf1e6dbe3f8a'],
+				value: '8002bc51-7260-468f-8840-cf1e6dbe3f8a'
 			},
 			{
 				label: $modelIdToDisplayName['b6c1372f-31a7-457c-907c-d292a6ffef97'],
