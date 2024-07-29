@@ -19,6 +19,12 @@ export const adminLogsSelectedWorker = localAndUrlParamWritable<string>(
 	'w',
 	adminLogsSelectedWorkerDefault
 );
+export const adminLogsIsSettingsOpenDefault = false;
+export const adminLogsIsSettingsOpen = localAndUrlParamWritable<boolean>(
+	'adminLogsIsSettingsOpen',
+	's',
+	adminLogsIsSettingsOpenDefault
+);
 
 export const availableAdminLogLayoutOptions = ['timestamp', 'worker-name', 'none'] as const;
 

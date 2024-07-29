@@ -28,12 +28,15 @@ export async function load({ url }) {
 		_workerName !== undefined && _workerName !== null && workerNamesJSON.data.includes(_workerName)
 			? _workerName
 			: null;
+	const _isSettingsOpen = url.searchParams.get('s');
+	const isSettingsOpen = _isSettingsOpen === 'true' ? true : null;
 
 	return {
 		search,
 		workerName,
 		layoutOptions: layoutOptions.length > 0 ? layoutOptions : null,
 		lokiToken: LOKI_TOKEN,
-		workerNames: workerNamesJSON.data
+		workerNames: workerNamesJSON.data,
+		isSettingsOpen
 	};
 }

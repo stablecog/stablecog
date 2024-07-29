@@ -16,6 +16,8 @@
 	import MetaTag from '$components/utils/MetaTag.svelte';
 	import { PUBLIC_LOKI_HOST } from '$env/static/public';
 	import {
+		adminLogsIsSettingsOpen,
+		adminLogsIsSettingsOpenDefault,
 		adminLogsLayoutOptions,
 		adminLogsLayoutOptionsDefault,
 		adminLogsSearch,
@@ -58,7 +60,6 @@
 	let scrollContainer: HTMLDivElement;
 	const isAtTheEdgeThreshold = 8;
 	let isError = false;
-	let isSettingsOpen = false;
 	let mounted = false;
 	let layoutOptions: TTab<TLayoutOption>[] = [
 		{
@@ -92,6 +93,12 @@
 		adminLogsSelectedWorker.set(data.workerName);
 	}
 
+	if (data.isSettingsOpen !== null) {
+		adminLogsIsSettingsOpen.set(data.isSettingsOpen);
+	} else {
+		adminLogsIsSettingsOpen.set(adminLogsIsSettingsOpenDefault);
+	}
+
 	$: $adminLogsLayoutOptions, setLayoutOptionNoneIfNeeded();
 
 	$: [searchString], setDebouncedSearch(searchString);
@@ -114,7 +121,7 @@
 		adminLogsSearch.set('');
 		adminLogsSelectedWorker.set(adminLogsSelectedWorkerDefault);
 		adminLogsLayoutOptions.set(adminLogsLayoutOptionsDefault);
-		isSettingsOpen = false;
+		adminLogsIsSettingsOpen.set(false);
 		scrollToBottom();
 	}
 
@@ -179,7 +186,7 @@
 	}
 
 	function toggleSettings() {
-		isSettingsOpen = !isSettingsOpen;
+		adminLogsIsSettingsOpen.set(!$adminLogsIsSettingsOpen);
 	}
 
 	let loadingLogRowsTimeout: NodeJS.Timeout;
@@ -286,7 +293,7 @@
 
 <div class="z-10 flex flex-1 flex-col items-center justify-start px-2 py-2 md:px-6 md:pb-6 md:pt-4">
 	<div
-		class="mb-3 flex w-full max-w-4xl flex-wrap items-center justify-center gap-3 {!isSettingsOpen &&
+		class="mb-3 flex w-full max-w-4xl flex-wrap items-center justify-center gap-3 {!$adminLogsIsSettingsOpen &&
 			'hidden'}"
 	>
 		<TabLikeDropdown
@@ -386,13 +393,13 @@
 					<div class="size-5">
 						<IconFilter
 							strokeWidth={2}
-							class="h-full w-full transition {isSettingsOpen
+							class="h-full w-full transition {$adminLogsIsSettingsOpen
 								? 'rotate-90 opacity-0'
 								: 'rotate-0 opacity-100'}"
 						/>
 						<IconXMark
 							strokeWidth={2}
-							class="absolute left-0 top-0 h-full w-full transition {isSettingsOpen
+							class="absolute left-0 top-0 h-full w-full transition {$adminLogsIsSettingsOpen
 								? 'rotate-90 opacity-100'
 								: 'rotate-0 opacity-0'}"
 						/>
