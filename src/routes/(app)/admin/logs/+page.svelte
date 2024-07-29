@@ -16,15 +16,10 @@
 	import MetaTag from '$components/utils/MetaTag.svelte';
 	import { PUBLIC_LOKI_HOST } from '$env/static/public';
 	import {
-		adminLogsIsSettingsOpen,
-		adminLogsIsSettingsOpenDefault,
-		adminLogsLayoutOptions,
 		adminLogsLayoutOptionsDefault,
-		adminLogsSearch,
-		adminLogsSelectedWorker,
 		adminLogsSelectedWorkerDefault,
 		type TLayoutOption
-	} from '$routes/(app)/admin/logs/constants';
+	} from '$routes/(app)/admin/logs/constants.js';
 	import {
 		areArraysMatching,
 		getLastTimestamp,
@@ -46,6 +41,13 @@
 
 	export let data;
 
+	const {
+		adminLogsIsSettingsOpen,
+		adminLogsLayoutOptions,
+		adminLogsSearch,
+		adminLogsSelectedWorker
+	} = data.stores;
+
 	const maxLogRows = 5000;
 	const initialMessageCount = 1000;
 	let ws: Websocket | undefined;
@@ -54,6 +56,10 @@
 	let start = Date.now() * 1_000_000 - 24 * 60 * 60 * 1_000 * 1_000_000;
 
 	let searchString: string | undefined;
+	if ($adminLogsSearch) {
+		searchString = $adminLogsSearch;
+	}
+
 	let searchTimeout: NodeJS.Timeout;
 	let searchDebounceMs = 300;
 
@@ -79,25 +85,6 @@
 	let isAtTop = false;
 	let lastSeenItemTimestamp = 0;
 	let lastTimestamp = 0;
-
-	if (data.search) {
-		searchString = data.search;
-		adminLogsSearch.set(data.search);
-	}
-
-	if (data.layoutOptions) {
-		adminLogsLayoutOptions.set(data.layoutOptions);
-	}
-
-	if (data.workerName) {
-		adminLogsSelectedWorker.set(data.workerName);
-	}
-
-	if (data.isSettingsOpen !== null) {
-		adminLogsIsSettingsOpen.set(data.isSettingsOpen);
-	} else {
-		adminLogsIsSettingsOpen.set(adminLogsIsSettingsOpenDefault);
-	}
 
 	$: $adminLogsLayoutOptions, setLayoutOptionNoneIfNeeded();
 
@@ -275,6 +262,11 @@
 	}
 
 	onMount(() => {
+		adminLogsSelectedWorker.set($adminLogsSelectedWorker);
+		adminLogsLayoutOptions.set($adminLogsLayoutOptions);
+		adminLogsSearch.set($adminLogsSearch);
+		adminLogsIsSettingsOpen.set($adminLogsIsSettingsOpen);
+
 		mounted = true;
 		return () => {
 			ws?.removeEventListener(WebsocketEvent.open, onOpen);
