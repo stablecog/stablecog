@@ -11,7 +11,7 @@ export const load: PageLoad = async ({ url, data }) => {
 	const _workerName = url.searchParams.get('w');
 
 	const search = _search !== undefined && _search !== null ? _search : '';
-	const layoutOptions: TLayoutOption[] | null =
+	const selectedLayouts: TLayoutOption[] | null =
 		_layoutOptions !== undefined && _layoutOptions !== null
 			? (_layoutOptions
 					.split(',')
@@ -29,10 +29,10 @@ export const load: PageLoad = async ({ url, data }) => {
 
 	const stores = createAdminLogsStores();
 
-	if (search) stores.adminLogsSearch.set(search);
-	if (layoutOptions.length > 0) stores.adminLogsLayoutOptions.set(layoutOptions);
-	if (workerName) stores.adminLogsSelectedWorker.set(workerName);
-	if (isSettingsOpen !== null) stores.adminLogsIsSettingsOpen.set(isSettingsOpen);
+	if (search) stores.search.set(search);
+	if (selectedLayouts.length > 0) stores.selectedLayouts.set(selectedLayouts);
+	if (workerName) stores.selectedWorker.set(workerName);
+	if (isSettingsOpen !== null) stores.isSettingsOpen.set(isSettingsOpen);
 
 	return {
 		stores,

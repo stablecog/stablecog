@@ -1,39 +1,47 @@
 import { localAndUrlParamWritable } from '$ts/stores/localAndUrlParamStore';
 
-export const adminLogsLayoutOptionsDefault: TLayoutOption[] = ['timestamp'];
-export const adminLogsSelectedWorkerDefault = 'all-workers';
-export const adminLogsIsSettingsOpenDefault = false;
+export const selectedLayoutsDefault: TLayoutOption[] = ['timestamp'];
+export const selectedWorkerDefault = 'all-workers';
+export const selectedAppDefault = 'sc-worker';
+export const isSettingsOpenDefault = false;
 
 export function createAdminLogsStores() {
-	const adminLogsLayoutOptions = localAndUrlParamWritable<TLayoutOption[]>(
-		'adminLogsLayoutOptions',
+	const selectedLayouts = localAndUrlParamWritable<TLayoutOption[]>(
+		'adminLogsSelectedLayouts',
 		'l',
-		adminLogsLayoutOptionsDefault
+		selectedLayoutsDefault
 	);
-	const adminLogsSearch = localAndUrlParamWritable<string | undefined | null>(
-		'adminLogsSearch',
-		'q',
-		''
+	const search = localAndUrlParamWritable<string | undefined | null>('adminLogsSearch', 'q', '');
+	const selectedApp = localAndUrlParamWritable<string>(
+		'adminLogsSelectedApp',
+		'a',
+		selectedAppDefault
 	);
-	const adminLogsSelectedWorker = localAndUrlParamWritable<string>(
+	const selectedWorker = localAndUrlParamWritable<string>(
 		'adminLogsSelectedWorker',
 		'w',
-		adminLogsSelectedWorkerDefault
+		selectedWorkerDefault
 	);
-	const adminLogsIsSettingsOpen = localAndUrlParamWritable<boolean>(
+	const isSettingsOpen = localAndUrlParamWritable<boolean>(
 		'adminLogsIsSettingsOpen',
 		's',
-		adminLogsIsSettingsOpenDefault
+		isSettingsOpenDefault
 	);
 
 	return {
-		adminLogsLayoutOptions,
-		adminLogsSearch,
-		adminLogsSelectedWorker,
-		adminLogsIsSettingsOpen
+		selectedLayouts,
+		search,
+		selectedWorker,
+		selectedApp,
+		isSettingsOpen
 	};
 }
 
-export const availableAdminLogLayoutOptions = ['timestamp', 'worker-name', 'none'] as const;
+export const availableAdminLogLayoutOptions = [
+	'timestamp',
+	'worker-name',
+	'app-name',
+	'none'
+] as const;
 
 export type TLayoutOption = (typeof availableAdminLogLayoutOptions)[number];

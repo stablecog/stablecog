@@ -16,8 +16,9 @@
 	import MetaTag from '$components/utils/MetaTag.svelte';
 	import { PUBLIC_LOKI_HOST } from '$env/static/public';
 	import {
-		adminLogsLayoutOptionsDefault,
-		adminLogsSelectedWorkerDefault,
+		selectedAppDefault,
+		selectedLayoutsDefault,
+		selectedWorkerDefault,
 		type TLayoutOption
 	} from '$routes/(app)/admin/logs/constants.js';
 	import {
@@ -41,23 +42,18 @@
 
 	export let data;
 
-	const {
-		adminLogsIsSettingsOpen,
-		adminLogsLayoutOptions,
-		adminLogsSearch,
-		adminLogsSelectedWorker
-	} = data.stores;
+	const { isSettingsOpen, selectedLayouts, search, selectedWorker, selectedApp } = data.stores;
 
-	const maxLogRows = 5000;
-	const initialMessageCount = 1000;
+	const maxLogRows = 5_000;
+	const initialMessageCount = 1_000;
 	let ws: Websocket | undefined;
 	let loadingLogRows = true;
 	let logRows: TLogRow[] = [];
 	let start = Date.now() * 1_000_000 - 24 * 60 * 60 * 1_000 * 1_000_000;
 
 	let searchString: string | undefined;
-	if ($adminLogsSearch) {
-		searchString = $adminLogsSearch;
+	if ($search) {
+		searchString = $search;
 	}
 
 	let searchTimeout: NodeJS.Timeout;
@@ -73,61 +69,71 @@
 			value: 'timestamp'
 		},
 		{
+			label: 'App Name',
+			value: 'app-name'
+		},
+		{
 			label: 'Worker Name',
 			value: 'worker-name'
 		}
 	];
 	const workerOptions = [
-		{ value: adminLogsSelectedWorkerDefault, label: 'All Workers' },
+		{ value: 'all-workers', label: 'All Workers' },
 		...data.workerNames.map((workerName) => ({ value: workerName, label: workerName }))
+	];
+	const appOptions = [
+		{ value: 'all-apps', label: 'All Apps' },
+		...data.appNames.map((appName) => ({ value: appName, label: appName }))
 	];
 	let isAtBottom = true;
 	let isAtTop = false;
 	let lastSeenItemTimestamp = 0;
 	let lastTimestamp = 0;
 
-	$: $adminLogsLayoutOptions, setLayoutOptionNoneIfNeeded();
+	$: $selectedLayouts, setLayoutOptionNoneIfNeeded();
 
 	$: [searchString], setDebouncedSearch(searchString);
 
 	let query = `{logger="root"}`;
-	$: [$adminLogsSearch, $adminLogsSelectedWorker], setQuery();
+	$: [$search, $selectedWorker, $selectedApp], setQuery();
 	$: lokiWebsocketEndpoint = `wss://${PUBLIC_LOKI_HOST}/loki/api/v1/tail?query=${query}&limit=${initialMessageCount}&start=${start}&token=${data.lokiToken}`;
 	$: [lokiWebsocketEndpoint, mounted], setupWebsocket();
-	$: [$adminLogsSearch, $adminLogsSelectedWorker], scrollToBottom();
+	$: [$search, $selectedWorker], scrollToBottom();
 
 	$: hasQueryFilters =
-		($adminLogsSearch !== undefined && $adminLogsSearch !== null && $adminLogsSearch !== '') ||
-		$adminLogsSelectedWorker !== adminLogsSelectedWorkerDefault;
-	$: hasLayoutFilters =
-		areArraysMatching($adminLogsLayoutOptions, adminLogsLayoutOptionsDefault) === false;
+		($search !== undefined && $search !== null && $search !== '') ||
+		$selectedWorker !== selectedWorkerDefault ||
+		$selectedApp !== selectedAppDefault;
+	$: hasLayoutFilters = areArraysMatching($selectedLayouts, selectedLayoutsDefault) === false;
 	$: hasFilters = hasQueryFilters || hasLayoutFilters;
 
 	function clearFilters() {
 		searchString = '';
-		adminLogsSearch.set('');
-		adminLogsSelectedWorker.set(adminLogsSelectedWorkerDefault);
-		adminLogsLayoutOptions.set(adminLogsLayoutOptionsDefault);
-		adminLogsIsSettingsOpen.set(false);
+		search.set('');
+		selectedWorker.set(selectedWorkerDefault);
+		selectedLayouts.set(selectedLayoutsDefault);
+		selectedApp.set(selectedAppDefault);
+		isSettingsOpen.set(false);
 		scrollToBottom();
 	}
 
 	function setQuery() {
 		query = `{logger="root"`;
-		if ($adminLogsSelectedWorker !== adminLogsSelectedWorkerDefault) {
-			query += `,worker_name="${$adminLogsSelectedWorker}"`;
+		query += `,application="${$selectedApp}"`;
+		if ($selectedWorker !== selectedWorkerDefault) {
+			query += `,worker_name="${$selectedWorker}"`;
 		}
 		query += `}`;
-		if ($adminLogsSearch !== '' && $adminLogsSearch !== undefined && $adminLogsSearch !== null) {
+		if ($search !== '' && $search !== undefined && $search !== null) {
 			const t = '`';
-			query += `|~${t}(?i)${escapeRE2($adminLogsSearch)}${t}`;
+			query += `|~${t}(?i)${escapeRE2($search)}${t}`;
 		}
 	}
 
 	function setLayoutOptionNoneIfNeeded() {
 		if (!mounted) return;
-		if ($adminLogsLayoutOptions.length === 0) {
-			adminLogsLayoutOptions.set(['none']);
+		if ($selectedLayouts.length === 0) {
+			selectedLayouts.set(['none']);
 		}
 	}
 
@@ -180,7 +186,7 @@
 	}
 
 	function toggleSettings() {
-		adminLogsIsSettingsOpen.set(!$adminLogsIsSettingsOpen);
+		isSettingsOpen.set(!$isSettingsOpen);
 	}
 
 	let loadingLogRowsTimeout: NodeJS.Timeout;
@@ -190,7 +196,7 @@
 		clearTimeout(loadingLogRowsTimeout);
 		loadingLogRowsTimeout = setTimeout(() => {
 			loadingLogRows = false;
-		}, 1000);
+		}, 10_000);
 	}
 	function onClose() {
 		console.log('🔴 Websocket closed');
@@ -234,14 +240,14 @@
 		if (!browser) return;
 		clearTimeout(searchTimeout);
 		if (!searchString) {
-			adminLogsSearch.set('');
+			search.set('');
 			return;
 		}
 		searchTimeout = setTimeout(async () => {
 			if (searchString) {
-				adminLogsSearch.set(searchString);
+				search.set(searchString);
 			} else {
-				adminLogsSearch.set('');
+				search.set('');
 			}
 		}, searchDebounceMs);
 	}
@@ -287,12 +293,18 @@
 
 <div class="z-10 flex flex-1 flex-col items-center justify-start px-2 py-2 md:px-6 md:pb-6 md:pt-4">
 	<div
-		class="mb-3 flex w-full max-w-4xl flex-wrap items-center justify-center gap-3 {!$adminLogsIsSettingsOpen &&
+		class="mb-3 flex w-full max-w-4xl flex-wrap items-center justify-center gap-3 {!$isSettingsOpen &&
 			'hidden'}"
 	>
 		<TabLikeDropdown
+			name="App"
+			bind:value={$selectedApp}
+			items={appOptions}
+			class="w-full flex-auto md:flex-1"
+		/>
+		<TabLikeDropdown
 			name="Worker"
-			bind:value={$adminLogsSelectedWorker}
+			bind:value={$selectedWorker}
 			items={workerOptions}
 			class="w-full flex-auto md:flex-1"
 		/>
@@ -300,7 +312,7 @@
 			name="Options"
 			class="w-full flex-auto md:flex-1"
 			items={layoutOptions}
-			bind:values={$adminLogsLayoutOptions}
+			bind:values={$selectedLayouts}
 		/>
 		<TabLikeInput
 			class="w-full flex-auto md:flex-1"
@@ -342,22 +354,39 @@
 						<div
 							class="flex w-full flex-col items-start justify-start gap-0.5 py-1 text-left font-mono text-xxs md:flex-row md:gap-0 md:py-0.75 md:text-xs"
 						>
-							{#if $adminLogsLayoutOptions.includes('timestamp') || $adminLogsLayoutOptions.includes('worker-name')}
+							{#if $selectedLayouts.includes('timestamp') || $selectedLayouts.includes('worker-name')}
 								<p class="flex gap-4 whitespace-pre pr-4">
-									{#if $adminLogsLayoutOptions.includes('timestamp')}
+									{#if $selectedLayouts.includes('timestamp')}
 										<span class="text-c-on-bg/50">
 											{getTimeString(logRow.value[0])}
 										</span>
 									{/if}
-									{#if $adminLogsLayoutOptions.includes('worker-name')}
+									{#if $selectedLayouts.includes('app-name')}
 										<span
-											class="{data.workerNames.indexOf(logRow.stream.worker_name) % 4 === 0
-												? 'text-c-secondary/75'
-												: data.workerNames.indexOf(logRow.stream.worker_name) % 4 === 1
-													? 'text-c-primary/75'
-													: data.workerNames.indexOf(logRow.stream.worker_name) % 4 === 2
-														? 'text-c-success/75'
-														: 'text-c-danger/75'} md:w-[8ch] md:overflow-hidden md:overflow-ellipsis"
+											class="{logRow.stream.application === undefined
+												? 'text-c-on-bg/25'
+												: data.appNames.indexOf(logRow.stream.application) % 4 === 3
+													? 'text-c-secondary/75'
+													: data.appNames.indexOf(logRow.stream.application) % 4 === 2
+														? 'text-c-primary/75'
+														: data.appNames.indexOf(logRow.stream.application) % 4 === 1
+															? 'text-c-success/75'
+															: 'text-c-danger/75'} md:w-[9ch] md:overflow-hidden md:overflow-ellipsis"
+										>
+											{logRow.stream.application}
+										</span>
+									{/if}
+									{#if $selectedLayouts.includes('worker-name')}
+										<span
+											class="{logRow.stream.worker_name === undefined
+												? 'text-c-on-bg/25'
+												: data.workerNames.indexOf(logRow.stream.worker_name) % 4 === 0
+													? 'text-c-secondary/75'
+													: data.workerNames.indexOf(logRow.stream.worker_name) % 4 === 1
+														? 'text-c-primary/75'
+														: data.workerNames.indexOf(logRow.stream.worker_name) % 4 === 2
+															? 'text-c-success/75'
+															: 'text-c-danger/75'} md:w-[9ch] md:overflow-hidden md:overflow-ellipsis"
 										>
 											{logRow.stream.worker_name}
 										</span>
@@ -387,13 +416,13 @@
 					<div class="size-5">
 						<IconFilter
 							strokeWidth={2}
-							class="h-full w-full transition {$adminLogsIsSettingsOpen
+							class="h-full w-full transition {$isSettingsOpen
 								? 'rotate-90 opacity-0'
 								: 'rotate-0 opacity-100'}"
 						/>
 						<IconXMark
 							strokeWidth={2}
-							class="absolute left-0 top-0 h-full w-full transition {$adminLogsIsSettingsOpen
+							class="absolute left-0 top-0 h-full w-full transition {$isSettingsOpen
 								? 'rotate-90 opacity-100'
 								: 'rotate-0 opacity-0'}"
 						/>
