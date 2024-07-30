@@ -119,14 +119,21 @@
 		}
 		query += `}`;
 		if ($adminLogsSearch !== '' && $adminLogsSearch !== undefined && $adminLogsSearch !== null) {
-			query += `|~"(?i)${$adminLogsSearch}"`;
+			const t = '`';
+			query += `|~${t}(?i)${escapeRE2($adminLogsSearch)}${t}`;
 		}
 	}
+
 	function setLayoutOptionNoneIfNeeded() {
 		if (!mounted) return;
 		if ($adminLogsLayoutOptions.length === 0) {
 			adminLogsLayoutOptions.set(['none']);
 		}
+	}
+
+	function escapeRE2(input: string): string {
+		const specialChars = /[.\\+*?()|[\]{}^$]/g;
+		return input.replace(specialChars, '\\$&');
 	}
 
 	function scrollToBottom() {
