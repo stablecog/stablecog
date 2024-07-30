@@ -16,8 +16,10 @@
 	import MetaTag from '$components/utils/MetaTag.svelte';
 	import { PUBLIC_LOKI_HOST } from '$env/static/public';
 	import {
+		selectedAppAll,
 		selectedAppDefault,
 		selectedLayoutsDefault,
+		selectedWorkerAll,
 		selectedWorkerDefault,
 		type TLayoutOption
 	} from '$routes/(app)/admin/logs/constants.js';
@@ -78,11 +80,11 @@
 		}
 	];
 	const workerOptions = [
-		{ value: 'all-workers', label: 'All Workers' },
+		{ value: selectedWorkerAll, label: 'All Workers' },
 		...data.workerNames.map((workerName) => ({ value: workerName, label: workerName }))
 	];
 	const appOptions = [
-		{ value: 'all-apps', label: 'All Apps' },
+		{ value: selectedAppAll, label: 'All Apps' },
 		...data.appNames.map((appName) => ({ value: appName, label: appName }))
 	];
 	let isAtBottom = true;
@@ -119,8 +121,10 @@
 
 	function setQuery() {
 		query = `{logger="root"`;
-		query += `,application="${$selectedApp}"`;
-		if ($selectedWorker !== selectedWorkerDefault) {
+		if ($selectedApp !== selectedAppAll) {
+			query += `,application="${$selectedApp}"`;
+		}
+		if ($selectedWorker !== selectedWorkerAll) {
 			query += `,worker_name="${$selectedWorker}"`;
 		}
 		query += `}`;

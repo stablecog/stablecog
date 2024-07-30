@@ -2,7 +2,9 @@ import { localAndUrlParamWritable } from '$ts/stores/localAndUrlParamStore';
 
 export const selectedLayoutsDefault: TLayoutOption[] = ['timestamp'];
 export const selectedWorkerDefault = 'all-workers';
+export const selectedWorkerAll = 'all-workers';
 export const selectedAppDefault = 'sc-worker';
+export const selectedAppAll = 'all-apps';
 export const isSettingsOpenDefault = false;
 
 export function createAdminLogsStores() {
