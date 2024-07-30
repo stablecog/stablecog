@@ -14,7 +14,7 @@ export const load: PageServerLoad = async () => {
 	const appNamesJSON: { data: string[] } = await appNamesRes.json();
 	return {
 		lokiToken: LOKI_TOKEN,
-		workerNames: workerNamesJSON.data,
-		appNames: appNamesJSON.data
+		workerNames: workerNamesJSON.data.sort(),
+		appNames: appNamesJSON.data.sort()
 	};
 };
