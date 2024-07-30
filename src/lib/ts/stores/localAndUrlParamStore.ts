@@ -1,5 +1,6 @@
 import { browser } from '$app/environment';
 import { localWritable as writable } from '@macfja/svelte-persistent-store';
+import { get } from 'svelte/store';
 
 export function localAndUrlParamWritable<T>(key: string, paramKey: string, defaultValue: T) {
 	const {
@@ -10,20 +11,27 @@ export function localAndUrlParamWritable<T>(key: string, paramKey: string, defau
 	} = writable<T>(key, defaultValue);
 
 	const set: typeof _set = (params) => {
-		_set(params);
 		setUrlSearchParam({ key: paramKey, value: params, defaultValue });
+		_set(params);
 	};
 
 	const del: typeof _delete = () => {
 		_delete();
 	};
 
-	const subscribe: typeof _subscribe = (params) => {
-		return _subscribe(params);
+	const subscribe: typeof _subscribe = (run, invalidate) => {
+		const unsubscribe = _subscribe(run, invalidate);
+		const currentValue = get({ subscribe: _subscribe });
+		setUrlSearchParam({ key: paramKey, value: currentValue, defaultValue });
+		return unsubscribe;
 	};
 
-	const update: typeof _update = (params) => {
-		_update(params);
+	const update: typeof _update = (updater) => {
+		_update((currentValue) => {
+			const newValue = updater(currentValue);
+			setUrlSearchParam({ key: paramKey, value: newValue, defaultValue });
+			return newValue;
+		});
 	};
 
 	return {

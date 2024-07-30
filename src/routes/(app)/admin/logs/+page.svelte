@@ -269,11 +269,6 @@
 	}
 
 	onMount(() => {
-		adminLogsSelectedWorker.set($adminLogsSelectedWorker);
-		adminLogsLayoutOptions.set($adminLogsLayoutOptions);
-		adminLogsSearch.set($adminLogsSearch);
-		adminLogsIsSettingsOpen.set($adminLogsIsSettingsOpen);
-
 		mounted = true;
 		return () => {
 			ws?.removeEventListener(WebsocketEvent.open, onOpen);
