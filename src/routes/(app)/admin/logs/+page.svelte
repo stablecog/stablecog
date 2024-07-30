@@ -297,7 +297,7 @@
 
 <div class="z-10 flex flex-1 flex-col items-center justify-start px-2 py-2 md:px-6 md:pb-6 md:pt-4">
 	<div
-		class="mb-3 flex w-full max-w-4xl flex-wrap items-center justify-center gap-3 {!$isSettingsOpen &&
+		class="mb-3 flex w-full max-w-5xl flex-wrap items-center justify-center gap-3 {!$isSettingsOpen &&
 			'hidden'}"
 	>
 		<TabLikeDropdown
@@ -327,7 +327,7 @@
 			icon={IconSearch}
 		/>
 	</div>
-	<div class="relative flex w-full max-w-4xl flex-1 flex-col items-center justify-start">
+	<div class="relative flex w-full max-w-5xl flex-1 flex-col items-center justify-start">
 		<div
 			class="absolute left-0 top-0 flex h-full w-full flex-col overflow-hidden rounded-2xl bg-c-bg ring-2 ring-c-bg-secondary"
 		>
@@ -397,7 +397,7 @@
 									{/if}
 								</p>
 							{/if}
-							<p class="flex w-full whitespace-pre">
+							<p class="flex w-full whitespace-pre md:whitespace-pre-wrap">
 								{logRow.value[1]}
 							</p>
 						</div>
