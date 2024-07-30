@@ -1,19 +1,18 @@
 export function getTimeString(val: string) {
 	const date = new Date(Number(val) / 1000000);
-	// if date is more than 24 hour ago, show date and time
 	const now = new Date();
 	const timeString =
 		date.toLocaleTimeString(undefined, { hour12: false }) +
 		'.' +
 		date.getMilliseconds().toString().slice(0, 2).padEnd(2, '0');
-	if (now.getTime() - date.getTime() > 24 * 60 * 60 * 1000) {
-		return date.toLocaleDateString() + ' ' + timeString;
+	const dateString = `${date.getFullYear()}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getDate().toString().padStart(2, '0')}`;
+	const isOlderThan24Hours = now.getTime() - date.getTime() > 24 * 60 * 60 * 1000;
+	let finalString = '';
+	if (isOlderThan24Hours) {
+		finalString += `${dateString} | `;
 	}
-	return (
-		date.toLocaleTimeString(undefined, { hour12: false }) +
-		'.' +
-		date.getMilliseconds().toString().slice(0, 2).padEnd(2, '0')
-	);
+	finalString += timeString;
+	return finalString;
 }
 
 export function getLastTimestamp(logRows: TLogRow[]) {

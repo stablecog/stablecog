@@ -313,7 +313,7 @@
 			class="w-full flex-auto md:flex-1"
 		/>
 		<TabLikeFilterDropdown
-			name="Options"
+			name="Options ({$selectedLayouts.length}/{layoutOptions.length})"
 			class="w-full flex-auto md:flex-1"
 			items={layoutOptions}
 			bind:values={$selectedLayouts}
@@ -392,7 +392,7 @@
 															? 'text-c-success/75'
 															: 'text-c-danger/75'} md:w-[9ch] md:overflow-hidden md:overflow-ellipsis"
 										>
-											{logRow.stream.worker_name}
+											{logRow.stream.worker_name ?? 'None'}
 										</span>
 									{/if}
 								</p>
