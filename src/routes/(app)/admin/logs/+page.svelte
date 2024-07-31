@@ -4,14 +4,11 @@
 	import IconApp from '$components/icons/IconApp.svelte';
 	import IconArrowRight from '$components/icons/IconArrowRight.svelte';
 	import IconDocumentEmpty from '$components/icons/IconDocumentEmpty.svelte';
-	import IconFilter from '$components/icons/IconFilter.svelte';
 	import IconFlag from '$components/icons/IconFlag.svelte';
 	import IconPreferences from '$components/icons/IconPreferences.svelte';
 	import IconSadFace from '$components/icons/IconSadFace.svelte';
 	import IconSearch from '$components/icons/IconSearch.svelte';
-	import IconServer from '$components/icons/IconServer.svelte';
 	import IconServerOutline from '$components/icons/IconServerOutline.svelte';
-	import IconSettings from '$components/icons/IconSettings.svelte';
 	import IconSettingsOutline from '$components/icons/IconSettingsOutline.svelte';
 	import IconUndo from '$components/icons/IconUndo.svelte';
 	import IconXMark from '$components/icons/IconXMark.svelte';
