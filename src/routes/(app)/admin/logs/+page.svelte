@@ -375,7 +375,7 @@
 														? 'text-c-primary/75'
 														: data.appNames.indexOf(logRow.stream.application) % 4 === 1
 															? 'text-c-success/75'
-															: 'text-c-danger/75'} md:w-[9ch] md:overflow-hidden md:overflow-ellipsis"
+															: 'text-c-danger/75'} w-[9ch] overflow-hidden overflow-ellipsis"
 										>
 											{logRow.stream.application}
 										</span>
@@ -390,7 +390,7 @@
 														? 'text-c-primary/75'
 														: data.workerNames.indexOf(logRow.stream.worker_name) % 4 === 2
 															? 'text-c-success/75'
-															: 'text-c-danger/75'} md:w-[9ch] md:overflow-hidden md:overflow-ellipsis"
+															: 'text-c-danger/75'} w-[9ch] overflow-hidden overflow-ellipsis"
 										>
 											{logRow.stream.worker_name ?? 'None'}
 										</span>
