@@ -29,6 +29,7 @@
 		'w-5.5 h-5.5 flex-shrink-0 -ml-1 mr-2 text-c-on-bg not-touch:group-enabled:group-hover:text-c-primary';
 	export let disabledText = 'Disabled';
 	export let disabledIcon: ConstructorOfATypedSvelteComponent | undefined = undefined;
+	export let nameIcon: ConstructorOfATypedSvelteComponent | undefined = undefined;
 	let classes = '';
 
 	let minDropdownHeight = 200;
@@ -136,11 +137,18 @@
 				</div>
 			</div>
 			<div class="flex min-w-0 flex-shrink items-center">
-				<svelte:component
-					this={disabled && disabledIcon !== undefined ? disabledIcon : iconSet}
-					type={selectedItem?.value}
-					class="{iconSetClass} transition"
-				/>
+				{#if nameIcon}
+					<svelte:component
+						this={nameIcon}
+						class="-ml-1 mr-2 h-5.5 w-5.5 flex-shrink-0 text-c-on-bg transition not-touch:group-hover:text-c-primary"
+					/>
+				{:else}
+					<svelte:component
+						this={disabled && disabledIcon !== undefined ? disabledIcon : iconSet}
+						type={selectedItem?.value}
+						class="{iconSetClass} transition"
+					/>
+				{/if}
 				<p
 					class="relative z-0 max-w-full flex-shrink overflow-hidden overflow-ellipsis whitespace-nowrap text-base
 					font-medium text-c-on-bg transition not-touch:group-enabled:group-hover:text-c-primary"
