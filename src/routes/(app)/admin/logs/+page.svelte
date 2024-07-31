@@ -313,7 +313,7 @@
 			class="w-full flex-auto md:flex-1"
 		/>
 		<TabLikeFilterDropdown
-			name="Options ({$selectedLayouts.length}/{layoutOptions.length})"
+			name="Layout ({$selectedLayouts.length}/{layoutOptions.length})"
 			class="w-full flex-auto md:flex-1"
 			items={layoutOptions}
 			bind:values={$selectedLayouts}
