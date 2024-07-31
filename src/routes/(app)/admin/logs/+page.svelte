@@ -11,6 +11,8 @@
 	import IconSearch from '$components/icons/IconSearch.svelte';
 	import IconServer from '$components/icons/IconServer.svelte';
 	import IconServerOutline from '$components/icons/IconServerOutline.svelte';
+	import IconSettings from '$components/icons/IconSettings.svelte';
+	import IconSettingsOutline from '$components/icons/IconSettingsOutline.svelte';
 	import IconUndo from '$components/icons/IconUndo.svelte';
 	import IconXMark from '$components/icons/IconXMark.svelte';
 	import SubtleButton from '$components/primitives/buttons/SubtleButton.svelte';
@@ -425,9 +427,9 @@
 				</SubtleButton>
 				<SubtleButton noPadding class="pointer-events-auto shrink-0 p-2" onClick={toggleSettings}>
 					<div class="size-5">
-						<IconFilter
-							strokeWidth={2}
-							class="h-full w-full transition {$isSettingsOpen
+						<IconSettingsOutline
+							strokeWidth={1.5}
+							class="h-full w-full scale-110 transition {$isSettingsOpen
 								? 'rotate-90 opacity-0'
 								: 'rotate-0 opacity-100'}"
 						/>
@@ -449,7 +451,7 @@
 			>
 				<SubtleButton
 					noPadding
-					class="pointer-events-auto p-2  {isAtTop ? 'translate-y-13' : ''}"
+					class="pointer-events-auto p-2 {isAtTop ? 'translate-y-13' : ''}"
 					onClick={scrollToTop}
 				>
 					<IconArrowRight strokeWidth={2} class="size-5 -rotate-90" />
