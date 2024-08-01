@@ -361,7 +361,7 @@
 						<div
 							class="flex w-full flex-col items-start justify-start gap-0.5 py-1 text-left font-mono text-xxs md:flex-row md:gap-0 md:py-0.75 md:text-xs"
 						>
-							{#if $selectedLayouts.includes('timestamp') || $selectedLayouts.includes('worker-name')}
+							{#if $selectedLayouts.includes('timestamp') || $selectedLayouts.includes('worker-name') || $selectedLayouts.includes('app-name')}
 								<p class="flex gap-4 whitespace-pre pr-4">
 									{#if $selectedLayouts.includes('timestamp')}
 										<span class="text-c-on-bg/50">
