@@ -90,6 +90,9 @@
 	let lastTimestamp = 0;
 
 	$: $selectedLayouts, setLayoutOptionNoneIfNeeded();
+	$: filteredSelectedLayouts = $selectedLayouts.filter((o) => o !== 'none');
+	$: $selectedApps, setAppOptionAllIfNeeded();
+	$: filteredSelectedApps = $selectedApps.filter((o) => o !== 'all');
 
 	$: [searchString], setDebouncedSearch(searchString);
 
@@ -118,8 +121,8 @@
 
 	function setQuery() {
 		query = `{logger="root"`;
-		if ($selectedApps.length > 0 && $selectedApps.length < appOptions.length) {
-			query += `,application=~"${$selectedApps.join('|')}"`;
+		if (filteredSelectedApps.length > 0 && filteredSelectedApps.length < appOptions.length) {
+			query += `,application=~"${filteredSelectedApps.join('|')}"`;
 		}
 		if ($selectedWorkers.length > 0 && $selectedWorkers.length < workerOptions.length) {
 			query += `,worker_name=~"${$selectedWorkers.join('|')}"`;
@@ -128,6 +131,13 @@
 		if ($search !== '' && $search !== undefined && $search !== null) {
 			const t = '`';
 			query += `|~${t}(?i)${escapeRE2($search)}${t}`;
+		}
+	}
+
+	function setAppOptionAllIfNeeded() {
+		if (!mounted) return;
+		if ($selectedApps.length === 0) {
+			selectedApps.set(['all']);
 		}
 	}
 
@@ -300,7 +310,7 @@
 		<TabLikeFilterDropdown
 			nameIcon={IconApp}
 			name="Apps"
-			nameTagline="({$selectedApps.length}/{appOptions.length})"
+			nameTagline="({filteredSelectedApps.length}/{appOptions.length})"
 			bind:values={$selectedApps}
 			items={appOptions}
 			class="w-full flex-auto md:flex-1"
@@ -316,7 +326,7 @@
 		<TabLikeFilterDropdown
 			nameIcon={IconPreferences}
 			name="Layout"
-			nameTagline="({$selectedLayouts.length}/{layoutOptions.length})"
+			nameTagline="({filteredSelectedLayouts.length}/{layoutOptions.length})"
 			class="w-full flex-auto md:flex-1"
 			items={layoutOptions}
 			bind:values={$selectedLayouts}

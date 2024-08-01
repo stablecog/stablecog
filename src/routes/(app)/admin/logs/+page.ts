@@ -12,14 +12,15 @@ export const load: PageLoad = async ({ url, data }) => {
 	const _appNames = url.searchParams.get('a');
 
 	const search = _search !== undefined && _search !== null ? _search : '';
-	const selectedLayouts: TLayoutOption[] | null =
+	const layouts: TLayoutOption[] | null =
 		_layoutOptions !== undefined && _layoutOptions !== null
 			? (_layoutOptions
 					.split(',')
-					.filter((option) =>
-						availableAdminLogLayoutOptions.includes(option as TLayoutOption)
+					.filter(
+						(option) =>
+							availableAdminLogLayoutOptions.includes(option as TLayoutOption) || option === 'none'
 					) as TLayoutOption[])
-			: [];
+			: null;
 
 	const workerNames =
 		_workerNames !== undefined && _workerNames !== null
@@ -27,17 +28,18 @@ export const load: PageLoad = async ({ url, data }) => {
 			: null;
 	const appNames =
 		_appNames !== undefined && _appNames !== null
-			? _appNames.split(',').filter((a) => data.appNames.includes(a))
+			? _appNames.split(',').filter((a) => data.appNames.includes(a) || a === 'all')
 			: null;
 	const _isSettingsOpen = url.searchParams.get('s');
-	const isSettingsOpen = _isSettingsOpen === 'true' ? true : null;
+	const isSettingsOpen =
+		_isSettingsOpen === 'true' ? true : _isSettingsOpen === 'false' ? false : null;
 
 	const stores = createAdminLogsStores();
 
 	if (search) stores.search.set(search);
-	if (selectedLayouts.length > 0) stores.selectedLayouts.set(selectedLayouts);
-	if (workerNames) stores.selectedWorkers.set(workerNames);
-	if (appNames) stores.selectedApps.set(appNames);
+	if (layouts && layouts.length > 0) stores.selectedLayouts.set(layouts);
+	if (workerNames && workerNames.length > 0) stores.selectedWorkers.set(workerNames);
+	if (appNames && appNames.length > 0) stores.selectedApps.set(appNames);
 	if (isSettingsOpen !== null) stores.isSettingsOpen.set(isSettingsOpen);
 
 	return {
