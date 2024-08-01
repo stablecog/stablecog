@@ -299,21 +299,24 @@
 	>
 		<TabLikeFilterDropdown
 			nameIcon={IconApp}
-			name="Apps ({$selectedApps.length}/{appOptions.length})"
+			name="Apps"
+			nameTagline="({$selectedApps.length}/{appOptions.length})"
 			bind:values={$selectedApps}
 			items={appOptions}
 			class="w-full flex-auto md:flex-1"
 		/>
 		<TabLikeFilterDropdown
 			nameIcon={IconServerOutline}
-			name="Workers ({$selectedWorkers.length}/{workerOptions.length})"
+			name="Workers"
+			nameTagline="({$selectedWorkers.length}/{workerOptions.length})"
 			bind:values={$selectedWorkers}
 			items={workerOptions}
 			class="w-full flex-auto md:flex-1"
 		/>
 		<TabLikeFilterDropdown
 			nameIcon={IconPreferences}
-			name="Layout ({$selectedLayouts.length}/{layoutOptions.length})"
+			name="Layout"
+			nameTagline="({$selectedLayouts.length}/{layoutOptions.length})"
 			class="w-full flex-auto md:flex-1"
 			items={layoutOptions}
 			bind:values={$selectedLayouts}

@@ -1,19 +1,19 @@
 <script lang="ts">
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
-	import ScrollAreaWithChevron from '$components/utils/ScrollAreaWithChevron.svelte';
+	import IconTickOnly from '$components/icons/IconTickOnly.svelte';
 	import TabBarWrapper from '$components/primitives/tabBars/TabBarWrapper.svelte';
+	import ScrollAreaWithChevron from '$components/utils/ScrollAreaWithChevron.svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import type { TTab } from '$ts/types/main';
 	import { onMount } from 'svelte';
-	import IconTickOnly from '$components/icons/IconTickOnly.svelte';
-	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 
 	type T = $$Generic;
 	export let values: T[];
 	export let items: TTab<T>[];
 	export let name: string;
 	export let nameIcon: ConstructorOfATypedSvelteComponent | undefined = undefined;
+	export let nameTagline: string | undefined = undefined;
 	export let hasTitle = false;
 	export let dontScale = false;
 	export let disabled = false;
@@ -138,6 +138,13 @@
 					text-base font-medium text-c-on-bg transition not-touch:group-hover:text-c-primary"
 				>
 					{name}
+					{#if nameTagline}
+						<span
+							class="font-normal text-c-on-bg/60 transition not-touch:group-hover:text-c-primary"
+						>
+							{nameTagline}
+						</span>
+					{/if}
 				</p>
 			</div>
 			<div
