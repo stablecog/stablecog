@@ -19,11 +19,9 @@
 	import MetaTag from '$components/utils/MetaTag.svelte';
 	import { PUBLIC_LOKI_HOST } from '$env/static/public';
 	import {
-		selectedAppAll,
-		selectedAppDefault,
+		selectedAppsDefault,
 		selectedLayoutsDefault,
-		selectedWorkerAll,
-		selectedWorkerDefault,
+		selectedWorkersDefault,
 		type TLayoutOption
 	} from '$routes/(app)/admin/logs/constants.js';
 	import {
@@ -47,7 +45,7 @@
 
 	export let data;
 
-	const { isSettingsOpen, selectedLayouts, search, selectedWorker, selectedApp } = data.stores;
+	const { isSettingsOpen, selectedLayouts, search, selectedWorkers, selectedApps } = data.stores;
 
 	const maxLogRows = 5_000;
 	const initialMessageCount = 1_000;
@@ -83,13 +81,9 @@
 		}
 	];
 	const workerOptions = [
-		{ value: selectedWorkerAll, label: 'All Workers' },
 		...data.workerNames.map((workerName) => ({ value: workerName, label: workerName }))
 	];
-	const appOptions = [
-		{ value: selectedAppAll, label: 'All Apps' },
-		...data.appNames.map((appName) => ({ value: appName, label: appName }))
-	];
+	const appOptions = [...data.appNames.map((appName) => ({ value: appName, label: appName }))];
 	let isAtBottom = true;
 	let isAtTop = false;
 	let lastSeenItemTimestamp = 0;
@@ -100,35 +94,35 @@
 	$: [searchString], setDebouncedSearch(searchString);
 
 	let query = `{logger="root"}`;
-	$: [$search, $selectedWorker, $selectedApp], setQuery();
+	$: [$search, $selectedWorkers, $selectedApps], setQuery();
 	$: lokiWebsocketEndpoint = `wss://${PUBLIC_LOKI_HOST}/loki/api/v1/tail?query=${query}&limit=${initialMessageCount}&start=${start}&token=${data.lokiToken}`;
 	$: [lokiWebsocketEndpoint, mounted], setupWebsocket();
-	$: [$search, $selectedWorker], scrollToBottom();
+	$: [$search, $selectedWorkers], scrollToBottom();
 
 	$: hasQueryFilters =
 		($search !== undefined && $search !== null && $search !== '') ||
-		$selectedWorker !== selectedWorkerDefault ||
-		$selectedApp !== selectedAppDefault;
+		!areArraysMatching($selectedWorkers, selectedWorkersDefault) ||
+		!areArraysMatching($selectedApps, selectedAppsDefault);
 	$: hasLayoutFilters = areArraysMatching($selectedLayouts, selectedLayoutsDefault) === false;
 	$: hasFilters = hasQueryFilters || hasLayoutFilters;
 
 	function clearFilters() {
 		searchString = '';
 		search.set('');
-		selectedWorker.set(selectedWorkerDefault);
+		selectedWorkers.set(selectedWorkersDefault);
 		selectedLayouts.set(selectedLayoutsDefault);
-		selectedApp.set(selectedAppDefault);
+		selectedApps.set(selectedAppsDefault);
 		isSettingsOpen.set(false);
 		scrollToBottom();
 	}
 
 	function setQuery() {
 		query = `{logger="root"`;
-		if ($selectedApp !== selectedAppAll) {
-			query += `,application="${$selectedApp}"`;
+		if ($selectedApps.length > 0 && $selectedApps.length < appOptions.length) {
+			query += `,application=~"${$selectedApps.join('|')}"`;
 		}
-		if ($selectedWorker !== selectedWorkerAll) {
-			query += `,worker_name="${$selectedWorker}"`;
+		if ($selectedWorkers.length > 0 && $selectedWorkers.length < workerOptions.length) {
+			query += `,worker_name=~"${$selectedWorkers.join('|')}"`;
 		}
 		query += `}`;
 		if ($search !== '' && $search !== undefined && $search !== null) {
@@ -303,17 +297,17 @@
 		class="mb-3 flex w-full max-w-5xl flex-wrap items-center justify-center gap-3 {!$isSettingsOpen &&
 			'hidden'}"
 	>
-		<TabLikeDropdown
+		<TabLikeFilterDropdown
 			nameIcon={IconApp}
-			name="App"
-			bind:value={$selectedApp}
+			name="Apps ({$selectedApps.length}/{appOptions.length})"
+			bind:values={$selectedApps}
 			items={appOptions}
 			class="w-full flex-auto md:flex-1"
 		/>
-		<TabLikeDropdown
+		<TabLikeFilterDropdown
 			nameIcon={IconServerOutline}
-			name="Worker"
-			bind:value={$selectedWorker}
+			name="Workers ({$selectedWorkers.length}/{workerOptions.length})"
+			bind:values={$selectedWorkers}
 			items={workerOptions}
 			class="w-full flex-auto md:flex-1"
 		/>

@@ -1,10 +1,8 @@
 import { localAndUrlParamWritable } from '$ts/stores/localAndUrlParamStore';
 
 export const selectedLayoutsDefault: TLayoutOption[] = ['timestamp'];
-export const selectedWorkerDefault = 'all-workers';
-export const selectedWorkerAll = 'all-workers';
-export const selectedAppDefault = 'sc-worker';
-export const selectedAppAll = 'all-apps';
+export const selectedWorkersDefault = [];
+export const selectedAppsDefault = ['sc-worker'];
 export const isSettingsOpenDefault = false;
 
 export function createAdminLogsStores() {
@@ -14,15 +12,15 @@ export function createAdminLogsStores() {
 		selectedLayoutsDefault
 	);
 	const search = localAndUrlParamWritable<string | undefined | null>('adminLogsSearch', 'q', '');
-	const selectedApp = localAndUrlParamWritable<string>(
-		'adminLogsSelectedApp',
+	const selectedApps = localAndUrlParamWritable<string[]>(
+		'adminLogsSelectedApps',
 		'a',
-		selectedAppDefault
+		selectedAppsDefault
 	);
-	const selectedWorker = localAndUrlParamWritable<string>(
-		'adminLogsSelectedWorker',
+	const selectedWorkers = localAndUrlParamWritable<string[]>(
+		'adminLogsSelectedWorkers',
 		'w',
-		selectedWorkerDefault
+		selectedWorkersDefault
 	);
 	const isSettingsOpen = localAndUrlParamWritable<boolean>(
 		'adminLogsIsSettingsOpen',
@@ -33,8 +31,8 @@ export function createAdminLogsStores() {
 	return {
 		selectedLayouts,
 		search,
-		selectedWorker,
-		selectedApp,
+		selectedWorkers,
+		selectedApps,
 		isSettingsOpen
 	};
 }

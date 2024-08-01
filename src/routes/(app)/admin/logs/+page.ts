@@ -8,7 +8,8 @@ import type { PageLoad } from './$types';
 export const load: PageLoad = async ({ url, data }) => {
 	const _search = url.searchParams.get('q');
 	const _layoutOptions = url.searchParams.get('l');
-	const _workerName = url.searchParams.get('w');
+	const _workerNames = url.searchParams.get('w');
+	const _appNames = url.searchParams.get('a');
 
 	const search = _search !== undefined && _search !== null ? _search : '';
 	const selectedLayouts: TLayoutOption[] | null =
@@ -20,9 +21,13 @@ export const load: PageLoad = async ({ url, data }) => {
 					) as TLayoutOption[])
 			: [];
 
-	const workerName =
-		_workerName !== undefined && _workerName !== null && data.workerNames.includes(_workerName)
-			? _workerName
+	const workerNames =
+		_workerNames !== undefined && _workerNames !== null
+			? _workerNames.split(',').filter((w) => data.workerNames.includes(w))
+			: null;
+	const appNames =
+		_appNames !== undefined && _appNames !== null
+			? _appNames.split(',').filter((a) => data.appNames.includes(a))
 			: null;
 	const _isSettingsOpen = url.searchParams.get('s');
 	const isSettingsOpen = _isSettingsOpen === 'true' ? true : null;
@@ -31,7 +36,8 @@ export const load: PageLoad = async ({ url, data }) => {
 
 	if (search) stores.search.set(search);
 	if (selectedLayouts.length > 0) stores.selectedLayouts.set(selectedLayouts);
-	if (workerName) stores.selectedWorker.set(workerName);
+	if (workerNames) stores.selectedWorkers.set(workerNames);
+	if (appNames) stores.selectedApps.set(appNames);
 	if (isSettingsOpen !== null) stores.isSettingsOpen.set(isSettingsOpen);
 
 	return {
