@@ -1170,6 +1170,12 @@ type RootTranslation = {
 				 */
 				realName: string
 			}
+			'0a99668b-45bd-4f7e-aa9c-f9aaa41ef13b': {
+				/**
+				 * F​L​U​X​.​1
+				 */
+				realName: string
+			}
 			'22b0857d-7edc-4d00-9cd9-45aa509db093': {
 				/**
 				 * K​a​n​d​i​n​s​k​y
@@ -4522,6 +4528,12 @@ export type TranslationFunctions = {
 			'b6c1372f-31a7-457c-907c-d292a6ffef97': {
 				/**
 				 * Luna Diffusion
+				 */
+				realName: () => LocalizedString
+			}
+			'0a99668b-45bd-4f7e-aa9c-f9aaa41ef13b': {
+				/**
+				 * FLUX.1
 				 */
 				realName: () => LocalizedString
 			}
