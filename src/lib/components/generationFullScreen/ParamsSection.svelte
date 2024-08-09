@@ -72,26 +72,6 @@
 				<p class="font-semibold">{generation.guidance_scale}</p>
 			</WithTooltip>
 		</div>
-		<div class="flex min-w-[calc(50%-0.75rem)] flex-col items-start gap-1">
-			<WithTooltip
-				title={$LL.Home.InferenceStepsTabBar.Title()}
-				paragraph={$LL.Home.InferenceStepsTabBar.Paragraph()}
-				let:trigger
-				let:triggerStoreValue
-				color="bg-tertiary"
-			>
-				<div
-					tabindex="-1"
-					use:trigger
-					{...triggerStoreValue}
-					class="flex cursor-default items-center gap-1.5 text-sm text-c-on-bg/75"
-				>
-					<IconGenerationSettingsSet type="inference-steps" class="h-4 w-4" />
-					<p class="font-medium">{$LL.Home.InferenceStepsTabBar.Title()}</p>
-				</div>
-			</WithTooltip>
-			<p class="font-semibold">{generation.inference_steps}</p>
-		</div>
 		{#if generation.prompt_strength}
 			<div class="flex min-w-[calc(50%-0.75rem)] flex-col items-start gap-1">
 				<WithTooltip
