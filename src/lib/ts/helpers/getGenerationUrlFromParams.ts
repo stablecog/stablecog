@@ -22,9 +22,10 @@ export function getGenerationUrlFromParams({
 	if (num_inference_steps) params.push(`is=${num_inference_steps}`);
 	if (seed || seed === 0) params.push(`s=${seed}`);
 	if (model_id) params.push(`mi=${model_id}`);
-	if (scheduler_id) params.push(`si=${scheduler_id}`);
+	// TO-DO: Removed scheduler_id for now
+	/* if (scheduler_id) params.push(`si=${scheduler_id}`); */
 	if (get(page).url.pathname === '/generate')
-		params.push(`rn=${Math.round(Math.random() * 1000000000000)}`);
+		params.push(`rn=${Math.round(Math.random() * 1_000_000_000)}`);
 	return baseUrl + params.join('&');
 }
 
