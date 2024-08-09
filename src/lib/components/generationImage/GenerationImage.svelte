@@ -198,9 +198,11 @@
 				loading="lazy"
 				class="absolute left-0 top-0 h-full w-full transform object-cover transition-[transform,opacity,filter] duration-[0.2s,0.2s,0.2s] ease-[ease-out,ease-in,ease-out] {!isImageLoaded
 					? 'opacity-0'
-					: 'opacity-100'} filter {overlayShouldShow
-					? 'brightness-[0.8] contrast-[1.05]'
-					: 'not-touch:group-hover:brightness-[0.8] not-touch:group-hover:contrast-[1.05]'} {isInGallerySelectedIds
+					: 'opacity-100'} filter {cardType === 'generate'
+					? ''
+					: overlayShouldShow
+						? 'brightness-[0.8] contrast-[1.05]'
+						: 'not-touch:group-hover:brightness-[0.8] not-touch:group-hover:contrast-[1.05]'} {isInGallerySelectedIds
 					? 'scale-110'
 					: 'scale-100'}"
 				{sizes}
