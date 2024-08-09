@@ -26,11 +26,13 @@ export const generationModels: {
 		name: string;
 		supportedSchedulerIds: TAvailableSchedulerId[];
 		active?: boolean;
+		img2imgNotSupported?: boolean;
 	};
 } = {
 	'0a99668b-45bd-4f7e-aa9c-f9aaa41ef13b': {
 		name: 'FLUX.1',
-		supportedSchedulerIds: sdSharedSchedulerIds
+		supportedSchedulerIds: sdSharedSchedulerIds,
+		img2imgNotSupported: true
 	},
 	'b6c1372f-31a7-457c-907c-d292a6ffef97': {
 		name: 'Luna Diffusion',

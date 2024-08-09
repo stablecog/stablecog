@@ -88,6 +88,7 @@ const ja: Translation = {
 				'生成画像から除去したいもの指定します。プロンプトとは対照的な意味としてとらわれます。'
 		},
 		ImageInput: {
+			NotSupported: 'Not supported by the model',
 			Paragraph: 'クリックまたは画像をここにドロップします',
 			Title: '画像をアップロード'
 		},

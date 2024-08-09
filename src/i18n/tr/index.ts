@@ -88,6 +88,7 @@ const tr: Translation = {
 				'İstemediğin şeyleri üretilecek fotoğraftan çıkartmak için. Komutun yaptığının tam tersini yapar.'
 		},
 		ImageInput: {
+			NotSupported: 'Not supported by the model',
 			Paragraph: 'Tıkla veya fotoğrafı buraya bırak',
 			Title: 'Fotoğraf Yükle'
 		},

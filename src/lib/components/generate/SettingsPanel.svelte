@@ -5,7 +5,7 @@
 	import TabLikeTextArea from '$components/primitives/tabBars/TabLikeTextArea.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import SidebarWrapper from '$components/generate/SidebarWrapper.svelte';
-	import { availableModelIdDropdownItems } from '$ts/constants/generationModels';
+	import { availableModelIdDropdownItems, generationModels } from '$ts/constants/generationModels';
 	import { aspectRatioDropdownItems } from '$ts/constants/generationSize';
 	import {
 		guidanceScaleHighThreshold,
@@ -64,128 +64,138 @@
 		bind:this={settingsContainer}
 		class="flex h-full w-full flex-col gap-7 overflow-auto pb-[calc(4rem+env(safe-area-inset-bottom))] pt-4 md:pb-20 md:pt-5"
 	>
-		{#if $generateMode !== 'inpainting'}
+		<div class="flex w-full flex-col gap-7">
+			{#if $generateMode !== 'inpainting'}
+				<SettingsPanelItem
+					title={$LL.Home.AspectRatioDropdown.Title()}
+					iconType="aspect-ratio"
+					tooltipTitle={$LL.Home.AspectRatioTabBar.Title()}
+					tooltipParagraph={$LL.Home.AspectRatioTabBar.Paragraph()}
+				>
+					<TabLikeDropdown
+						class="w-full"
+						iconSet={IconAspectRatio}
+						container={settingsContainer}
+						containerTopMinDistance={containerDropdownPadding}
+						containerBottomMinDistance={containerDropdownPadding}
+						items={$aspectRatioDropdownItems}
+						bind:value={$generationAspectRatio}
+						name={$LL.Home.AspectRatioDropdown.Title()}
+					/>
+				</SettingsPanelItem>
+			{/if}
 			<SettingsPanelItem
-				title={$LL.Home.AspectRatioDropdown.Title()}
-				iconType="aspect-ratio"
-				tooltipTitle={$LL.Home.AspectRatioTabBar.Title()}
-				tooltipParagraph={$LL.Home.AspectRatioTabBar.Paragraph()}
+				title={$LL.Home.ModelDropdown.Title()}
+				iconType="model"
+				tooltipTitle={$LL.Home.ModelDropdown.Title()}
+				tooltipParagraph={$LL.Home.ModelDropdown.Paragraph()}
 			>
 				<TabLikeDropdown
 					class="w-full"
-					iconSet={IconAspectRatio}
 					container={settingsContainer}
 					containerTopMinDistance={containerDropdownPadding}
 					containerBottomMinDistance={containerDropdownPadding}
-					items={$aspectRatioDropdownItems}
-					bind:value={$generationAspectRatio}
-					name={$LL.Home.AspectRatioDropdown.Title()}
+					items={$availableModelIdDropdownItems}
+					name={$LL.Home.ModelDropdown.Title()}
+					iconSet={IconModelImage}
+					iconSetClass="w-11 h-11 -mx-4 -my-5 mr-3 rounded-lg bg-c-bg-tertiary"
+					listClass="w-full flex flex-wrap px-1 md:px-0 pt-[calc(0.375rem+1px)] pb-1.25"
+					bind:value={$generationModelId}
+					let:item
+					let:onClick
+					let:isSelected
+					let:isNew
+				>
+					<ModelCard modelId={item.value} {onClick} {isSelected} {isNew} />
+				</TabLikeDropdown>
+			</SettingsPanelItem>
+			{#if $generateMode !== 'inpainting'}
+				<SettingsPanelItem
+					title={$LL.Home.ImageInput.Title()}
+					iconType="upload-image"
+					wrapperClass={generationModels[$generationModelId]?.img2imgNotSupported
+						? 'order-last'
+						: ''}
+					tooltipTitle={$LL.Home.ImageInput.Title()}
+					tooltipParagraph={$LL.Home.InitialImageTabBar.Paragraph()}
+				>
+					<TabLikeInitImageUploader2
+						notSupported={generationModels[$generationModelId]?.img2imgNotSupported ? true : false}
+						disabled={!isCheckCompleted}
+						class="w-full"
+						{openSignInModal}
+					/>
+				</SettingsPanelItem>
+			{/if}
+			<SettingsPanelItem
+				title={$LL.Home.NegativePromptInput.Title()}
+				iconType="negative-prompt"
+				tooltipTitle={$LL.Home.NegativePromptInput.Title()}
+				tooltipParagraph={$LL.Home.NegativePromptInput.Paragraph()}
+			>
+				<TabLikeTextArea
+					max={maxPromptLength}
+					placeholder={$LL.Home.NegativePromptInput.PlaceholderAlt()}
+					class="w-full"
+					bind:value={$generationNegativePrompt}
+					maxRows={4}
 				/>
 			</SettingsPanelItem>
-		{/if}
-		<SettingsPanelItem
-			title={$LL.Home.ModelDropdown.Title()}
-			iconType="model"
-			tooltipTitle={$LL.Home.ModelDropdown.Title()}
-			tooltipParagraph={$LL.Home.ModelDropdown.Paragraph()}
-		>
-			<TabLikeDropdown
-				class="w-full"
-				container={settingsContainer}
-				containerTopMinDistance={containerDropdownPadding}
-				containerBottomMinDistance={containerDropdownPadding}
-				items={$availableModelIdDropdownItems}
-				name={$LL.Home.ModelDropdown.Title()}
-				iconSet={IconModelImage}
-				iconSetClass="w-11 h-11 -mx-4 -my-5 mr-3 rounded-lg bg-c-bg-tertiary"
-				listClass="w-full flex flex-wrap px-1 md:px-0 pt-[calc(0.375rem+1px)] pb-1.25"
-				bind:value={$generationModelId}
-				let:item
-				let:onClick
-				let:isSelected
-				let:isNew
-			>
-				<ModelCard modelId={item.value} {onClick} {isSelected} {isNew} />
-			</TabLikeDropdown>
-		</SettingsPanelItem>
-		{#if $generateMode !== 'inpainting'}
 			<SettingsPanelItem
-				title={$LL.Home.ImageInput.Title()}
-				iconType="upload-image"
-				tooltipTitle={$LL.Home.ImageInput.Title()}
-				tooltipParagraph={$LL.Home.InitialImageTabBar.Paragraph()}
+				title={$LL.Home.NumOutputsSlider.Title()}
+				iconType="number-of-images"
+				tooltipTitle={$LL.Home.NumOutputsSlider.Title()}
+				tooltipParagraph={$LL.Home.NumOutputsSlider.Paragraph()}
 			>
-				<TabLikeInitImageUploader2 disabled={!isCheckCompleted} class="w-full" {openSignInModal} />
+				<TabLikeSliderInput
+					name={$LL.Home.NumOutputsSlider.Title()}
+					disabled={!isCheckCompleted}
+					class="w-full"
+					min={numOutputsMin}
+					max={numOutputsMax}
+					valueSize="md"
+					bind:value={$generationNumOutputs}
+				/>
 			</SettingsPanelItem>
-		{/if}
-		<SettingsPanelItem
-			title={$LL.Home.NegativePromptInput.Title()}
-			iconType="negative-prompt"
-			tooltipTitle={$LL.Home.NegativePromptInput.Title()}
-			tooltipParagraph={$LL.Home.NegativePromptInput.Paragraph()}
-		>
-			<TabLikeTextArea
-				max={maxPromptLength}
-				placeholder={$LL.Home.NegativePromptInput.PlaceholderAlt()}
-				class="w-full"
-				bind:value={$generationNegativePrompt}
-				maxRows={4}
-			/>
-		</SettingsPanelItem>
-		<SettingsPanelItem
-			title={$LL.Home.NumOutputsSlider.Title()}
-			iconType="number-of-images"
-			tooltipTitle={$LL.Home.NumOutputsSlider.Title()}
-			tooltipParagraph={$LL.Home.NumOutputsSlider.Paragraph()}
-		>
-			<TabLikeSliderInput
-				name={$LL.Home.NumOutputsSlider.Title()}
-				disabled={!isCheckCompleted}
-				class="w-full"
-				min={numOutputsMin}
-				max={numOutputsMax}
-				valueSize="md"
-				bind:value={$generationNumOutputs}
-			/>
-		</SettingsPanelItem>
-		<SettingsPanelItem
-			title={$LL.Home.ShowOnProfileToggle.Title()}
-			iconType="show-on-profile"
-			tooltipTitle={$LL.Home.ShowOnProfileToggle.Title()}
-			tooltipParagraph={$LL.Home.ShowOnProfileToggle.Paragraph()}
-		>
-			<WithTooltip
-				let:trigger
-				let:triggerStoreValue
-				color="bg-tertiary"
-				title={$LL.Shared.ProFeatures.SubscribeTitle()}
-				titleIcon={IconStar}
-				paragraph={$LL.Shared.ProFeatures.ChangeVisibilityFeatureParagraph()}
-				buttonHref="/pricing"
-				buttonText={$LL.Pricing.SubscribeButton()}
-				isActive={!canToggleVisibility}
-				overflowPadding={{ bottom: 100 }}
+			<SettingsPanelItem
+				title={$LL.Home.ShowOnProfileToggle.Title()}
+				iconType="show-on-profile"
+				tooltipTitle={$LL.Home.ShowOnProfileToggle.Title()}
+				tooltipParagraph={$LL.Home.ShowOnProfileToggle.Paragraph()}
 			>
-				<div
-					tabindex="-1"
-					use:trigger
-					{...triggerStoreValue}
-					class="w-full {!canToggleVisibility ? 'cursor-not-allowed' : ''}"
+				<WithTooltip
+					let:trigger
+					let:triggerStoreValue
+					color="bg-tertiary"
+					title={$LL.Shared.ProFeatures.SubscribeTitle()}
+					titleIcon={IconStar}
+					paragraph={$LL.Shared.ProFeatures.ChangeVisibilityFeatureParagraph()}
+					buttonHref="/pricing"
+					buttonText={$LL.Pricing.SubscribeButton()}
+					isActive={!canToggleVisibility}
+					overflowPadding={{ bottom: 100 }}
 				>
-					<TabLikeToggle
-						class="w-full {!canToggleVisibility ? 'pointer-events-none' : ''}"
-						bind:isToggled={$generationShouldSubmitToGallery}
-						disabled={!isCheckCompleted || !canToggleVisibility}
-						disabledIsToggled={canToggleVisibility ? $generationShouldSubmitToGallery : true}
-						text={canToggleVisibility
-							? $generationShouldSubmitToGallery
-								? $LL.Shared.On()
-								: $LL.Shared.Off()
-							: $LL.Shared.On()}
-					/>
-				</div>
-			</WithTooltip>
-		</SettingsPanelItem>
+					<div
+						tabindex="-1"
+						use:trigger
+						{...triggerStoreValue}
+						class="w-full {!canToggleVisibility ? 'cursor-not-allowed' : ''}"
+					>
+						<TabLikeToggle
+							class="w-full {!canToggleVisibility ? 'pointer-events-none' : ''}"
+							bind:isToggled={$generationShouldSubmitToGallery}
+							disabled={!isCheckCompleted || !canToggleVisibility}
+							disabledIsToggled={canToggleVisibility ? $generationShouldSubmitToGallery : true}
+							text={canToggleVisibility
+								? $generationShouldSubmitToGallery
+									? $LL.Shared.On()
+									: $LL.Shared.Off()
+								: $LL.Shared.On()}
+						/>
+					</div>
+				</WithTooltip>
+			</SettingsPanelItem>
+		</div>
 		<div class="flex w-full flex-col ring-2 ring-c-bg-secondary">
 			<button
 				class="group flex w-full justify-start px-4 py-4 font-medium text-c-on-bg/75 transition {$advancedModeApp

@@ -82,7 +82,11 @@ const en: BaseTranslation = {
 			Paragraph:
 				'To remove unwanted things from the image. It does the opposite of what the prompt does.'
 		},
-		ImageInput: { Paragraph: 'Click or drop your image here', Title: 'Upload Image' },
+		ImageInput: {
+			NotSupported: 'Not supported by the model',
+			Paragraph: 'Click or drop your image here',
+			Title: 'Upload Image'
+		},
 		SeedInput: {
 			Title: 'Seed',
 			Placeholder: 'Seed number',

@@ -81,7 +81,11 @@ const de: Translation = {
 			PlaceholderAlt: 'Enter things to avoid',
 			Paragraph: 'Um ungewollte Dinge auszuschließen. Bewirkt das Gegenteil von Eingabewörtern.'
 		},
-		ImageInput: { Paragraph: 'Click or drop your image here', Title: 'Upload Image' },
+		ImageInput: {
+			NotSupported: 'Not supported by the model',
+			Paragraph: 'Click or drop your image here',
+			Title: 'Upload Image'
+		},
 		SeedInput: {
 			Title: 'Seed',
 			Placeholder: 'Seed-Nummer',

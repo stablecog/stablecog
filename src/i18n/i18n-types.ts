@@ -240,6 +240,10 @@ type RootTranslation = {
 		}
 		ImageInput: {
 			/**
+			 * N​o​t​ ​s​u​p​p​o​r​t​e​d​ ​b​y​ ​t​h​e​ ​m​o​d​e​l
+			 */
+			NotSupported: string
+			/**
 			 * C​l​i​c​k​ ​o​r​ ​d​r​o​p​ ​y​o​u​r​ ​i​m​a​g​e​ ​h​e​r​e
 			 */
 			Paragraph: string
@@ -3623,6 +3627,10 @@ export type TranslationFunctions = {
 			Paragraph: () => LocalizedString
 		}
 		ImageInput: {
+			/**
+			 * Not supported by the model
+			 */
+			NotSupported: () => LocalizedString
 			/**
 			 * Click or drop your image here
 			 */

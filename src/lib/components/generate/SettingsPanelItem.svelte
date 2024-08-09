@@ -8,9 +8,10 @@
 	export let icon: ConstructorOfATypedSvelteComponent | undefined = undefined;
 	export let iconType: TIconGenerationSettingsSet | undefined = undefined;
 	export let title: string;
+	export let wrapperClass = '';
 </script>
 
-<div class="flex w-full flex-col items-start px-3 md:px-4">
+<div class="flex w-full flex-col items-start px-3 md:px-4 {wrapperClass}">
 	<WithTooltip let:trigger let:triggerStoreValue title={tooltipTitle} paragraph={tooltipParagraph}>
 		<div
 			tabindex="-1"

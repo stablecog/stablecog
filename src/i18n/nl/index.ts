@@ -83,6 +83,7 @@ const nl: Translation = {
 				'Om ongewenste dingen uit de afbeelding te verwijderen. Doet het tegenovergestelde van wat de prompt doet.'
 		},
 		ImageInput: {
+			NotSupported: 'Not supported by the model',
 			Paragraph: 'Click or drop your image here',
 			Title: 'Upload Afbeelding'
 		},

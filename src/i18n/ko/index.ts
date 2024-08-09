@@ -82,7 +82,11 @@ const ko: Translation = {
 			Paragraph:
 				'원하지 않는 결과를 없애기 위한 문구입니다. 원하는 문구를 입력하는 것과 반대되는 역할을 합니다.'
 		},
-		ImageInput: { Paragraph: 'Click or drop your image here', Title: 'Upload Image' },
+		ImageInput: {
+			NotSupported: 'Not supported by the model',
+			Paragraph: 'Click or drop your image here',
+			Title: 'Upload Image'
+		},
 		SeedInput: {
 			Title: '난수 시드',
 			Placeholder: '난수 시드 값',
