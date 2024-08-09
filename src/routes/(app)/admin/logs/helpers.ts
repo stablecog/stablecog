@@ -7,8 +7,9 @@ export function getTimeString(val: string) {
 		date.getMilliseconds().toString().slice(0, 2).padEnd(2, '0');
 	const dateString = `${date.getFullYear()}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getDate().toString().padStart(2, '0')}`;
 	const isOlderThan24Hours = now.getTime() - date.getTime() > 24 * 60 * 60 * 1000;
+	const notToday = now.getDate() !== date.getDate();
 	let finalString = '';
-	if (isOlderThan24Hours) {
+	if (isOlderThan24Hours || notToday) {
 		finalString += `${dateString} | `;
 	}
 	finalString += timeString;
