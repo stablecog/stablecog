@@ -20,12 +20,12 @@ export function getGenerationUrlFromParams({
 	if (negative_prompt) {
 		urlParams.set('np', negative_prompt.text);
 	}
-	if (width) {
+	/* if (width) {
 		urlParams.set('w', width.toString());
 	}
 	if (height) {
 		urlParams.set('h', height.toString());
-	}
+	} */
 	/* if (guidance_scale) {
 		urlParams.set('gs', guidance_scale.toString());
 	}
