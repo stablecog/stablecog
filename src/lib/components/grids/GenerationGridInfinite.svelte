@@ -53,7 +53,6 @@
 	export let paddingTop = 0;
 	export let paddingBottom = 0;
 	export let setSearchQuery: ((query: string) => void) | undefined = undefined;
-	export let hasExtraPadding = false;
 
 	$: horizontalPadding = paddingLeft + paddingRight;
 	let isInitialScrollPositionSet = false;
@@ -342,10 +341,8 @@
 						? 'translate-y-0'
 						: 'translate-y-full'} pointer-events-none sticky bottom-0 left-0
 					flex w-full transform items-center justify-center
-					px-2 pt-8 transition duration-300
-					md:px-3 md:pt-8 {hasExtraPadding
-						? 'pb-[calc(2rem+env(safe-area-inset-bottom))] md:pb-[calc(3rem+env(safe-area-inset-bottom))]'
-						: 'pb-[calc(0.5rem+env(safe-area-inset-bottom))] md:pb-[calc(1rem+env(safe-area-inset-bottom))]'}"
+					px-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))] pt-8 transition
+					duration-300 md:px-3 md:pb-[calc(1rem+env(safe-area-inset-bottom))] md:pt-8"
 				>
 					<button
 						disabled={!showScrollToTopChevron}

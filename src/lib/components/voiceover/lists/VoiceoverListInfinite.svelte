@@ -210,11 +210,11 @@
 		</div>
 		{#if horizontal}
 			<div
-				class="pointer-events-none absolute left-0 top-0 h-full w-12 bg-gradient-to-r from-c-bg to-c-bg/0
+				class="pointer-events-none absolute left-0 top-0 h-full w-8 bg-gradient-to-r from-c-bg to-c-bg/0
 				transition duration-100 {listAtStart ? 'opacity-0' : 'opacity-100'}"
 			/>
 			<div
-				class="pointer-events-none absolute right-0 top-0 h-full w-12 bg-gradient-to-l from-c-bg to-c-bg/0
+				class="pointer-events-none absolute right-0 top-0 h-full w-8 bg-gradient-to-l from-c-bg to-c-bg/0
 				transition duration-100 {listAtEnd ? 'opacity-0' : 'opacity-100'}"
 			/>
 		{/if}

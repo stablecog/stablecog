@@ -317,7 +317,6 @@
 											paddingRight={6}
 											paddingTop={6}
 											paddingBottom={6}
-											hasExtraPadding
 											{pinnedFullOutputs}
 											noLoadingSpinnerAlignmentAdjustment
 											hasPlaceholder
