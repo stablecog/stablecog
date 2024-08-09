@@ -23,6 +23,7 @@
 		TGenerationFullOutput,
 		TGenerationWithSelectedOutput
 	} from '$ts/stores/user/generation';
+	import { onDestroy } from 'svelte';
 
 	export let modalType: TGenerationFullScreenModalType;
 	export let output: TGenerationFullOutput;
@@ -33,8 +34,7 @@
 		...output.generation,
 		selected_output: output
 	};
-	/* $: generateSimilarUrl = getGenerationUrlFromParams({ ...output.generation }); */
-	$: generateSimilarUrl = '/generate';
+	$: generateSimilarUrl = getGenerationUrlFromParams({ ...output.generation });
 	$: exploreSimilarUrl = `/gallery?q=${generation.selected_output.id}`;
 	$: linkUrl =
 		modalType === 'user-profile'
@@ -126,6 +126,14 @@
 	}
 
 	$: now = generation ? Date.now() : Date.now();
+
+	onDestroy(() => {
+		for (const key in buttonObjectsWithState) {
+			if (buttonObjectsWithState[key].timeout) {
+				clearTimeout(buttonObjectsWithState[key].timeout);
+			}
+		}
+	});
 </script>
 
 <div class="flex w-full justify-center pb-8 pt-2 md:px-5 md:pt-6 lg:px-8 xl:px-12 2xl:px-16">
