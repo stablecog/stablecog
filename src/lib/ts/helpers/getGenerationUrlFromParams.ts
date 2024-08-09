@@ -23,10 +23,10 @@ export function getGenerationUrlFromParams({
 	if (width) {
 		urlParams.set('w', width.toString());
 	}
-	/* if (height) {
+	if (height) {
 		urlParams.set('h', height.toString());
-	} */
-	if (guidance_scale) {
+	}
+	/* if (guidance_scale) {
 		urlParams.set('gs', guidance_scale.toString());
 	}
 	if (num_inference_steps) {
@@ -37,7 +37,7 @@ export function getGenerationUrlFromParams({
 	}
 	if (model_id) {
 		urlParams.set('mi', model_id);
-	}
+	} */
 	// TO-DO: Removed scheduler_id for now
 	/* if (scheduler_id) params.push(`si=${scheduler_id}`); */
 	if (get(page).url.pathname === '/generate') {
