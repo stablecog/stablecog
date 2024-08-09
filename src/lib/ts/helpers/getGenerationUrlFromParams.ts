@@ -32,12 +32,12 @@ export function getGenerationUrlFromParams({
 	if (num_inference_steps) {
 		urlParams.set('is', num_inference_steps.toString());
 	} */
-	if (seed || seed === 0) {
+	/* if (seed || seed === 0) {
 		urlParams.set('s', seed.toString());
 	}
 	if (model_id) {
 		urlParams.set('mi', model_id);
-	}
+	} */
 	// TO-DO: Removed scheduler_id for now
 	/* if (scheduler_id) params.push(`si=${scheduler_id}`); */
 	if (get(page).url.pathname === '/generate') {
