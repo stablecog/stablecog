@@ -14,10 +14,10 @@ export function getGenerationUrlFromParams({
 }: TGenerationUrlFromParamsParams) {
 	const baseUrl = '/generate?';
 	let params: string[] = [];
-	/* if (prompt) params.push(`p=${encodeURIComponent(prompt.text)}`);
+	if (prompt) params.push(`p=${encodeURIComponent(prompt.text)}`);
 	if (negative_prompt) params.push(`np=${encodeURIComponent(negative_prompt.text)}`);
 	if (width) params.push(`w=${width}`);
-	if (height) params.push(`h=${height}`);
+	/* if (height) params.push(`h=${height}`);
 	if (guidance_scale) params.push(`gs=${guidance_scale}`);
 	if (num_inference_steps) params.push(`is=${num_inference_steps}`);
 	if (seed || seed === 0) params.push(`s=${seed}`);
