@@ -33,7 +33,8 @@
 		...output.generation,
 		selected_output: output
 	};
-	$: generateSimilarUrl = getGenerationUrlFromParams({ ...output.generation });
+	/* $: generateSimilarUrl = getGenerationUrlFromParams({ ...output.generation }); */
+	$: generateSimilarUrl = '/generate';
 	$: exploreSimilarUrl = `/gallery?q=${generation.selected_output.id}`;
 	$: linkUrl =
 		modalType === 'user-profile'
