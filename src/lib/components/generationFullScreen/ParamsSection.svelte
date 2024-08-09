@@ -1,5 +1,4 @@
 <script lang="ts">
-	import SubtleButton from '$components/primitives/buttons/SubtleButton.svelte';
 	import type {
 		TButtonObjectsWithState,
 		TGenerationFullScreenModalType,
@@ -8,11 +7,11 @@
 	import IconCopy from '$components/icons/IconCopy.svelte';
 	import IconGenerationSettingsSet from '$components/icons/iconGenerationSettingsSet/IconGenerationSettingsSet.svelte';
 	import IconTick from '$components/icons/IconTick.svelte';
+	import SubtleButton from '$components/primitives/buttons/SubtleButton.svelte';
 	import Morpher from '$components/utils/Morpher.svelte';
 	import WithTooltip from '$components/utils/WithTooltip.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { generationModelIdDefault, modelIdToDisplayName } from '$ts/constants/generationModels';
-	import { schedulerIdDefault, schedulerIdToDisplayName } from '$ts/constants/schedulers';
 	import { userSummary } from '$ts/stores/user/summary';
 	import type { TGenerationWithSelectedOutput } from '$userStores/generation';
 	import { copy } from 'svelte-copy';
@@ -92,29 +91,6 @@
 				</div>
 			</WithTooltip>
 			<p class="font-semibold">{generation.inference_steps}</p>
-		</div>
-		<div class="flex min-w-[calc(50%-0.75rem)] flex-col items-start gap-1">
-			<WithTooltip
-				title={$LL.Home.SchedulerDropdown.Title()}
-				paragraph={$LL.Home.SchedulerDropdown.Paragraph()}
-				let:trigger
-				let:triggerStoreValue
-				color="bg-tertiary"
-			>
-				<div
-					tabindex="-1"
-					use:trigger
-					{...triggerStoreValue}
-					class="flex cursor-default items-center gap-1.5 text-sm text-c-on-bg/75"
-				>
-					<IconGenerationSettingsSet type="scheduler" class="h-4 w-4" />
-					<p class="font-medium">{$LL.Home.SchedulerDropdown.Title()}</p>
-				</div>
-			</WithTooltip>
-			<p class="font-semibold">
-				{$schedulerIdToDisplayName[generation.scheduler_id ?? schedulerIdDefault] ??
-					$LL.Shared.UnknownTitle()}
-			</p>
 		</div>
 		{#if generation.prompt_strength}
 			<div class="flex min-w-[calc(50%-0.75rem)] flex-col items-start gap-1">

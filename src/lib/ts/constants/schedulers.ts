@@ -13,7 +13,7 @@ export const schedulerIdToSchedulerNameCog = {
 	'01e94c28-501d-4c6d-8f00-079f3230bf58': 'UNI_PC'
 } as const;
 
-export const schedulerIdDefault: TAvailableSchedulerId = 'cc1b8dbf-0aec-4e52-8110-8082506fb7ba';
+export const schedulerIdDefault: TAvailableSchedulerId = 'af2679a4-dbbb-4950-8c06-c3bb15416ef6';
 
 export const availableSchedulerIds = Object.keys(
 	schedulerIdToSchedulerNameCog

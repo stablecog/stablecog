@@ -240,8 +240,10 @@ export async function submitInitialGenerationRequest({
 		mask_image_url = await uploadImage({ access_token, formData: formData });
 	}
 
+	// TO-DO: don't send scheduler for now
+	const { scheduler_id, ...editedRest } = rest;
 	const finalRequest = {
-		...rest,
+		...editedRest,
 		prompt: promptText,
 		negative_prompt: negativePromptText,
 		mask_image_url

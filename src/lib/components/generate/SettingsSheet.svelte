@@ -23,7 +23,7 @@
 		: $windowWidth < mdBreakpoint && isOpen
 			? '0%'
 			: `calc(100% - ${promptBarHeight + horizontalListHeight}px)`});"
-	class="z-40 flex h-[min(calc(100%-3rem),60rem)] w-full flex-col gap-1 rounded-t-2xl bg-c-bg ring-2 ring-c-bg-secondary
+	class="z-40 flex h-[min(100%,60rem)] w-full flex-col gap-1 rounded-t-2xl bg-c-bg ring-2 ring-c-bg-secondary
 		md:rounded-none md:ring-0 {isOpen
 		? 'shadow-sheet-open shadow-c-shadow/[var(--o-shadow-strongest)]'
 		: 'shadow-sheet-closed shadow-c-shadow/[var(--o-shadow-stronger)]'} absolute

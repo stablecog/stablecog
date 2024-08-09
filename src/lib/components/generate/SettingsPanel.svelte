@@ -1,10 +1,22 @@
 <script lang="ts">
+	import IconModelImage from '$components/cards/modelCard/IconModelImage.svelte';
+	import ModelCard from '$components/cards/modelCard/ModelCard.svelte';
+	import SettingsPanelItem from '$components/generate/SettingsPanelItem.svelte';
+	import SidebarWrapper from '$components/generate/SidebarWrapper.svelte';
 	import IconAspectRatio from '$components/icons/IconAspectRatio.svelte';
+	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
+	import IconSeed from '$components/icons/IconSeed.svelte';
+	import IconStar from '$components/icons/IconStar.svelte';
+	import IconWarningOutline from '$components/icons/IconWarningOutline.svelte';
 	import TabLikeDropdown from '$components/primitives/tabBars/TabLikeDropdown.svelte';
+	import TabLikeInitImageUploader2 from '$components/primitives/tabBars/TabLikeInitImageUploader2.svelte';
+	import TabLikeInput from '$components/primitives/tabBars/TabLikeInput.svelte';
 	import TabLikeSliderInput from '$components/primitives/tabBars/TabLikeSliderInput.svelte';
 	import TabLikeTextArea from '$components/primitives/tabBars/TabLikeTextArea.svelte';
+	import TabLikeToggle from '$components/primitives/tabBars/TabLikeToggle.svelte';
+	import WithTooltip from '$components/utils/WithTooltip.svelte';
 	import LL from '$i18n/i18n-svelte';
-	import SidebarWrapper from '$components/generate/SidebarWrapper.svelte';
+	import { expandCollapse } from '$ts/animation/transitions';
 	import { availableModelIdDropdownItems, generationModels } from '$ts/constants/generationModels';
 	import { aspectRatioDropdownItems } from '$ts/constants/generationSize';
 	import {
@@ -16,35 +28,22 @@
 		numOutputsMax,
 		numOutputsMin
 	} from '$ts/constants/main';
+	import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
+	import { advancedModeApp } from '$ts/stores/advancedMode';
+	import { generateMode } from '$ts/stores/generate/generateMode';
 	import {
 		generationAspectRatio,
 		generationGuidanceScale,
 		generationModelId,
 		generationNegativePrompt,
 		generationNumOutputs,
-		generationSchedulerId,
 		generationSeed,
 		generationShouldSubmitToGallery
 	} from '$ts/stores/generationSettings';
-	import { advancedModeApp } from '$ts/stores/advancedMode';
-	import type { TTab } from '$ts/types/main';
-	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
-	import { expandCollapse } from '$ts/animation/transitions';
-	import { quadOut } from 'svelte/easing';
-	import IconSeed from '$components/icons/IconSeed.svelte';
-	import TabLikeInput from '$components/primitives/tabBars/TabLikeInput.svelte';
-	import TabLikeInitImageUploader2 from '$components/primitives/tabBars/TabLikeInitImageUploader2.svelte';
-	import SettingsPanelItem from '$components/generate/SettingsPanelItem.svelte';
-	import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
-	import ModelCard from '$components/cards/modelCard/ModelCard.svelte';
-	import IconModelImage from '$components/cards/modelCard/IconModelImage.svelte';
-	import TabLikeToggle from '$components/primitives/tabBars/TabLikeToggle.svelte';
 	import { userSummary } from '$ts/stores/user/summary';
-	import IconWarningOutline from '$components/icons/IconWarningOutline.svelte';
+	import type { TTab } from '$ts/types/main';
+	import { quadOut } from 'svelte/easing';
 	import { scale } from 'svelte/transition';
-	import WithTooltip from '$components/utils/WithTooltip.svelte';
-	import IconStar from '$components/icons/IconStar.svelte';
-	import { generateMode } from '$ts/stores/generate/generateMode';
 
 	export let rounding: 'all' | 'top' | 'bottom' = 'all';
 	export let openSignInModal: () => void;
@@ -285,22 +284,6 @@
 									</div>
 								</div>
 							{/if}
-						</SettingsPanelItem>
-						<SettingsPanelItem
-							title={$LL.Home.SchedulerDropdown.Title()}
-							iconType="scheduler"
-							tooltipTitle={$LL.Home.SchedulerDropdown.Title()}
-							tooltipParagraph={$LL.Home.SchedulerDropdown.Paragraph()}
-						>
-							<TabLikeDropdown
-								class="w-full"
-								container={settingsContainer}
-								containerTopMinDistance={containerDropdownPadding}
-								containerBottomMinDistance={containerDropdownPadding}
-								items={supportedSchedulerIdDropdownItems}
-								bind:value={$generationSchedulerId}
-								name={$LL.Home.AspectRatioDropdown.Title()}
-							/>
 						</SettingsPanelItem>
 						<SettingsPanelItem
 							title={$LL.Home.SeedInput.Title()}
