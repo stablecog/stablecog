@@ -422,9 +422,9 @@
 		if (serverData.model_id !== null && isValue(serverData.model_id)) {
 			generationModelId.set(serverData.model_id);
 		}
-		/* if (isValue(serverData.guidance_scale) && serverData.guidance_scale !== null) {
+		if (isValue(serverData.guidance_scale) && serverData.guidance_scale !== null) {
 			generationGuidanceScale.set(serverData.guidance_scale);
-		} */
+		}
 		if (isValue(serverData.scheduler_id) && serverData.scheduler_id !== null) {
 			generationSchedulerId.set(serverData.scheduler_id);
 		}
