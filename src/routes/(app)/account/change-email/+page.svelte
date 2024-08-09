@@ -70,7 +70,7 @@
 
 <MetaTag
 	title="Change Email | Stablecog"
-	description="Change your account's email address on Stablecog. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
+	description="Change your account's email address on Stablecog. Free, multilingual and open-source AI image generator using Stable Diffusion, FLUX, and Kandinsky."
 	image_url="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 />
 

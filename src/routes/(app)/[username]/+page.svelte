@@ -151,7 +151,7 @@
 
 <MetaTag
 	title="@{data.username} | Stablecog"
-	description="Check out the profile of @{data.username} on Stablecog: Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
+	description="Check out the profile of @{data.username} on Stablecog: Free, multilingual and open-source AI image generator using Stable Diffusion, FLUX, and Kandinsky."
 	image_url={getPreviewImageUrlForUserProfile(data.username)}
 	canonical="{canonicalUrl}{$page.url.pathname}"
 	robots="noindex"

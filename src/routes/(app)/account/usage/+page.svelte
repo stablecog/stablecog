@@ -30,7 +30,7 @@
 
 <MetaTag
 	title="Usage | Account"
-	description="Manage your Stablecog account. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
+	description="Manage your Stablecog account. Free, multilingual and open-source AI image generator using Stable Diffusion, FLUX, and Kandinsky."
 	image_url="{canonicalUrl}/previews/account-{previewImageVersion}.png"
 />
 

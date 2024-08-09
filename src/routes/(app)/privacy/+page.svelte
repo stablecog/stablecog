@@ -10,7 +10,7 @@
 
 <MetaTag
 	title="Privacy Policy | Stablecog"
-	description="Check out the privacy policy for Stablecog. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
+	description="Check out the privacy policy for Stablecog. Free, multilingual and open-source AI image generator using Stable Diffusion, FLUX, and Kandinsky."
 	image_url="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 />
 

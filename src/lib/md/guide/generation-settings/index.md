@@ -1,6 +1,6 @@
 ---
 title: Generation Settings
-description: Learn about each generation setting used for generating images on Stablecog using Stable Diffusion and Kandinsky.
+description: Learn about each generation setting used for generating images on Stablecog using Stable Diffusion, FLUX, and Kandinsky.
 author: M. Yekta Güngör
 author_url: https://twitter.com/yektagg
 date: 2023-04-18T15:00:00.000Z

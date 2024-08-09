@@ -171,7 +171,7 @@
 
 <MetaTag
 	title="Voiceover | Stablecog"
-	description="Create voiceovers with AI on Stablecog: Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
+	description="Create voiceovers with AI on Stablecog: Free, multilingual and open-source AI image generator using Stable Diffusion, FLUX, and Kandinsky."
 	image_url="{canonicalUrl}/previews/voiceover-v2.png"
 />
 

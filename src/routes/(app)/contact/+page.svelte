@@ -11,7 +11,7 @@
 
 <MetaTag
 	title="Contact | Stablecog"
-	description="Reach out to us and we'll answer any questions you have. Create amazing art in seconds with AI. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
+	description="Reach out to us and we'll answer any questions you have. Create amazing art in seconds with AI. Free, multilingual and open-source AI image generator using Stable Diffusion, FLUX, and Kandinsky."
 	image_url="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 />
 

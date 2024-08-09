@@ -8,5 +8,5 @@
 	url={socialAppUrlsAbsolute.x}
 	redirectingText={$LL.Redirect.RedirectingToTitle({ name: $LL.Platform.X() })}
 	title="X | Stablecog"
-	description="Follow us on X for updates on Stablecog. Free, multilingual and open-source AI image generator using Stable Diffusion and Kandinsky."
+	description="Follow us on X for updates on Stablecog. Free, multilingual and open-source AI image generator using Stable Diffusion, FLUX, and Kandinsky."
 />
