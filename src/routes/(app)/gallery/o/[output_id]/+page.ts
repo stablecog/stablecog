@@ -35,6 +35,7 @@ export const load: PageLoad = async ({ params, parent, fetch }) => {
 			headers
 		}),
 		getGalleryFullOutputs({
+			custom_fetch: fetch,
 			search: outputId,
 			per_page: similarCount + 1,
 			accessToken: session?.access_token

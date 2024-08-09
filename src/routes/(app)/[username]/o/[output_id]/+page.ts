@@ -34,6 +34,7 @@ export const load: PageLoad = async ({ params, parent }) => {
 			headers
 		}),
 		getUserProfileFullOutputs({
+			custom_fetch: fetch,
 			search: outputId,
 			per_page: similarCount + 1,
 			username,
