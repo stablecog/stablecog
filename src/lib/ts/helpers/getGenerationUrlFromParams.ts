@@ -26,10 +26,10 @@ export function getGenerationUrlFromParams({
 	if (height) {
 		urlParams.set('h', height.toString());
 	}
-	/* if (guidance_scale) {
+	if (guidance_scale) {
 		urlParams.set('gs', guidance_scale.toString());
 	}
-	if (num_inference_steps) {
+	/* if (num_inference_steps) {
 		urlParams.set('is', num_inference_steps.toString());
 	}
 	if (seed || seed === 0) {
