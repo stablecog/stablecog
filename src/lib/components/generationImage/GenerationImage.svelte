@@ -62,14 +62,6 @@
 	const showPromptOnHover = cardType !== 'gallery' && cardType !== 'admin-gallery' ? true : false;
 
 	let naturalWidth: number;
-	let _isImageLoaded = false;
-	let isImageLoaded = false;
-
-	const onImageLoaded = () => {
-		_isImageLoaded = true;
-	};
-
-	$: isImageLoaded = (naturalWidth && naturalWidth > 0) || _isImageLoaded;
 
 	$: isInGallerySelectedIds =
 		$isUserGalleryEditActive && cardType === 'history'
@@ -194,9 +186,8 @@
 	<SrcsetProvider {imageQualityPreset} src={srcHighest} {cardType} let:sizes let:srcset>
 		<div class="absolute left-0 top-0 h-full w-full">
 			<img
-				on:load={onImageLoaded}
 				loading="lazy"
-				class="absolute left-0 top-0 h-full w-full transform object-cover transition-[transform,opacity,filter] duration-[0.2s,0.2s,0.2s] ease-[ease-out,ease-in,ease-out] {!isImageLoaded
+				class="absolute left-0 top-0 h-full w-full transform object-cover transition-[transform,opacity,filter] duration-[0.2s,0.2s,0.2s] ease-[ease-out,ease-in,ease-out] {!naturalWidth
 					? 'opacity-0'
 					: 'opacity-100'} filter {cardType === 'generate'
 					? ''
