@@ -30,7 +30,7 @@ export const load: ServerLoad = ({ url }) => {
 	const _width = url.searchParams.get('w');
 	const _height = url.searchParams.get('h');
 	const _aspect_ratio = url.searchParams.get('ar');
-	const _guidance_scale = url.searchParams.get('gs');
+	const _guidance_scale = url.searchParams.get('gsc');
 	const _model_id = url.searchParams.get('mi');
 	const _scheduler_id = url.searchParams.get('si');
 	const _advanced_mode = url.searchParams.get('adv');
@@ -80,8 +80,8 @@ export const load: ServerLoad = ({ url }) => {
 			? _advanced_mode === 'true'
 				? true
 				: _advanced_mode === 'false'
-				? false
-				: null
+					? false
+					: null
 			: null;
 	const init_image_strength_float =
 		_init_image_strength !== null ? parseFloat(_init_image_strength) : null;
