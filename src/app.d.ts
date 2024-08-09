@@ -17,7 +17,7 @@ declare namespace App {
 		isLeftSidebarHidden: boolean;
 		advancedMode: boolean | null;
 		supabase: SupabaseClient;
-		getSession(): Promise<Session | null>;
+		safeGetSession(): Promise<{ session: Session | null; user: User | null }>;
 	}
 
 	// interface Error {}

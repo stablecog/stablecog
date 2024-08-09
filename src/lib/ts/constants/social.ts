@@ -18,4 +18,4 @@ export const socialAppUrlsAbsolute = {
 	email: 'mailto:hello@stablecog.com'
 };
 
-export const companyInfo = '© 2023 Stablecog, Inc.';
+export const companyInfo = `© ${new Date().getFullYear()} Stablecog, Inc.`;

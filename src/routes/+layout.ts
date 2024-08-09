@@ -5,33 +5,35 @@ import type { TAvailableTheme } from '$ts/stores/theme';
 import type { TUserSummary } from '$ts/stores/user/summary';
 import { getUserSummary } from '$ts/helpers/user/user';
 import { supabaseAnonKey, supabaseUrl } from '$ts/constants/supabase';
-import { createBrowserClient, isBrowser, parse } from '@supabase/ssr';
+import { createBrowserClient, createServerClient, isBrowser } from '@supabase/ssr';
 
 export const load: LayoutLoad = async (event) => {
 	const { depends, data, fetch } = event;
 	depends('supabase:auth');
-	const supabase = createBrowserClient(supabaseUrl, supabaseAnonKey, {
-		global: {
-			fetch
-		},
-		cookies: {
-			get(key) {
-				if (!isBrowser()) {
-					return JSON.stringify(data.session);
+
+	const supabase = isBrowser()
+		? createBrowserClient(supabaseUrl, supabaseAnonKey, {
+				global: {
+					fetch
 				}
-				const cookie = parse(document.cookie);
-				return cookie[key];
-			}
-		}
-	});
+			})
+		: createServerClient(supabaseUrl, supabaseAnonKey, {
+				global: {
+					fetch
+				},
+				cookies: {
+					getAll() {
+						return data.cookies;
+					}
+				}
+			});
+
 	const {
 		data: { session }
 	} = await supabase.auth.getSession();
 
 	let userSummary: TUserSummary | undefined = undefined;
-	if (event.data.userSummary) {
-		userSummary = event.data.userSummary;
-	} else if (session && session.access_token && session.expires_in > 3) {
+	if (session && session.access_token && session.expires_in > 3) {
 		try {
 			const summary = await getUserSummary(session.access_token);
 			if (summary) {

@@ -8,7 +8,7 @@ import { getUserSummary } from '$ts/helpers/user/user';
 import { redirect, type ServerLoad } from '@sveltejs/kit';
 
 export const load: ServerLoad = async (event) => {
-	const session = await event.locals.getSession();
+	const { session } = await event.locals.safeGetSession();
 	const priceId = event.url.searchParams.get('price_id');
 	const from = event.url.searchParams.get('from');
 	if (!from) {

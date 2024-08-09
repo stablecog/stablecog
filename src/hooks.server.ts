@@ -15,21 +15,30 @@ const LINK_HEADER_LENGTH = 60;
 export const handle: Handle = async ({ event, resolve }) => {
 	event.locals.supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
 		cookies: {
-			get: (key) => event.cookies.get(key),
-			set: (key, value, options) => {
-				event.cookies.set(key, value, { ...options, path: options.path ?? '/' });
-			},
-			remove: (key, options) => {
-				event.cookies.delete(key, { ...options, path: options.path ?? '/' });
+			getAll: () => event.cookies.getAll(),
+			setAll: (cookiesToSet) => {
+				cookiesToSet.forEach(({ name, value, options }) => {
+					event.cookies.set(name, value, { ...options, path: '/' });
+				});
 			}
 		}
 	});
 
-	event.locals.getSession = async () => {
+	event.locals.safeGetSession = async () => {
 		const {
 			data: { session }
 		} = await event.locals.supabase.auth.getSession();
-		return session;
+		if (!session) {
+			return { session: null, user: null };
+		}
+		const {
+			data: { user },
+			error
+		} = await event.locals.supabase.auth.getUser();
+		if (error) {
+			return { session: null, user: null };
+		}
+		return { session, user };
 	};
 
 	let preferredLocale = getPreferredLocale(event);
@@ -54,9 +63,9 @@ export const handle: Handle = async ({ event, resolve }) => {
 		const notSignedInRedirectRoute = `/sign-in?rd_to=${encodeURIComponent(event.url.pathname)}`;
 		const notAuthorizedRedirectRoute = `/`;
 		try {
-			const session = await event.locals.getSession();
-			const userId = session?.user?.id;
-			if (!userId) {
+			const { session, user } = await event.locals.safeGetSession();
+			const userId = user.id;
+			if (!userId || !session) {
 				return notSignedInResponse(notSignedInRedirectRoute);
 			}
 			const res = await fetch(`${apiUrl.origin}/v1/user`, {

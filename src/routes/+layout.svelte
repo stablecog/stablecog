@@ -113,10 +113,8 @@
 	onMount(() => {
 		setBodyClasses();
 		setBodyOverflowHiddenClass();
-		const {
-			data: { subscription }
-		} = supabase.auth.onAuthStateChange((event, _session) => {
-			if (_session?.expires_at !== session?.expires_at) {
+		const { data } = supabase.auth.onAuthStateChange((_, newSession) => {
+			if (newSession?.expires_at !== session?.expires_at) {
 				invalidate('supabase:auth');
 			}
 		});
@@ -140,9 +138,7 @@
 		setNavbarState();
 		setThumbmark();
 		mounted = true;
-		return () => {
-			subscription.unsubscribe();
-		};
+		return () => data.subscription.unsubscribe();
 	});
 
 	afterNavigate(() => {

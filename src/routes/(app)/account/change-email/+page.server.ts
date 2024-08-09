@@ -2,7 +2,7 @@ import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async (event) => {
-	const session = await event.locals.getSession();
+	const { session } = await event.locals.safeGetSession();
 	if (!session?.user?.id) {
 		redirect(307, `/sign-in?rd_to=${encodeURIComponent(event.url.pathname)}`);
 	}
