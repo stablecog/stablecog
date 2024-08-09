@@ -29,7 +29,6 @@
 	import { appVersion } from '$ts/stores/appVersion';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { lastClickedOutputId } from '$ts/stores/lastClickedOutputId';
-	import { loadedImages } from '$ts/stores/loadedImages';
 	import {
 		isUserGalleryEditActive,
 		userGalleryCurrentView,
@@ -47,7 +46,6 @@
 	export let generation: TGenerationWithSelectedOutput;
 	export let cardType: TGenerationImageCardType;
 	export let isGalleryEditActive: boolean = false;
-	export let didLoadBefore: boolean = false;
 	export let cardWidth: number | undefined = undefined;
 	export let setSearchQuery: ((query: string) => void) | undefined = undefined;
 	export let imageQualityPreset: TImgProxyQuality | undefined = undefined;
@@ -63,13 +61,15 @@
 	let leftButtonContainer: HTMLDivElement;
 	const showPromptOnHover = cardType !== 'gallery' && cardType !== 'admin-gallery' ? true : false;
 
+	let naturalWidth: number;
+	let _isImageLoaded = false;
 	let isImageLoaded = false;
+
 	const onImageLoaded = () => {
-		isImageLoaded = true;
-		setTimeout(() => {
-			loadedImages[generation.selected_output.image_url + cardType] = true;
-		}, 500);
+		_isImageLoaded = true;
 	};
+
+	$: isImageLoaded = (naturalWidth && naturalWidth > 0) || _isImageLoaded;
 
 	$: isInGallerySelectedIds =
 		$isUserGalleryEditActive && cardType === 'history'
@@ -192,19 +192,15 @@
 	</div>
 {:else}
 	<SrcsetProvider {imageQualityPreset} src={srcHighest} {cardType} let:sizes let:srcset>
-		<div
-			class="absolute left-0 top-0 h-full w-full transition duration-350 {cardType === 'generate'
-				? 'not-touch:group-hover:scale-105'
-				: 'not-touch:group-hover:scale-105 md:not-touch:group-hover:scale-103'}
-			{overlayShouldShow ? (cardType === 'generate' ? 'scale-105' : 'scale-105 md:scale-103') : ''}"
-		>
+		<div class="absolute left-0 top-0 h-full w-full">
 			<img
 				on:load={onImageLoaded}
 				loading="lazy"
-				class="absolute left-0 top-0 h-full w-full object-cover {didLoadBefore
-					? 'transition-[transform] duration-[0.2s] ease-[ease-out]'
-					: 'transition-[transform,opacity] duration-[0.2s,0.2s] ease-[ease-out,ease-in]'} 
-				transform {isImageLoaded ? 'opacity-100' : 'opacity-0'} {isInGallerySelectedIds
+				class="absolute left-0 top-0 h-full w-full transform object-cover transition-[transform,opacity,filter] duration-[0.2s,0.2s,0.2s] ease-[ease-out,ease-in,ease-out] {!isImageLoaded
+					? 'opacity-0'
+					: 'opacity-100'} filter {overlayShouldShow
+					? 'brightness-[0.8] contrast-[1.05]'
+					: 'not-touch:group-hover:brightness-[0.8] not-touch:group-hover:contrast-[1.05]'} {isInGallerySelectedIds
 					? 'scale-110'
 					: 'scale-100'}"
 				{sizes}
@@ -213,6 +209,7 @@
 				alt={generation.prompt.text}
 				width={generation.width}
 				height={generation.height}
+				bind:naturalWidth
 			/>
 		</div>
 	</SrcsetProvider>

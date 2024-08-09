@@ -23,7 +23,6 @@
 	export let output: TGenerationFullOutput;
 	export let isSelected: boolean;
 	export let isHoverable: boolean;
-	export let didLoadBefore: boolean;
 	export let cardWidth: number | undefined;
 	export let setSearchQuery: ((query: string) => void) | undefined = undefined;
 	export let isGalleryEditActive: boolean;
@@ -67,7 +66,6 @@
 						imageQualityPreset={cardType === 'stage' ? undefined : imageQualityLowDefault}
 						{cardType}
 						{cardWidth}
-						{didLoadBefore}
 						{isGalleryEditActive}
 						generation={{
 							...output.generation,

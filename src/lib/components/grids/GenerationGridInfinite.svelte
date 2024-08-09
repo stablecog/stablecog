@@ -17,7 +17,6 @@
 		isAdminGalleryEditActive
 	} from '$ts/stores/admin/gallery';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
-	import { loadedImages } from '$ts/stores/loadedImages';
 	import {
 		isUserGalleryEditActive,
 		userGalleryActionableItems,
@@ -280,7 +279,6 @@
 				{#each $gridVirtualizer.getVirtualItems() as virtualItem (virtualItem.index + outputs[virtualItem.index].id)}
 					{@const output = outputs[virtualItem.index]}
 					{@const isSelected = selectedItems.includes(output.id)}
-					{@const didLoadBefore = loadedImages[output.image_url + cardType] === true}
 					{@const isHoverable =
 						isHoverAllowed &&
 						!isSelected &&
@@ -311,7 +309,6 @@
 							{cardType}
 							{isHoverable}
 							{isSelected}
-							{didLoadBefore}
 							{cardWidth}
 							{isGalleryEditActive}
 							{setSearchQuery}
