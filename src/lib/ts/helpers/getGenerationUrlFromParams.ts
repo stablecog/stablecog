@@ -12,21 +12,39 @@ export function getGenerationUrlFromParams({
 	num_inference_steps,
 	seed
 }: TGenerationUrlFromParamsParams) {
-	const baseUrl = '/generate?';
-	let params: string[] = [];
-	if (prompt) params.push(`p=${encodeURIComponent(prompt.text)}`);
-	if (negative_prompt) params.push(`np=${encodeURIComponent(negative_prompt.text)}`);
-	if (width) params.push(`w=${width}`);
-	/* if (height) params.push(`h=${height}`);
-	if (guidance_scale) params.push(`gs=${guidance_scale}`);
-	if (num_inference_steps) params.push(`is=${num_inference_steps}`);
-	if (seed || seed === 0) params.push(`s=${seed}`);
-	if (model_id) params.push(`mi=${model_id}`); */
+	const baseUrl = '/generate';
+	const urlParams = new URLSearchParams();
+	if (prompt) {
+		urlParams.set('p', prompt.text);
+	}
+	if (negative_prompt) {
+		urlParams.set('np', negative_prompt.text);
+	}
+	if (width) {
+		urlParams.set('w', width.toString());
+	}
+	if (height) {
+		urlParams.set('h', height.toString());
+	}
+	/* if (guidance_scale) {
+		urlParams.set('gs', guidance_scale.toString());
+	}
+	if (num_inference_steps) {
+		urlParams.set('is', num_inference_steps.toString());
+	} */
+	if (seed || seed === 0) {
+		urlParams.set('s', seed.toString());
+	}
+	if (model_id) {
+		urlParams.set('mi', model_id);
+	}
 	// TO-DO: Removed scheduler_id for now
 	/* if (scheduler_id) params.push(`si=${scheduler_id}`); */
-	if (get(page).url.pathname === '/generate')
-		params.push(`rn=${Math.round(Math.random() * 1_000_000_000)}`);
-	return baseUrl + params.join('&');
+	if (get(page).url.pathname === '/generate') {
+		urlParams.set('rn', Math.round(Math.random() * 1_000_000_000).toString());
+	}
+	const paramsStr = urlParams.toString();
+	return baseUrl + paramsStr !== '' ? `?${paramsStr}` : '';
 }
 
 export interface TGenerationUrlFromParamsParams {
