@@ -46,8 +46,8 @@ export const load: ServerLoad = ({ url }) => {
 	const _seed_number = _seed !== null ? parseInt(_seed) : null;
 	const seed =
 		_seed_number !== null && _seed_number >= 0 && _seed_number <= maxSeed ? _seed_number : null;
-	const _guidance_scale_number = _guidance_scale !== null ? parseInt(_guidance_scale) : null;
-	/* const guidance_scale =
+	/* const _guidance_scale_number = _guidance_scale !== null ? parseInt(_guidance_scale) : null;
+	const guidance_scale =
 		_guidance_scale_number !== null &&
 		_guidance_scale_number >= guidanceScaleMin &&
 		_guidance_scale_number <= guidanceScaleMax
