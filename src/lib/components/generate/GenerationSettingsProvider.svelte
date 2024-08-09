@@ -146,18 +146,6 @@
 		generationModels[$generationModelId].supportedSchedulerIds.includes(i.value)
 	);
 
-	function getValidValue<T>(value: T, tabs: TTab<T>[], isValid: (s: T) => boolean) {
-		if (!isValid(value)) {
-			const index = tabs.map((t) => t.value).indexOf(value);
-			for (let i = index - 1; i >= 0; i--) {
-				if (isValid(tabs[i].value)) {
-					return tabs[i].value;
-				}
-			}
-		}
-		return value;
-	}
-
 	function updateGenerationOnStage() {
 		if ($generations && $generations[0] && $generations[0].status === 'pre-submit') {
 			generations.update((generations) => {
@@ -434,9 +422,9 @@
 		if (serverData.model_id !== null && isValue(serverData.model_id)) {
 			generationModelId.set(serverData.model_id);
 		}
-		if (isValue(serverData.guidance_scale) && serverData.guidance_scale !== null) {
+		/* if (isValue(serverData.guidance_scale) && serverData.guidance_scale !== null) {
 			generationGuidanceScale.set(serverData.guidance_scale);
-		}
+		} */
 		if (isValue(serverData.scheduler_id) && serverData.scheduler_id !== null) {
 			generationSchedulerId.set(serverData.scheduler_id);
 		}

@@ -35,9 +35,9 @@ export function getGenerationUrlFromParams({
 	if (model_id) {
 		urlParams.set('mi', model_id);
 	}
-	/* if (guidance_scale) {
-		urlParams.set('gsc', guidance_scale.toString());
-	} */
+	if (guidance_scale) {
+		urlParams.set('gs', guidance_scale.toString());
+	}
 	// TO-DO: Removed scheduler_id for now
 	/* if (scheduler_id) params.push(`si=${scheduler_id}`); */
 	if (get(page).url.pathname === '/generate') {

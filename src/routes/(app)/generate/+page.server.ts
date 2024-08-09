@@ -30,7 +30,7 @@ export const load: ServerLoad = ({ url }) => {
 	const _width = url.searchParams.get('w');
 	const _height = url.searchParams.get('h');
 	const _aspect_ratio = url.searchParams.get('ar');
-	const _guidance_scale = url.searchParams.get('gsc');
+	const _guidance_scale = url.searchParams.get('gs');
 	const _model_id = url.searchParams.get('mi');
 	const _scheduler_id = url.searchParams.get('si');
 	const _advanced_mode = url.searchParams.get('adv');
