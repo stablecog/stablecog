@@ -44,7 +44,7 @@
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import { afterNavigate } from '$app/navigation';
 	import NoBgButton from '$components/primitives/buttons/NoBgButton.svelte';
-	import type { TGeneratePageData } from '$approutes/generate/+page.server';
+	import type { TGeneratePageData } from '$routes/(app)/generate/+page';
 	import IconSettings from '$components/icons/IconSettings.svelte';
 	import { generateMode } from '$ts/stores/generate/generateMode';
 	import { exportStage } from '$components/canvas/helpers/exportStage';

@@ -1,22 +1,25 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
+	import { afterNavigate } from '$app/navigation';
 	import { estimatedGenerationDurationMs } from '$components/generate/estimatedGenerationDurationMs';
+	import type { TIsReadyMap } from '$components/generate/types';
+	import type { TGeneratePageData } from '$routes/(app)/generate/+page';
 	import {
 		availableGenerationModelIds,
 		generationModelIdDefault,
 		generationModels
 	} from '$ts/constants/generationModels';
 	import {
-		aspectRatioToImageSize,
-		widthDefault,
-		type TAvailableHeight,
-		type TAvailableWidth,
-		heightDefault,
 		aspectRatioDefault,
+		aspectRatioTabs,
+		aspectRatioToImageSize,
 		getAspectRatioFromWidthAndHeight,
-		widthTabs,
+		heightDefault,
 		heightTabs,
-		aspectRatioTabs
+		widthDefault,
+		widthTabs,
+		type TAvailableHeight,
+		type TAvailableWidth
 	} from '$ts/constants/generationSize';
 	import {
 		guidanceScaleDefault,
@@ -29,6 +32,13 @@
 		numOutputsMax,
 		numOutputsMin
 	} from '$ts/constants/main';
+	import {
+		availableSchedulerIdDropdownItems,
+		availableSchedulerIds,
+		schedulerIdDefault
+	} from '$ts/constants/schedulers';
+	import { isValue } from '$ts/helpers/isValue';
+	import { advancedMode, advancedModeApp } from '$ts/stores/advancedMode';
 	import { calculateGenerationCost, generationCostCompletionPerMs } from '$ts/stores/cost';
 	import {
 		generationAspectRatio,
@@ -54,20 +64,9 @@
 		schedulerId,
 		seed
 	} from '$ts/stores/generationSettings';
-	import { onMount } from 'svelte';
-	import { isValue } from '$ts/helpers/isValue';
-	import {
-		availableSchedulerIdDropdownItems,
-		availableSchedulerIds,
-		schedulerIdDefault
-	} from '$ts/constants/schedulers';
-	import { advancedMode, advancedModeApp } from '$ts/stores/advancedMode';
-	import type { TIsReadyMap } from '$components/generate/types';
-	import { generations } from '$ts/stores/user/generation';
-	import { afterNavigate } from '$app/navigation';
-	import type { TTab } from '$ts/types/main';
-	import type { TGeneratePageData } from '$approutes/generate/+page.server';
 	import { shouldSubmitToGallery } from '$ts/stores/shouldSubmitToGallery';
+	import { generations } from '$ts/stores/user/generation';
+	import { onMount } from 'svelte';
 
 	export let serverData: TGeneratePageData;
 	export let isReadyMap: TIsReadyMap;
@@ -297,6 +296,7 @@
 			$guidanceScale <= guidanceScaleMax
 		) {
 			generationGuidanceScale.set($guidanceScale);
+			console.log('set guidance scale on mount', $generationGuidanceScale);
 		}
 
 		if (
@@ -424,6 +424,7 @@
 		}
 		if (isValue(serverData.guidance_scale) && serverData.guidance_scale !== null) {
 			generationGuidanceScale.set(serverData.guidance_scale);
+			console.log('set guidance scale after navigate', $generationGuidanceScale);
 		}
 		if (isValue(serverData.scheduler_id) && serverData.scheduler_id !== null) {
 			generationSchedulerId.set(serverData.scheduler_id);

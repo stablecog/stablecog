@@ -42,6 +42,7 @@
 	} from '$ts/stores/generationSettings';
 	import { userSummary } from '$ts/stores/user/summary';
 	import type { TTab } from '$ts/types/main';
+	import { onMount } from 'svelte';
 	import { quadOut } from 'svelte/easing';
 	import { scale } from 'svelte/transition';
 
@@ -56,6 +57,28 @@
 
 	let settingsContainer: HTMLDivElement;
 	let containerDropdownPadding = 16;
+
+	let mounted = false;
+
+	let _guidanceScale = $generationGuidanceScale;
+	$: _guidanceScale = $generationGuidanceScale;
+	$: {
+		if (mounted && _guidanceScale !== undefined && _guidanceScale !== null) {
+			generationGuidanceScale.set(_guidanceScale);
+		}
+	}
+
+	let _seed = $generationSeed;
+	$: _seed = $generationSeed;
+	$: {
+		if (mounted) {
+			generationSeed.set(_seed);
+		}
+	}
+
+	onMount(() => {
+		mounted = true;
+	});
 </script>
 
 <SidebarWrapper {rounding} {noWrapper} hasGradient>
@@ -262,7 +285,7 @@
 								min={guidanceScaleMin}
 								max={guidanceScaleMax}
 								valueSize="md"
-								bind:value={$generationGuidanceScale}
+								bind:value={_guidanceScale}
 							/>
 							{#if $generationGuidanceScale < guidanceScaleLowThreshold || $generationGuidanceScale > guidanceScaleHighThreshold}
 								<div
@@ -294,7 +317,7 @@
 							<TabLikeInput
 								name={$LL.Home.SeedInput.Title()}
 								class="w-full"
-								bind:value={$generationSeed}
+								bind:value={_seed}
 								placeholder={$LL.Home.SeedInput.Placeholder()}
 							/>
 						</SettingsPanelItem>

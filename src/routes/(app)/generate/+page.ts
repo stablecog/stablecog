@@ -21,9 +21,8 @@ import {
 	numOutputsMin
 } from '$ts/constants/main';
 import { availableSchedulerIds, type TAvailableSchedulerId } from '$ts/constants/schedulers';
-import type { ServerLoad } from '@sveltejs/kit';
 
-export const load: ServerLoad = ({ url }) => {
+export const load = ({ url }) => {
 	const _prompt = url.searchParams.get('p');
 	const _negative_prompt = url.searchParams.get('np');
 	const _seed = url.searchParams.get('s');
@@ -53,7 +52,6 @@ export const load: ServerLoad = ({ url }) => {
 		_guidance_scale_number <= guidanceScaleMax
 			? _guidance_scale_number
 			: null;
-	guidance_scale = null;
 	const width =
 		_width !== null && widthTabs.map((i) => i.value).includes(_width as TAvailableWidth)
 			? (_width as TAvailableWidth)
