@@ -187,7 +187,7 @@
 		<div class="absolute left-0 top-0 h-full w-full">
 			<img
 				loading="lazy"
-				class="absolute left-0 top-0 h-full w-full transform object-cover transition-[transform,opacity,filter] duration-[0.2s,0.2s,0.2s] ease-[ease-out,ease-in,ease-out] {!naturalWidth
+				class="absolute left-0 top-0 h-full w-full transform object-cover transition-[transform,opacity,filter] duration-[0.2s,0.15s,0.2s] ease-[ease-out,ease-in,ease-out] {!naturalWidth
 					? 'opacity-0'
 					: 'opacity-100'} filter {cardType === 'generate'
 					? ''
