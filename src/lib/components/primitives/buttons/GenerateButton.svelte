@@ -34,7 +34,7 @@
 	aria-label={label}
 >
 	<IconWand
-		class="relative h-7 w-7 scale-100 transform text-c-on-bg transition
+		class="relative size-6 scale-100 transform text-c-on-bg transition
 			not-touch:group-hover/generatebutton:text-c-on-primary"
 	/>
 </a>

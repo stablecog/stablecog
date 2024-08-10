@@ -102,11 +102,7 @@
 
 	const defaultAspectRatio = 1;
 	$: extraHeightForInfo =
-		cardType === 'gallery' || cardType === 'admin-gallery'
-			? $windowWidth < mdBreakpoint
-				? 73
-				: 82
-			: 0;
+		cardType === 'admin-gallery' ? ($windowWidth < mdBreakpoint ? 73 : 82) : 0;
 
 	$: estimatedItemWidth = hasGridScrollContainer
 		? gridScrollContainer && gridScrollContainerWidth

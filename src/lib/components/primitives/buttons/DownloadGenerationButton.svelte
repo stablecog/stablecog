@@ -66,16 +66,16 @@
 	before:rounded-full before:bg-c-primary before:transition before:not-touch:hover:translate-x-0 {classes}"
 	aria-label="Download Image"
 >
-	<Morpher morphed={downloadStatus === 'downloading'} class="h-7 w-7">
+	<Morpher morphed={downloadStatus === 'downloading'} class="size-6">
 		<IconDownload
 			slot="0"
-			class="relative h-7 w-7 text-c-on-bg transition
+			class="relative size-6 text-c-on-bg transition
 				not-touch:group-hover/downloadbutton:text-c-on-primary"
 		/>
 		<IconAnimatedSpinner
 			slot="1"
 			loading={downloadStatus === 'downloading'}
-			class="relative h-7 w-7 text-c-on-bg
+			class="relative size-6 text-c-on-bg
 				not-touch:group-hover/downloadbutton:text-c-on-primary"
 		/>
 	</Morpher>

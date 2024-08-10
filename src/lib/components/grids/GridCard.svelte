@@ -104,7 +104,7 @@
 			{/if}
 		{/if}
 	</div>
-	{#if cardType === 'gallery' || cardType === 'admin-gallery'}
+	{#if cardType === 'admin-gallery'}
 		<div class="flex w-full flex-col rounded-b-xl bg-c-bg-secondary text-sm">
 			{#if cardType === 'admin-gallery' && (output.aesthetic_artifact_score !== undefined || output.aesthetic_rating_score !== undefined)}
 				<div

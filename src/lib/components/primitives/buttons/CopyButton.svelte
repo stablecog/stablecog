@@ -45,11 +45,11 @@
 	<IconCopy
 		class="transform {copied
 			? 'scale-0 opacity-0'
-			: 'scale-100 opacity-100'} h-7 w-7 text-c-on-bg transition
+			: 'scale-100 opacity-100'} size-6 text-c-on-bg transition
 						not-touch:group-hover/copybutton:text-c-on-primary"
 	/>
 	<IconTick
-		class="absolute left-2.5 top-2.5 h-7 w-7 transform {!copied
+		class="absolute left-2.5 top-2.5 size-6 transform {!copied
 			? 'scale-0 opacity-0'
 			: 'scale-175 opacity-100'} text-c-success transition"
 	/>

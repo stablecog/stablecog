@@ -42,6 +42,7 @@
 	import { sessionStore } from '$ts/constants/supabase';
 	import { pushState } from '$app/navigation';
 	import type { TImgProxyQuality } from '$ts/helpers/imgproxy';
+	import LikeButton from '$components/primitives/buttons/LikeButton.svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let cardType: TGenerationImageCardType;
@@ -59,7 +60,7 @@
 	let promptCopiedTimeout: NodeJS.Timeout;
 	let rightButtonContainer: HTMLDivElement;
 	let leftButtonContainer: HTMLDivElement;
-	const showPromptOnHover = cardType !== 'gallery' && cardType !== 'admin-gallery' ? true : false;
+	const showPromptOnHover = cardType !== 'admin-gallery' ? true : false;
 
 	let naturalWidth: number;
 
@@ -189,13 +190,7 @@
 				loading="lazy"
 				class="absolute left-0 top-0 h-full w-full transform object-cover transition-[transform,opacity,filter] duration-[0.2s,0.15s,0.2s] ease-[ease-out,ease-in,ease-out] {!naturalWidth
 					? 'opacity-0'
-					: 'opacity-100'} filter {cardType === 'generate'
-					? ''
-					: overlayShouldShow
-						? 'brightness-[0.8] contrast-[1.05]'
-						: 'not-touch:group-hover:brightness-[0.8] not-touch:group-hover:contrast-[1.05]'} {isInGallerySelectedIds
-					? 'scale-110'
-					: 'scale-100'}"
+					: 'opacity-100'} {isInGallerySelectedIds ? 'scale-110' : 'scale-100'}"
 				{sizes}
 				src={srcPicked}
 				{srcset}
@@ -240,6 +235,7 @@
 		class="absolute h-5 w-5 {cardType === 'generate' ? '-left-0.5 -top-0.5' : 'left-0 top-0'}"
 	/>
 {/if}
+<!-- Prompt section -->
 {#if !generation.selected_output.is_deleted && !isGalleryEditActive}
 	<a
 		aria-label="View generation: {shortPrompt}..."
@@ -250,9 +246,10 @@
 	>
 		{#if cardType !== 'generate' && showPromptOnHover}
 			<p
-				class="list-fade pointer-events-none max-h-[max(4rem,min(35%,5.3rem))] min-h-0 w-full transform px-2 py-2 text-sm
-				font-medium leading-normal text-c-on-bg transition not-touch:group-focus-within:translate-y-0 not-touch:group-hover:translate-y-0
-					md:px-3 md:py-2.5
+				style={'text-shadow: 0 1px 2px rgb(var(--c-barrier) / 0.25);'}
+				class="list-fade pointer-events-none max-h-[max(4rem,min(35%,5.3rem))] min-h-0 w-full transform px-2 py-2
+					text-sm font-medium leading-normal text-c-on-bg filter transition
+					not-touch:group-focus-within:translate-y-0 not-touch:group-hover:translate-y-0 md:px-3 md:py-2.5
 					{overlayShouldShow ? 'translate-y-0' : 'translate-y-full'}"
 			>
 				{generation.prompt.text}
@@ -260,6 +257,7 @@
 		{/if}
 	</a>
 {/if}
+<!-- Top Buttons -->
 {#if cardType !== 'generate'}
 	{@const showLeftContainer =
 		(cardType === 'admin-gallery' || cardType === 'history') &&
@@ -309,7 +307,7 @@
 			<div
 				bind:this={rightButtonContainer}
 				class="pointer-events-none flex transform flex-row flex-wrap items-center
-				justify-end gap-1.5 px-1.5 pt-1.5 transition"
+				justify-end gap-1 px-1.5 pt-1.5 transition"
 			>
 				{#if cardType !== 'admin-gallery'}
 					<CopyButton
@@ -344,6 +342,9 @@
 						class="pointer-events-auto"
 					/>
 				{/if}
+				{#if cardType !== 'admin-gallery' && cardType !== 'history' && cardType !== 'stage' && cardWidth && cardWidth > 210}
+					<LikeButton {generation} modalType={cardType} type="round" class="pointer-events-auto" />
+				{/if}
 			</div>
 		{:else if cardType === 'history' && $userGalleryCurrentView !== 'favorites' && generation.selected_output.is_favorited && !generation.selected_output.is_deleted}
 			<div class="p-1">
@@ -352,6 +353,7 @@
 		{/if}
 	</div>
 {/if}
+<!-- Indicators -->
 {#if (cardType === 'user-profile' && generation.selected_output.is_public === false) || generation.selected_output.is_deleted || (cardType === 'admin-gallery' && showAdminGalleryBarrier) || (cardType === 'history' && $userGalleryCurrentView === 'favorites' && !generation.selected_output.is_favorited) || (cardType === 'history' && $userGalleryCurrentView === 'likes' && !generation.selected_output.is_liked)}
 	<!-- Deleted, approved, rejected or just hidden -->
 	{@const sizeClasses =

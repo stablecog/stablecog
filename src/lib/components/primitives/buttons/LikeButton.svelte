@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
-	import SubtleButton from '$components/primitives/buttons/SubtleButton.svelte';
 	import type { TGenerationFullScreenModalType } from '$components/generationFullScreen/types';
 	import IconHeartSet from '$components/icons/IconHeartSet.svelte';
+	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
+	import SubtleButton from '$components/primitives/buttons/SubtleButton.svelte';
 	import { locale } from '$i18n/i18n-svelte';
+	import { sessionStore } from '$ts/constants/supabase';
 	import { logGenerationOutputLikedChange } from '$ts/helpers/loggers';
 	import { replaceOutputInUserQueryData } from '$ts/helpers/replaceOutputInUserQueryData';
 	import { likeOutputs } from '$ts/queries/likeOutputs';
@@ -18,17 +19,16 @@
 	} from '$ts/stores/user/generation';
 	import {
 		galleryFullOutputsQueryKey,
-		userProfileFullOutputsQueryKey,
-		historyFullOutputsQueryKey
+		historyFullOutputsQueryKey,
+		userProfileFullOutputsQueryKey
 	} from '$ts/stores/user/queryKeys';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { useQueryClient } from '@tanstack/svelte-query';
 	import { get } from 'svelte/store';
-	import { sessionStore } from '$ts/constants/supabase';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let modalType: TGenerationFullScreenModalType;
-	export let type: 'on-image' | 'subtle' | 'on-grid-card' = 'subtle';
+	export let type: 'on-image' | 'subtle' | 'on-grid-card' | 'round' = 'subtle';
 	export let onLikesChanged:
 		| (({
 				newLikeCount,
@@ -155,7 +155,23 @@
 </script>
 
 {#key generation.selected_output.id}
-	{#if type === 'on-image'}
+	{#if type === 'round'}
+		<button
+			bind:this={buttonElement}
+			aria-label="Like"
+			data-sveltekit-preload-data="hover"
+			on:click={onClick}
+			class="group/likebutton relative z-0 touch-manipulation overflow-hidden rounded-full bg-c-bg p-2.5 transition
+				before:absolute before:left-0 before:top-0 before:h-full before:w-full
+				before:-translate-x-full before:transform
+				before:rounded-full before:bg-c-danger/25 before:transition before:not-touch:hover:translate-x-0 {classes}"
+		>
+			<IconHeartSet
+				liked={generation.selected_output.is_liked}
+				class="relative size-6 flex-shrink-0 transform transition not-touch:group-hover/likebutton:text-c-danger"
+			/>
+		</button>
+	{:else if type === 'on-image'}
 		<button
 			bind:this={buttonElement}
 			on:click={onClick}

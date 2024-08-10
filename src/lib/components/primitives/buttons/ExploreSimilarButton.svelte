@@ -60,7 +60,7 @@
 	aria-label="Explore Similar"
 >
 	<IconImageSearch
-		class="relative h-7 w-7 text-c-on-bg transition
+		class="relative size-6 text-c-on-bg transition
 			not-touch:group-hover/explorebutton:text-c-on-primary"
 	/>
 </a>

@@ -95,7 +95,7 @@
 		aria-label="Favorite Output"
 	>
 		<IconFavorite
-			class="h-7 w-7 transition not-touch:group-hover/favoritebutton:text-c-secondary"
+			class="size-6 transition not-touch:group-hover/favoritebutton:text-c-secondary"
 			favorited={generation.selected_output.is_favorited}
 		/>
 	</button>
