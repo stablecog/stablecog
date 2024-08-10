@@ -296,7 +296,6 @@
 			$guidanceScale <= guidanceScaleMax
 		) {
 			generationGuidanceScale.set($guidanceScale);
-			console.log('set guidance scale on mount', $generationGuidanceScale);
 		}
 
 		if (
@@ -424,7 +423,6 @@
 		}
 		if (isValue(serverData.guidance_scale) && serverData.guidance_scale !== null) {
 			generationGuidanceScale.set(serverData.guidance_scale);
-			console.log('set guidance scale after navigate', $generationGuidanceScale);
 		}
 		if (isValue(serverData.scheduler_id) && serverData.scheduler_id !== null) {
 			generationSchedulerId.set(serverData.scheduler_id);
