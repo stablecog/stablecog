@@ -1,6 +1,6 @@
 <script lang="ts">
 	import IconWand from '$components/icons/IconWand.svelte';
-	import { getGenerationUrlFromParams } from '$ts/helpers/getGenerationUrlFromParams';
+	import { getGenerateSimilarUrlFromParams } from '$ts/helpers/getGenerationUrlFromParams';
 	import type { TGenerationWithSelectedOutput } from '$ts/stores/user/generation';
 
 	export let generation: TGenerationWithSelectedOutput;
@@ -21,7 +21,7 @@
 	before:absolute before:left-0 before:top-0 before:h-full before:w-full
 	before:-translate-x-full before:transform
 	before:rounded-full before:bg-c-primary before:transition before:not-touch:hover:translate-x-0 {classes}"
-	href={getGenerationUrlFromParams({
+	href={getGenerateSimilarUrlFromParams({
 		prompt: generation.prompt,
 		negative_prompt: generation.negative_prompt ?? undefined,
 		model_id: generation.model_id ?? undefined,

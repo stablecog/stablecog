@@ -1,6 +1,11 @@
 import { page } from '$app/stores';
 import { get } from 'svelte/store';
 
+export function getGenerateSimilarUrlFromParams({ ...params }: TGenerationUrlFromParamsParams) {
+	const { seed, ...rest } = params;
+	return getGenerationUrlFromParams({ ...rest });
+}
+
 export function getGenerationUrlFromParams({
 	prompt,
 	negative_prompt,

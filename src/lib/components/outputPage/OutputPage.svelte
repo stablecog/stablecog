@@ -1,9 +1,5 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import ImagePlaceholder from '$components/utils/image/ImagePlaceholder.svelte';
-	import WithTooltip from '$components/utils/WithTooltip.svelte';
-	import NoBgButton from '$components/primitives/buttons/NoBgButton.svelte';
-	import UsernameButton from '$components/primitives/buttons/UsernameButton.svelte';
 	import ButtonsSection from '$components/generationFullScreen/ButtonsSection.svelte';
 	import ParamsSection from '$components/generationFullScreen/ParamsSection.svelte';
 	import type {
@@ -14,8 +10,12 @@
 	import IconBack from '$components/icons/IconBack.svelte';
 	import IconChatBubbleCancel from '$components/icons/IconChatBubbleCancel.svelte';
 	import SimilarOutputsSectionOutputPage from '$components/outputPage/SimilarOutputsSectionOutputPage.svelte';
+	import NoBgButton from '$components/primitives/buttons/NoBgButton.svelte';
+	import UsernameButton from '$components/primitives/buttons/UsernameButton.svelte';
+	import ImagePlaceholder from '$components/utils/image/ImagePlaceholder.svelte';
+	import WithTooltip from '$components/utils/WithTooltip.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
-	import { getGenerationUrlFromParams } from '$ts/helpers/getGenerationUrlFromParams';
+	import { getGenerateSimilarUrlFromParams } from '$ts/helpers/getGenerationUrlFromParams';
 	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
 	import { getImgProxySrc, getImgProxySrcDefault, getImgProxySrcSet } from '$ts/helpers/imgproxy';
 	import { navbarHeight } from '$ts/stores/navbarHeight';
@@ -34,7 +34,7 @@
 		...output.generation,
 		selected_output: output
 	};
-	$: generateSimilarUrl = getGenerationUrlFromParams({ ...output.generation });
+	$: generateSimilarUrl = getGenerateSimilarUrlFromParams({ ...output.generation });
 	$: exploreSimilarUrl = `/gallery?q=${generation.selected_output.id}`;
 	$: linkUrl =
 		modalType === 'user-profile'

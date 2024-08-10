@@ -2,17 +2,15 @@
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import ModalWrapper from '$components/modals/ModalWrapper.svelte';
-	import QueuePosition from '$components/QueuePosition.svelte';
-	import ScrollAreaWithChevron from '$components/utils/ScrollAreaWithChevron.svelte';
 	import InsufficientCreditsBadge from '$components/badges/InsufficientCreditsBadge.svelte';
-	import Button from '$components/primitives/buttons/Button.svelte';
-	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
-	import FavoriteButton from '$components/primitives/buttons/FavoriteButton.svelte';
-	import UsernameButton from '$components/primitives/buttons/UsernameButton.svelte';
 	import { baseOutputForInpainting } from '$components/canvas/stores/baseOutputForInpainting';
 	import UpscaleAnimation from '$components/generate/UpscaleAnimation.svelte';
 	import ButtonsSection from '$components/generationFullScreen/ButtonsSection.svelte';
+	import {
+		lgBreakpoint,
+		mdBreakpoint,
+		sidebarWidth
+	} from '$components/generationFullScreen/constants';
 	import Container from '$components/generationFullScreen/Container.svelte';
 	import Divider from '$components/generationFullScreen/Divider.svelte';
 	import GenerationFullScreenImageSet from '$components/generationFullScreen/GenerationFullScreenImageSet.svelte';
@@ -21,27 +19,32 @@
 	import ShowOnProfileSection from '$components/generationFullScreen/ShowOnProfileSection.svelte';
 	import SideButton from '$components/generationFullScreen/SideButton.svelte';
 	import SimilarOutputsSection from '$components/generationFullScreen/SimilarOutputsSection.svelte';
-	import {
-		lgBreakpoint,
-		mdBreakpoint,
-		sidebarWidth
-	} from '$components/generationFullScreen/constants';
 	import type {
 		TButtonObjectsWithState,
 		TGenerationFullScreenModalType,
 		TSetButtonObjectWithState
 	} from '$components/generationFullScreen/types';
 	import SrcsetProvider from '$components/generationImage/SrcsetProvider.svelte';
+	import IconGalleryFilled from '$components/icons/IconGalleryFilled.svelte';
 	import IconNoImage from '$components/icons/IconNoImage.svelte';
 	import IconUpscale from '$components/icons/IconUpscale.svelte';
+	import ModalWrapper from '$components/modals/ModalWrapper.svelte';
+	import Button from '$components/primitives/buttons/Button.svelte';
+	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
+	import FavoriteButton from '$components/primitives/buttons/FavoriteButton.svelte';
+	import UsernameButton from '$components/primitives/buttons/UsernameButton.svelte';
 	import TabBar from '$components/primitives/tabBars/TabBar.svelte';
+	import QueuePosition from '$components/QueuePosition.svelte';
+	import ScrollAreaWithChevron from '$components/utils/ScrollAreaWithChevron.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import type { TRequestNavigationEventParams } from '$routes/(app)/admin/gallery/types';
+	import { sessionStore } from '$ts/constants/supabase';
 	import { upscaleModelIdDefault } from '$ts/constants/upscaleModels';
 	import { isAdmin, isSuperAdmin } from '$ts/helpers/admin/roles';
 	import { generateSSEId } from '$ts/helpers/generateSSEId';
-	import { getGenerationUrlFromParams } from '$ts/helpers/getGenerationUrlFromParams';
+	import { getGenerateSimilarUrlFromParams } from '$ts/helpers/getGenerationUrlFromParams';
 	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
+	import { imageQualityLowDefault } from '$ts/helpers/imgproxy';
 	import { adminGallerySelectedOutputIds } from '$ts/stores/admin/gallery';
 	import { generateMode } from '$ts/stores/generate/generateMode';
 	import { lastClickedOutputId } from '$ts/stores/lastClickedOutputId';
@@ -62,9 +65,6 @@
 	import { createEventDispatcher, onMount } from 'svelte';
 	import { quadOut } from 'svelte/easing';
 	import { fly } from 'svelte/transition';
-	import { sessionStore } from '$ts/constants/supabase';
-	import IconGalleryFilled from '$components/icons/IconGalleryFilled.svelte';
-	import { imageQualityLowDefault } from '$ts/helpers/imgproxy';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let prevGeneration: TGenerationWithSelectedOutput | undefined = undefined;
@@ -179,7 +179,7 @@
 		if (generation.selected_output.upscaled_image_url) upscaledTabValue = 'upscaled';
 		buttonObjectsWithState = { ...initialButtonObjectsWithState };
 		const { seed, selected_output, ...rest } = generation;
-		generateSimilarUrl = getGenerationUrlFromParams(rest);
+		generateSimilarUrl = getGenerateSimilarUrlFromParams(rest);
 		linkUrl =
 			modalType === 'user-profile' ||
 			(modalType === 'history' && $userGalleryCurrentView !== 'likes') ||
