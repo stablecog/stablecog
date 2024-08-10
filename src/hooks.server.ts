@@ -64,8 +64,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 		const notAuthorizedRedirectRoute = `/`;
 		try {
 			const { session, user } = await event.locals.safeGetSession();
-			const userId = user.id;
-			if (!userId || !session) {
+			if (!session || !user || !user.id) {
 				return notSignedInResponse(notSignedInRedirectRoute);
 			}
 			const res = await fetch(`${apiUrl.origin}/v1/user`, {

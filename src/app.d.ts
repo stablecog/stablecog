@@ -7,6 +7,7 @@ type TranslationFunctions = import('$i18n/i18n-types').TranslationFunctions;
 type Themes = import('$ts/stores/theme').TAvailableTheme;
 type SupabaseClient = import('@supabase/supabase-js').SupabaseClient;
 type Session = import('@supabase/supabase-js').Session;
+type User = import('@supabase/supabase-js').User;
 declare namespace App {
 	interface Locals {
 		locale: Locales;
