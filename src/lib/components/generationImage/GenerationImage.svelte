@@ -307,7 +307,7 @@
 			<div
 				bind:this={rightButtonContainer}
 				class="pointer-events-none flex transform flex-row flex-wrap items-center
-				justify-end gap-1 px-1.5 pt-1.5 transition"
+				justify-end gap-0.5 px-1.5 pt-1.5 transition"
 			>
 				{#if cardType !== 'admin-gallery'}
 					<CopyButton
@@ -342,7 +342,7 @@
 						class="pointer-events-auto"
 					/>
 				{/if}
-				{#if cardType !== 'admin-gallery' && cardType !== 'history' && cardType !== 'stage' && cardWidth && cardWidth > 210}
+				{#if cardType !== 'admin-gallery' && cardType !== 'history' && cardType !== 'stage' && cardWidth && cardWidth > 205}
 					<LikeButton {generation} modalType={cardType} type="round" class="pointer-events-auto" />
 				{/if}
 			</div>
