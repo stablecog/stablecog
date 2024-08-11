@@ -11,7 +11,8 @@
 	export let width: string;
 	export let height: string;
 	export let href: string | undefined = undefined;
-
+	export let caption = false;
+	export let captionSide: 'bottom' | 'top' = 'bottom';
 	export { classes as class };
 
 	let classes = 'mt-6 mb-3';
@@ -81,29 +82,64 @@
 {:else}
 	<div class="w-full {classes}">
 		<div
-			class="shadow-c-shadow/[var(--o-shadow-strong) group/docimage relative z-0 overflow-hidden rounded-lg
-			bg-c-bg-tertiary shadow-xl ring-2 ring-c-bg-tertiary not-touch:hover:cursor-zoom-in"
+			class="shadow-c-shadow/[var(--o-shadow-strong) relative z-0 rounded-lg
+			bg-c-bg-tertiary shadow-xl ring-2 ring-c-bg-tertiary"
 		>
-			<img
-				on:click={() => toggleFullscreen()}
-				on:keydown={() => null}
-				loading="lazy"
-				class="h-auto w-full transform transition duration-500 ease-out not-touch:group-hover/docimage:scale-102"
-				{sizes}
-				src={_src}
-				{srcset}
-				{alt}
-				{width}
-				{height}
-			/>
+			{#if caption}
+				<figure class="flex w-full flex-col">
+					<button
+						class="group/docimage flex w-full flex-col not-touch:hover:cursor-zoom-in"
+						on:click={() => toggleFullscreen()}
+					>
+						<div class="relative z-0 w-full overflow-hidden rounded-lg">
+							<img
+								loading="lazy"
+								class="h-auto w-full transform transition duration-500 ease-out not-touch:group-hover/docimage:scale-102"
+								{sizes}
+								src={_src}
+								{srcset}
+								{alt}
+								{width}
+								{height}
+							/>
+						</div>
+					</button>
+					{#if caption === true}
+						<figcaption
+							class="text-balance px-4 py-3 text-center text-sm {captionSide === 'top'
+								? 'order-first'
+								: ''}"
+						>
+							{alt}
+						</figcaption>
+					{/if}
+				</figure>
+			{:else}
+				<button
+					class="group/docimage flex w-full flex-col not-touch:hover:cursor-zoom-in"
+					on:click={() => toggleFullscreen()}
+				>
+					<div class="relative z-0 w-full overflow-hidden rounded-lg">
+						<img
+							loading="lazy"
+							class="h-auto w-full transform transition duration-500 ease-out not-touch:group-hover/docimage:scale-102"
+							{sizes}
+							src={_src}
+							{srcset}
+							{alt}
+							{width}
+							{height}
+						/>
+					</div>
+				</button>
+			{/if}
 		</div>
 	</div>
 {/if}
 
 {#if isFullscreen}
-	<div
+	<button
 		on:click={() => toggleFullscreen()}
-		on:keydown={() => null}
 		use:portal={'body'}
 		class="fixed left-0 top-0 z-[9999] flex h-full w-full items-center justify-center overflow-auto bg-c-barrier/90 px-2 py-16
 		not-touch:hover:cursor-zoom-out md:overflow-hidden md:p-4"
@@ -117,5 +153,5 @@
 			{width}
 			{height}
 		/>
-	</div>
+	</button>
 {/if}

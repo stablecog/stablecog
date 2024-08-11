@@ -61,6 +61,10 @@ const _sidebar: TSidebarItemBase = {
 			pathname: '/guide/models',
 			children: [
 				{
+					title: 'FLUX.1',
+					pathname: '/guide/models/flux-1'
+				},
+				{
 					title: 'Stable Diffusion 3',
 					pathname: '/guide/models/stable-diffusion-3'
 				},

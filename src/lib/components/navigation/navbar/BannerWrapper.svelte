@@ -9,8 +9,8 @@
 
 	export let canShow = true;
 
-	const lastNotification = 'stable-diffusion-3-medium';
-	const href = '/blog/stable-diffusion-3-medium-the-successor-to-sdxl';
+	const lastNotification = 'flux-1';
+	const href = '/blog/the-best-open-source-ai-image-model-in-2024-flux-1';
 	const pathname = new URL(canonicalUrl + href).pathname;
 
 	let mounted = false;
@@ -36,9 +36,7 @@
 	>
 		<div class="flex items-center justify-center gap-2">
 			<IconBolt class="h-6 w-6 flex-shrink-0" />
-			<p class="min-w-0 flex-shrink overflow-hidden overflow-ellipsis">
-				Stable Diffusion 3 is now available!
-			</p>
+			<p class="min-w-0 flex-shrink overflow-hidden overflow-ellipsis">FLUX.1 is now available!</p>
 		</div>
 	</Banner>
 {/if}
