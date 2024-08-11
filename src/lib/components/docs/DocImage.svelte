@@ -83,7 +83,9 @@
 	<div class="w-full {classes}">
 		<div
 			class="shadow-c-shadow/[var(--o-shadow-strong) relative z-0 rounded-lg
-			bg-c-bg-tertiary shadow-xl ring-2 ring-c-bg-tertiary"
+			{caption
+				? 'bg-c-bg-secondary ring-c-bg-secondary'
+				: 'bg-c-bg-tertiary ring-c-bg-tertiary'} shadow-xl ring-2"
 		>
 			{#if caption}
 				<figure class="flex w-full flex-col">
@@ -91,7 +93,11 @@
 						class="group/docimage flex w-full flex-col not-touch:hover:cursor-zoom-in"
 						on:click={() => toggleFullscreen()}
 					>
-						<div class="relative z-0 w-full overflow-hidden rounded-lg">
+						<div
+							class="relative z-0 w-full overflow-hidden {captionSide === 'top'
+								? 'rounded-b-lg'
+								: ' rounded-t-lg'}"
+						>
 							<img
 								loading="lazy"
 								class="h-auto w-full transform transition duration-500 ease-out not-touch:group-hover/docimage:scale-102"
@@ -106,7 +112,8 @@
 					</button>
 					{#if caption === true}
 						<figcaption
-							class="text-balance px-4 py-3 text-center text-sm {captionSide === 'top'
+							class="text-balance px-4 py-3 text-center text-sm text-c-on-bg/75 {captionSide ===
+							'top'
 								? 'order-first'
 								: ''}"
 						>
