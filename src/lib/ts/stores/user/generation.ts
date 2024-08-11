@@ -185,7 +185,8 @@ export const setGenerationToServerProcessing = ({ ui_id, id }: { ui_id: string; 
 
 export async function queueInitialGenerationRequest(request: TInitialGenerationRequest) {
 	generations.update(($generations) => {
-		const username = get(userSummary)?.username;
+		const userSumm = get(userSummary);
+		const username = userSumm?.username;
 		const generationToSubmit: TGeneration = {
 			...request,
 			status: 'to-be-submitted',

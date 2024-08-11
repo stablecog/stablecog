@@ -351,6 +351,7 @@ const es: Translation = {
 		},
 		ProFeatures: {
 			SubscribeTitle: 'Subscribe!',
+			ChangeNumOutputsFeatureParagraph: 'Changing the number of images requires a subscription.',
 			ChangeVisibilityFeatureParagraph:
 				'Changing the visibility of this generation requires a subscription.'
 		},
@@ -859,6 +860,8 @@ const es: Translation = {
 			SlowGeneration: 'Slow generation',
 			FastGeneration: 'Fast generation',
 			ImagesArePublic: 'Οι εικόνες είναι δημόσιες.',
+			MaxOneImagePerGeneration: 'Max. 1 image per generation.',
+			MaxImagesPerGeneration: 'Max. {count} images per generation.',
 			ImagesArePrivate: 'Οι εικόνες είναι ιδιωτικές.'
 		},
 		Badges: {

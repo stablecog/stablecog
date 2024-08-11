@@ -34,6 +34,7 @@
 	import { getCustomerPortalUrl } from '$ts/helpers/user/getCustomerPortalUrl.js';
 	import { isSignInModalOpen } from '$ts/stores/isSignInModalOpen.js';
 	import { userSummary } from '$ts/stores/user/summary';
+	import { count } from 'd3';
 
 	export let data;
 
@@ -54,6 +55,9 @@
 	}) => [
 		{
 			paragraph: $LL.Pricing.Features.FastGeneration()
+		},
+		{
+			paragraph: $LL.Pricing.Features.MaxImagesPerGeneration({ count: 4 })
 		},
 		{
 			paragraph: $LL.Pricing.Features.ParallelGenerations({
@@ -94,6 +98,10 @@
 			features: [
 				{
 					paragraph: $LL.Pricing.Features.SlowGeneration(),
+					icon: IconMinus
+				},
+				{
+					paragraph: $LL.Pricing.Features.MaxOneImagePerGeneration(),
 					icon: IconMinus
 				},
 				{

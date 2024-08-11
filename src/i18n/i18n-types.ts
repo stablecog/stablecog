@@ -1079,6 +1079,10 @@ type RootTranslation = {
 			 */
 			SubscribeTitle: string
 			/**
+			 * C​h​a​n​g​i​n​g​ ​t​h​e​ ​n​u​m​b​e​r​ ​o​f​ ​i​m​a​g​e​s​ ​r​e​q​u​i​r​e​s​ ​a​ ​s​u​b​s​c​r​i​p​t​i​o​n​.
+			 */
+			ChangeNumOutputsFeatureParagraph: string
+			/**
 			 * C​h​a​n​g​i​n​g​ ​t​h​e​ ​v​i​s​i​b​i​l​i​t​y​ ​o​f​ ​t​h​i​s​ ​g​e​n​e​r​a​t​i​o​n​ ​r​e​q​u​i​r​e​s​ ​a​ ​s​u​b​s​c​r​i​p​t​i​o​n​.
 			 */
 			ChangeVisibilityFeatureParagraph: string
@@ -2581,6 +2585,15 @@ type RootTranslation = {
 			 * I​m​a​g​e​s​ ​a​r​e​ ​p​u​b​l​i​c​.
 			 */
 			ImagesArePublic: string
+			/**
+			 * M​a​x​.​ ​1​ ​i​m​a​g​e​ ​p​e​r​ ​g​e​n​e​r​a​t​i​o​n​.
+			 */
+			MaxOneImagePerGeneration: string
+			/**
+			 * M​a​x​.​ ​{​c​o​u​n​t​}​ ​i​m​a​g​e​s​ ​p​e​r​ ​g​e​n​e​r​a​t​i​o​n​.
+			 * @param {unknown} count
+			 */
+			MaxImagesPerGeneration: RequiredParams<'count'>
 			/**
 			 * I​m​a​g​e​s​ ​a​r​e​ ​p​r​i​v​a​t​e​.
 			 */
@@ -4444,6 +4457,10 @@ export type TranslationFunctions = {
 			 */
 			SubscribeTitle: () => LocalizedString
 			/**
+			 * Changing the number of images requires a subscription.
+			 */
+			ChangeNumOutputsFeatureParagraph: () => LocalizedString
+			/**
 			 * Changing the visibility of this generation requires a subscription.
 			 */
 			ChangeVisibilityFeatureParagraph: () => LocalizedString
@@ -5927,6 +5944,14 @@ export type TranslationFunctions = {
 			 * Images are public.
 			 */
 			ImagesArePublic: () => LocalizedString
+			/**
+			 * Max. 1 image per generation.
+			 */
+			MaxOneImagePerGeneration: () => LocalizedString
+			/**
+			 * Max. {count} images per generation.
+			 */
+			MaxImagesPerGeneration: (arg: { count: unknown }) => LocalizedString
 			/**
 			 * Images are private.
 			 */

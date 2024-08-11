@@ -8,6 +8,7 @@
 	export let step = 1;
 	export let name: string;
 	export let disabled: boolean = false;
+	export let notAllowed: boolean = false;
 	export let hasTitle = false;
 	export let valueSize: 'sm' | 'md' = 'sm';
 	export let numeratorFormatter: (value: number) => string = (value) => value.toString();
@@ -15,7 +16,7 @@
 	let classes = '';
 </script>
 
-<TabBarWrapper class={classes}>
+<TabBarWrapper class="{classes} {notAllowed ? 'opacity-50' : ''}">
 	{#if hasTitle}
 		<div class="flex self-stretch text-c-on-bg/50">
 			<slot name="title" />
@@ -32,6 +33,7 @@
 		{max}
 		{min}
 		{disabled}
+		{notAllowed}
 		{numeratorFormatter}
 	/>
 </TabBarWrapper>

@@ -354,6 +354,7 @@ const tr: Translation = {
 		},
 		ProFeatures: {
 			SubscribeTitle: 'Abone Ol!',
+			ChangeNumOutputsFeatureParagraph: 'Changing the number of images requires a subscription.',
 			ChangeVisibilityFeatureParagraph:
 				'Bu üretimin görünürlüğünü değiştirebilmek için abone olman gerek.'
 		},
@@ -868,6 +869,8 @@ const tr: Translation = {
 			SlowGeneration: 'Yavaş üretim.',
 			FastGeneration: 'Hızlı üretim.',
 			ImagesArePublic: 'Fotoğraflar halka açık.',
+			MaxOneImagePerGeneration: 'Üretim başı en fazla 1 fotoğraf.',
+			MaxImagesPerGeneration: 'Üretim başı en fazla {count} fotoğraf.',
 			ImagesArePrivate: 'Fotoğraflar gizli.'
 		},
 		Badges: {

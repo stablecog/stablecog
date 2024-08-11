@@ -30,6 +30,7 @@
 		initImageStrengthMin,
 		numOutputsDefault,
 		numOutputsMax,
+		numOutputsMaxFree,
 		numOutputsMin
 	} from '$ts/constants/main';
 	import {
@@ -37,6 +38,7 @@
 		availableSchedulerIds,
 		schedulerIdDefault
 	} from '$ts/constants/schedulers';
+	import { canUserEditNumOutputs } from '$ts/helpers/canUserEditNumOutputs';
 	import { isValue } from '$ts/helpers/isValue';
 	import { advancedMode, advancedModeApp } from '$ts/stores/advancedMode';
 	import { calculateGenerationCost, generationCostCompletionPerMs } from '$ts/stores/cost';
@@ -66,6 +68,7 @@
 	} from '$ts/stores/generationSettings';
 	import { shouldSubmitToGallery } from '$ts/stores/shouldSubmitToGallery';
 	import { generations } from '$ts/stores/user/generation';
+	import { userSummary } from '$ts/stores/user/summary';
 	import { onMount } from 'svelte';
 
 	export let serverData: TGeneratePageData;
@@ -139,11 +142,20 @@
 
 	$: $generationModelId, enforceSupportedSchedulerId();
 
-	$: [$generationAspectRatio, $generationNumOutputs], updateGenerationOnStage();
-
 	$: supportedSchedulerIdDropdownItems = $availableSchedulerIdDropdownItems.filter((i) =>
 		generationModels[$generationModelId].supportedSchedulerIds.includes(i.value)
 	);
+
+	$: canEditNumOutputs = canUserEditNumOutputs($userSummary);
+
+	$: [isReadyMap, canEditNumOutputs, $generationNumOutputs], enforceNumOutputs();
+	$: [$generationAspectRatio, $generationNumOutputs], updateGenerationOnStage();
+
+	function enforceNumOutputs() {
+		if (!canEditNumOutputs && $generationNumOutputs > numOutputsMaxFree) {
+			generationNumOutputs.set(Math.min(numOutputsMaxFree, $generationNumOutputs));
+		}
+	}
 
 	function updateGenerationOnStage() {
 		if ($generations && $generations[0] && $generations[0].status === 'pre-submit') {
@@ -392,6 +404,7 @@
 			generationShouldSubmitToGallery.set($shouldSubmitToGallery);
 		}
 		isReadyMap.generationSettings = true;
+		isReadyMap = { ...isReadyMap };
 	});
 
 	afterNavigate(() => {

@@ -19,7 +19,7 @@
 	export let discountRate: number | undefined = undefined;
 </script>
 
-<div {id} class="flex w-full items-stretch px-3 py-4 sm:max-w-sm md:w-1/2 xl:w-1/4">
+<div {id} class="flex w-full items-stretch py-4 sm:max-w-sm md:w-1/2 md:px-2 xl:w-1/4">
 	<div
 		class="flex w-full flex-col rounded-2xl bg-c-bg p-4
 		shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] ring-2 md:rounded-3xl md:p-5 {isSelected

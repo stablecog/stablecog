@@ -29,6 +29,8 @@
 		numOutputsMin
 	} from '$ts/constants/main';
 	import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
+	import { isAdmin } from '$ts/helpers/admin/roles';
+	import { canUserEditNumOutputs } from '$ts/helpers/canUserEditNumOutputs';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { generateMode } from '$ts/stores/generate/generateMode';
 	import {
@@ -52,9 +54,6 @@
 	export let isCheckCompleted: boolean;
 	export let supportedSchedulerIdDropdownItems: TTab<TAvailableSchedulerId>[];
 
-	$: canToggleVisibility =
-		$userSummary?.product_id !== undefined || $userSummary?.has_nonfree_credits === true;
-
 	let settingsContainer: HTMLDivElement;
 	let containerDropdownPadding = 16;
 
@@ -67,6 +66,10 @@
 			generationGuidanceScale.set(_guidanceScale);
 		}
 	}
+
+	$: canToggleVisibility =
+		$userSummary?.product_id !== undefined || $userSummary?.has_nonfree_credits === true;
+	$: canEditNumOutputs = canUserEditNumOutputs($userSummary);
 
 	let _seed = $generationSeed;
 	$: _seed = $generationSeed;
@@ -169,15 +172,36 @@
 				tooltipTitle={$LL.Home.NumOutputsSlider.Title()}
 				tooltipParagraph={$LL.Home.NumOutputsSlider.Paragraph()}
 			>
-				<TabLikeSliderInput
-					name={$LL.Home.NumOutputsSlider.Title()}
-					disabled={!isCheckCompleted}
-					class="w-full"
-					min={numOutputsMin}
-					max={numOutputsMax}
-					valueSize="md"
-					bind:value={$generationNumOutputs}
-				/>
+				<WithTooltip
+					let:trigger
+					let:triggerStoreValue
+					color="bg-tertiary"
+					title={$LL.Shared.ProFeatures.SubscribeTitle()}
+					titleIcon={IconStar}
+					paragraph={$LL.Shared.ProFeatures.ChangeNumOutputsFeatureParagraph()}
+					buttonHref="/pricing"
+					buttonText={$LL.Pricing.SubscribeButton()}
+					isActive={!canEditNumOutputs}
+					overflowPadding={{ bottom: 100 }}
+				>
+					<div
+						tabindex="-1"
+						use:trigger
+						{...triggerStoreValue}
+						class="w-full {!canEditNumOutputs ? 'cursor-not-allowed' : ''}"
+					>
+						<TabLikeSliderInput
+							name={$LL.Home.NumOutputsSlider.Title()}
+							disabled={!isCheckCompleted || !canEditNumOutputs}
+							notAllowed={!canEditNumOutputs}
+							class="w-full"
+							min={numOutputsMin}
+							max={numOutputsMax}
+							valueSize="md"
+							bind:value={$generationNumOutputs}
+						/>
+					</div>
+				</WithTooltip>
 			</SettingsPanelItem>
 			<SettingsPanelItem
 				title={$LL.Home.ShowOnProfileToggle.Title()}

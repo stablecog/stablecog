@@ -7,6 +7,7 @@
 	export let max: number;
 	export let step: number;
 	export let disabled = false;
+	export let notAllowed = false;
 	export let name: string;
 	export { classes as class };
 	export let size: 'sm' | 'md' = 'md';
@@ -35,19 +36,24 @@
 
 <div
 	aria-label={name}
-	class="pr-1.5 {max.toString().length - min.toString().length < 2 ? 'pl-1.5' : ''} {classes}"
+	class="pr-1.5 {notAllowed ? 'pointer-events-none' : ''} {max.toString().length -
+		min.toString().length <
+	2
+		? 'pl-1.5'
+		: ''} {classes}"
 >
 	<span
 		{...$root}
+		data-not-allowed={notAllowed ? true : undefined}
 		class="group/sliderinput relative flex h-full flex-1 cursor-grab touch-none select-none
-			items-center active:cursor-grabbing"
+			items-center active:cursor-grabbing data-[not-allowed]:cursor-not-allowed"
 	>
 		<span class="{size === 'sm' ? 'h-1.5' : 'h-2'} block w-full rounded-full bg-c-on-bg/20">
 			<span
 				{...$range}
-				class="{size === 'sm'
-					? 'h-1.5'
-					: 'h-2'} rounded-full bg-c-on-bg transition group-active/sliderinput:bg-c-primary"
+				class="{size === 'sm' ? 'h-1.5' : 'h-2'} rounded-full bg-c-on-bg transition {!notAllowed
+					? 'group-active/sliderinput:bg-c-primary'
+					: ''}"
 			/>
 		</span>
 		{#each [...Array($valueLocal.length).keys()] as _}
@@ -55,11 +61,13 @@
 				use:thumbs
 				{...$thumbs[0]}
 				class="{size === 'sm'
-					? 'h-4 w-4 group-hover/sliderinput:ring-[6px] group-active/sliderinput:ring-3'
-					: 'h-5 w-5 group-hover/sliderinput:ring-[7px] group-active/sliderinput:ring-4'}
+					? `h-4 w-4 ${!notAllowed ? 'group-hover/sliderinput:ring-[6px] group-active/sliderinput:ring-3' : ''}`
+					: `h-5 w-5 ${!notAllowed ? 'group-hover/sliderinput:ring-[7px] group-active/sliderinput:ring-4' : ''}`}
 					block rounded-full bg-c-on-bg shadow-lg
 					shadow-c-shadow/[var(--o-shadow-strongest)] outline-none ring-0 ring-c-on-bg/25 transition
-					group-active/sliderinput:bg-c-primary group-active/sliderinput:ring-c-primary/50"
+					{!notAllowed
+					? 'group-active/sliderinput:bg-c-primary group-active/sliderinput:ring-c-primary/50'
+					: ''}"
 			/>
 		{/each}
 	</span>

@@ -7,8 +7,8 @@ export const apiUrl = new URL(
 	env.PUBLIC_APP_MODE === 'qa'
 		? env.PUBLIC_GO_SERVER_URL_QA
 		: env.PUBLIC_APP_MODE === 'dev'
-		? env.PUBLIC_GO_SERVER_URL_DEV
-		: env.PUBLIC_GO_SERVER_URL_PROD
+			? env.PUBLIC_GO_SERVER_URL_DEV
+			: env.PUBLIC_GO_SERVER_URL_PROD
 );
 export const authServerUrl = new URL(env.PUBLIC_AUTH_SERVER_URL);
 
@@ -52,9 +52,10 @@ export const modalCloseDelay = 120;
 export const maxSeed = 2147483647;
 export const maxPromptLength = 500;
 
-export const numOutputsDefault = 2;
+export const numOutputsDefault = 1;
 export const numOutputsMin = 1;
 export const numOutputsMax = 4;
+export const numOutputsMaxFree = 1;
 
 export const availableInferenceSteps = ['30', '40', '50'] as const;
 export type TAvailableInferenceSteps = (typeof availableInferenceSteps)[number];

@@ -351,6 +351,7 @@ const ja: Translation = {
 		},
 		ProFeatures: {
 			SubscribeTitle: 'Subscribe!',
+			ChangeNumOutputsFeatureParagraph: 'Changing the number of images requires a subscription.',
 			ChangeVisibilityFeatureParagraph:
 				'Changing the visibility of this generation requires a subscription.'
 		},
@@ -847,6 +848,8 @@ const ja: Translation = {
 			SlowGeneration: 'Slow generation',
 			FastGeneration: 'Fast generation',
 			ImagesArePublic: '生成画像は公開',
+			MaxOneImagePerGeneration: 'Max. 1 image per generation.',
+			MaxImagesPerGeneration: 'Max. {count} images per generation.',
 			ImagesArePrivate: '生成画像は非公開'
 		},
 		Badges: {

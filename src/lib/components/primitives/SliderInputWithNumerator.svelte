@@ -8,6 +8,7 @@
 	export let step = 1;
 	export let name: string;
 	export let disabled: boolean;
+	export let notAllowed: boolean;
 	export let valueSize: 'sm' | 'md' = 'sm';
 	export let numeratorFormatter: (value: number) => string = (value) => value.toString();
 	export { classes as class };
@@ -21,7 +22,7 @@
 		{step}
 		{numeratorFormatter}
 		{value}
-		class="{valueSize === 'md' ? 'px-0.5 text-base' : 'text-sm'} text-c-on-bg"
+		class="{valueSize === 'md' ? 'px-0.5 text-base' : 'text-sm'} pointer-events-none text-c-on-bg"
 	/>
-	<SliderInput {disabled} class="h-full flex-1" bind:value {name} {min} {max} {step} />
+	<SliderInput {notAllowed} {disabled} class="h-full flex-1" bind:value {name} {min} {max} {step} />
 </div>
