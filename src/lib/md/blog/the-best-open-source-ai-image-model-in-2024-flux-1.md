@@ -66,7 +66,7 @@ Some models adhere to your prompt well but the results are not very aestheticall
 
 ## The VRAM Problem
 
-Because of the aforementioned bigger text encoders and a 12 billion parameters, FLUX.1 requires more VRAM than some other models (although it is similar to Stable Diffusion 3 Medium). This means that you will need a beefier GPU to run it, with [8-bit quantized encoders](https://huggingface.co/docs/diffusers/main/en/api/pipelines/flux#single-file-loading-for-the-fluxtransformer2dmodel), it barely fits on flagship consumer GPUs with 24GB of VRAM. It might still cause problems on some generations if you are generating 2+ images at a time at 1024x1024 resolution.
+Because of the aforementioned bigger text encoders and 12 billion parameters, FLUX.1 requires more VRAM than some other models (although it is similar to Stable Diffusion 3 Medium). This means that you will need a beefier GPU to run it, with [8-bit quantized encoders](https://huggingface.co/docs/diffusers/main/en/api/pipelines/flux#single-file-loading-for-the-fluxtransformer2dmodel), it barely fits on flagship consumer GPUs with 24GB of VRAM. It might still cause problems on some generations if you are generating 2+ images at a time at 1024x1024 resolution.
 
 ## Conclusion
 
