@@ -30,11 +30,11 @@ FLUX.1 can incorporate text into images, and it does it very well. In our tests,
 
 ### Text Example 1
 
-<DocImage captionSide='top' caption src="https://ba.stablecog.com/blog/stablecog-fur-v2.jpeg" width="5120" height="2880" alt='the text "Stablecog" made out of purple fur, orange furs in the background, orange background, cinematitc lighting' />
+<DocImage caption="top" src="https://ba.stablecog.com/blog/stablecog-fur-v2.jpeg" width="5120" height="2880" alt='the text "Stablecog" made out of purple fur, orange furs in the background, orange background, cinematitc lighting' />
 
 ### Text Example 2
 
-<DocImage captionSide='top' caption src="https://ba.stablecog.com/blog/stablecog-latte-art.jpeg" width="5120" height="2880" alt={`Latte art in a rich, creamy coffee, with "Stablecog" beautifully inscribed in intricate white foam. The scene is cinematic, featuring soft, dramatic lighting that highlights the texture of the foam and the depth of the coffee's color, with subtle bokeh in the background to enhance the luxurious atmosphere.`} />
+<DocImage caption="top" src="https://ba.stablecog.com/blog/stablecog-latte-art.jpeg" width="5120" height="2880" alt={`Latte art in a rich, creamy coffee, with "Stablecog" beautifully inscribed in intricate white foam. The scene is cinematic, featuring soft, dramatic lighting that highlights the texture of the foam and the depth of the coffee's color, with subtle bokeh in the background to enhance the luxurious atmosphere.`} />
 
 ## Better Prompt Adherence
 
@@ -42,11 +42,11 @@ FLUX.1 has an exceptional understanding of your prompts because it incorporates 
 
 ### Adherence Example 1
 
-<DocImage captionSide='top' caption src="https://ba.stablecog.com/blog/three-turtle-friends.jpeg" width="5120" height="2880" alt='Three turtle friends hanging out in a jungle. The left one wears eye glasses with a yellow frame and red glass, middle one wears a red hat and the right one wears a purple hat. Cinematic scene, beautiful lighting, 3D high quality render' />
+<DocImage caption="top" src="https://ba.stablecog.com/blog/three-turtle-friends.jpeg" width="5120" height="2880" alt='Three turtle friends hanging out in a jungle. The left one wears eye glasses with a yellow frame and red glass, middle one wears a red hat and the right one wears a purple hat. Cinematic scene, beautiful lighting, 3D high quality render' />
 
 ### Adherence Example 2
 
-<DocImage captionSide='top' caption src="https://ba.stablecog.com/blog/three-miniature-houses.jpeg" width="5120" height="2880" alt='A magical miniature town with only 3 houses and lots of yellow trees. One house is purple, one house is orange and one house is teal' />
+<DocImage caption="top" src="https://ba.stablecog.com/blog/three-miniature-houses.jpeg" width="5120" height="2880" alt='A magical miniature town with only 3 houses and lots of yellow trees. One house is purple, one house is orange and one house is teal' />
 
 ## The Aesthetic
 
@@ -54,15 +54,15 @@ Some models adhere to your prompt well but the results are not very aestheticall
 
 ### Example 1
 
-<DocImage captionSide='top' caption src="https://ba.stablecog.com/blog/ranger-woman-with-scales.jpeg" width="5120" height="2880" alt='Photoreal gorgeous thrity year old green-blue triton ranger woman with green-blue scaled green-blue skin floating in the deep ocean realm by lee jeffries, otherworldly creature, in the style of fantasy movies, photorealistic, bokeh masterpiece smooth shading, ultra detailed, high resolution, cinematic, unreal 6, subtle shadows, octane render, 8k, cinema 4d, HDR, dust effect, vivid colors.' />
+<DocImage caption="top" src="https://ba.stablecog.com/blog/ranger-woman-with-scales.jpeg" width="5120" height="2880" alt='Photoreal gorgeous thrity year old green-blue triton ranger woman with green-blue scaled green-blue skin floating in the deep ocean realm by lee jeffries, otherworldly creature, in the style of fantasy movies, photorealistic, bokeh masterpiece smooth shading, ultra detailed, high resolution, cinematic, unreal 6, subtle shadows, octane render, 8k, cinema 4d, HDR, dust effect, vivid colors.' />
 
 ### Example 2
 
-<DocImage captionSide='top' caption src="https://ba.stablecog.com/blog/crochet-puppy.jpeg" width="5120" height="2880" alt="A visually enchanting 4K photograph featuring a lovable, Pixar-inspired miniature pinscher puppy, expertly crafted in a whimsical and vibrant cartoon style. The puppy, adorned with soft fur and expressive features, is masterfully rendered in a lifelike 3D amigurumi crochet design, which captivates viewers with its irresistible charm. The background is filled with warm, inviting colors and a 3D render, creating a cinematic atmosphere that further accentuates the puppy's enchanting appeal." />
+<DocImage caption="top" src="https://ba.stablecog.com/blog/crochet-puppy.jpeg" width="5120" height="2880" alt="A visually enchanting 4K photograph featuring a lovable, Pixar-inspired miniature pinscher puppy, expertly crafted in a whimsical and vibrant cartoon style. The puppy, adorned with soft fur and expressive features, is masterfully rendered in a lifelike 3D amigurumi crochet design, which captivates viewers with its irresistible charm. The background is filled with warm, inviting colors and a 3D render, creating a cinematic atmosphere that further accentuates the puppy's enchanting appeal." />
 
 ### Example 3
 
-<DocImage captionSide='top' caption src="https://ba.stablecog.com/blog/woman-made-out-of-spikes.jpeg" width="5120" height="2880" alt="A female humanoid sculpture, intricate and detailed, crafted from thousands of tiny steel spikes, each element expertly fashioned with razor-sharp precision, standing confidently. The figure's delicate features are beautifully replicated, showcasing the elegant curves of its form and the precise angles of its face, creating a dazzling interplay of light and shadow that draws the eye. Background is completely covered by steel spikes" />
+<DocImage caption="top" src="https://ba.stablecog.com/blog/woman-made-out-of-spikes.jpeg" width="5120" height="2880" alt="A female humanoid sculpture, intricate and detailed, crafted from thousands of tiny steel spikes, each element expertly fashioned with razor-sharp precision, standing confidently. The figure's delicate features are beautifully replicated, showcasing the elegant curves of its form and the precise angles of its face, creating a dazzling interplay of light and shadow that draws the eye. Background is completely covered by steel spikes" />
 
 ## The VRAM Problem
 

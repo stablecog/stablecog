@@ -11,8 +11,7 @@
 	export let width: string;
 	export let height: string;
 	export let href: string | undefined = undefined;
-	export let caption = false;
-	export let captionSide: 'bottom' | 'top' = 'bottom';
+	export let caption: 'top' | boolean = false;
 	export { classes as class };
 
 	let classes = 'mt-6 mb-3';
@@ -20,6 +19,8 @@
 	$: srcset = getImgProxySrcSet({ src });
 	const sizes = `min(100vw, ${docContainerSize}px)`;
 	const highestSrc = getImgProxySrc({ src, preset: 'full' });
+
+	const hasCaption = caption === true || typeof caption === 'string';
 
 	const paddingPx = 16;
 	$: boundByHeight =
@@ -60,24 +61,63 @@
 
 {#if href}
 	<div class="w-full {classes}">
-		<a
-			class="group w-full focus-visible:shadow-none"
-			{href}
-			target="_blank"
-			rel="noopener noreferrer"
+		<div
+			class="shadow-c-shadow/[var(--o-shadow-strong) relative z-0 rounded-lg
+			{caption
+				? 'bg-c-bg-secondary ring-c-bg-secondary'
+				: 'bg-c-bg-tertiary ring-c-bg-tertiary'} shadow-xl ring-2 transition hover:ring-c-primary/75"
 		>
-			<img
-				loading="lazy"
-				class="shadow-c-shadow/[var(--o-shadow-strong) h-auto w-full rounded-lg bg-c-bg-tertiary shadow-xl ring-2
-        ring-c-bg-tertiary transition group-hover:ring-c-primary/75 group-focus:ring-c-primary/75"
-				{sizes}
-				src={_src}
-				{srcset}
-				{alt}
-				{width}
-				{height}
-			/>
-		</a>
+			{#if hasCaption}
+				<figure class="flex w-full flex-col">
+					<a
+						aria-label={alt}
+						class="w-full {typeof caption === 'string' && caption === 'top'
+							? 'rounded-b-lg'
+							: ' rounded-t-lg'}"
+						{href}
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						<div
+							class="relative z-0 w-full overflow-hidden {caption === 'top'
+								? 'rounded-b-lg'
+								: ' rounded-t-lg'}"
+						>
+							<img
+								loading="lazy"
+								class="h-auto w-full transform"
+								{sizes}
+								src={_src}
+								{srcset}
+								{alt}
+								{width}
+								{height}
+							/>
+						</div>
+					</a>
+					<figcaption
+						class="text-balance px-4 py-3 text-center text-sm text-c-on-bg/75 {caption === 'top'
+							? 'order-first'
+							: ''}"
+					>
+						{alt}
+					</figcaption>
+				</figure>
+			{:else}
+				<a class="w-full" {href} aria-label={alt} target="_blank" rel="noopener noreferrer">
+					<img
+						loading="lazy"
+						class="h-auto w-full"
+						{sizes}
+						src={_src}
+						{srcset}
+						{alt}
+						{width}
+						{height}
+					/>
+				</a>
+			{/if}
+		</div>
 	</div>
 {:else}
 	<div class="w-full {classes}">
@@ -87,14 +127,18 @@
 				? 'bg-c-bg-secondary ring-c-bg-secondary'
 				: 'bg-c-bg-tertiary ring-c-bg-tertiary'} shadow-xl ring-2"
 		>
-			{#if caption}
+			{#if hasCaption}
 				<figure class="flex w-full flex-col">
 					<button
-						class="group/docimage flex w-full flex-col not-touch:hover:cursor-zoom-in"
+						class="group/docimage flex w-full flex-col not-touch:hover:cursor-zoom-in {caption ===
+						'top'
+							? 'rounded-b-lg'
+							: ' rounded-t-lg'}"
 						on:click={() => toggleFullscreen()}
 					>
 						<div
-							class="relative z-0 w-full overflow-hidden {captionSide === 'top'
+							class="relative z-0 w-full overflow-hidden {typeof caption === 'string' &&
+							caption === 'top'
 								? 'rounded-b-lg'
 								: ' rounded-t-lg'}"
 						>
@@ -110,16 +154,14 @@
 							/>
 						</div>
 					</button>
-					{#if caption === true}
-						<figcaption
-							class="text-balance px-4 py-3 text-center text-sm text-c-on-bg/75 {captionSide ===
-							'top'
-								? 'order-first'
-								: ''}"
-						>
-							{alt}
-						</figcaption>
-					{/if}
+					<figcaption
+						class="text-balance px-4 py-3 text-center text-sm text-c-on-bg/75 {typeof caption ===
+							'string' && caption === 'top'
+							? 'order-first'
+							: ''}"
+					>
+						{alt}
+					</figcaption>
 				</figure>
 			{:else}
 				<button
