@@ -1,5 +1,5 @@
 import { apiUrl } from '$ts/constants/main';
-import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
+import { generationModels, type TAvailableGenerationModelId } from '$ts/constants/generationModels';
 import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
 import { get, writable } from 'svelte/store';
 import {
@@ -231,6 +231,12 @@ export async function submitInitialGenerationRequest({
 	const promptText = request.prompt.text;
 	const negativePromptText = request.negative_prompt?.text;
 	const { prompt, negative_prompt, ...rest } = request;
+	const init_image_url = generationModels[request.model_id]?.img2imgNotSupported
+		? undefined
+		: request.init_image_url;
+	const prompt_strength = generationModels[request.model_id]?.img2imgNotSupported
+		? undefined
+		: request.prompt_strength;
 
 	// upload the mask image if it exists
 	let mask_image_url = undefined;
@@ -247,6 +253,8 @@ export async function submitInitialGenerationRequest({
 		...editedRest,
 		prompt: promptText,
 		negative_prompt: negativePromptText,
+		init_image_url,
+		prompt_strength,
 		mask_image_url
 	};
 	const response = await fetch(`${apiUrl.origin}/v1/user/generation`, {
