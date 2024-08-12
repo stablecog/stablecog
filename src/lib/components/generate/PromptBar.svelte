@@ -52,6 +52,7 @@
 	import { KonvaInstance, paintLayer, stage } from '$components/canvas/stores/konva';
 	import { baseOutputForInpainting } from '$components/canvas/stores/baseOutputForInpainting';
 	import { sessionStore } from '$ts/constants/supabase';
+	import { generationModels } from '$ts/constants/generationModels';
 
 	export let openSignInModal: () => void;
 	export let serverData: TGeneratePageData;
@@ -163,13 +164,18 @@
 			scheduler_id: $generationSchedulerId,
 			width: Number($generationWidth),
 			height: Number($generationHeight),
-			init_image_url: $generationInitImageUrl,
-			init_image_file: $generationInitImageFiles,
-			mask_image_data_url,
-			prompt_strength:
-				$generationInitImageUrl && $generationInitImageStrength !== undefined
+			init_image_url: generationModels[$generationModelId]?.img2imgNotSupported
+				? undefined
+				: $generationInitImageUrl,
+			init_image_file: generationModels[$generationModelId]?.img2imgNotSupported
+				? undefined
+				: $generationInitImageFiles,
+			prompt_strength: generationModels[$generationModelId]?.img2imgNotSupported
+				? undefined
+				: $generationInitImageUrl && $generationInitImageStrength !== undefined
 					? Number((1 - Number($generationInitImageStrength) / 100).toFixed(1))
 					: undefined,
+			mask_image_data_url,
 			guidance_scale: Number($generationGuidanceScale),
 			inference_steps: Number($generationInferenceSteps),
 			seed:
