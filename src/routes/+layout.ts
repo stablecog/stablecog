@@ -39,7 +39,7 @@ export const load: LayoutLoad = async (event) => {
 		try {
 			const summary = await getUserSummary(session.access_token);
 			if (!browser) {
-				console.log('layout.ts - UserSummary load time:', `${Date.now() - startUserSummary}ms`);
+				console.log('layout.ts | UserSummary load time:', `${Date.now() - startUserSummary}ms`);
 			}
 			if (summary) {
 				userSummary = summary;
