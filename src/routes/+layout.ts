@@ -38,15 +38,15 @@ export const load: LayoutLoad = async (event) => {
 	if (session && session.access_token && session.expires_in > 3) {
 		try {
 			const summary = await getUserSummary(session.access_token);
+			if (!browser) {
+				console.log('layout.ts - UserSummary load time:', `${Date.now() - startUserSummary}ms`);
+			}
 			if (summary) {
 				userSummary = summary;
 			}
 		} catch (error) {
 			console.log('getUserSummary error', error);
 		}
-	}
-	if (!browser) {
-		console.log('layout.ts - UserSummary load time:', `${Date.now() - startUserSummary}ms`);
 	}
 	const locale = event.data.locale;
 	await loadLocaleAsync(locale);
