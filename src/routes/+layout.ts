@@ -6,6 +6,7 @@ import type { TUserSummary } from '$ts/stores/user/summary';
 import { getUserSummary } from '$ts/helpers/user/user';
 import { supabaseAnonKey, supabaseUrl } from '$ts/constants/supabase';
 import { createBrowserClient, createServerClient, isBrowser } from '@supabase/ssr';
+import { browser } from '$app/environment';
 
 export const load: LayoutLoad = async (event) => {
 	const { depends, data, fetch } = event;
@@ -32,6 +33,7 @@ export const load: LayoutLoad = async (event) => {
 		data: { session }
 	} = await supabase.auth.getSession();
 
+	const startUserSummary = Date.now();
 	let userSummary: TUserSummary | undefined = undefined;
 	if (session && session.access_token && session.expires_in > 3) {
 		try {
@@ -40,13 +42,17 @@ export const load: LayoutLoad = async (event) => {
 				userSummary = summary;
 			}
 		} catch (error) {
-			console.log('/v1/user error', error);
+			console.log('getUserSummary error', error);
 		}
+	}
+	if (!browser) {
+		console.log('layout.ts - UserSummary load time:', `${Date.now() - startUserSummary}ms`);
 	}
 	const locale = event.data.locale;
 	await loadLocaleAsync(locale);
 	const theme = event.data.theme;
 	const isLeftSidebarHidden = event.data.isLeftSidebarHidden;
+
 	return {
 		locale,
 		session,

@@ -177,7 +177,6 @@
 	};
 
 	if ($generations && $generations.length === 0) {
-		console.log('adding', generationPlaceholder);
 		generations.update((gs) => [generationPlaceholder, ...gs]);
 	}
 

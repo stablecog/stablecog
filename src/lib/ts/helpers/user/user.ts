@@ -6,7 +6,7 @@ export async function getUserSummary(
 	access_token: string | undefined
 ): Promise<TUserSummary | null> {
 	if (!access_token) return null;
-	console.log('getting user summary');
+	console.log('Getting userSummary');
 	let userSummary: TUserSummary | null = null;
 	const userRes = await fetch(`${apiUrl.origin}/v1/user`, {
 		headers: {
