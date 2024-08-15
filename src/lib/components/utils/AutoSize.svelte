@@ -11,7 +11,7 @@
 		style="width: {clientWidth ? `${clientWidth}px` : '100%'}; height: {clientHeight
 			? `${clientHeight}px`
 			: '100%'}"
-		class="overflow-auto {hideScroll ? 'hide-scrollbar' : ''}"
+		class="flex flex-col overflow-auto {hideScroll ? 'hide-scrollbar' : ''}"
 	>
 		<slot {clientWidth} {clientHeight} />
 	</div>

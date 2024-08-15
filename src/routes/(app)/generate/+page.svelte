@@ -313,12 +313,12 @@
 								<AutoSize bind:element={gridScrollContainer} let:clientWidth let:clientHeight>
 									{#if $windowWidth > lgBreakpoint && gridScrollContainer}
 										<GenerationGridInfinite
+											loadingPlaceholderType="with-loader"
 											paddingLeft={6}
 											paddingRight={6}
 											paddingTop={6}
 											paddingBottom={6}
 											{pinnedFullOutputs}
-											noLoadingSpinnerAlignmentAdjustment
 											hasPlaceholder
 											cardType="generate"
 											generationsQuery={historyFullOutputsQueryKey}

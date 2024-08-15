@@ -196,9 +196,9 @@
 			/>
 		</div>
 	</GalleryLikeTitleSection>
-	<GalleryLikeGridWrapper let:canShowLoader>
-		{#if $galleryGenerationFullOutputsQuery?.isLoading}
-			<GalleryLikeLoadingPlaceholder {canShowLoader} />
+	<GalleryLikeGridWrapper>
+		{#if galleryGenerationFullOutputsQuery === undefined || $galleryGenerationFullOutputsQuery === undefined || $galleryGenerationFullOutputsQuery.isLoading}
+			<GalleryLikeLoadingPlaceholder />
 		{:else if $galleryGenerationFullOutputsQuery?.isError || ($galleryGenerationFullOutputsQuery?.data && !$galleryGenerationFullOutputsQuery?.data?.pages)}
 			<div class="flex w-full flex-1 flex-col items-center px-5 py-8">
 				<div class="my-auto flex flex-col items-center gap-2">
@@ -228,20 +228,22 @@
 				<GenerationGridInfinite
 					cardType="gallery"
 					generationsQuery={galleryGenerationFullOutputsQuery}
-					cols={$windowWidth > xl3Breakpoint
+					cols={$windowWidth >= xl3Breakpoint
 						? 7
-						: $windowWidth > xl2Breakpoint
+						: $windowWidth >= xl2Breakpoint
 							? 6
-							: $windowWidth > xlBreakpoint
+							: $windowWidth >= xlBreakpoint
 								? 5
-								: $windowWidth > lgBreakpoint
+								: $windowWidth >= lgBreakpoint
 									? 4
-									: $windowWidth > mdBreakpoint
+									: $windowWidth >= mdBreakpoint
 										? 3
 										: 2}
 					{setSearchQuery}
 				/>
 			</GenerationGridInfiniteWrapper>
+		{:else}
+			<GalleryLikeLoadingPlaceholder />
 		{/if}
 	</GalleryLikeGridWrapper>
 </GalleryLikePageWrapper>

@@ -1,28 +1,26 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import { page } from '$app/stores';
-	import MetaTag from '$components/utils/MetaTag.svelte';
+	import AccountPageCard from '$approutes/account/AccountPageCard.svelte';
+	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
+	import IconGrid from '$components/icons/IconGrid.svelte';
+	import IconSadFaceOutline from '$components/icons/IconSadFaceOutline.svelte';
+	import IconSc from '$components/icons/IconSc.svelte';
+	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 	import ModalWrapper from '$components/modals/ModalWrapper.svelte';
 	import Button from '$components/primitives/buttons/Button.svelte';
 	import IconButton from '$components/primitives/buttons/IconButton.svelte';
-	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
-	import IconKey from '$components/icons/IconKey.svelte';
-	import IconSadFaceOutline from '$components/icons/IconSadFaceOutline.svelte';
-	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
+	import MetaTag from '$components/utils/MetaTag.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
-	import AccountPageCard from '$approutes/account/AccountPageCard.svelte';
+	import { getAppFromAppId } from '$routes/(app)/account/apps/helpers';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { expandCollapse } from '$ts/animation/transitions';
 	import { canonicalUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
+	import { sessionStore } from '$ts/constants/supabase';
 	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
 	import { deleteUserToken, getUserTokens } from '$ts/queries/tokens';
 	import { createMutation, createQuery } from '@tanstack/svelte-query';
 	import { quadOut } from 'svelte/easing';
-	import IconSc from '$components/icons/IconSc.svelte';
-	import { getAppFromAppId } from '$routes/(app)/account/apps/helpers';
-	import IconGrid from '$components/icons/IconGrid.svelte';
-	import { sessionStore } from '$ts/constants/supabase';
 
 	let isModalOpen = false;
 	let tokenToDelete: string | undefined = undefined;

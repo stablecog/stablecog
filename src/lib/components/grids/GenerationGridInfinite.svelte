@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
+	import GalleryLikeLoadingPlaceholder from '$components/galleryLike/GalleryLikeLoadingPlaceholder.svelte';
 	import GenerateGridPlaceholder from '$components/generate/GenerateGridPlaceholder.svelte';
 	import { mdBreakpoint } from '$components/generationFullScreen/constants';
 	import type { TGenerationImageCardType } from '$components/generationImage/types';
 	import GridCard from '$components/grids/GridCard.svelte';
 	import { gridScrollPositions } from '$components/grids/scrollPosition';
-	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconArrowRight from '$components/icons/IconArrowRight.svelte';
 	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
 	import LL from '$i18n/i18n-svelte';
@@ -44,7 +44,6 @@
 	export let gridScrollContainerWidth: number | undefined = undefined;
 	export let pinnedFullOutputs: TGenerationFullOutput[] | undefined = undefined;
 	export let cardType: TGenerationImageCardType;
-	export let noLoadingSpinnerAlignmentAdjustment = false;
 	export let hasPlaceholder = false;
 	export let cols = 6;
 	export let paddingLeft = 0;
@@ -52,6 +51,7 @@
 	export let paddingTop = 0;
 	export let paddingBottom = 0;
 	export let setSearchQuery: ((query: string) => void) | undefined = undefined;
+	export let loadingPlaceholderType: 'default' | 'with-loader' = 'default';
 
 	$: horizontalPadding = paddingLeft + paddingRight;
 	let isInitialScrollPositionSet = false;
@@ -248,13 +248,7 @@
 </script>
 
 {#if $generationsQuery?.isLoading}
-	<div
-		class="flex h-full w-full flex-1 flex-col items-center justify-center px-4 py-6 text-center text-c-on-bg/60"
-	>
-		<IconAnimatedSpinner class="h-12 w-12" />
-		<p class="mt-2 opacity-0">{$LL.Gallery.SearchingTitle()}</p>
-		<div class="h-[2vh] {noLoadingSpinnerAlignmentAdjustment ? 'hidden' : ''}" />
-	</div>
+	<GalleryLikeLoadingPlaceholder type={loadingPlaceholderType} />
 {:else if hasPlaceholder && $generationsQuery?.isSuccess && outputs !== undefined && outputs.length === 0}
 	<GenerateGridPlaceholder text={$LL.Generate.Grid.NoGeneration.Paragraph()} />
 {:else if $generationsQuery?.isSuccess && $generationsQuery.data.pages.length > 0 && outputs !== undefined}

@@ -244,9 +244,9 @@
 				<BatchEditBar type="history" />
 			</div>
 		{/if}
-		<GalleryLikeGridWrapper let:canShowLoader>
-			{#if $historyFullOutputsQuery?.isLoading}
-				<GalleryLikeLoadingPlaceholder {canShowLoader} />
+		<GalleryLikeGridWrapper>
+			{#if historyFullOutputsQuery === undefined || $historyFullOutputsQuery === undefined || $historyFullOutputsQuery?.isLoading}
+				<GalleryLikeLoadingPlaceholder />
 			{:else if $historyFullOutputsQuery?.isError || ($historyFullOutputsQuery?.data && !$historyFullOutputsQuery?.data?.pages)}
 				<div class="flex w-full flex-1 flex-col items-center px-5 py-8">
 					<div class="my-auto flex flex-col items-center gap-2">
@@ -279,7 +279,7 @@
 						<div class="h-[1vh]" />
 					</div>
 				</div>
-			{:else if $windowWidth}
+			{:else if $historyFullOutputsQuery !== undefined && $windowWidth}
 				{#key $userGalleryCurrentView}
 					<GenerationGridInfiniteWrapper
 						key={$userGallerySearchString +
@@ -303,6 +303,8 @@
 						/>
 					</GenerationGridInfiniteWrapper>
 				{/key}
+			{:else}
+				<GalleryLikeLoadingPlaceholder />
 			{/if}
 		</GalleryLikeGridWrapper>
 	{/if}

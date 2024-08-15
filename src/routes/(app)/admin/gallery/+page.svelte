@@ -269,9 +269,9 @@
 				<BatchEditBar type="admin-gallery" />
 			</div>
 		{/if}
-		<GalleryLikeGridWrapper let:canShowLoader>
+		<GalleryLikeGridWrapper>
 			{#if adminFullOutputsQuery === undefined || $adminFullOutputsQuery === undefined || $adminFullOutputsQuery.isLoading}
-				<GalleryLikeLoadingPlaceholder {canShowLoader} />
+				<GalleryLikeLoadingPlaceholder />
 			{:else if $adminFullOutputsQuery?.data?.pages?.length === 1 && $adminFullOutputsQuery.data.pages[0].outputs.length === 0}
 				<div class="flex w-full flex-1 flex-col items-center px-5 py-8">
 					<div class="my-auto flex flex-col items-center gap-2 text-center text-c-on-bg/50">
@@ -287,7 +287,7 @@
 						<p class="text-c-on-bg/50">{$LL.Error.SomethingWentWrong()}</p>
 					</div>
 				</div>
-			{:else}
+			{:else if $adminFullOutputsQuery !== undefined && $windowWidth}
 				<GenerationGridInfiniteWrapper
 					key={$adminGallerySearchString +
 						$adminGalleryModelIdFilters.join(',') +
@@ -309,6 +309,8 @@
 											: 2}
 					/>
 				</GenerationGridInfiniteWrapper>
+			{:else}
+				<GalleryLikeLoadingPlaceholder />
 			{/if}
 		</GalleryLikeGridWrapper>
 	{/if}

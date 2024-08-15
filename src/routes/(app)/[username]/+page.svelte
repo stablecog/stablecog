@@ -267,12 +267,9 @@
 			/>
 		</div>
 	</div>
-	<GalleryLikeGridWrapper
-		class="relative flex w-full flex-1 flex-col pb-3 pt-1 md:pt-3"
-		let:canShowLoader
-	>
-		{#if $galleryGenerationFullOutputsQuery?.isLoading}
-			<GalleryLikeLoadingPlaceholder {canShowLoader} />
+	<GalleryLikeGridWrapper class="relative flex w-full flex-1 flex-col pb-3 pt-1 md:pt-3">
+		{#if galleryGenerationFullOutputsQuery === undefined || $galleryGenerationFullOutputsQuery === undefined || $galleryGenerationFullOutputsQuery?.isLoading}
+			<GalleryLikeLoadingPlaceholder />
 		{:else if $galleryGenerationFullOutputsQuery?.isError || ($galleryGenerationFullOutputsQuery?.data && !$galleryGenerationFullOutputsQuery?.data?.pages)}
 			<div class="flex w-full flex-1 flex-col items-center px-5 py-8">
 				<div class="my-auto flex flex-col items-center gap-2">
@@ -311,6 +308,8 @@
 					{setSearchQuery}
 				/>
 			</div>
+		{:else}
+			<GalleryLikeLoadingPlaceholder />
 		{/if}
 	</GalleryLikeGridWrapper>
 </div>
