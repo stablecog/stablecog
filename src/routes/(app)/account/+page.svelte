@@ -117,14 +117,21 @@
 							</NoBgButton>
 						</WithChangeUsernameModal>
 					</div>
-					<SubtleButton target="_blank" href="/{$userSummary?.username}">
-						<div class="flex items-center gap-2 px-1">
-							<p class="flex min-w-0 flex-shrink text-base font-semibold">
+					<Button
+						noPadding
+						size="sm"
+						class="px-3.5 py-3 md:w-auto"
+						type="subtle"
+						target="_blank"
+						href="/{$userSummary?.username}"
+					>
+						<div class="flex items-center gap-2">
+							<p class="flex min-w-0 flex-shrink font-semibold">
 								{$LL.Shared.VisitProfileButton()}
 							</p>
-							<IconExternalLink class="-mr-1 h-6 w-6 text-c-on-bg" />
+							<IconExternalLink class="-my-0.5 -mr-1 h-6 w-6 text-c-on-bg" />
 						</div>
-					</SubtleButton>
+					</Button>
 				</div>
 				<AccountDetailLine title={$LL.Shared.EmailInput.Placeholder()}>
 					<NoBgButton noPadding class="-mx-3 -my-3" href="/account/change-email" hoverFrom="left">
@@ -237,7 +244,13 @@
 							>
 								{$LL.Account.ManageSubscriptionButton()}
 							</Button>
-							<Button noPadding class="w-full px-3.5 py-3 md:w-auto" size="sm" href={'/pricing'}>
+							<Button
+								noPadding
+								type="subtle"
+								class="w-full px-3.5 py-3 md:order-first md:w-auto"
+								size="sm"
+								href={'/pricing'}
+							>
 								{$LL.Account.ComparePlansButton()}
 							</Button>
 						</div>

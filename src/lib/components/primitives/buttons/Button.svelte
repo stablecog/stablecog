@@ -26,7 +26,8 @@
 		| 'danger'
 		| 'no-bg-on-bg'
 		| 'on-bg'
-		| 'bg-secondary' = 'primary';
+		| 'bg-secondary'
+		| 'subtle' = 'primary';
 	export let fadeOnDisabled = false;
 	export let animateOnClick = false;
 	export let buttonType: 'submit' | 'button' | 'reset' | null | undefined = undefined;
@@ -117,9 +118,11 @@
 				? 'text-c-on-bg'
 				: type === 'primary-alt'
 					? 'text-c-primary'
-					: type === 'on-bg'
-						? 'text-c-bg'
-						: 'text-c-on-primary'} {loading
+					: type === 'subtle'
+						? 'text-c-on-bg'
+						: type === 'on-bg'
+							? 'text-c-bg'
+							: 'text-c-on-primary'} {loading
 			? type === 'success'
 				? 'bg-c-success-secondary'
 				: type === 'danger'
@@ -135,11 +138,13 @@
 						? 'bg-c-bg-secondary'
 						: type === 'primary-alt'
 							? 'bg-c-bg-tertiary'
-							: type === 'on-bg'
-								? 'bg-c-on-bg'
-								: type === 'no-bg-on-bg'
-									? 'bg-c-primary/0'
-									: 'bg-c-primary'} {type === 'bg-secondary'
+							: type === 'subtle'
+								? 'bg-c-bg-tertiary'
+								: type === 'on-bg'
+									? 'bg-c-on-bg'
+									: type === 'no-bg-on-bg'
+										? 'bg-c-primary/0'
+										: 'bg-c-primary'} {type === 'bg-secondary'
 			? 'ring-2 ring-c-bg-tertiary'
 			: ''} {classes} {shouldAnimate ? 'scale-animation' : ''}"
 	>
@@ -161,7 +166,9 @@
 									? 'bg-c-on-bg/10'
 									: type === 'primary-alt'
 										? 'bg-c-primary/15'
-										: 'bg-c-secondary'} not-touch:group-hover:translate-x-0"
+										: type === 'subtle'
+											? 'bg-c-on-bg/10'
+											: 'bg-c-secondary'} not-touch:group-hover:translate-x-0"
 				/>
 			</div>
 		{/if}
@@ -254,9 +261,11 @@
 				? 'text-c-on-bg'
 				: type === 'primary-alt'
 					? 'text-c-primary'
-					: type === 'on-bg'
-						? 'text-c-bg'
-						: 'text-c-on-primary'} {loading
+					: type === 'subtle'
+						? 'text-c-on-bg'
+						: type === 'on-bg'
+							? 'text-c-bg'
+							: 'text-c-on-primary'} {loading
 			? type === 'success'
 				? 'bg-c-success-secondary'
 				: type === 'danger'
@@ -272,11 +281,13 @@
 						? 'bg-c-bg-secondary'
 						: type === 'primary-alt'
 							? 'bg-c-bg-tertiary'
-							: type === 'on-bg'
-								? 'bg-c-on-bg'
-								: type === 'no-bg-on-bg'
-									? 'bg-c-primary/0'
-									: 'bg-c-primary'} {type === 'bg-secondary'
+							: type === 'subtle'
+								? 'bg-c-bg-tertiary'
+								: type === 'on-bg'
+									? 'bg-c-on-bg'
+									: type === 'no-bg-on-bg'
+										? 'bg-c-primary/0'
+										: 'bg-c-primary'} {type === 'bg-secondary'
 			? 'ring-2 ring-c-bg-tertiary'
 			: ''} {fadeOnDisabled && disabled ? 'opacity-75' : ''} {classes} {shouldAnimate
 			? 'scale-animation'
@@ -300,7 +311,9 @@
 									? 'bg-c-on-bg/10'
 									: type === 'primary-alt'
 										? 'bg-c-primary/15'
-										: 'bg-c-secondary'} not-touch:group-enabled:group-hover:translate-x-0"
+										: type === 'subtle'
+											? 'bg-c-on-bg/10'
+											: 'bg-c-secondary'} not-touch:group-enabled:group-hover:translate-x-0"
 				/>
 			</div>
 		{/if}
@@ -393,9 +406,11 @@
 				? 'text-c-on-bg'
 				: type === 'primary-alt'
 					? 'text-c-primary'
-					: type === 'on-bg'
-						? 'text-c-bg'
-						: 'text-c-on-primary'} {loading
+					: type === 'subtle'
+						? 'text-c-on-bg'
+						: type === 'on-bg'
+							? 'text-c-bg'
+							: 'text-c-on-primary'} {loading
 			? type === 'success'
 				? 'bg-c-success-secondary'
 				: type === 'danger'
@@ -411,11 +426,13 @@
 						? 'bg-c-bg-secondary'
 						: type === 'primary-alt'
 							? 'bg-c-bg-tertiary'
-							: type === 'on-bg'
-								? 'bg-c-on-bg'
-								: type === 'no-bg-on-bg'
-									? 'bg-c-primary/0'
-									: 'bg-c-primary'} {type === 'bg-secondary' && !noBorder
+							: type === 'subtle'
+								? 'bg-c-bg-tertiary'
+								: type === 'on-bg'
+									? 'bg-c-on-bg'
+									: type === 'no-bg-on-bg'
+										? 'bg-c-primary/0'
+										: 'bg-c-primary'} {type === 'bg-secondary' && !noBorder
 			? 'ring-2 ring-c-bg-tertiary'
 			: ''} {fadeOnDisabled && disabled ? 'opacity-75' : ''} {classes} {shouldAnimate
 			? 'scale-animation'
@@ -439,7 +456,9 @@
 									? 'bg-c-on-bg/10'
 									: type === 'primary-alt'
 										? 'bg-c-primary/15'
-										: 'bg-c-secondary'} not-touch:group-enabled:group-hover:translate-x-0"
+										: type === 'subtle'
+											? 'bg-c-on-bg/10'
+											: 'bg-c-secondary'} not-touch:group-enabled:group-hover:translate-x-0"
 				/>
 			</div>
 		{/if}
@@ -531,9 +550,11 @@
 				? 'text-c-on-bg'
 				: type === 'primary-alt'
 					? 'text-c-primary'
-					: type === 'on-bg'
-						? 'text-c-bg'
-						: 'text-c-on-primary'} {loading
+					: type === 'subtle'
+						? 'text-c-on-bg'
+						: type === 'on-bg'
+							? 'text-c-bg'
+							: 'text-c-on-primary'} {loading
 			? type === 'success'
 				? 'bg-c-success-secondary'
 				: type === 'danger'
@@ -549,11 +570,13 @@
 						? 'bg-c-bg-secondary'
 						: type === 'primary-alt'
 							? 'bg-c-bg-tertiary'
-							: type === 'on-bg'
-								? 'bg-c-on-bg'
-								: type === 'no-bg-on-bg'
-									? 'bg-c-primary/0'
-									: 'bg-c-primary'} {type === 'bg-secondary' && !noBorder
+							: type === 'subtle'
+								? 'bg-c-bg-tertiary'
+								: type === 'on-bg'
+									? 'bg-c-on-bg'
+									: type === 'no-bg-on-bg'
+										? 'bg-c-primary/0'
+										: 'bg-c-primary'} {type === 'bg-secondary' && !noBorder
 			? 'ring-2 ring-c-bg-tertiary'
 			: ''} {fadeOnDisabled && disabled ? 'opacity-75' : ''} {classes} {shouldAnimate
 			? 'scale-animation'
@@ -577,7 +600,9 @@
 									? 'bg-c-on-bg/10'
 									: type === 'primary-alt'
 										? 'bg-c-primary/15'
-										: 'bg-c-secondary'} not-touch:group-enabled:group-hover:translate-x-0"
+										: type === 'subtle'
+											? 'bg-c-on-bg/10'
+											: 'bg-c-secondary'} not-touch:group-enabled:group-hover:translate-x-0"
 				/>
 			</div>
 		{/if}
