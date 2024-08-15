@@ -56,7 +56,7 @@
 							>
 								<Img
 									loading="lazy"
-									class="h-auto w-full transition duration-350 not-touch:group-hover:scale-105"
+									class="h-auto w-full transition duration-350"
 									sizes={`(min-width: 1024px) calc(28rem / ${simpleGridCols}), calc(min(36rem, 100vw) / ${simpleGridCols})`}
 									src={getImgProxySrc({
 										src: similarOutput.upscaled_image_url ?? similarOutput.image_url,
