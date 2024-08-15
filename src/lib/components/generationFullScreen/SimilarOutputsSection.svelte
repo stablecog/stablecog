@@ -71,7 +71,7 @@
 				>
 					<div class="w-full p-px">
 						<svg
-							class="w-full rounded-lg border-2 border-c-bg-tertiary bg-c-bg-tertiary
+							class="w-full rounded-lg border-1.5 border-c-bg-tertiary bg-c-bg-tertiary
 							shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]"
 							xmlns="http://www.w3.org/2000/svg"
 							fill="none"
@@ -110,7 +110,7 @@
 						<div class="w-full p-px">
 							{#key similarOutput.id}
 								<div
-									class="relative z-0 w-full overflow-hidden rounded-lg border-2 border-c-bg-tertiary
+									class="relative z-0 w-full overflow-hidden rounded-lg border-1.5 border-c-bg-tertiary
 									bg-c-bg-tertiary shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] transition not-touch:group-hover:border-c-primary"
 								>
 									<Img

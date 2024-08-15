@@ -48,10 +48,10 @@
 					data-sveltekit-preload-data="hover"
 					class="group w-full"
 				>
-					<div class="w-full p-2px">
+					<div class="w-full p-px">
 						{#key similarOutput.id}
 							<div
-								class="relative z-0 w-full overflow-hidden rounded-xl border-2 border-c-bg-secondary
+								class="relative z-0 w-full overflow-hidden rounded-lg border-1.5 border-c-bg-secondary
                 bg-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-stronger)] transition not-touch:group-hover:border-c-primary"
 							>
 								<Img

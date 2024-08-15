@@ -148,7 +148,7 @@
 			>
 				<div
 					class="relative flex overflow-hidden rounded-2xl bg-c-bg-secondary
-					shadow-xl shadow-c-shadow/[var(--o-shadow-stronger)] ring-2 ring-c-bg-secondary"
+					shadow-xl shadow-c-shadow/[var(--o-shadow-stronger)] ring-1.5 ring-c-bg-secondary"
 				>
 					<ImagePlaceholder
 						width={currentImageWidth}

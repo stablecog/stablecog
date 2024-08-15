@@ -44,9 +44,9 @@
 			output.status !== 'failed' &&
 			output.status !== 'failed-nsfw' &&
 			output.status !== 'failed-nsfw-prompt'
-			? 'rounded-lg border-2 hover:border-c-primary'
-			: 'rounded-lg border-2'
-		: 'rounded-xl border-2'} {isSelected
+			? 'rounded-lg border-1.5 hover:border-c-primary'
+			: 'rounded-lg border-1.5'
+		: 'rounded-xl border-1.5'} {isSelected
 		? 'border-c-primary'
 		: 'border-c-bg-secondary'} {isHoverable ? 'hover:border-c-primary/75' : ''}"
 >
