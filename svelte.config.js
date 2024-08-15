@@ -17,6 +17,9 @@ const config = {
 	],
 	kit: {
 		adapter: process.env.VERCEL ? adapterAuto() : adapterNode(),
+		version: {
+			pollInterval: 30000
+		},
 		alias: {
 			'$components/*': './src/lib/components',
 			'$ts/*': './src/lib/ts',

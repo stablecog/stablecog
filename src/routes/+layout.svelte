@@ -2,14 +2,14 @@
 	import '$css/app.css';
 	import { theme, themeApp } from '$ts/stores/theme';
 	import { onMount } from 'svelte';
-	import { page } from '$app/stores';
+	import { page, updated } from '$app/stores';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import { locale, setLocale } from '$i18n/i18n-svelte';
 	import { localeLS } from '$ts/stores/localeLS';
 	import { loadLocaleAsync } from '$i18n/i18n-util.async';
 	import { isLocale } from '$i18n/i18n-util';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
-	import { afterNavigate, goto, invalidate } from '$app/navigation';
+	import { afterNavigate, beforeNavigate, goto, invalidate } from '$app/navigation';
 	import { logPageview } from '$ts/helpers/loggers';
 	import { setCookie } from '$ts/helpers/setCookie';
 	import { appVersion } from '$ts/stores/appVersion';
@@ -139,6 +139,12 @@
 		setThumbmark();
 		mounted = true;
 		return () => data.subscription.unsubscribe();
+	});
+
+	beforeNavigate(({ willUnload, to }) => {
+		if ($updated && !willUnload && to?.url) {
+			location.href = to.url.href + to.url.search;
+		}
 	});
 
 	afterNavigate(() => {
