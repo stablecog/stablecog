@@ -69,9 +69,9 @@
 					cols={simpleGridCols}
 					items={Array.from({ length: similarOutputsCount }).map((i) => 1)}
 				>
-					<div class="w-full p-2px">
+					<div class="w-full p-px">
 						<svg
-							class="w-full rounded-xl border-2 border-c-bg-tertiary bg-c-bg-tertiary
+							class="w-full rounded-lg border-2 border-c-bg-tertiary bg-c-bg-tertiary
 							shadow-lg shadow-c-shadow/[var(--o-shadow-strong)]"
 							xmlns="http://www.w3.org/2000/svg"
 							fill="none"
@@ -105,12 +105,12 @@
 								selected_output: similarOutput
 							});
 						}}
-						class="group w-full rounded-xl"
+						class="group w-full rounded-lg"
 					>
-						<div class="w-full p-2px">
+						<div class="w-full p-px">
 							{#key similarOutput.id}
 								<div
-									class="relative z-0 w-full overflow-hidden rounded-xl border-2 border-c-bg-tertiary
+									class="relative z-0 w-full overflow-hidden rounded-lg border-2 border-c-bg-tertiary
 									bg-c-bg-tertiary shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] transition not-touch:group-hover:border-c-primary"
 								>
 									<Img
