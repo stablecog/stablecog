@@ -26,7 +26,7 @@
 	<div class="group relative h-full w-full">
 		<ImagePlaceholder width={generation.width} height={generation.height} />
 		<div
-			class="absolute left-0 top-0 z-0 h-full w-full overflow-hidden rounded-xl border-2
+			class="absolute left-0 top-0 z-0 h-full w-full overflow-hidden rounded-xl border-1.5
 			border-c-bg-secondary bg-c-bg-secondary shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] transition"
 		>
 			<div class="relative z-0 h-full w-full overflow-hidden rounded-xl">
