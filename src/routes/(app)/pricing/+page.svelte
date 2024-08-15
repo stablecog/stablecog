@@ -34,7 +34,6 @@
 	import { getCustomerPortalUrl } from '$ts/helpers/user/getCustomerPortalUrl.js';
 	import { isSignInModalOpen } from '$ts/stores/isSignInModalOpen.js';
 	import { userSummary } from '$ts/stores/user/summary';
-	import { count } from 'd3';
 
 	export let data;
 
