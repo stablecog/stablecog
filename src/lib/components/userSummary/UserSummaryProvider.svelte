@@ -29,11 +29,17 @@
 				})
 			: undefined;
 
-	$: [$userSummaryQuery], setUserSummary();
+	$: isSuccess = $userSummaryQuery?.isSuccess;
+	$: isError = $userSummaryQuery?.isError;
+	$: data = $userSummaryQuery?.data;
+
+	$: [isSuccess, isError, data], setUserSummary();
 
 	function setUserSummary() {
 		if (browser && $userSummaryQuery && $userSummaryQuery.isSuccess && $userSummaryQuery.data) {
 			userSummary.set({ ...$userSummaryQuery.data, refetch: $userSummaryQuery.refetch });
+		} else if (browser && $userSummaryQuery && $userSummaryQuery.isError) {
+			userSummary.set(null);
 		}
 	}
 
