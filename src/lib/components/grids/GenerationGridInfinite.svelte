@@ -4,7 +4,7 @@
 	import GenerateGridPlaceholder from '$components/generate/GenerateGridPlaceholder.svelte';
 	import { mdBreakpoint } from '$components/generationFullScreen/constants';
 	import type { TGenerationImageCardType } from '$components/generationImage/types';
-	import GridCard from '$components/grids/GridCard.svelte';
+	import GenerationGridCard from '$components/grids/GenerationGridCard.svelte';
 	import { gridScrollPositions } from '$components/grids/scrollPosition';
 	import IconArrowRight from '$components/icons/IconArrowRight.svelte';
 	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
@@ -301,7 +301,7 @@
 						"
 						class="absolute p-px"
 					>
-						<GridCard
+						<GenerationGridCard
 							{output}
 							{cardType}
 							{isHoverable}
