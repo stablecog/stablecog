@@ -1,11 +1,15 @@
 <script lang="ts">
 	export let text: string;
+	export let paddingX = 0;
+	export let paddingY = 0;
 </script>
 
-<div class="relative h-full w-full px-2 py-1.5">
-	<div class="flex h-full w-full items-center justify-center gap-1">
+<div style="padding: {paddingY}px {paddingX}px" class="relative h-full w-full">
+	<div class="flex h-full w-full items-center justify-center opacity-50">
 		{#each Array(10) as item}
-			<div class="h-full flex-1 rounded-md bg-c-bg-secondary" />
+			<div class="flex h-full flex-1 flex-col p-px">
+				<div class="h-full flex-1 rounded-md bg-c-bg-secondary" />
+			</div>
 		{/each}
 	</div>
 	<div

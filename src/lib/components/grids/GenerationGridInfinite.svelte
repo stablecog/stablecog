@@ -248,7 +248,14 @@
 </script>
 
 {#if $generationsQuery?.isLoading}
-	<GalleryLikeLoadingPlaceholder type={loadingPlaceholderType} />
+	<GalleryLikeLoadingPlaceholder
+		{paddingLeft}
+		{paddingRight}
+		{paddingTop}
+		{paddingBottom}
+		{cardType}
+		type={loadingPlaceholderType}
+	/>
 {:else if hasPlaceholder && $generationsQuery?.isSuccess && outputs !== undefined && outputs.length === 0}
 	<GenerateGridPlaceholder text={$LL.Generate.Grid.NoGeneration.Paragraph()} />
 {:else if $generationsQuery?.isSuccess && $generationsQuery.data.pages.length > 0 && outputs !== undefined}
@@ -356,4 +363,13 @@
 			{/if}
 		</div>
 	{/if}
+{:else}
+	<GalleryLikeLoadingPlaceholder
+		{paddingLeft}
+		{paddingRight}
+		{paddingTop}
+		{paddingBottom}
+		{cardType}
+		type={loadingPlaceholderType}
+	/>
 {/if}

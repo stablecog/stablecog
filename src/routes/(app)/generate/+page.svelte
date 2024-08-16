@@ -56,6 +56,8 @@
 	import { metaDescriptionDefault } from '$ts/constants/meta.js';
 	import { getHistoryFullOutputs } from '$ts/queries/galleryLike/historyOutputs.js';
 	import type { TGalleryFullOutputsPage } from '$ts/queries/galleryLike/types.js';
+	import GalleryLikeLoadingPlaceholder from '$components/galleryLike/GalleryLikeLoadingPlaceholder.svelte';
+	import GenerateHorizontalListLoadingPlaceholder from '$components/generate/GenerateHorizontalListLoadingPlaceholder.svelte';
 
 	export let data;
 
@@ -87,7 +89,7 @@
 		''
 	]);
 
-	$: historyFullOutputsQueryKey =
+	$: historyFullOutputsQuery =
 		$sessionStore?.user.id && $userSummary
 			? createInfiniteQuery({
 					queryKey: $generatePageHistoryFullOutputsQueryKey,
@@ -127,7 +129,7 @@
 		.filter((g) => g.status !== 'pre-submit')
 		.flatMap((g) => g.outputs.map((o) => ({ ...o, generation: g })));
 
-	$: historyOutputs = $historyFullOutputsQueryKey?.data?.pages?.flatMap((p) => p.outputs);
+	$: historyOutputs = $historyFullOutputsQuery?.data?.pages?.flatMap((p) => p.outputs);
 
 	$: generateAllSucceededOutputs = historyOutputs
 		? removeRepeatingOutputs({
@@ -309,11 +311,10 @@
 						<SidebarWrapper hasGradient>
 							{#if !$sessionStore?.user.id || !$userSummary}
 								<GenerateGridPlaceholder text={$LL.Generate.Grid.NotSignedIn.Paragraph()} />
-							{:else if historyFullOutputsQueryKey}
+							{:else if historyFullOutputsQuery && $historyFullOutputsQuery}
 								<AutoSize bind:element={gridScrollContainer} let:clientWidth let:clientHeight>
 									{#if $windowWidth > lgBreakpoint && gridScrollContainer}
 										<GenerationGridInfinite
-											loadingPlaceholderType="with-loader"
 											paddingLeft={6}
 											paddingRight={6}
 											paddingTop={6}
@@ -321,15 +322,31 @@
 											{pinnedFullOutputs}
 											hasPlaceholder
 											cardType="generate"
-											generationsQuery={historyFullOutputsQueryKey}
+											generationsQuery={historyFullOutputsQuery}
 											cols={$windowWidth > xlBreakpoint ? 3 : 2}
 											{gridScrollContainer}
 											gridScrollContainerWidth={clientWidth}
 											gridScrollContainerHeight={clientHeight}
 											hasGridScrollContainer
 										/>
+									{:else}
+										<GalleryLikeLoadingPlaceholder
+											paddingLeft={6}
+											paddingRight={6}
+											paddingBottom={6}
+											paddingTop={6}
+											cardType="generate"
+										/>
 									{/if}
 								</AutoSize>
+							{:else}
+								<GalleryLikeLoadingPlaceholder
+									paddingLeft={6}
+									paddingRight={6}
+									paddingBottom={6}
+									paddingTop={6}
+									cardType="generate"
+								/>
 							{/if}
 						</SidebarWrapper>
 					</div>
@@ -385,21 +402,23 @@
 								>
 									{#if !$sessionStore?.user.id || !$userSummary}
 										<GenerateHorizontalListPlaceholder
+											paddingX={8}
+											paddingY={6}
 											text={$LL.Generate.Grid.NotSignedIn.Paragraph()}
 										/>
-									{:else if historyFullOutputsQueryKey}
-										{#if $windowWidth < mdBreakpoint && listScrollContainer}
-											<GenerateHorizontalList
-												{listScrollContainer}
-												listScrollContainerWidth={clientWidth}
-												listScrollContainerHeight={clientHeight}
-												paddingX={8}
-												paddingY={6}
-												{pinnedFullOutputs}
-												generationsQuery={historyFullOutputsQueryKey}
-												cardType="generate"
-											/>
-										{/if}
+									{:else if historyFullOutputsQuery && $windowWidth < mdBreakpoint && listScrollContainer}
+										<GenerateHorizontalList
+											{listScrollContainer}
+											listScrollContainerWidth={clientWidth}
+											listScrollContainerHeight={clientHeight}
+											paddingX={8}
+											paddingY={6}
+											{pinnedFullOutputs}
+											generationsQuery={historyFullOutputsQuery}
+											cardType="generate"
+										/>
+									{:else}
+										<GenerateHorizontalListLoadingPlaceholder paddingX={8} paddingY={6} />
 									{/if}
 								</AutoSize>
 							</div>
@@ -464,9 +483,11 @@
 							<div class="flex h-20 w-full flex-col">
 								{#if !$sessionStore?.user.id || !$userSummary}
 									<GenerateHorizontalListPlaceholder
+										paddingX={6}
+										paddingY={6}
 										text={$LL.Generate.Grid.NotSignedIn.Paragraph()}
 									/>
-								{:else if historyFullOutputsQueryKey}
+								{:else if historyFullOutputsQuery}
 									<AutoSize
 										bind:element={listScrollContainerMd}
 										hideScroll
@@ -479,13 +500,17 @@
 												listScrollContainerWidth={clientWidth}
 												listScrollContainerHeight={clientHeight}
 												{pinnedFullOutputs}
-												generationsQuery={historyFullOutputsQueryKey}
+												generationsQuery={historyFullOutputsQuery}
 												cardType="generate"
 												paddingX={6}
 												paddingY={6}
 											/>
+										{:else}
+											<GenerateHorizontalListLoadingPlaceholder paddingX={6} paddingY={6} />
 										{/if}
 									</AutoSize>
+								{:else}
+									<GenerateHorizontalListLoadingPlaceholder paddingX={6} paddingY={6} />
 								{/if}
 							</div>
 						</SidebarWrapper>

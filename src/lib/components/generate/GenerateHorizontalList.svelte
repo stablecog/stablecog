@@ -1,23 +1,23 @@
 <script lang="ts">
+	import GenerateHorizontalListLoadingPlaceholder from '$components/generate/GenerateHorizontalListLoadingPlaceholder.svelte';
+	import GenerateHorizontalListPlaceholder from '$components/generate/GenerateHorizontalListPlaceholder.svelte';
+	import GenerationAnimation from '$components/generate/GenerationAnimation.svelte';
 	import GenerationImage from '$components/generationImage/GenerationImage.svelte';
 	import type { TGenerationImageCardType } from '$components/generationImage/types';
-	import ImagePlaceholder from '$components/utils/image/ImagePlaceholder.svelte';
-	import type { CreateInfiniteQueryResult, InfiniteData } from '@tanstack/svelte-query';
-	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
-	import type { TGenerationFullOutput } from '$ts/stores/user/generation';
-	import GenerationAnimation from '$components/generate/GenerationAnimation.svelte';
-	import { fade } from 'svelte/transition';
-	import { quadIn, quadOut } from 'svelte/easing';
-	import LL from '$i18n/i18n-svelte';
-	import GenerateHorizontalListPlaceholder from '$components/generate/GenerateHorizontalListPlaceholder.svelte';
 	import IconEyeSlashOutline from '$components/icons/IconEyeSlashOutline.svelte';
-	import IconSadFaceOutline from '$components/icons/IconSadFaceOutline.svelte';
-	import type { Readable } from 'svelte/store';
-	import { createVirtualizer, type SvelteVirtualizer } from '@tanstack/svelte-virtual';
-	import { windowHeight, windowWidth } from '$ts/stores/window';
-	import { removeRepeatingOutputs } from '$ts/helpers/removeRepeatingOutputs';
 	import IconNsfwPrompt from '$components/icons/IconNSFWPrompt.svelte';
+	import IconSadFaceOutline from '$components/icons/IconSadFaceOutline.svelte';
+	import ImagePlaceholder from '$components/utils/image/ImagePlaceholder.svelte';
+	import LL from '$i18n/i18n-svelte';
+	import { removeRepeatingOutputs } from '$ts/helpers/removeRepeatingOutputs';
 	import type { TGalleryFullOutputsPage } from '$ts/queries/galleryLike/types';
+	import type { TGenerationFullOutput } from '$ts/stores/user/generation';
+	import { windowHeight, windowWidth } from '$ts/stores/window';
+	import type { CreateInfiniteQueryResult, InfiniteData } from '@tanstack/svelte-query';
+	import { createVirtualizer, type SvelteVirtualizer } from '@tanstack/svelte-virtual';
+	import { quadIn, quadOut } from 'svelte/easing';
+	import type { Readable } from 'svelte/store';
+	import { fade } from 'svelte/transition';
 
 	export let generationsQuery:
 		| CreateInfiniteQueryResult<InfiniteData<TGalleryFullOutputsPage, unknown>, Error>
@@ -31,7 +31,6 @@
 	export let paddingY = 0;
 
 	let listVirtualizer: Readable<SvelteVirtualizer<HTMLDivElement, Element>> | undefined;
-	let placeholderInnerContainerHeight: number;
 
 	$: onlyOutputs = $generationsQuery?.data?.pages
 		.flatMap((page) => page.outputs)
@@ -133,26 +132,13 @@
 </script>
 
 {#if $generationsQuery?.isLoading}
-	<div class="h-full w-full">
-		<div
-			bind:clientHeight={placeholderInnerContainerHeight}
-			class="flex h-full w-full flex-row items-center justify-center"
-		>
-			<ImagePlaceholder
-				containerHeight={placeholderInnerContainerHeight}
-				width={512}
-				height={512}
-				class="opacity-0"
-			/>
-			<div
-				class="absolute z-0 flex h-full w-full flex-col items-center justify-center overflow-hidden text-center text-c-on-bg/60"
-			>
-				<IconAnimatedSpinner class="h-7 w-7" />
-			</div>
-		</div>
-	</div>
+	<GenerateHorizontalListLoadingPlaceholder {paddingX} {paddingY} />
 {:else if $generationsQuery?.isSuccess && outputs !== undefined && outputs.length === 0}
-	<GenerateHorizontalListPlaceholder text={$LL.Generate.Grid.NoGeneration.Paragraph()} />
+	<GenerateHorizontalListPlaceholder
+		{paddingX}
+		{paddingY}
+		text={$LL.Generate.Grid.NoGeneration.Paragraph()}
+	/>
 {:else if $generationsQuery?.isSuccess && outputs !== undefined && outputs.length > 0}
 	{#if listScrollContainer && $listVirtualizer}
 		<div
@@ -240,4 +226,6 @@
 		class="pointer-events-none absolute right-0 top-0 h-full w-6 bg-gradient-to-l from-c-bg to-c-bg/0
 			transition duration-100 {listAtEnd ? 'opacity-0' : 'opacity-100'}"
 	/>
+{:else}
+	<GenerateHorizontalListLoadingPlaceholder {paddingX} {paddingY} />
 {/if}

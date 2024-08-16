@@ -6,14 +6,14 @@
 	<div class="flex h-full w-full flex-col items-stretch justify-start opacity-50">
 		{#each Array(8) as item}
 			<div class="flex w-full flex-1 flex-row">
-				<div class="flex flex-1 p-2px">
-					<div class="h-full w-full rounded-md bg-c-bg-secondary" />
+				<div class="flex flex-1 p-px">
+					<div class="h-full w-full rounded-lg bg-c-bg-secondary" />
 				</div>
-				<div class="flex flex-1 p-2px">
-					<div class="h-full w-full rounded-md bg-c-bg-secondary" />
+				<div class="flex flex-1 p-px">
+					<div class="h-full w-full rounded-lg bg-c-bg-secondary" />
 				</div>
-				<div class="hidden flex-1 p-2px xl:flex">
-					<div class="h-full w-full rounded-md bg-c-bg-secondary" />
+				<div class="hidden flex-1 p-px xl:flex">
+					<div class="h-full w-full rounded-lg bg-c-bg-secondary" />
 				</div>
 			</div>
 		{/each}
