@@ -97,7 +97,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 	}
 	const response = await resolve(event, {
 		filterSerializedResponseHeaders(name) {
-			return name === 'content-range';
+			return name === 'content-range' || name === 'x-supabase-api-version';
 		}
 	});
 	const linkHeaders = response.headers.get('Link');

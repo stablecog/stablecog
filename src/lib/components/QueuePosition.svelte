@@ -1,12 +1,11 @@
 <script lang="ts">
+	import { page } from '$app/stores';
+	import IconPulsing from '$components/icons/IconPulsing.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
-	import IconQueue from './icons/IconQueue.svelte';
-	import { userSummary } from '$ts/stores/user/summary';
+	import { sessionStore } from '$ts/constants/supabase';
 	import { logSkipTheQueueButtonClicked } from '$ts/helpers/loggers';
 	import { appVersion } from '$ts/stores/appVersion';
-	import { page } from '$app/stores';
-	import { sessionStore } from '$ts/constants/supabase';
-	import IconPulsing from '$components/icons/IconPulsing.svelte';
+	import { userSummary } from '$ts/stores/user/summary';
 
 	export let position: number;
 	export let hasBg = false;
