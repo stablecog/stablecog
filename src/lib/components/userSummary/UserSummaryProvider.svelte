@@ -46,7 +46,7 @@
 	$: isError = $userSummaryQuery?.isError;
 	$: data = $userSummaryQuery?.data;
 
-	$: [$userSummary, isSuccess, isError, data], setUserSummary();
+	$: [isSuccess, isError, data], setUserSummary();
 
 	function setUserSummary() {
 		if (browser && $userSummaryQuery && $userSummaryQuery.isSuccess && $userSummaryQuery.data) {
