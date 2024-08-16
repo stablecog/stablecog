@@ -406,6 +406,9 @@
 				},
 				body: JSON.stringify(body)
 			});
+			if (!res.ok) {
+				throw new Error('Failed to create checkout session');
+			}
 			const resJson: TCheckoutSessionRes = await res.json();
 			if (resJson.error) {
 				throw new Error(resJson.error);

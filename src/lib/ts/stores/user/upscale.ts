@@ -177,6 +177,10 @@ export async function submitInitialUpscaleRequest({
 		},
 		body: JSON.stringify(request)
 	});
+	if (!response.ok) {
+		setUpscaleToFailed({ id: request.ui_id });
+		throw new Error(`Failed to submit upscale request: ${response.status}`);
+	}
 	const resJSON: TInitialUpscaleResponse = await response.json();
 	console.log('Upscale request response:', resJSON);
 	return { ...resJSON, ui_id: request.ui_id };

@@ -179,6 +179,10 @@
 
 	async function getAndSetTotals() {
 		const res = await fetch(`${apiUrl.origin}/v1/stats`);
+		if (!res.ok) {
+			console.error('Failed to fetch stats');
+			return;
+		}
 		const resJson: IStatsRes = await res.json();
 		const { generation_output_count: gCount, upscale_output_count: uCount } = resJson;
 		if (gCount > $generationTotalCount) {

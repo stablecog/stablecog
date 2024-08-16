@@ -182,6 +182,9 @@ export async function submitInitialVoiceoverRequest(
 		},
 		body: JSON.stringify(finalRequest)
 	});
+	if (!response.ok) {
+		throw new Error(`Failed to submit voiceover request: ${response.status}`);
+	}
 	const resJSON: TInitialVoiceoverResponse = await response.json();
 	console.log('Voiceover request response:', resJSON);
 	return { ...resJSON, ui_id: request.ui_id };

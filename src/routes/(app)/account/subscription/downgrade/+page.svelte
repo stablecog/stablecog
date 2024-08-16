@@ -62,6 +62,9 @@
 					target_price_id: targetPriceId
 				})
 			});
+			if (!res.ok) {
+				throw new Error('Failed to change plan');
+			}
 			const data = await res.json();
 			if (data.success) {
 				const summary = await getUserSummary($sessionStore?.access_token);

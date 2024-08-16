@@ -4,6 +4,9 @@ import type { TVoiceoverFullOutput } from '$ts/stores/user/voiceovers';
 export async function downloadVoicoverOutput(output: TVoiceoverFullOutput) {
 	const url = output.audio_file_url;
 	const res = await fetch(`${url}?download=true`);
+	if (!res.ok) {
+		throw new Error(`Failed to fetch audio: ${res.status}`);
+	}
 	const blob = await res.blob();
 	const fileName = getAudioFileNameFromVoiceover({
 		url,

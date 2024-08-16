@@ -60,6 +60,12 @@
 				email
 			})
 		});
+		if (!res.ok) {
+			console.log('Error with sign in', res);
+			signInCardStatus.set('error');
+			errorText = $LL.Error.SomethingWentWrong();
+			return;
+		}
 		const resJSON: { allowed: boolean } = await res.json();
 		if (!resJSON.allowed) {
 			signInCardStatus.set('error');

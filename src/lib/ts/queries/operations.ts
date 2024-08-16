@@ -22,6 +22,9 @@ export async function getUserOperations({
 			Authorization: 'Bearer ' + access_token
 		}
 	});
+	if (!res.ok) {
+		throw new Error(`Failed to fetch operations: ${res.status}`);
+	}
 	const data: TUserOperationsPage = await res.json();
 	const extendedOperations: TUserOperationExtended[] = data.operations.map((operation) => {
 		const createdAt = new Date(operation.created_at);

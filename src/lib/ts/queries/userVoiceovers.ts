@@ -33,6 +33,9 @@ export async function getUserVoiceoverFullOutputs({
 			Authorization: 'Bearer ' + access_token
 		}
 	});
+	if (!res.ok) {
+		throw new Error(`Failed to fetch user outputs: ${res.status}`);
+	}
 	const data: TUserVoiceoverFullOutputsPage = await res.json();
 	return data;
 }
@@ -85,6 +88,9 @@ export async function getAllUserGenerationFullOutputs({
 			Authorization: 'Bearer ' + access_token
 		}
 	});
+	if (!res.ok) {
+		throw new Error(`Failed to fetch user outputs: ${res.status}`);
+	}
 	const data: TUserVoiceoverFullOutputsPage = await res.json();
 	if (data.error) throw new Error(data.error);
 	return data;

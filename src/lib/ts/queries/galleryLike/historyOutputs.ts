@@ -64,6 +64,9 @@ export async function getHistoryFullOutputs({
 			Authorization: 'Bearer ' + access_token
 		}
 	});
+	if (!res.ok) {
+		throw new Error(`Failed to fetch user outputs: ${res.status}`);
+	}
 	const data: TGalleryFullOutputsPageShallow = await res.json();
 	const editedData: TGalleryFullOutputsPage = {
 		...data,

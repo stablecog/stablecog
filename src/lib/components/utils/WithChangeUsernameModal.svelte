@@ -97,8 +97,12 @@
 			},
 			body: JSON.stringify({ username: newUsername })
 		});
+		if (!res.ok) {
+			throw new Error("Response wasn't okay when changing username");
+		}
 		const resJson: { username: string; error?: string } = await res.json();
-		if (!res.ok) throw new Error(resJson.error || 'Something went wrong with username change');
+		if (resJson.error)
+			throw new Error(resJson.error || 'Something went wrong with username change');
 		const { username: usernameFromServer } = resJson;
 		logUsernameChanged(type, {
 			'SC - App Version': $appVersion,

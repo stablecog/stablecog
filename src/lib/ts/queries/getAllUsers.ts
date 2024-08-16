@@ -43,6 +43,9 @@ export async function getAllUsers({
 			Authorization: `Bearer ${access_token}`
 		}
 	});
+	if (!res.ok) {
+		throw new Error(`Failed to fetch users: ${res.status}`);
+	}
 	const resJson: TAllUsersPage = await res.json();
 	const { total_count, total_count_by_product_id } = resJson;
 	let total_counts: TCount[] | undefined;
@@ -86,6 +89,9 @@ export async function banOrUnbanUsers({
 			delete_data
 		})
 	});
+	if (!res.ok) {
+		throw new Error(`Failed to ban users: ${res.status}`);
+	}
 	const resJson = await res.json();
 	return resJson;
 }
@@ -111,6 +117,9 @@ export async function banOrUnbanDomains({
 			action
 		})
 	});
+	if (!res.ok) {
+		throw new Error(`Failed to ban domains: ${res.status}`);
+	}
 	const resJson = await res.json();
 	return resJson;
 }

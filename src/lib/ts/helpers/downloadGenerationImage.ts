@@ -17,6 +17,9 @@ export async function downloadGenerationImage({
 	logProps
 }: TDownloadGenerationImageProps) {
 	const res = await fetch(`${url}?download=true`);
+	if (!res.ok) {
+		throw new Error(`Failed to fetch image: ${res.status}`);
+	}
 	const blob = await res.blob();
 	const fileName = getImageFileNameFromGeneration({
 		url,

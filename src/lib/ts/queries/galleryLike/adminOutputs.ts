@@ -74,6 +74,9 @@ export async function getAdminFullOutputs({
 			Authorization: `Bearer ${access_token}`
 		}
 	});
+	if (!res.ok) {
+		throw new Error(`Failed to fetch user outputs: ${res.status}`);
+	}
 	const data: TGalleryFullOutputsPageShallow = await res.json();
 	if (data.error) throw new Error(data.error);
 	const editedData: TGalleryFullOutputsPage = {

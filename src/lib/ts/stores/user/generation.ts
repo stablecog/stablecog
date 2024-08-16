@@ -259,6 +259,12 @@ export async function submitInitialGenerationRequest({
 		},
 		body: JSON.stringify(finalRequest)
 	});
+	if (!response.ok) {
+		const error = await response.json();
+		console.error('Generation request failed:', error);
+		setGenerationToFailed({ id: request.ui_id, error: error.error });
+		return;
+	}
 	const resJSON: TInitialGenerationResponse = await response.json();
 	console.log('Generation request response:', resJSON);
 	return { ...resJSON, ui_id: request.ui_id };

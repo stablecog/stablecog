@@ -14,10 +14,11 @@ export async function getUserSummary(
 			Authorization: `Bearer ${access_token}`
 		}
 	});
-	if (userRes.ok) {
-		const userResJson: TUserSummary = await userRes.json();
-		userSummary = userResJson;
+	if (!userRes.ok) {
+		throw new Error(`Failed to fetch user: ${userRes.status}`);
 	}
+	const userResJson: TUserSummary = await userRes.json();
+	userSummary = userResJson;
 	return userSummary;
 }
 
@@ -35,6 +36,9 @@ export async function downgradeSubscription(
 			target_price_id: price_id
 		})
 	});
+	if (!res.ok) {
+		throw new Error(`Failed to downgrade subscription: ${res.status}`);
+	}
 	const resJson = await res.json();
 	console.log(resJson);
 }
@@ -71,6 +75,9 @@ export async function connectAccountToDiscord({
 			platform_token
 		})
 	});
+	if (!res.ok) {
+		throw new Error(`Failed to connect account to Discord: ${res.status}`);
+	}
 	const resJson: TConnectAccountResponse = await res.json();
 	return resJson;
 }
@@ -95,6 +102,9 @@ export async function approveAppAuthorization({
 			app_id
 		})
 	});
+	if (!res.ok) {
+		throw new Error(`Failed to approve app authorization: ${res.status}`);
+	}
 	const resJson: TApproveAppAuthorizationResponse = await res.json();
 	return resJson;
 }
