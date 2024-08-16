@@ -14,6 +14,7 @@
 	import { sessionStore } from '$ts/constants/supabase';
 
 	export let queryClient: QueryClient;
+	export let supabase: SupabaseClient;
 
 	let mounted = false;
 
@@ -25,7 +26,19 @@
 		browser && userId
 			? createQuery({
 					queryKey: getUserSummaryQueryKey(userId),
-					queryFn: () => getUserSummary(accessToken)
+					queryFn: async () => {
+						const { error: userError } = await supabase.auth.getUser(accessToken);
+						if (userError) {
+							console.log('Error getting user', userError);
+							throw new Error('Error getting user');
+						}
+						const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+						if (sessionError) {
+							console.log('Error getting session', sessionError);
+							throw new Error('Error getting session');
+						}
+						return getUserSummary(sessionData.session?.access_token);
+					}
 				})
 			: undefined;
 
@@ -33,7 +46,7 @@
 	$: isError = $userSummaryQuery?.isError;
 	$: data = $userSummaryQuery?.data;
 
-	$: [isSuccess, isError, data], setUserSummary();
+	$: [$userSummary, isSuccess, isError, data], setUserSummary();
 
 	function setUserSummary() {
 		if (browser && $userSummaryQuery && $userSummaryQuery.isSuccess && $userSummaryQuery.data) {

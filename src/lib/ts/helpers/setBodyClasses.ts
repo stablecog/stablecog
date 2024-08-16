@@ -4,7 +4,6 @@ import { themeApp } from '$ts/stores/theme';
 import { get } from 'svelte/store';
 
 export function setBodyClasses() {
-	console.log('test');
 	if (browser) {
 		const theme = get(themeApp);
 		const isTouch = get(isTouchscreen);
