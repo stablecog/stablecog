@@ -1,4 +1,6 @@
 <script lang="ts">
+	import ImagePlaceholder from '$components/utils/image/ImagePlaceholder.svelte';
+
 	export let paddingX = 0;
 	export let paddingY = 0;
 
@@ -8,8 +10,12 @@
 
 <div style="padding: {paddingY}px {paddingX}px" class="flex h-full w-full flex-row">
 	{#each items as item, index}
-		<div class="aspect-square h-full p-px">
-			<div class="h-full w-full rounded-md bg-c-bg-secondary" />
+		<div class="p-px">
+			<ImagePlaceholder
+				width={512}
+				height={512}
+				class="h-full w-auto rounded-md bg-c-bg-secondary"
+			/>
 		</div>
 	{/each}
 </div>
