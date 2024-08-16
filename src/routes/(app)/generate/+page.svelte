@@ -302,7 +302,7 @@
 					<div
 						transition:fly={{
 							duration: 250,
-							x: $windowWidth > xlBreakpoint ? -200 : -100,
+							x: $windowWidth >= xlBreakpoint ? -200 : -100,
 							easing: quadOut
 						}}
 						class="relative z-10 flex h-full w-36 xl:w-72"
@@ -313,7 +313,7 @@
 								<GenerateGridPlaceholder text={$LL.Generate.Grid.NotSignedIn.Paragraph()} />
 							{:else if historyFullOutputsQuery && $historyFullOutputsQuery}
 								<AutoSize bind:element={gridScrollContainer} let:clientWidth let:clientHeight>
-									{#if $windowWidth > lgBreakpoint && gridScrollContainer}
+									{#if $windowWidth >= lgBreakpoint && gridScrollContainer}
 										<GenerationGridInfinite
 											paddingLeft={6}
 											paddingRight={6}
@@ -323,7 +323,7 @@
 											hasPlaceholder
 											cardType="generate"
 											generationsQuery={historyFullOutputsQuery}
-											cols={$windowWidth > xlBreakpoint ? 3 : 2}
+											cols={$windowWidth >= xlBreakpoint ? 3 : 2}
 											{gridScrollContainer}
 											gridScrollContainerWidth={clientWidth}
 											gridScrollContainerHeight={clientHeight}
