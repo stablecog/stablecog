@@ -50,10 +50,10 @@
 	const { isSettingsOpen, selectedLayouts, search, selectedWorkers, selectedApps } = data.stores;
 
 	const initialMessageCount = 5_000;
+	const start = (Date.now() - 1_000 * 60 * 60 * 24) * 1_000_000;
 	let ws: Websocket | undefined;
 	let loadingLogRows = true;
 	let logRows: TLogRow[] = [];
-	let start = Date.now() * 1_000_000 - 24 * 60 * 60 * 1_000 * 1_000_000;
 	let followLogs = true;
 
 	let searchString: string | undefined;
