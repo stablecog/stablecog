@@ -42,17 +42,19 @@
 		WebsocketBuilder,
 		WebsocketEvent
 	} from 'websocket-ts';
+	import { VList } from 'virtua/svelte';
+	import { throttle } from '$ts/helpers/general/throttle.js';
 
 	export let data;
 
 	const { isSettingsOpen, selectedLayouts, search, selectedWorkers, selectedApps } = data.stores;
 
-	const maxLogRows = 5_000;
-	const initialMessageCount = 1_000;
+	const initialMessageCount = 5_000;
 	let ws: Websocket | undefined;
 	let loadingLogRows = true;
 	let logRows: TLogRow[] = [];
 	let start = Date.now() * 1_000_000 - 24 * 60 * 60 * 1_000 * 1_000_000;
+	let followLogs = true;
 
 	let searchString: string | undefined;
 	if ($search) {
@@ -62,7 +64,7 @@
 	let searchTimeout: NodeJS.Timeout;
 	let searchDebounceMs = 300;
 
-	let scrollContainer: HTMLDivElement;
+	let scrollContainer: VList<TLogRow>;
 	const isAtTheEdgeThreshold = 8;
 	let isError = false;
 	let mounted = false;
@@ -156,8 +158,10 @@
 	function scrollToBottom() {
 		if (scrollContainer) {
 			setTimeout(() => {
-				scrollContainer.scrollTop = scrollContainer.scrollHeight;
-				scrollContainer.scrollLeft = 0;
+				followLogs = true;
+				isAtBottom = true;
+				isAtTop = false;
+				scrollContainer.scrollToIndex(logRows.length - 1);
 			});
 		}
 	}
@@ -165,16 +169,18 @@
 	function scrollToTop() {
 		if (scrollContainer) {
 			setTimeout(() => {
-				scrollContainer.scrollTop = 0;
-				scrollContainer.scrollLeft = 0;
+				followLogs = false;
+				isAtTop = true;
+				isAtBottom = false;
+				scrollContainer.scrollToIndex(0);
 			});
 		}
 	}
 
 	function getIsAtBottom() {
 		if (scrollContainer) {
-			const maxScroll = scrollContainer.scrollHeight - scrollContainer.clientHeight;
-			const currentScroll = scrollContainer.scrollTop;
+			const maxScroll = scrollContainer.getScrollSize() - scrollContainer.getViewportSize();
+			const currentScroll = scrollContainer.getScrollOffset();
 			return maxScroll - currentScroll < isAtTheEdgeThreshold;
 		}
 		return true;
@@ -182,19 +188,25 @@
 
 	function getIsAtTop() {
 		if (scrollContainer) {
-			const currentScroll = scrollContainer.scrollTop;
+			const currentScroll = scrollContainer.getScrollOffset();
 			return currentScroll < isAtTheEdgeThreshold;
 		}
 		return true;
 	}
 
 	function scrollContainerOnScroll() {
+		console.log('executing');
 		isAtBottom = getIsAtBottom();
 		isAtTop = getIsAtTop();
 		if (isAtBottom) {
+			followLogs = true;
 			lastSeenItemTimestamp = getLastTimestamp(logRows);
+		} else {
+			followLogs = false;
 		}
 	}
+
+	const throttledScrollContainerOnScroll = throttle(scrollContainerOnScroll, 20);
 
 	function toggleSettings() {
 		isSettingsOpen.set(!$isSettingsOpen);
@@ -222,7 +234,6 @@
 			console.log('Message with unknown type:', parsedResult);
 			return;
 		}
-		let wasAtBottom = getIsAtBottom();
 		let newLogRows: TLogRow[] = [];
 		for (const stream of messageAsReceived.streams) {
 			for (const value of stream.values) {
@@ -232,16 +243,13 @@
 				});
 			}
 		}
-		logRows =
-			logRows.length + newLogRows.length > maxLogRows
-				? [...logRows.slice(-initialMessageCount), ...newLogRows]
-				: [...logRows, ...newLogRows];
+		logRows = [...logRows, ...newLogRows];
 		lastTimestamp = getLastTimestamp(logRows);
-		if (wasAtBottom) {
+		if (followLogs) {
 			lastSeenItemTimestamp = lastTimestamp;
 		}
 		setTimeout(() => {
-			if (wasAtBottom) {
+			if (followLogs) {
 				scrollToBottom();
 			}
 		});
@@ -345,76 +353,97 @@
 			class="absolute left-0 top-0 flex h-full w-full flex-col overflow-hidden rounded-2xl bg-c-bg ring-2 ring-c-bg-secondary"
 		>
 			<div
-				on:scroll={scrollContainerOnScroll}
-				bind:this={scrollContainer}
-				class="flex w-full flex-1 flex-col overflow-auto px-4 py-3"
+				on:wheel={throttledScrollContainerOnScroll}
+				on:touchstart={throttledScrollContainerOnScroll}
+				on:touchmove={throttledScrollContainerOnScroll}
+				on:touchend={throttledScrollContainerOnScroll}
+				class="flex w-full flex-1 flex-col overflow-hidden"
 			>
 				{#if isError}
-					<IconSadFace class="m-auto size-10 text-c-on-bg/50" />
+					<div class="m-auto flex items-center justify-center px-4 py-3">
+						<IconSadFace class="m-auto size-10 text-c-on-bg/50" />
+					</div>
 				{:else if loadingLogRows}
-					<IconAnimatedSpinner class="m-auto size-10 text-c-on-bg/50" />
+					<div class="m-auto flex items-center justify-center px-4 py-3">
+						<IconAnimatedSpinner class="m-auto size-10 text-c-on-bg/50" />
+					</div>
 				{:else if logRows.length === 0}
-					<div class="m-auto flex flex-col items-center justify-center gap-2 text-c-on-bg/50">
+					<div
+						class="m-auto flex flex-col items-center justify-center gap-2 px-4 py-3 text-c-on-bg/50"
+					>
 						<IconDocumentEmpty class="size-10" />
 						<p class="text-center">No matching logs</p>
 					</div>
 				{:else}
-					<div class="flex w-full items-center justify-start pb-3 pr-20">
-						<IconFlag class="mr-2 size-5 shrink-0" />
-						<p
-							class="min-w-0 shrink overflow-hidden overflow-ellipsis whitespace-nowrap font-semibold"
-						>
-							Start
-						</p>
-					</div>
-					{#each logRows as logRow}
-						<div
-							class="flex w-full flex-col items-start justify-start gap-0.5 py-1 text-left font-mono text-xxs md:flex-row md:gap-0 md:py-0.75 md:text-xs"
-						>
-							{#if $selectedLayouts.includes('timestamp') || $selectedLayouts.includes('worker-name') || $selectedLayouts.includes('app-name')}
-								<p class="flex gap-4 whitespace-pre pr-4">
-									{#if $selectedLayouts.includes('timestamp')}
-										<span class="text-c-on-bg/50">
-											{getTimeString(logRow.value[0])}
-										</span>
-									{/if}
-									{#if $selectedLayouts.includes('app-name')}
-										<span
-											class="{logRow.stream.application === undefined
-												? 'text-c-on-bg/25'
-												: data.appNames.indexOf(logRow.stream.application) % 4 === 3
-													? 'text-c-secondary/75'
-													: data.appNames.indexOf(logRow.stream.application) % 4 === 2
-														? 'text-c-primary/75'
-														: data.appNames.indexOf(logRow.stream.application) % 4 === 1
-															? 'text-c-success/75'
-															: 'text-c-danger/75'} w-[9ch] overflow-hidden overflow-ellipsis"
-										>
-											{logRow.stream.application}
-										</span>
-									{/if}
-									{#if $selectedLayouts.includes('worker-name')}
-										<span
-											class="{logRow.stream.worker_name === undefined
-												? 'text-c-on-bg/25'
-												: data.workerNames.indexOf(logRow.stream.worker_name) % 4 === 0
-													? 'text-c-secondary/75'
-													: data.workerNames.indexOf(logRow.stream.worker_name) % 4 === 1
-														? 'text-c-primary/75'
-														: data.workerNames.indexOf(logRow.stream.worker_name) % 4 === 2
-															? 'text-c-success/75'
-															: 'text-c-danger/75'} w-[9ch] overflow-hidden overflow-ellipsis"
-										>
-											{logRow.stream.worker_name ?? 'None'}
-										</span>
-									{/if}
+					<VList
+						bind:this={scrollContainer}
+						data={logRows}
+						let:item
+						let:index
+						getKey={(d) => d.value[0]}
+						class="flex flex-col items-start justify-start py-3"
+					>
+						{#if index === 0}
+							<div class="flex flex-row">
+								<div class="flex w-full items-center justify-start px-4 pb-3 pr-20">
+									<IconFlag class="mr-2 size-5 shrink-0" />
+									<p
+										class="min-w-0 shrink overflow-hidden overflow-ellipsis whitespace-nowrap font-semibold"
+									>
+										Start
+									</p>
+								</div>
+							</div>
+						{/if}
+						<div class="flex flex-row">
+							<div
+								class="flex flex-col items-start justify-start gap-0.5 px-4 py-1 text-left font-mono text-xxs md:flex-row md:gap-0 md:py-0.75 md:text-xs"
+							>
+								{#if $selectedLayouts.includes('timestamp') || $selectedLayouts.includes('worker-name') || $selectedLayouts.includes('app-name')}
+									<p class="flex gap-4 whitespace-pre pr-4">
+										{#if $selectedLayouts.includes('timestamp')}
+											<span class="text-c-on-bg/50">
+												{getTimeString(item.value[0])}
+											</span>
+										{/if}
+										{#if $selectedLayouts.includes('app-name')}
+											<span
+												class="{item.stream.application === undefined
+													? 'text-c-on-bg/25'
+													: data.appNames.indexOf(item.stream.application) % 4 === 3
+														? 'text-c-secondary/75'
+														: data.appNames.indexOf(item.stream.application) % 4 === 2
+															? 'text-c-primary/75'
+															: data.appNames.indexOf(item.stream.application) % 4 === 1
+																? 'text-c-success/75'
+																: 'text-c-danger/75'} w-[9ch] overflow-hidden overflow-ellipsis"
+											>
+												{item.stream.application}
+											</span>
+										{/if}
+										{#if $selectedLayouts.includes('worker-name')}
+											<span
+												class="{item.stream.worker_name === undefined
+													? 'text-c-on-bg/25'
+													: data.workerNames.indexOf(item.stream.worker_name) % 4 === 0
+														? 'text-c-secondary/75'
+														: data.workerNames.indexOf(item.stream.worker_name) % 4 === 1
+															? 'text-c-primary/75'
+															: data.workerNames.indexOf(item.stream.worker_name) % 4 === 2
+																? 'text-c-success/75'
+																: 'text-c-danger/75'} w-[9ch] overflow-hidden overflow-ellipsis"
+											>
+												{item.stream.worker_name ?? 'None'}
+											</span>
+										{/if}
+									</p>
+								{/if}
+								<p class="flex w-full whitespace-pre md:whitespace-pre-wrap">
+									{item.value[1]}
 								</p>
-							{/if}
-							<p class="flex w-full whitespace-pre md:whitespace-pre-wrap">
-								{logRow.value[1]}
-							</p>
+							</div>
 						</div>
-					{/each}
+					</VList>
 				{/if}
 			</div>
 			<!-- Top Buttons -->
