@@ -8,9 +8,12 @@
 	const items = Array.from({ length: rowCount }, (_, i) => i);
 </script>
 
-<div style="padding: {paddingY}px {paddingX}px" class="flex h-full w-full flex-row">
+<div
+	style="padding: {paddingY}px {paddingX}px"
+	class="flex h-full w-full flex-row justify-start overflow-auto"
+>
 	{#each items as item, index}
-		<div class="p-px">
+		<div class="h-full shrink-0 p-px">
 			<ImagePlaceholder
 				width={512}
 				height={512}
