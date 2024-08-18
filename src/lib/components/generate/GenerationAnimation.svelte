@@ -16,6 +16,6 @@
 	<div
 		class="{type === 'inpainting'
 			? 'bg-c-primary'
-			: 'bg-c-primary/75'} h-full w-2px animate-pulse-fast"
+			: 'bg-c-primary'} h-full w-2px animate-pulse-fast"
 	/>
 </div>

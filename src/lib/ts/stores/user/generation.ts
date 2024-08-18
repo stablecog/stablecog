@@ -1,31 +1,30 @@
-import { apiUrl } from '$ts/constants/main';
-import { generationModels, type TAvailableGenerationModelId } from '$ts/constants/generationModels';
-import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
-import { get, writable } from 'svelte/store';
-import {
-	generationCostCompletionPerMs,
-	getCostCompletionPerMsFromGeneration
-} from '$ts/stores/cost';
-import { generateSSEId } from '$ts/helpers/generateSSEId';
+import { dataUrltoFile } from '$components/canvas/helpers/exportStage';
+import type { TGenerationImageCardType } from '$components/generationImage/types';
 import {
 	newGenerationCompleteAnimation,
 	newGenerationStartAnimation
-} from '$ts/animation/generationAnimation';
-import type { Tweened } from 'svelte/motion';
-import type { TGenerationImageCardType } from '$components/generationImage/types';
-import { isSuperAdmin } from '$ts/helpers/admin/roles';
-import { userSummary } from '$ts/stores/user/summary';
-import { derived } from 'svelte/store';
-import { convertToDBTimeString } from '$ts/helpers/convertToDBTimeString';
-import { addToRecentlyUpdatedOutputIds } from '$ts/stores/user/recentlyUpdatedOutputIds';
+} from '$ts/animation/processAnimation';
+import { type TAvailableGenerationModelId } from '$ts/constants/generationModels';
+import { apiUrl } from '$ts/constants/main';
+import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
 import {
 	STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO,
 	roleToProductId
 } from '$ts/constants/stripePublic';
-import type { TQueueItem } from '$ts/stores/user/queue';
-import { z } from 'zod';
+import { isSuperAdmin } from '$ts/helpers/admin/roles';
+import { convertToDBTimeString } from '$ts/helpers/convertToDBTimeString';
+import { generateSSEId } from '$ts/helpers/generateSSEId';
 import { uploadImage } from '$ts/helpers/user/uploadImage';
-import { dataUrltoFile } from '$components/canvas/helpers/exportStage';
+import {
+	generationCostCompletionPerMs,
+	getCostCompletionPerMsFromGeneration
+} from '$ts/stores/cost';
+import type { TQueueItem } from '$ts/stores/user/queue';
+import { addToRecentlyUpdatedOutputIds } from '$ts/stores/user/recentlyUpdatedOutputIds';
+import { userSummary } from '$ts/stores/user/summary';
+import type { Tweened } from 'svelte/motion';
+import { derived, get, writable } from 'svelte/store';
+import { z } from 'zod';
 
 export const generations = writable<TGeneration[]>([]);
 export const activeGeneration = writable<TGenerationWithSelectedOutput | undefined>(undefined);

@@ -1,7 +1,7 @@
 import {
 	newUpscaleCompleteAnimation,
 	newUpscaleStartAnimation
-} from '$ts/animation/generationAnimation';
+} from '$ts/animation/processAnimation';
 import { apiUrl } from '$ts/constants/main';
 import type { TAvailableUpscaleModelId } from '$ts/constants/upscaleModels';
 import { estimatedUpscaleDurationMs } from '$ts/stores/cost';

@@ -4,7 +4,7 @@ import { generateSSEId } from '$ts/helpers/generateSSEId';
 import {
 	newGenerationCompleteAnimation,
 	newGenerationStartAnimation
-} from '$ts/animation/generationAnimation';
+} from '$ts/animation/processAnimation';
 import type { Tweened } from 'svelte/motion';
 import { isSuperAdmin } from '$ts/helpers/admin/roles';
 import { userSummary } from '$ts/stores/user/summary';
