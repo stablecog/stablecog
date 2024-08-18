@@ -198,7 +198,9 @@
 			</div>
 		</div>
 	{/if}
-	<h1 class="mt-1 max-w-[21rem] text-center text-2xl font-bold leading-normal md:-mt-1">
+	<h1
+		class="mt-1 max-w-[21rem] text-balance text-center text-2xl font-bold leading-normal md:-mt-1"
+	>
 		{$signInCardStatus === 'sent-otp'
 			? $LL.SignIn.PageTitleSentLink()
 			: title
@@ -210,7 +212,7 @@
 			class="mb-4 max-w-[21rem] text-center text-base leading-relaxed text-c-on-bg/75 md:text-base {$signInCardStatus ===
 			'sent-otp'
 				? 'mt-1'
-				: ''}"
+				: ''} text-balance"
 		>
 			{$signInCardStatus === 'sent-otp'
 				? $LL.SignIn.PageParagraphSentLink()
@@ -375,7 +377,7 @@
 					md:-mx-10 md:my-6 md:w-[calc(100%+6rem)]"
 				/>
 				<div class="-mt-1.5 flex w-full max-w-[21rem] justify-center md:-mb-2.25 md:-mt-2">
-					<p class="max-w-full text-center text-sm text-c-on-bg/60">
+					<p class="max-w-full text-balance text-center text-sm text-c-on-bg/60">
 						{@html $LL.Legal.AcceptedPoliciesParagraph({
 							termsOfService: `<a target='_blank' class='text-c-primary hover:underline' href="/terms">${$LL.Legal.TermsOfServiceTitle()}</a>`,
 							privacyPolicy: `<a target="_blank" class='text-c-primary hover:underline' href="/privacy">${$LL.Legal.PrivacyPolicyTitle()}</a>`
