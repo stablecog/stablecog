@@ -4,9 +4,9 @@ import { quadOut } from 'svelte/easing';
 import { tweened, type Tweened } from 'svelte/motion';
 import { get } from 'svelte/store';
 
-export const longProcessAnimationMultiplier = 10;
+export const longProcessAnimationMultiplier = 25;
 export const longProcessMaxValue = 0.75;
-export const imageLoadExtraMs = 1000;
+export const imageLoadExtraMs = 5000;
 
 export function newGenerationCompleteAnimation(animation: Tweened<number> | undefined) {
 	const value = animation ? get(animation) : 0;
