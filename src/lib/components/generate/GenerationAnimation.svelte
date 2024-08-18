@@ -13,9 +13,5 @@
 		: 'bg-c-primary/25'} animate-generation pointer-events-none absolute left-0 top-0 flex
 	h-full w-full origin-left transform items-center justify-end"
 >
-	<div
-		class="{type === 'inpainting'
-			? 'bg-c-primary'
-			: 'bg-c-primary'} h-full w-2px animate-pulse-fast"
-	/>
+	<div class="h-full w-2px animate-pulse-fast bg-c-primary" />
 </div>
