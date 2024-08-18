@@ -1,5 +1,4 @@
-import { estimatedGenerationDurationMs } from '$components/generate/estimatedGenerationDurationMs';
-import { estimatedUpscaleDurationMs } from '$ts/stores/cost';
+import { estimatedGenerationDurationMs, estimatedUpscaleDurationMs } from '$ts/stores/cost';
 import { quadOut } from 'svelte/easing';
 import { tweened, type Tweened } from 'svelte/motion';
 import { get } from 'svelte/store';
@@ -15,6 +14,7 @@ export function newGenerationCompleteAnimation(animation: Tweened<number> | unde
 		duration: duration + imageLoadExtraMs,
 		easing: quadOut
 	});
+	console.log('Calculated duration', duration);
 	newAnimation.set(1);
 	return newAnimation;
 }

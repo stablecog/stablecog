@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { afterNavigate } from '$app/navigation';
-	import { estimatedGenerationDurationMs } from '$components/generate/estimatedGenerationDurationMs';
 	import type { TIsReadyMap } from '$components/generate/types';
 	import type { TGeneratePageData } from '$routes/(app)/generate/+page';
 	import {
@@ -41,12 +40,15 @@
 	import { canUserEditNumOutputs } from '$ts/helpers/canUserEditNumOutputs';
 	import { isValue } from '$ts/helpers/isValue';
 	import { advancedMode, advancedModeApp } from '$ts/stores/advancedMode';
-	import { calculateGenerationCost, generationCostCompletionPerMs } from '$ts/stores/cost';
+	import {
+		calculateGenerationCost,
+		estimatedGenerationDurationMs,
+		generationCostCompletionPerMs
+	} from '$ts/stores/cost';
 	import {
 		generationAspectRatio,
 		generationGuidanceScale,
 		generationHeight,
-		generationInferenceSteps,
 		generationInitImageStrength,
 		generationModelId,
 		generationNegativePrompt,
@@ -192,7 +194,6 @@
 			const cost = calculateGenerationCost(
 				Number($generationWidth),
 				Number($generationHeight),
-				Number($generationInferenceSteps),
 				Number($generationNumOutputs)
 			);
 			estimatedGenerationDurationMs.set(cost / $generationCostCompletionPerMs);

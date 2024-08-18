@@ -1,9 +1,12 @@
 import type { TGeneration } from '$ts/stores/user/generation';
 import { writable as writableLocal } from '@macfja/svelte-persistent-store';
+import { writable } from 'svelte/store';
 
-const defaultUpscaleDurationMs = 6000;
-const defaultGenerationCostCompletionPerMs = 6000;
+const defaultUpscaleDurationMs = 20000;
+const defaultGenerationDurationPerOutputMs = 10000;
+const defaultGenerationCostCompletionPerMs = 105;
 
+export const estimatedGenerationDurationMs = writable(defaultGenerationDurationPerOutputMs);
 export const generationCostCompletionPerMs = writableLocal<number | null>(
 	'generationCostCompletionPerMs',
 	defaultGenerationCostCompletionPerMs
@@ -13,23 +16,16 @@ export const estimatedUpscaleDurationMs = writableLocal<number>(
 	defaultUpscaleDurationMs
 );
 
-const widthBase = 512;
-const heightBase = 512;
-const outputsBase = 4;
-const stepsBase = 30;
-const costBase = widthBase * heightBase * outputsBase * stepsBase;
+const widthBase = 1024;
+const heightBase = 1024;
+const outputsBase = 1;
+const costBase = widthBase * heightBase * outputsBase;
 
-export const calculateGenerationCost = (
-	width: number,
-	height: number,
-	numOutputs: number,
-	inferenceSteps: number
-) => {
+export const calculateGenerationCost = (width: number, height: number, numOutputs: number) => {
 	const widthMul = width / widthBase;
 	const heightMul = height / heightBase;
 	const outputsMul = numOutputs / outputsBase;
-	const stepsMul = inferenceSteps / stepsBase;
-	const costMul = widthMul * heightMul * outputsMul * stepsMul;
+	const costMul = widthMul * heightMul * outputsMul;
 	const cost = costBase * costMul;
 	return cost;
 };
@@ -41,8 +37,7 @@ export const getCostFromGeneration = (generation: TGeneration) => {
 	const cost = calculateGenerationCost(
 		generation.width,
 		generation.height,
-		generation.outputs.length,
-		generation.inference_steps
+		generation.outputs.length
 	);
 	return cost;
 };
