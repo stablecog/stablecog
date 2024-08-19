@@ -22,18 +22,18 @@ Here are some examples on our pricing:
 
 ### Starter Plan
 
-- The cost of generating an image: <Code>$0.0057</Code>.
-- The cost of upscaling an image: <Code>$0.0057</Code>.
+- The cost of generating an image: <Code>$0.005</Code>.
+- The cost of upscaling an image: <Code>$0.005</Code>.
 
 ### Pro Plan
 
-- The cost of generating an image: <Code>$0.0055</Code>.
-- The cost of upscaling an image: <Code>$0.0055</Code>.
+- The cost of generating an image: <Code>$0.00416</Code>.
+- The cost of upscaling an image: <Code>$0.00416</Code>.
 
 ### Ultimate Plan
 
-- The cost of generating an image: <Code>$0.005</Code>.
-- The cost of upscaling an image: <Code>$0.005</Code>.
+- The cost of generating an image: <Code>$0.00416</Code>.
+- The cost of upscaling an image: <Code>$0.00416</Code>.
 
 <Divider/>
 
@@ -43,15 +43,15 @@ While on any of the plans above, you can also purchase additional credits. Here 
 
 ### Medium Pack
 
-- The cost of generating an image: <Code>$0.0066</Code>.
-- The cost of upscaling an image: <Code>$0.0066</Code>.
+- The cost of generating an image: <Code>$0.00571</Code>.
+- The cost of upscaling an image: <Code>$0.00571</Code>.
 
 ### Large Pack
 
-- The cost of generating an image: <Code>$0.0062</Code>.
-- The cost of upscaling an image: <Code>$0.0062</Code>.
+- The cost of generating an image: <Code>$0.00476</Code>.
+- The cost of upscaling an image: <Code>$0.00476</Code>.
 
 ### Mega Pack
 
-- The cost of generating an image: <Code>$0.0055</Code>.
-- The cost of upscaling an image: <Code>$0.0055</Code>.
+- The cost of generating an image: <Code>$0.00476</Code>.
+- The cost of upscaling an image: <Code>$0.00476</Code>.

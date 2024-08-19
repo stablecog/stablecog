@@ -85,7 +85,7 @@ export const STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO: {
 } = {
 	[PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION]: {
 		product_id: PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION,
-		monthly_images: 1750,
+		monthly_images: 2000,
 		parallel_generations: 2,
 		parallel_upscales: 2,
 		parallel_voiceovers: 1,
@@ -104,7 +104,7 @@ export const STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO: {
 	},
 	[PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION]: {
 		product_id: PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION,
-		monthly_images: 4500,
+		monthly_images: 6000,
 		parallel_generations: 3,
 		parallel_upscales: 3,
 		parallel_voiceovers: 1,
@@ -123,7 +123,7 @@ export const STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO: {
 	},
 	[PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION]: {
 		product_id: PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION,
-		monthly_images: 10000,
+		monthly_images: 12000,
 		parallel_generations: 4,
 		parallel_upscales: 4,
 		parallel_voiceovers: 1,
@@ -159,7 +159,7 @@ export const STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS: {
 } = {
 	[PUBLIC_STRIPE_PRODUCT_ID_MEDIUM_PACK]: {
 		product_id: PUBLIC_STRIPE_PRODUCT_ID_MEDIUM_PACK,
-		images: 1500,
+		images: 1750,
 		prices: {
 			[PUBLIC_STRIPE_PRICE_ID_MEDIUM_PACK]: {
 				currencies: {
@@ -175,7 +175,7 @@ export const STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS: {
 	},
 	[PUBLIC_STRIPE_PRODUCT_ID_LARGE_PACK]: {
 		product_id: PUBLIC_STRIPE_PRODUCT_ID_LARGE_PACK,
-		images: 4000,
+		images: 5250,
 		prices: {
 			[PUBLIC_STRIPE_PRICE_ID_LARGE_PACK]: {
 				currencies: {
@@ -191,7 +191,7 @@ export const STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS: {
 	},
 	[PUBLIC_STRIPE_PRODUCT_ID_MEGA_PACK]: {
 		product_id: PUBLIC_STRIPE_PRODUCT_ID_MEGA_PACK,
-		images: 9000,
+		images: 10500,
 		prices: {
 			[PUBLIC_STRIPE_PRICE_ID_MEGA_PACK]: {
 				currencies: {
