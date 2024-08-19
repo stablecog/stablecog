@@ -1881,6 +1881,22 @@ type RootTranslation = {
 		 */
 		SubscriptionCancellationTitle: string
 		/**
+		 * D​e​l​e​t​e
+		 */
+		DeleteButton: string
+		/**
+		 * R​e​q​u​e​s​t​ ​D​e​l​e​t​i​o​n
+		 */
+		RequestDeletionButton: string
+		/**
+		 * D​e​l​e​t​e​ ​A​c​c​o​u​n​t
+		 */
+		DeleteAccountTitle: string
+		/**
+		 * T​h​i​s​ ​a​c​t​i​o​n​ ​i​s​ ​p​e​r​m​a​n​e​n​t​ ​a​n​d​ ​c​a​n​n​o​t​ ​b​e​ ​u​n​d​o​n​e​.
+		 */
+		DeleteAccountParagraph: string
+		/**
 		 * M​a​n​a​g​e​ ​S​u​b​s​c​r​i​p​t​i​o​n
 		 */
 		ManageSubscriptionTitle: string
@@ -5253,6 +5269,22 @@ export type TranslationFunctions = {
 		 * Subscription Cancellation
 		 */
 		SubscriptionCancellationTitle: () => LocalizedString
+		/**
+		 * Delete
+		 */
+		DeleteButton: () => LocalizedString
+		/**
+		 * Request Deletion
+		 */
+		RequestDeletionButton: () => LocalizedString
+		/**
+		 * Delete Account
+		 */
+		DeleteAccountTitle: () => LocalizedString
+		/**
+		 * This action is permanent and cannot be undone.
+		 */
+		DeleteAccountParagraph: () => LocalizedString
 		/**
 		 * Manage Subscription
 		 */

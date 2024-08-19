@@ -1,23 +1,22 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import ProductIdBadge from '$components/badges/ProductIdBadge.svelte';
-	import LL, { locale } from '$i18n/i18n-svelte';
-	import { userSummary } from '$ts/stores/user/summary';
-	import Button from '$components/primitives/buttons/Button.svelte';
-	import { isGalleryAdmin, isSuperAdmin } from '$ts/helpers/admin/roles';
-	import DropdownItem from '$components/primitives/dropdown/DropdownItem.svelte';
-	import IconWrench from '$components/icons/IconWrench.svelte';
-	import IconUser from '$components/icons/IconUser.svelte';
-	import { logSignOut } from '$ts/helpers/loggers';
-	import IconSignOut from '$components/icons/IconSignOut.svelte';
-	import { appVersion } from '$ts/stores/appVersion';
-	import IconSettings from '$components/icons/IconSettings.svelte';
-	import type { TAccountDropdownPage } from '$components/accountMenu/types';
 	import PageWrapper from '$components/accountMenu/PageWrapper.svelte';
-	import IconCommandLine from '$components/icons/IconCommandLine.svelte';
+	import type { TAccountDropdownPage } from '$components/accountMenu/types';
+	import ProductIdBadge from '$components/badges/ProductIdBadge.svelte';
 	import IconProfile from '$components/icons/IconProfile.svelte';
+	import IconSettings from '$components/icons/IconSettings.svelte';
+	import IconSignOut from '$components/icons/IconSignOut.svelte';
 	import IconToken from '$components/icons/IconToken.svelte';
+	import IconUser from '$components/icons/IconUser.svelte';
+	import IconWrench from '$components/icons/IconWrench.svelte';
+	import Button from '$components/primitives/buttons/Button.svelte';
+	import DropdownItem from '$components/primitives/dropdown/DropdownItem.svelte';
+	import LL, { locale } from '$i18n/i18n-svelte';
 	import { sessionStore, supabaseStore } from '$ts/constants/supabase';
+	import { isGalleryAdmin, isSuperAdmin } from '$ts/helpers/admin/roles';
+	import { logSignOut } from '$ts/helpers/loggers';
+	import { appVersion } from '$ts/stores/appVersion';
+	import { userSummary } from '$ts/stores/user/summary';
 
 	export let setAccountMenuDropdownPage: (p: TAccountDropdownPage) => void;
 	export let closeMenu: () => void;

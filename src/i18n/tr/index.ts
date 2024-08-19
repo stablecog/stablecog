@@ -632,6 +632,10 @@ const tr: Translation = {
 		SubscriptionStatusTitle: 'Abonelik Durumu',
 		SubscriptionRenewalTitle: 'Abonelik Yenilenmesi',
 		SubscriptionCancellationTitle: 'Abonelik İptali',
+		DeleteButton: 'Sil',
+		RequestDeletionButton: 'Silme Talep Et',
+		DeleteAccountTitle: 'Üyeliği Sil',
+		DeleteAccountParagraph: 'Bu işlem kalıcıdır ve geri alınamaz.',
 		ManageSubscriptionTitle: 'Aboneliği Yönet',
 		ManageTitle: 'Yönet',
 		Apps: {

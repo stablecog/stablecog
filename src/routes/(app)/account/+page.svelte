@@ -275,6 +275,26 @@
 					/>
 				</div>
 				<div class="h-2px w-full bg-c-bg-secondary" />
+				<div
+					id="delete"
+					class="flex w-full flex-wrap items-center justify-between gap-4 border-2 border-c-danger/25 px-4 py-5 md:px-5"
+				>
+					<div class="flex flex-col px-1 md:-my-0.75 md:max-w-128">
+						<p class="font-semibold text-c-danger/75">{$LL.Account.DeleteAccountTitle()}</p>
+						<p class="mt-0.5 text-c-on-bg/75">{$LL.Account.DeleteAccountParagraph()}</p>
+					</div>
+					<Button
+						noPadding
+						type="danger"
+						class="w-full px-4.5 py-3 md:-my-0.75 md:w-auto"
+						size="sm"
+						target="_blank"
+						href="mailto:privacy@stablecog.com?subject=Delete%20my%20account&body=Please%20delete%20my%20account."
+					>
+						{$LL.Account.RequestDeletionButton()}
+					</Button>
+				</div>
+				<div class="h-2px w-full bg-c-bg-secondary" />
 				<div class="flex w-full flex-wrap items-stretch">
 					<DropdownItem href="/generate" class="w-full md:w-auto md:flex-1">
 						<div

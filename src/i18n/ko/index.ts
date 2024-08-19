@@ -605,6 +605,10 @@ const ko: Translation = {
 		SubscriptionStatusTitle: 'Subscription Status',
 		SubscriptionRenewalTitle: 'Subscription Renewal',
 		SubscriptionCancellationTitle: 'Subscription Cancellation',
+		DeleteButton: 'Delete',
+		RequestDeletionButton: 'Request Deletion',
+		DeleteAccountTitle: 'Delete Account',
+		DeleteAccountParagraph: 'This action is permanent and cannot be undone.',
 		ManageSubscriptionTitle: 'Manage Subscription',
 		ManageTitle: 'Manage',
 		Apps: {
