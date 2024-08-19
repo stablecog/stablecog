@@ -322,7 +322,7 @@
 						>
 							{$LL.SignIn.ContinueWithProviderButton({ provider: 'Google' })}
 						</ButtonOAuth>
-						<!-- <ButtonOAuth
+						<ButtonOAuth
 							withSpinner
 							disabled={$signInCardStatus === 'loading'}
 							loading={$signInCardStatus === 'loading' && provider === 'apple'}
@@ -333,7 +333,7 @@
 							<p class="min-w-0 flex-1">
 								{$LL.SignIn.ContinueWithProviderButton({ provider: 'Apple' })}
 							</p>
-						</ButtonOAuth> -->
+						</ButtonOAuth>
 						<ButtonOAuth
 							withSpinner
 							disabled={$signInCardStatus === 'loading'}
