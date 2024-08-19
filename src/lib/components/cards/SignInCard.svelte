@@ -104,7 +104,7 @@
 		provider = prov;
 		console.log('Signing in with', prov, $signInCardStatus);
 		await tick();
-		setTimeout(async () => {
+		try {
 			const { data: sData, error: sError } = await $supabaseStore.auth.signInWithOAuth({
 				provider: prov,
 				options: {
@@ -120,7 +120,11 @@
 				return;
 			}
 			console.log(sData);
-		});
+		} catch (error) {
+			console.log(error);
+			signInCardStatus.set('error');
+			errorText = $LL.Error.SomethingWentWrong();
+		}
 	}
 
 	const docRoutes = [
