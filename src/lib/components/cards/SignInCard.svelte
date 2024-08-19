@@ -102,6 +102,7 @@
 		}
 		signInCardStatus.set('loading');
 		provider = prov;
+		console.log($page.url.origin);
 		const { data: sData, error: sError } = await $supabaseStore.auth.signInWithOAuth({
 			provider: prov,
 			options: {
