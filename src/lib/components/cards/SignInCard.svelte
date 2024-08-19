@@ -19,7 +19,7 @@
 	import { userSummary } from '$ts/stores/user/summary';
 	import { wantsEmail } from '$ts/stores/user/wantsEmail';
 	import type { Provider } from '@supabase/supabase-js';
-	import { onDestroy, onMount } from 'svelte';
+	import { onDestroy, onMount, tick } from 'svelte';
 	import { quadOut } from 'svelte/easing';
 	import { writable } from 'svelte/store';
 
@@ -102,7 +102,7 @@
 		}
 		signInCardStatus.set('loading');
 		provider = prov;
-		console.log($page.url.origin);
+		await tick();
 		const { data: sData, error: sError } = await $supabaseStore.auth.signInWithOAuth({
 			provider: prov,
 			options: {
