@@ -60,7 +60,7 @@
 				: provider === 'discord'
 					? 'bg-[#4854d7]'
 					: provider === 'apple'
-						? 'bg-[#252542]'
+						? 'bg-[#44445C]'
 						: 'bg-c-secondary'
 			: provider === 'google'
 				? 'bg-white'
@@ -82,7 +82,7 @@
 					: provider === 'discord'
 						? 'bg-[#4854d7]'
 						: provider === 'apple'
-							? 'bg-[#252542]'
+							? 'bg-[#44445C]'
 							: 'bg-c-secondary'} not-touch:group-enabled:group-hover:translate-x-0"
 			/>
 		</div>
@@ -147,7 +147,7 @@
 				: provider === 'discord'
 					? 'bg-[#4854d7]'
 					: provider === 'apple'
-						? 'bg-[#252542]'
+						? 'bg-[#44445C]'
 						: 'bg-c-secondary'
 			: provider === 'google'
 				? 'bg-white'
@@ -169,7 +169,7 @@
 					: provider === 'discord'
 						? 'bg-[#4854d7]'
 						: provider === 'apple'
-							? 'bg-[#252542]'
+							? 'bg-[#44445C]'
 							: 'bg-c-secondary'} not-touch:group-enabled:group-hover:translate-x-0"
 			/>
 		</div>
