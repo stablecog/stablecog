@@ -102,22 +102,25 @@
 		}
 		signInCardStatus.set('loading');
 		provider = prov;
+		console.log('Signing in with', prov, $signInCardStatus);
 		await tick();
-		const { data: sData, error: sError } = await $supabaseStore.auth.signInWithOAuth({
-			provider: prov,
-			options: {
-				redirectTo: `${$page.url.origin}/auth/callback?rd_to=${
-					redirectTo ? encodeURIComponent(redirectTo) : '/'
-				}`
+		setTimeout(async () => {
+			const { data: sData, error: sError } = await $supabaseStore.auth.signInWithOAuth({
+				provider: prov,
+				options: {
+					redirectTo: `${$page.url.origin}/auth/callback?rd_to=${
+						redirectTo ? encodeURIComponent(redirectTo) : '/'
+					}`
+				}
+			});
+			if (sError) {
+				console.log(sError);
+				signInCardStatus.set('error');
+				errorText = $LL.Error.InvalidCode();
+				return;
 			}
+			console.log(sData);
 		});
-		if (sError) {
-			console.log(sError);
-			signInCardStatus.set('error');
-			errorText = $LL.Error.InvalidCode();
-			return;
-		}
-		console.log(sData);
 	}
 
 	const docRoutes = [
