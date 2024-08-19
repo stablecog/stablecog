@@ -52,47 +52,54 @@
 		}
 		signInCardStatus.set('loading');
 		provider = 'email';
-		const res = await fetch(`${apiUrl.origin}/v1/email/check`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				email
-			})
-		});
-		if (!res.ok) {
-			console.log('Error with sign in', res);
+		try {
+			const res = await fetch(`${apiUrl.origin}/v1/email/check`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					email
+				})
+			});
+			if (!res.ok) {
+				console.log('Error with sign in', res);
+				signInCardStatus.set('error');
+				errorText = $LL.Error.SomethingWentWrong();
+				return;
+			}
+			const resJSON: { allowed: boolean } = await res.json();
+			if (!resJSON.allowed) {
+				signInCardStatus.set('error');
+				errorText = $LL.Error.EmailNotAllowed();
+				return;
+			}
+			const { data: sData, error: sError } = await $supabaseStore.auth.signInWithOtp({
+				email,
+				options: {
+					emailRedirectTo: redirectTo ? encodeURIComponent(redirectTo) : '/'
+				}
+			});
+			if (sError) {
+				console.log(sError);
+				signInCardStatus.set('error');
+				if (
+					sError.message ===
+					'For security purposes, you can only request this once every 60 seconds'
+				) {
+					errorText = $LL.Error.OnceEvery60Seconds();
+				} else {
+					errorText = $LL.Error.SomethingWentWrong();
+				}
+				return;
+			}
+			console.log(sData);
+			signInCardStatus.set('sent-otp');
+		} catch (error) {
+			console.log(error);
 			signInCardStatus.set('error');
 			errorText = $LL.Error.SomethingWentWrong();
-			return;
 		}
-		const resJSON: { allowed: boolean } = await res.json();
-		if (!resJSON.allowed) {
-			signInCardStatus.set('error');
-			errorText = $LL.Error.EmailNotAllowed();
-			return;
-		}
-		const { data: sData, error: sError } = await $supabaseStore.auth.signInWithOtp({
-			email,
-			options: {
-				emailRedirectTo: redirectTo ? encodeURIComponent(redirectTo) : '/'
-			}
-		});
-		if (sError) {
-			console.log(sError);
-			signInCardStatus.set('error');
-			if (
-				sError.message === 'For security purposes, you can only request this once every 60 seconds'
-			) {
-				errorText = $LL.Error.OnceEvery60Seconds();
-			} else {
-				errorText = $LL.Error.SomethingWentWrong();
-			}
-			return;
-		}
-		console.log(sData);
-		signInCardStatus.set('sent-otp');
 	}
 
 	async function signInWithOAuth(prov: Provider) {
