@@ -60,14 +60,14 @@
 				: provider === 'discord'
 					? 'bg-[#4854d7]'
 					: provider === 'apple'
-						? 'bg-[#44445C]'
+						? 'bg-[#3D3D3D]'
 						: 'bg-c-secondary'
 			: provider === 'google'
 				? 'bg-white'
 				: provider === 'discord'
 					? 'bg-[#5865F2]'
 					: provider === 'apple'
-						? 'bg-[#373752]'
+						? 'bg-[#333333]'
 						: 'bg-c-primary'} {classes}"
 	>
 		<div
@@ -82,7 +82,7 @@
 					: provider === 'discord'
 						? 'bg-[#4854d7]'
 						: provider === 'apple'
-							? 'bg-[#44445C]'
+							? 'bg-[#3D3D3D]'
 							: 'bg-c-secondary'} not-touch:group-enabled:group-hover:translate-x-0"
 			/>
 		</div>
@@ -147,14 +147,14 @@
 				: provider === 'discord'
 					? 'bg-[#4854d7]'
 					: provider === 'apple'
-						? 'bg-[#44445C]'
+						? 'bg-[#3D3D3D]'
 						: 'bg-c-secondary'
 			: provider === 'google'
 				? 'bg-white'
 				: provider === 'discord'
 					? 'bg-[#5865F2]'
 					: provider === 'apple'
-						? 'bg-[#373752]'
+						? 'bg-[#333333]'
 						: 'bg-c-primary'} {classes}"
 	>
 		<div
@@ -169,7 +169,7 @@
 					: provider === 'discord'
 						? 'bg-[#4854d7]'
 						: provider === 'apple'
-							? 'bg-[#44445C]'
+							? 'bg-[#3D3D3D]'
 							: 'bg-c-secondary'} not-touch:group-enabled:group-hover:translate-x-0"
 			/>
 		</div>
