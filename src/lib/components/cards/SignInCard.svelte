@@ -1,28 +1,27 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import Button from '$components/primitives/buttons/Button.svelte';
-	import ButtonOAuth from '$components/primitives/buttons/ButtonOAuth.svelte';
-	import DropdownItem from '$components/primitives/dropdown/DropdownItem.svelte';
+	import WantsEmailCard from '$components/cards/WantsEmailCard.svelte';
 	import ErrorLine from '$components/error/ErrorLine.svelte';
 	import IconBack from '$components/icons/IconBack.svelte';
 	import IconEmail from '$components/icons/IconEmail.svelte';
+	import IconPassword from '$components/icons/IconPassword.svelte';
+	import Button from '$components/primitives/buttons/Button.svelte';
+	import ButtonOAuth from '$components/primitives/buttons/ButtonOAuth.svelte';
+	import DropdownItem from '$components/primitives/dropdown/DropdownItem.svelte';
 	import Input from '$components/primitives/Input.svelte';
+	import PinInput from '$components/primitives/PinInput.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
-	import type { Provider } from '@supabase/supabase-js';
-	import { quadOut } from 'svelte/easing';
-	import IconPassword from '$components/icons/IconPassword.svelte';
-	import { wantsEmail } from '$ts/stores/user/wantsEmail';
-	import { onDestroy, onMount } from 'svelte';
-	import WantsEmailCard from '$components/cards/WantsEmailCard.svelte';
-	import { userSummary } from '$ts/stores/user/summary';
+	import { apiUrl } from '$ts/constants/main';
+	import { sessionStore, supabaseStore } from '$ts/constants/supabase';
 	import { getUserSummary } from '$ts/helpers/user/user';
 	import { signInCardCodeSignInStatus, signInCardStatus } from '$ts/stores/signInCardState';
-	import { apiUrl } from '$ts/constants/main';
-	import PinInput from '$components/primitives/PinInput.svelte';
-	import { sessionStore, supabaseStore } from '$ts/constants/supabase';
+	import { userSummary } from '$ts/stores/user/summary';
+	import { wantsEmail } from '$ts/stores/user/wantsEmail';
+	import type { Provider } from '@supabase/supabase-js';
+	import { onDestroy, onMount } from 'svelte';
+	import { quadOut } from 'svelte/easing';
 	import { writable } from 'svelte/store';
-	import { negativePrompt } from '$ts/stores/generationSettings';
 
 	export let redirectTo: string | null = null;
 	export let isModal = false;
@@ -323,20 +322,18 @@
 						>
 							{$LL.SignIn.ContinueWithProviderButton({ provider: 'Google' })}
 						</ButtonOAuth>
-						{#if $negativePrompt === 'yekta'}
-							<ButtonOAuth
-								withSpinner
-								disabled={$signInCardStatus === 'loading'}
-								loading={$signInCardStatus === 'loading' && provider === 'apple'}
-								class="w-full"
-								onClick={() => signInWithOAuth('apple')}
-								provider="apple"
-							>
-								<p class="min-w-0 flex-1">
-									{$LL.SignIn.ContinueWithProviderButton({ provider: 'Apple' })}
-								</p>
-							</ButtonOAuth>
-						{/if}
+						<!-- <ButtonOAuth
+							withSpinner
+							disabled={$signInCardStatus === 'loading'}
+							loading={$signInCardStatus === 'loading' && provider === 'apple'}
+							class="w-full"
+							onClick={() => signInWithOAuth('apple')}
+							provider="apple"
+						>
+							<p class="min-w-0 flex-1">
+								{$LL.SignIn.ContinueWithProviderButton({ provider: 'Apple' })}
+							</p>
+						</ButtonOAuth> -->
 						<ButtonOAuth
 							withSpinner
 							disabled={$signInCardStatus === 'loading'}
