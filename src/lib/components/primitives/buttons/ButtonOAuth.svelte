@@ -52,17 +52,23 @@
 			? 'text-black'
 			: provider === 'discord'
 				? 'text-white'
-				: 'text-c-on-primary'} {loading
+				: provider === 'apple'
+					? 'text-white'
+					: 'text-c-on-primary'} {loading
 			? provider === 'google'
 				? 'bg-indigo-200'
 				: provider === 'discord'
 					? 'bg-[#4854d7]'
-					: 'bg-c-secondary'
+					: provider === 'apple'
+						? 'bg-[#303040]'
+						: 'bg-c-secondary'
 			: provider === 'google'
 				? 'bg-white'
 				: provider === 'discord'
 					? 'bg-[#5865F2]'
-					: 'bg-c-primary'} {classes}"
+					: provider === 'apple'
+						? 'bg-[#39394D]'
+						: 'bg-c-primary'} {classes}"
 	>
 		<div
 			style="width: {buttonSize}px; height: {buttonSize}px;"
@@ -75,13 +81,18 @@
 					? 'bg-indigo-200'
 					: provider === 'discord'
 						? 'bg-[#4854d7]'
-						: 'bg-c-secondary'} not-touch:group-enabled:group-hover:translate-x-0"
+						: provider === 'apple'
+							? 'bg-[#303040]'
+							: 'bg-c-secondary'} not-touch:group-enabled:group-hover:translate-x-0"
 			/>
 		</div>
 		<div class="relative w-full">
 			{#if withSpinner}
 				<div class="flex max-w-full items-center justify-between gap-2">
-					<IconOAuthProvider {provider} class="-my-1 h-7 w-7 flex-shrink-0" />
+					<IconOAuthProvider
+						{provider}
+						class="-my-1 h-7 w-7 flex-shrink-0 {provider === 'apple' ? '-translate-y-[5%]' : ''}"
+					/>
 					<div class="min-w-0 flex-1 px-1">
 						<slot />
 					</div>
@@ -100,7 +111,10 @@
 				</div>
 			{:else}
 				<div class="flex max-w-full items-center justify-between gap-2">
-					<IconOAuthProvider {provider} class="-my-1 h-7 w-7 flex-shrink-0" />
+					<IconOAuthProvider
+						{provider}
+						class="-my-1 h-7 w-7 flex-shrink-0 {provider === 'apple' ? '-translate-y-[5%]' : ''}"
+					/>
 					<div class="min-w-0 flex-1 px-1">
 						<slot />
 					</div>
@@ -131,17 +145,23 @@
 			? 'text-black'
 			: provider === 'discord'
 				? 'text-white'
-				: 'text-c-on-primary'} {loading
+				: provider === 'apple'
+					? 'text-white'
+					: 'text-c-on-primary'} {loading
 			? provider === 'google'
 				? 'bg-indigo-200'
 				: provider === 'discord'
 					? 'bg-[#4854d7]'
-					: 'bg-c-secondary'
+					: provider === 'apple'
+						? 'bg-[#303040]'
+						: 'bg-c-secondary'
 			: provider === 'google'
 				? 'bg-white'
 				: provider === 'discord'
 					? 'bg-[#5865F2]'
-					: 'bg-c-primary'} {classes}"
+					: provider === 'apple'
+						? 'bg-[#39394D]'
+						: 'bg-c-primary'} {classes}"
 	>
 		<div
 			style="width: {buttonSize}px; height: {buttonSize}px;"
@@ -154,7 +174,9 @@
 					? 'bg-indigo-200'
 					: provider === 'discord'
 						? 'bg-[#4854d7]'
-						: 'bg-c-secondary'} not-touch:group-enabled:group-hover:translate-x-0"
+						: provider === 'apple'
+							? 'bg-[#303040]'
+							: 'bg-c-secondary'} not-touch:group-enabled:group-hover:translate-x-0"
 			/>
 		</div>
 		<div class="relative w-full">
@@ -165,7 +187,10 @@
 						: 'scale-100 opacity-100'}"
 				>
 					<div class="flex max-w-full items-center justify-between gap-2">
-						<IconOAuthProvider {provider} class="-my-1 h-7 w-7 flex-shrink-0" />
+						<IconOAuthProvider
+							{provider}
+							class="-my-1 h-7 w-7 flex-shrink-0 {provider === 'apple' ? '-translate-y-[5%]' : ''}"
+						/>
 						<div class="min-w-0 flex-1 px-1">
 							<slot />
 						</div>
@@ -185,7 +210,10 @@
 				</div>
 			{:else}
 				<div class="flex max-w-full items-center justify-between gap-2">
-					<IconOAuthProvider {provider} class="-my-1 h-7 w-7 flex-shrink-0" />
+					<IconOAuthProvider
+						{provider}
+						class="-my-1 h-7 w-7 flex-shrink-0 {provider === 'apple' ? '-translate-y-[5%]' : ''}"
+					/>
 					<div class="min-w-0 flex-1 px-1">
 						<slot />
 					</div>

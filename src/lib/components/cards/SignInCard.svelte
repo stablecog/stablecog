@@ -22,6 +22,7 @@
 	import PinInput from '$components/primitives/PinInput.svelte';
 	import { sessionStore, supabaseStore } from '$ts/constants/supabase';
 	import { writable } from 'svelte/store';
+	import { negativePrompt } from '$ts/stores/generationSettings';
 
 	export let redirectTo: string | null = null;
 	export let isModal = false;
@@ -46,6 +47,7 @@
 			errorText = $LL.Error.InvalidEmail();
 			return;
 		}
+
 		if ($wantsEmailChecked) {
 			wantsEmail.set(true);
 		}
@@ -321,6 +323,20 @@
 						>
 							{$LL.SignIn.ContinueWithProviderButton({ provider: 'Google' })}
 						</ButtonOAuth>
+						{#if $negativePrompt === 'yekta'}
+							<ButtonOAuth
+								withSpinner
+								disabled={$signInCardStatus === 'loading'}
+								loading={$signInCardStatus === 'loading' && provider === 'apple'}
+								class="w-full"
+								onClick={() => signInWithOAuth('apple')}
+								provider="apple"
+							>
+								<p class="min-w-0 flex-1">
+									{$LL.SignIn.ContinueWithProviderButton({ provider: 'Apple' })}
+								</p>
+							</ButtonOAuth>
+						{/if}
 						<ButtonOAuth
 							withSpinner
 							disabled={$signInCardStatus === 'loading'}
