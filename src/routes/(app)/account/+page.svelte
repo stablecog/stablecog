@@ -280,7 +280,7 @@
 					class="flex w-full flex-wrap items-center justify-between gap-4 bg-c-danger/5 px-4 py-5 md:px-5"
 				>
 					<div class="flex flex-col px-1 md:-my-0.75 md:max-w-128">
-						<p class="font-semibold text-c-danger/85">{$LL.Account.DeleteAccountTitle()}</p>
+						<p class="font-semibold text-c-danger">{$LL.Account.DeleteAccountTitle()}</p>
 						<p class="mt-0.5 text-c-on-bg/75">{$LL.Account.DeleteAccountParagraph()}</p>
 					</div>
 					<Button
