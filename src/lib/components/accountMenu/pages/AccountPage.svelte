@@ -6,6 +6,7 @@
 	import IconProfile from '$components/icons/IconProfile.svelte';
 	import IconSettings from '$components/icons/IconSettings.svelte';
 	import IconSignOut from '$components/icons/IconSignOut.svelte';
+	import IconSupport from '$components/icons/IconSupport.svelte';
 	import IconToken from '$components/icons/IconToken.svelte';
 	import IconUser from '$components/icons/IconUser.svelte';
 	import IconWrench from '$components/icons/IconWrench.svelte';
@@ -106,6 +107,17 @@
 					transition not-touch:group-hover:text-c-primary"
 				>
 					{$LL.Settings.Title()}
+				</p>
+			</div>
+		</DropdownItem>
+		<DropdownItem href="/support" onClick={closeMenu}>
+			<div class="flex min-w-0 flex-1 items-center justify-start gap-2.5">
+				<IconSupport class="text-c-text h-6 w-6 transition not-touch:group-hover:text-c-primary" />
+				<p
+					class="min-w-0 flex-1 overflow-hidden overflow-ellipsis text-left text-c-on-bg
+					transition not-touch:group-hover:text-c-primary"
+				>
+					{$LL.Support.PageTitle()}
 				</p>
 			</div>
 		</DropdownItem>

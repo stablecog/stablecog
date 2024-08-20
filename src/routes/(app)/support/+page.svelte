@@ -20,7 +20,7 @@
 		<section id="support" class="flex w-full flex-col items-center justify-start">
 			<Logo class="w-16" />
 			<h1 class="mt-5 text-center text-4xl font-bold">{$LL.Support.PageTitle()}</h1>
-			<p class="mt-4 max-w-lg text-center leading-relaxed text-c-on-bg/75">
+			<p class="mt-4 max-w-lg text-balance text-center leading-relaxed text-c-on-bg/75">
 				{$LL.Support.PageParagraph()}
 			</p>
 			<div
