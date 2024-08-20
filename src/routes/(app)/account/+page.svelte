@@ -274,13 +274,13 @@
 						padding="p-5 md:px-6"
 					/>
 				</div>
-				<div class="h-2px w-full bg-c-bg-secondary" />
+				<div class="h-2px w-full bg-c-danger/15" />
 				<div
 					id="delete"
-					class="flex w-full flex-wrap items-center justify-between gap-4 border-2 border-c-danger/25 px-4 py-5 md:px-5"
+					class="flex w-full flex-wrap items-center justify-between gap-4 bg-c-danger/5 px-4 py-5 md:px-5"
 				>
 					<div class="flex flex-col px-1 md:-my-0.75 md:max-w-128">
-						<p class="font-semibold text-c-danger/75">{$LL.Account.DeleteAccountTitle()}</p>
+						<p class="font-semibold text-c-danger/85">{$LL.Account.DeleteAccountTitle()}</p>
 						<p class="mt-0.5 text-c-on-bg/75">{$LL.Account.DeleteAccountParagraph()}</p>
 					</div>
 					<Button
@@ -294,7 +294,7 @@
 						{$LL.Account.RequestDeletionButton()}
 					</Button>
 				</div>
-				<div class="h-2px w-full bg-c-bg-secondary" />
+				<div class="h-2px w-full bg-c-danger/15" />
 				<div class="flex w-full flex-wrap items-stretch">
 					<DropdownItem href="/generate" class="w-full md:w-auto md:flex-1">
 						<div
