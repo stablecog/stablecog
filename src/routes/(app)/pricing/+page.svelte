@@ -602,13 +602,13 @@
 				<div class="h-[1vh] w-full" />
 			</section>
 		{/if}
-		<div class="-mx-2 mt-5 flex w-[calc(100%+1rem)] justify-center md:mt-10">
-			<div class="h-2px w-full max-w-5xl rounded-full bg-c-bg-secondary" />
+		<div class="mt-5 w-full max-w-5xl md:mt-10 xl:max-w-7xl xl:px-4">
+			<div class="h-2px w-full rounded-full bg-c-bg-secondary" />
 		</div>
 		<section id="faq" class="flex w-full flex-col items-center pt-5">
-			<div class="flex max-w-5xl flex-wrap items-start justify-start">
+			<div class="flex max-w-5xl flex-wrap items-start justify-start xl:max-w-7xl xl:px-4">
 				{#each faqItems as item}
-					<div id={item.id} class="w-full px-0 py-4 md:w-1/2 md:px-5">
+					<div id={item.id} class="w-full px-0 py-4 md:w-1/2 md:px-5 xl:w-1/3">
 						<h5 class="font-semibold">{item.question}</h5>
 						{#if item.isHTML}
 							<p class="mt-1 text-c-on-bg/75">{@html item.answer}</p>
@@ -619,8 +619,8 @@
 				{/each}
 			</div>
 		</section>
-		<div class="-mx-2 mt-5 flex w-[calc(100%+1rem)] justify-center md:mt-6">
-			<div class="h-2px w-full max-w-5xl rounded-full bg-c-bg-secondary" />
+		<div class="mt-5 w-full max-w-5xl md:mt-6 xl:max-w-7xl xl:px-4">
+			<div class="h-2px w-full rounded-full bg-c-bg-secondary" />
 		</div>
 	</div>
 </PageWrapper>

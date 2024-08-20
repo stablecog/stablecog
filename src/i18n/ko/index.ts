@@ -874,7 +874,7 @@ const ko: Translation = {
 			CommercialUse: {
 				Question: 'Can I use the images commercially?',
 				Answer:
-					'If you create an image while you are subscribed to a plan (Starter, Pro or Ultimate), you can use that image commercially even if you cancel your plan afterwards at some point. If you are on the free plan, the images you create are for personal use only.'
+					'If you create an image while you are subscribed to a plan (Starter, Pro or Ultimate), you can use that image commercially even if you cancel your plan afterwards. If you are on the free plan, the images you create are for personal use only.'
 			},
 			MoreCredits: {
 				Question: 'Can I buy more credits?',

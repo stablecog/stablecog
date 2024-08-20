@@ -2683,7 +2683,7 @@ type RootTranslation = {
 				 */
 				Question: string
 				/**
-				 * I​f​ ​y​o​u​ ​c​r​e​a​t​e​ ​a​n​ ​i​m​a​g​e​ ​w​h​i​l​e​ ​y​o​u​ ​a​r​e​ ​s​u​b​s​c​r​i​b​e​d​ ​t​o​ ​a​ ​p​l​a​n​ ​(​S​t​a​r​t​e​r​,​ ​P​r​o​ ​o​r​ ​U​l​t​i​m​a​t​e​)​,​ ​y​o​u​ ​c​a​n​ ​u​s​e​ ​t​h​a​t​ ​i​m​a​g​e​ ​c​o​m​m​e​r​c​i​a​l​l​y​ ​e​v​e​n​ ​i​f​ ​y​o​u​ ​c​a​n​c​e​l​ ​y​o​u​r​ ​p​l​a​n​ ​a​f​t​e​r​w​a​r​d​s​ ​a​t​ ​s​o​m​e​ ​p​o​i​n​t​.​ ​I​f​ ​y​o​u​ ​a​r​e​ ​o​n​ ​t​h​e​ ​f​r​e​e​ ​p​l​a​n​,​ ​t​h​e​ ​i​m​a​g​e​s​ ​y​o​u​ ​c​r​e​a​t​e​ ​a​r​e​ ​f​o​r​ ​p​e​r​s​o​n​a​l​ ​u​s​e​ ​o​n​l​y​.
+				 * I​f​ ​y​o​u​ ​c​r​e​a​t​e​ ​a​n​ ​i​m​a​g​e​ ​w​h​i​l​e​ ​y​o​u​ ​a​r​e​ ​s​u​b​s​c​r​i​b​e​d​ ​t​o​ ​a​ ​p​l​a​n​ ​(​S​t​a​r​t​e​r​,​ ​P​r​o​ ​o​r​ ​U​l​t​i​m​a​t​e​)​,​ ​y​o​u​ ​c​a​n​ ​u​s​e​ ​t​h​a​t​ ​i​m​a​g​e​ ​c​o​m​m​e​r​c​i​a​l​l​y​ ​e​v​e​n​ ​i​f​ ​y​o​u​ ​c​a​n​c​e​l​ ​y​o​u​r​ ​p​l​a​n​ ​a​f​t​e​r​w​a​r​d​s​.​ ​I​f​ ​y​o​u​ ​a​r​e​ ​o​n​ ​t​h​e​ ​f​r​e​e​ ​p​l​a​n​,​ ​t​h​e​ ​i​m​a​g​e​s​ ​y​o​u​ ​c​r​e​a​t​e​ ​a​r​e​ ​f​o​r​ ​p​e​r​s​o​n​a​l​ ​u​s​e​ ​o​n​l​y​.
 				 */
 				Answer: string
 			}
@@ -6056,7 +6056,7 @@ export type TranslationFunctions = {
 				 */
 				Question: () => LocalizedString
 				/**
-				 * If you create an image while you are subscribed to a plan (Starter, Pro or Ultimate), you can use that image commercially even if you cancel your plan afterwards at some point. If you are on the free plan, the images you create are for personal use only.
+				 * If you create an image while you are subscribed to a plan (Starter, Pro or Ultimate), you can use that image commercially even if you cancel your plan afterwards. If you are on the free plan, the images you create are for personal use only.
 				 */
 				Answer: () => LocalizedString
 			}
