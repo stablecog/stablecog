@@ -280,7 +280,7 @@
 				</div>
 				<div class="h-2px w-full bg-c-bg-secondary" />
 				<div class="flex w-full flex-wrap items-stretch">
-					<DropdownItem href="/generate" class="w-full md:w-auto md:flex-1">
+					<DropdownItem href="/generate" class="w-full md:w-auto md:flex-1" rounding="rounded-xl">
 						<div
 							class="flex items-center justify-center gap-2 text-c-on-bg transition
 							not-touch:group-hover:text-c-primary"
@@ -290,7 +290,7 @@
 						</div>
 					</DropdownItem>
 					<div class="h-2px w-full bg-c-bg-secondary md:h-auto md:w-2px" />
-					<DropdownItem onClick={signOut} class="w-full md:w-auto md:flex-1">
+					<DropdownItem onClick={signOut} class="w-full md:w-auto md:flex-1" rounding="rounded-xl">
 						<div
 							class="flex items-center justify-center gap-2 text-c-on-bg transition
 							not-touch:group-hover:text-c-primary"

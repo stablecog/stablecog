@@ -14,6 +14,7 @@
 	export let noHoverEffectPadding = false;
 	export let equalHoverEffectPadding = false;
 	export { classes as class };
+	export let rounding = 'rounded-lg';
 	let classes = 'w-full';
 </script>
 
@@ -42,10 +43,10 @@
 					? 'p-1'
 					: 'px-1 py-1'}"
 		>
-			<div class="h-full w-full overflow-hidden {noHoverEffectPadding ? '' : 'rounded-lg'}">
+			<div class="h-full w-full overflow-hidden {noHoverEffectPadding ? '' : rounding}">
 				<div
 					class="aspect-square h-full w-full origin-left -translate-x-full transform bg-c-primary/10
-					opacity-0 {noHoverEffectPadding ? '' : 'rounded-lg'} {isSelected ? 'translate-x-0 opacity-100' : ''}
+					opacity-0 {noHoverEffectPadding ? '' : rounding} {isSelected ? 'translate-x-0 opacity-100' : ''}
 					transition not-touch:group-hover:translate-x-0 not-touch:group-hover:opacity-100"
 				/>
 			</div>
@@ -76,10 +77,10 @@
 						? 'p-1'
 						: 'px-1 py-1'}"
 			>
-				<div class="h-full w-full overflow-hidden {noHoverEffectPadding ? '' : 'rounded-lg'}">
+				<div class="h-full w-full overflow-hidden {noHoverEffectPadding ? '' : rounding}">
 					<div
 						class="aspect-square h-full w-full origin-left -translate-x-full transform bg-c-primary/10
-						opacity-0 {noHoverEffectPadding ? '' : 'rounded-lg'} {isSelected ? 'translate-x-0 opacity-100' : ''}
+						opacity-0 {noHoverEffectPadding ? '' : rounding} {isSelected ? 'translate-x-0 opacity-100' : ''}
 						transition not-touch:group-hover:translate-x-0 not-touch:group-hover:opacity-100"
 					/>
 				</div>
