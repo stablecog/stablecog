@@ -2,6 +2,7 @@
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 
 	export let overflowXScroll = true;
+	export let ringClass = 'ring-2 ring-c-bg-secondary';
 
 	let containerWidth: number | undefined;
 	let scrollContainerScrollLeft = 0;
@@ -25,7 +26,7 @@
 <div
 	bind:clientWidth={containerWidth}
 	class="relative z-0 flex w-full flex-col items-start justify-start overflow-hidden rounded-2xl
-	bg-c-bg shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-secondary"
+	bg-c-bg shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] {ringClass}"
 >
 	<div
 		on:scroll={onScroll}

@@ -233,7 +233,11 @@
 						</p>
 					</AccountDetailLine>
 				{/if}
-				<AccountDetailLine id="manage" title={$LL.Account.ManageSubscriptionTitle()}>
+				<AccountDetailLine
+					id="manage"
+					title={$LL.Account.ManageSubscriptionTitle()}
+					titleClass="px-1 text-c-on-bg/75 -mt-1 md:mt-0"
+				>
 					{#if $userSummary?.product_id}
 						<div class="flex w-full flex-wrap items-center gap-2.5 md:-my-0.75 md:w-auto">
 							<Button
@@ -274,27 +278,7 @@
 						padding="p-5 md:px-6"
 					/>
 				</div>
-				<div class="h-2px w-full bg-c-danger/15" />
-				<div
-					id="delete"
-					class="flex w-full flex-wrap items-center justify-between gap-4 bg-c-danger/5 px-4 py-5 md:px-5"
-				>
-					<div class="flex flex-col px-1 md:-my-0.75 md:max-w-128">
-						<p class="font-semibold text-c-danger">{$LL.Account.DeleteAccountTitle()}</p>
-						<p class="mt-0.5 text-c-on-bg/75">{$LL.Account.DeleteAccountParagraph()}</p>
-					</div>
-					<Button
-						noPadding
-						type="danger"
-						class="w-full px-4.5 py-3 md:-my-0.75 md:w-auto"
-						size="sm"
-						target="_blank"
-						href="mailto:privacy@stablecog.com?subject=Delete%20my%20account&body=Please%20delete%20my%20account."
-					>
-						{$LL.Account.RequestDeletionButton()}
-					</Button>
-				</div>
-				<div class="h-2px w-full bg-c-danger/15" />
+				<div class="h-2px w-full bg-c-bg-secondary" />
 				<div class="flex w-full flex-wrap items-stretch">
 					<DropdownItem href="/generate" class="w-full md:w-auto md:flex-1">
 						<div
@@ -315,6 +299,28 @@
 							<p>{$LL.SignIn.SignOutButton()}</p>
 						</div>
 					</DropdownItem>
+				</div>
+			</AccountPageCard>
+			<div class="h-6" />
+			<AccountPageCard ringClass="ring-2 ring-c-danger/12">
+				<div
+					id="delete"
+					class="flex w-full flex-wrap items-center justify-between gap-4 px-4 py-5 md:px-5"
+				>
+					<div class="-mt-1 flex flex-col px-1 md:-my-0.75 md:max-w-128">
+						<p class="font-semibold text-c-danger">{$LL.Account.DeleteAccountTitle()}</p>
+						<p class="mt-0.5 text-c-on-bg/75">{$LL.Account.DeleteAccountParagraph()}</p>
+					</div>
+					<Button
+						noPadding
+						type="danger"
+						class="w-full px-4.5 py-3 md:-my-0.75 md:w-auto"
+						size="sm"
+						target="_blank"
+						href="mailto:privacy@stablecog.com?subject=Delete%20my%20account&body=Please%20delete%20my%20account."
+					>
+						{$LL.Account.RequestDeletionButton()}
+					</Button>
 				</div>
 			</AccountPageCard>
 		</div>
