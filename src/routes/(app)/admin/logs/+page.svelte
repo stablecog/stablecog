@@ -314,7 +314,7 @@
 	class="z-10 flex flex-1 flex-col items-center justify-start px-2 py-2 md:px-6 md:pb-6 md:pt-4 xl:flex-row xl:items-stretch xl:justify-center xl:gap-3"
 >
 	<div
-		class="mb-3 flex w-full max-w-5xl flex-wrap items-center justify-center gap-3 xl:w-60 xl:flex-col xl:justify-start {!$isSettingsOpen &&
+		class="mb-3 flex w-full max-w-4xl flex-wrap items-center justify-center gap-3 xl:w-60 xl:flex-col xl:justify-start {!$isSettingsOpen &&
 			'hidden xl:flex'} xl:flex-shrink-0"
 	>
 		<TabLikeFilterDropdown
@@ -351,7 +351,7 @@
 		/>
 	</div>
 	<!-- Log container -->
-	<div class="relative flex w-full max-w-5xl flex-grow flex-col items-center justify-start">
+	<div class="relative flex w-full max-w-4xl flex-grow flex-col items-center justify-start">
 		<div
 			class="absolute left-0 top-0 flex h-full w-full flex-col overflow-hidden rounded-2xl bg-c-bg ring-2 ring-c-bg-secondary"
 		>
