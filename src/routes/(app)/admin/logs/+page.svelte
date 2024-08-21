@@ -13,7 +13,6 @@
 	import IconUndo from '$components/icons/IconUndo.svelte';
 	import IconXMark from '$components/icons/IconXMark.svelte';
 	import SubtleButton from '$components/primitives/buttons/SubtleButton.svelte';
-	import TabLikeDropdown from '$components/primitives/tabBars/TabLikeDropdown.svelte';
 	import TabLikeFilterDropdown from '$components/primitives/tabBars/TabLikeFilterDropdown.svelte';
 	import TabLikeInput from '$components/primitives/tabBars/TabLikeInput.svelte';
 	import MetaTag from '$components/utils/MetaTag.svelte';
@@ -33,8 +32,10 @@
 	} from '$routes/(app)/admin/logs/helpers.js';
 	import { canonicalUrl } from '$ts/constants/main.js';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion.js';
+	import { throttle } from '$ts/helpers/general/throttle.js';
 	import type { TTab } from '$ts/types/main';
 	import { onMount } from 'svelte';
+	import { VList } from 'virtua/svelte';
 	import {
 		ArrayQueue,
 		ConstantBackoff,
@@ -42,8 +43,6 @@
 		WebsocketBuilder,
 		WebsocketEvent
 	} from 'websocket-ts';
-	import { VList } from 'virtua/svelte';
-	import { throttle } from '$ts/helpers/general/throttle.js';
 
 	export let data;
 
@@ -512,5 +511,5 @@
 		</div>
 	</div>
 	<!-- Spacer -->
-	<div class="max-w-59 hidden min-w-0 flex-1 lg:flex"></div>
+	<div class="hidden min-w-0 max-w-59 flex-1 lg:flex"></div>
 </div>
