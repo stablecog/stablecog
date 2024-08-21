@@ -313,9 +313,10 @@
 <div
 	class="z-10 flex flex-1 flex-col items-center justify-start px-2 py-2 md:px-5 md:pb-6 md:pt-4 lg:flex-row lg:items-stretch lg:justify-center"
 >
+	<!-- Filter options -->
 	<div
-		class="mb-3 flex w-full max-w-4xl flex-wrap items-center justify-center gap-3 lg:w-56 lg:flex-col lg:justify-start {!$isSettingsOpen &&
-			'hidden lg:flex'} lg:flex-shrink-0 lg:pr-3"
+		class="mb-3 flex w-full max-w-4xl flex-wrap items-center justify-center gap-3 lg:w-56 lg:flex-shrink-0 lg:flex-col lg:justify-start lg:pr-3 {!$isSettingsOpen &&
+			'hidden lg:flex'}"
 	>
 		<TabLikeFilterDropdown
 			nameIcon={IconApp}
@@ -510,5 +511,6 @@
 			</div>
 		</div>
 	</div>
+	<!-- Spacer -->
 	<div class="max-w-59 hidden min-w-0 flex-1 lg:flex"></div>
 </div>
