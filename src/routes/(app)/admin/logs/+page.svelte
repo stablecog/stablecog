@@ -311,11 +311,11 @@
 />
 
 <div
-	class="z-10 flex flex-1 flex-col items-center justify-start px-2 py-2 md:px-6 md:pb-6 md:pt-4 xl:flex-row xl:items-stretch xl:justify-center xl:gap-3"
+	class="z-10 flex flex-1 flex-col items-center justify-start px-2 py-2 md:px-5 md:pb-6 md:pt-4 lg:flex-row lg:items-stretch lg:justify-center"
 >
 	<div
-		class="mb-3 flex w-full max-w-4xl flex-wrap items-center justify-center gap-3 xl:w-60 xl:flex-col xl:justify-start {!$isSettingsOpen &&
-			'hidden xl:flex'} xl:flex-shrink-0"
+		class="mb-3 flex w-full max-w-4xl flex-wrap items-center justify-center gap-3 lg:w-56 lg:flex-col lg:justify-start {!$isSettingsOpen &&
+			'hidden lg:flex'} lg:flex-shrink-0 lg:pr-3"
 	>
 		<TabLikeFilterDropdown
 			nameIcon={IconApp}
@@ -323,7 +323,7 @@
 			nameTagline="({filteredSelectedApps.length}/{appOptions.length})"
 			bind:values={$selectedApps}
 			items={appOptions}
-			class="w-full flex-auto md:flex-1 xl:flex-none"
+			class="w-full flex-auto md:flex-1 lg:flex-none"
 		/>
 		<TabLikeFilterDropdown
 			nameIcon={IconServerOutline}
@@ -331,18 +331,18 @@
 			nameTagline="({$selectedWorkers.length}/{workerOptions.length})"
 			bind:values={$selectedWorkers}
 			items={workerOptions}
-			class="w-full flex-auto md:flex-1 xl:flex-none"
+			class="w-full flex-auto md:flex-1 lg:flex-none"
 		/>
 		<TabLikeFilterDropdown
 			nameIcon={IconPreferences}
 			name="Layout"
 			nameTagline="({filteredSelectedLayouts.length}/{layoutOptions.length})"
-			class="w-full flex-auto md:flex-1 xl:flex-none"
+			class="w-full flex-auto md:flex-1 lg:flex-none"
 			items={layoutOptions}
 			bind:values={$selectedLayouts}
 		/>
 		<TabLikeInput
-			class="w-full flex-auto md:flex-1 xl:flex-none"
+			class="w-full flex-auto md:flex-1 lg:flex-none"
 			bind:value={searchString}
 			type="text"
 			name="Search"
@@ -463,7 +463,7 @@
 				</SubtleButton>
 				<SubtleButton
 					noPadding
-					class="pointer-events-auto shrink-0 p-2 xl:hidden"
+					class="pointer-events-auto shrink-0 p-2 lg:hidden"
 					onClick={toggleSettings}
 				>
 					<div class="size-5">
@@ -510,5 +510,5 @@
 			</div>
 		</div>
 	</div>
-	<div class="hidden min-w-0 max-w-60 flex-1 xl:flex"></div>
+	<div class="max-w-59 hidden min-w-0 flex-1 lg:flex"></div>
 </div>
