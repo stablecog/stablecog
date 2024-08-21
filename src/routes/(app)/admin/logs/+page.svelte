@@ -310,10 +310,12 @@
 	image_url="{canonicalUrl}/previews/home-{previewImageVersion}.png"
 />
 
-<div class="z-10 flex flex-1 flex-col items-center justify-start px-2 py-2 md:px-6 md:pb-6 md:pt-4">
+<div
+	class="z-10 flex flex-1 flex-col items-center justify-start px-2 py-2 md:px-6 md:pb-6 md:pt-4 xl:flex-row xl:items-stretch xl:justify-center xl:gap-3"
+>
 	<div
-		class="mb-3 flex w-full max-w-5xl flex-wrap items-center justify-center gap-3 {!$isSettingsOpen &&
-			'hidden'}"
+		class="mb-3 flex w-full max-w-5xl flex-wrap items-center justify-center gap-3 xl:w-60 xl:flex-col xl:justify-start {!$isSettingsOpen &&
+			'hidden xl:flex'} xl:flex-shrink-0"
 	>
 		<TabLikeFilterDropdown
 			nameIcon={IconApp}
@@ -321,7 +323,7 @@
 			nameTagline="({filteredSelectedApps.length}/{appOptions.length})"
 			bind:values={$selectedApps}
 			items={appOptions}
-			class="w-full flex-auto md:flex-1"
+			class="w-full flex-auto md:flex-1 xl:flex-none"
 		/>
 		<TabLikeFilterDropdown
 			nameIcon={IconServerOutline}
@@ -329,18 +331,18 @@
 			nameTagline="({$selectedWorkers.length}/{workerOptions.length})"
 			bind:values={$selectedWorkers}
 			items={workerOptions}
-			class="w-full flex-auto md:flex-1"
+			class="w-full flex-auto md:flex-1 xl:flex-none"
 		/>
 		<TabLikeFilterDropdown
 			nameIcon={IconPreferences}
 			name="Layout"
 			nameTagline="({filteredSelectedLayouts.length}/{layoutOptions.length})"
-			class="w-full flex-auto md:flex-1"
+			class="w-full flex-auto md:flex-1 xl:flex-none"
 			items={layoutOptions}
 			bind:values={$selectedLayouts}
 		/>
 		<TabLikeInput
-			class="w-full flex-auto md:flex-1"
+			class="w-full flex-auto md:flex-1 xl:flex-none"
 			bind:value={searchString}
 			type="text"
 			name="Search"
@@ -348,7 +350,8 @@
 			icon={IconSearch}
 		/>
 	</div>
-	<div class="relative flex w-full max-w-5xl flex-1 flex-col items-center justify-start">
+	<!-- Log container -->
+	<div class="relative flex w-full max-w-5xl flex-grow flex-col items-center justify-start">
 		<div
 			class="absolute left-0 top-0 flex h-full w-full flex-col overflow-hidden rounded-2xl bg-c-bg ring-2 ring-c-bg-secondary"
 		>
@@ -458,7 +461,11 @@
 				>
 					<IconUndo strokeWidth={2} class="size-5" />
 				</SubtleButton>
-				<SubtleButton noPadding class="pointer-events-auto shrink-0 p-2" onClick={toggleSettings}>
+				<SubtleButton
+					noPadding
+					class="pointer-events-auto shrink-0 p-2 xl:hidden"
+					onClick={toggleSettings}
+				>
 					<div class="size-5">
 						<IconSettingsOutline
 							strokeWidth={1.5}
@@ -503,4 +510,5 @@
 			</div>
 		</div>
 	</div>
+	<div class="hidden min-w-0 max-w-60 flex-1 xl:flex"></div>
 </div>
