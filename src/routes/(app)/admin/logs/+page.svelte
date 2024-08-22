@@ -314,12 +314,13 @@
 >
 	<!-- Filter options -->
 	<div
-		class="mb-3 flex w-full max-w-4xl flex-wrap items-center justify-center gap-3 lg:w-56 lg:flex-shrink-0 lg:flex-col lg:justify-start lg:pr-3 {!$isSettingsOpen &&
+		class="mb-3 flex w-full max-w-4xl flex-wrap items-center justify-center gap-3 lg:w-60 lg:flex-shrink-0 lg:flex-col lg:justify-start lg:pr-3 {!$isSettingsOpen &&
 			'hidden lg:flex'}"
 	>
 		<TabLikeFilterDropdown
 			nameIcon={IconApp}
 			name="Apps"
+			nameTaglineClass="text-c-on-bg/50 w-full font-normal text-sm transition not-touch:group-hover:text-c-primary pl-[0.5ch]"
 			nameTagline="({filteredSelectedApps.length}/{appOptions.length})"
 			bind:values={$selectedApps}
 			items={appOptions}
@@ -328,6 +329,7 @@
 		<TabLikeFilterDropdown
 			nameIcon={IconServerOutline}
 			name="Workers"
+			nameTaglineClass="text-c-on-bg/50 w-full font-normal text-sm transition not-touch:group-hover:text-c-primary pl-[0.5ch]"
 			nameTagline="({$selectedWorkers.length}/{workerOptions.length})"
 			bind:values={$selectedWorkers}
 			items={workerOptions}
@@ -336,6 +338,7 @@
 		<TabLikeFilterDropdown
 			nameIcon={IconPreferences}
 			name="Layout"
+			nameTaglineClass="text-c-on-bg/50 w-full font-normal text-sm transition not-touch:group-hover:text-c-primary pl-[0.5ch]"
 			nameTagline="({filteredSelectedLayouts.length}/{layoutOptions.length})"
 			class="w-full flex-auto md:flex-1 lg:flex-none"
 			items={layoutOptions}
@@ -511,5 +514,5 @@
 		</div>
 	</div>
 	<!-- Spacer -->
-	<div class="hidden min-w-0 max-w-59 flex-1 lg:flex"></div>
+	<div class="hidden min-w-0 max-w-60 flex-1 lg:flex" />
 </div>

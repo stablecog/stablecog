@@ -14,6 +14,8 @@
 	export let name: string;
 	export let nameIcon: ConstructorOfATypedSvelteComponent | undefined = undefined;
 	export let nameTagline: string | undefined = undefined;
+	export let nameTaglineClass =
+		'font-normal text-c-on-bg/60 transition not-touch:group-hover:text-c-primary';
 	export let hasTitle = false;
 	export let dontScale = false;
 	export let disabled = false;
@@ -139,9 +141,7 @@
 				>
 					{name}
 					{#if nameTagline}
-						<span
-							class="font-normal text-c-on-bg/60 transition not-touch:group-hover:text-c-primary"
-						>
+						<span class={nameTaglineClass}>
 							{nameTagline}
 						</span>
 					{/if}
