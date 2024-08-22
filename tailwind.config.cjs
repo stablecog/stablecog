@@ -19,6 +19,7 @@ module.exports = {
 		containerQueries
 	],
 	content: ['./src/**/*.{html,js,svelte,ts}'],
+	darkMode: ['selector', '[class~="theme-dark"]'],
 	theme: {
 		extend: {
 			colors: {

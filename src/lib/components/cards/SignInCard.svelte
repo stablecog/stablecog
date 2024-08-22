@@ -340,18 +340,6 @@
 						<ButtonOAuth
 							withSpinner
 							disabled={$signInCardStatus === 'loading'}
-							loading={$signInCardStatus === 'loading' && provider === 'apple'}
-							class="w-full"
-							onClick={() => signInWithOAuth('apple')}
-							provider="apple"
-						>
-							<p class="min-w-0 flex-1">
-								{$LL.SignIn.ContinueWithProviderButton({ provider: 'Apple' })}
-							</p>
-						</ButtonOAuth>
-						<ButtonOAuth
-							withSpinner
-							disabled={$signInCardStatus === 'loading'}
 							loading={$signInCardStatus === 'loading' && provider === 'discord'}
 							class="w-full"
 							onClick={() => signInWithOAuth('discord')}
@@ -359,6 +347,18 @@
 						>
 							<p class="min-w-0 flex-1">
 								{$LL.SignIn.ContinueWithProviderButton({ provider: 'Discord' })}
+							</p>
+						</ButtonOAuth>
+						<ButtonOAuth
+							withSpinner
+							disabled={$signInCardStatus === 'loading'}
+							loading={$signInCardStatus === 'loading' && provider === 'apple'}
+							class="w-full"
+							onClick={() => signInWithOAuth('apple')}
+							provider="apple"
+						>
+							<p class="min-w-0 flex-1">
+								{$LL.SignIn.ContinueWithProviderButton({ provider: 'Apple' })}
 							</p>
 						</ButtonOAuth>
 					</div>

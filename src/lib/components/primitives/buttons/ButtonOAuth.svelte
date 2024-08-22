@@ -53,21 +53,21 @@
 			: provider === 'discord'
 				? 'text-white'
 				: provider === 'apple'
-					? 'text-white'
+					? 'text-white dark:text-black'
 					: 'text-c-on-primary'} {loading
 			? provider === 'google'
 				? 'bg-indigo-200'
 				: provider === 'discord'
 					? 'bg-[#4854d7]'
 					: provider === 'apple'
-						? 'bg-[#3D3D3D]'
+						? 'bg-[#333333] dark:bg-indigo-200'
 						: 'bg-c-secondary'
 			: provider === 'google'
 				? 'bg-white'
 				: provider === 'discord'
 					? 'bg-[#5865F2]'
 					: provider === 'apple'
-						? 'bg-[#333333]'
+						? 'bg-black dark:bg-white'
 						: 'bg-c-primary'} {classes}"
 	>
 		<div
@@ -82,7 +82,7 @@
 					: provider === 'discord'
 						? 'bg-[#4854d7]'
 						: provider === 'apple'
-							? 'bg-[#3D3D3D]'
+							? 'bg-[#333333] dark:bg-indigo-200'
 							: 'bg-c-secondary'} not-touch:group-enabled:group-hover:translate-x-0"
 			/>
 		</div>
@@ -140,21 +140,21 @@
 			: provider === 'discord'
 				? 'text-white'
 				: provider === 'apple'
-					? 'text-white'
+					? 'text-white dark:text-black'
 					: 'text-c-on-primary'} {loading
 			? provider === 'google'
 				? 'bg-indigo-200'
 				: provider === 'discord'
 					? 'bg-[#4854d7]'
 					: provider === 'apple'
-						? 'bg-[#3D3D3D]'
+						? 'bg-[#333333] dark:bg-indigo-200'
 						: 'bg-c-secondary'
 			: provider === 'google'
 				? 'bg-white'
 				: provider === 'discord'
 					? 'bg-[#5865F2]'
 					: provider === 'apple'
-						? 'bg-[#333333]'
+						? 'bg-black dark:bg-white'
 						: 'bg-c-primary'} {classes}"
 	>
 		<div
@@ -169,7 +169,7 @@
 					: provider === 'discord'
 						? 'bg-[#4854d7]'
 						: provider === 'apple'
-							? 'bg-[#3D3D3D]'
+							? 'bg-[#333333] dark:bg-indigo-200'
 							: 'bg-c-secondary'} not-touch:group-enabled:group-hover:translate-x-0"
 			/>
 		</div>
