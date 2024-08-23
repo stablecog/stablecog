@@ -92,7 +92,7 @@
 
 	$: $selectedLayouts, setLayoutOptionNoneIfNeeded();
 	$: filteredSelectedLayouts = $selectedLayouts.filter((o) => o !== 'none');
-	$: $selectedApps, setAppOptionAllIfNeeded();
+	$: $selectedApps, onSelectedAppsChanged();
 	$: filteredSelectedApps = $selectedApps.filter((o) => o !== 'all');
 
 	$: [searchString], setDebouncedSearch(searchString);
@@ -109,6 +109,11 @@
 		!areArraysMatching($selectedApps, selectedAppsDefault);
 	$: hasLayoutFilters = areArraysMatching($selectedLayouts, selectedLayoutsDefault) === false;
 	$: hasFilters = hasQueryFilters || hasLayoutFilters;
+
+	function onSelectedAppsChanged() {
+		setAppOptionAllIfNeeded();
+		followLogs = true;
+	}
 
 	function clearFilters() {
 		searchString = '';
