@@ -9,40 +9,26 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  setup_env:
-    name: ⚙️ Setup environment
-    runs-on: ubuntu-latest
+  build_amd64:
+    name: 🔨 Build Docker Image (amd64)
+    runs-on: warp-ubuntu-latest-x64-8x
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
       - name: Set SHORT_SHA
         run: echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
 
       - name: Set COMMIT_MSG
         run: echo "COMMIT_MSG=${{ github.event.head_commit.message }}" >> $GITHUB_ENV
 
-      - name: Escape COMMIT_MSG
+      - name: Set BRANCH_NAME
         run: |
-          echo "COMMIT_MSG=$(echo $COMMIT_MSG | tr -d '\"')" >> $GITHUB_ENV
-
-      - name: Set BRANCH_NAME (merge)
-        if: github.event_name != 'pull_request'
-        run: echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | tr / -)" >> $GITHUB_ENV
-
-      - name: Set BRANCH_NAME (pull request)
-        if: github.event_name == 'pull_request'
-        run: echo "BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
-
-    outputs:
-      short_sha: ${{ env.SHORT_SHA }}
-      branch_name: ${{ env.BRANCH_NAME }}
-      commit_msg: ${{ env.COMMIT_MSG }}
-
-  build_amd64:
-    name: 🔨 Build Docker Image (amd64)
-    runs-on: warp-ubuntu-latest-x64-8x
-    needs: setup_env
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
+          if [ "${{ github.event_name }}" != 'pull_request' ]; then
+            echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | tr / -)" >> $GITHUB_ENV
+          else
+            echo "BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
+          fi
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -60,15 +46,28 @@ jobs:
           platforms: linux/amd64
           push: true
           file: ./Dockerfile
-          tags: stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ needs.setup_env.outputs.short_sha }}-amd64
+          tags: stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-amd64
 
   build_arm64:
     name: 🔨 Build Docker Image (arm64)
     runs-on: warp-ubuntu-latest-arm64-8x
-    needs: setup_env
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
+
+      - name: Set SHORT_SHA
+        run: echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
+
+      - name: Set COMMIT_MSG
+        run: echo "COMMIT_MSG=${{ github.event.head_commit.message }}" >> $GITHUB_ENV
+
+      - name: Set BRANCH_NAME
+        run: |
+          if [ "${{ github.event_name }}" != 'pull_request' ]; then
+            echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | tr / -)" >> $GITHUB_ENV
+          else
+            echo "BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
+          fi
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -86,7 +85,7 @@ jobs:
           platforms: linux/arm64
           push: true
           file: ./Dockerfile
-          tags: stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ needs.setup_env.outputs.short_sha }}-arm64
+          tags: stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-arm64
 
   push_manifest:
     name: 🏷️ Push Multi-Arch Manifest
@@ -96,33 +95,38 @@ jobs:
       - build_arm64
 
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set SHORT_SHA and BRANCH_NAME
+        run: |
+          SHORT_SHA=${GITHUB_SHA::7}
+          if [ "${{ github.event_name }}" != 'pull_request' ]; then
+            BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | tr / -)
+          else
+            BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)
+          fi
+          echo "SHORT_SHA=$SHORT_SHA" >> $GITHUB_ENV
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+
       - name: Login to registry
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Ensure Variables Are Set
-        run: |
-          echo "BRANCH_NAME=${{ needs.setup_env.outputs.branch_name }}"
-          echo "SHORT_SHA=${{ needs.setup_env.outputs.short_sha }}"
-          if [ -z "${{ needs.setup_env.outputs.branch_name }}" ] || [ -z "${{ needs.setup_env.outputs.short_sha }}" ]; then
-            echo "Error: BRANCH_NAME or SHORT_SHA is not set"
-            exit 1
-          fi
-
       - name: Create and push multi-arch manifest
         run: |
-          docker manifest create stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ needs.setup_env.outputs.short_sha }} \
-            --amend stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ needs.setup_env.outputs.short_sha }}-amd64 \
-            --amend stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ needs.setup_env.outputs.short_sha }}-arm64
-          docker manifest push stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ needs.setup_env.outputs.short_sha }}
+          docker manifest create stablecog/sc-web:$BRANCH_NAME-$SHORT_SHA \
+            --amend stablecog/sc-web:$BRANCH_NAME-$SHORT_SHA-amd64 \
+            --amend stablecog/sc-web:$BRANCH_NAME-$SHORT_SHA-arm64
+          docker manifest push stablecog/sc-web:$BRANCH_NAME-$SHORT_SHA
 
       - name: Tag and push 'latest'
         run: |
           docker manifest create stablecog/sc-web:latest \
-            --amend stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ needs.setup_env.outputs.short_sha }}-amd64 \
-            --amend stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ needs.setup_env.outputs.short_sha }}-arm64
+            --amend stablecog/sc-web:$BRANCH_NAME-$SHORT_SHA-amd64 \
+            --amend stablecog/sc-web:$BRANCH_NAME-$SHORT_SHA-arm64
           docker manifest push stablecog/sc-web:latest
 
   deploy:
@@ -134,10 +138,23 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
+      - name: Set SHORT_SHA, BRANCH_NAME, and COMMIT_MSG
+        run: |
+          SHORT_SHA=${GITHUB_SHA::7}
+          COMMIT_MSG=${{ github.event.head_commit.message }}
+          if [ "${{ github.event_name }}" != 'pull_request' ]; then
+            BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | tr / -)
+          else
+            BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)
+          fi
+          echo "SHORT_SHA=$SHORT_SHA" >> $GITHUB_ENV
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+          echo "COMMIT_MSG=$COMMIT_MSG" >> $GITHUB_ENV
+
       - name: Deploy
         uses: ./.github/actions/k3s-deploy
         with:
-          image: stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ needs.setup_env.outputs.short_sha }}
-          embed-title: '${{ needs.setup_env.outputs.commit_msg }}  •  ${{ needs.setup_env.outputs.short_sha }}'
+          image: stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}
+          embed-title: '${{ env.COMMIT_MSG }}  •  ${{ env.SHORT_SHA }}'
           webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
           kube_config: ${{ secrets.K3S_KUBE_CONFIG }}
