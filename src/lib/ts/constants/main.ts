@@ -4,6 +4,8 @@ import { placeholderUrl } from '$ts/constants/placeholderUrl';
 import type { TTab } from '$ts/types/main';
 
 export const canonicalUrl = 'https://stablecog.com';
+export const auxBucketUrl = 'https://ba.stablecog.com';
+export const auxBucketStaticUrl = `${auxBucketUrl}/static`;
 export const defaultLocale: Locales = 'en';
 
 const apiUrlStr =

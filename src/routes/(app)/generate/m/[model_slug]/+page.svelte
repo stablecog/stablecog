@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { generationModels } from '$ts/constants/generationModels.js';
-	import { canonicalUrl } from '$ts/constants/main.js';
-	import { previewImageVersion } from '$ts/constants/previewImageVersion.js';
 	import RedirectPage from '$components/RedirectPage.svelte';
 	import LL from '$i18n/i18n-svelte.js';
-	import { getModelPreviewImageUrl } from '$ts/helpers/getPreviewImageUrl.js';
+	import { generationModels } from '$ts/constants/generationModels.js';
+	import { auxBucketStaticUrl } from '$ts/constants/main.js';
 	import { metaDescriptionDefault } from '$ts/constants/meta.js';
+	import { previewImageVersion } from '$ts/constants/previewImageVersion.js';
+	import { getModelPreviewImageUrl } from '$ts/helpers/getPreviewImageUrl.js';
 
 	export let data;
 
@@ -24,7 +24,7 @@
 				: metaDescriptionDefault,
 		image_url: data.model_id
 			? getModelPreviewImageUrl(data.model_id)
-			: `${canonicalUrl}/previews/home-${previewImageVersion}.png`
+			: `${auxBucketStaticUrl}/previews/home-${previewImageVersion}.png`
 	};
 </script>
 

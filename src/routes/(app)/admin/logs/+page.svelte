@@ -30,7 +30,7 @@
 		type ReceivedMessage,
 		type TLogRow
 	} from '$routes/(app)/admin/logs/helpers.js';
-	import { canonicalUrl } from '$ts/constants/main.js';
+	import { auxBucketStaticUrl } from '$ts/constants/main.js';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion.js';
 	import { throttle } from '$ts/helpers/general/throttle.js';
 	import type { TTab } from '$ts/types/main';
@@ -311,7 +311,7 @@
 <MetaTag
 	title="Logs | Admin"
 	description="Stablecog admin panel. Free, multilingual and open-source AI image generator using Stable Diffusion, FLUX, and Kandinsky."
-	image_url="{canonicalUrl}/previews/home-{previewImageVersion}.png"
+	image_url="{auxBucketStaticUrl}/previews/home-{previewImageVersion}.png"
 />
 
 <div

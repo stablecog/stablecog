@@ -1,7 +1,8 @@
 import type { TSidebarItem, TSidebarItemBase } from '$docroutes/guide/types';
 import { addImageUrlToSidebarItem } from '$components/docs/helpers';
+import { auxBucketUrl } from '$ts/constants/main';
 
-export const previewBaseUrl = 'https://ba.stablecog.com/docs/previews';
+export const previewBaseUrl = `${auxBucketUrl}/docs/previews`;
 export const entries = import.meta.glob(`/src/lib/md/docs/**/*.md`);
 
 const _sidebar: TSidebarItemBase = {

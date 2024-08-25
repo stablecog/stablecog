@@ -1,20 +1,20 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import Button from '$components/primitives/buttons/Button.svelte';
-	import DropdownItem from '$components/primitives/dropdown/DropdownItem.svelte';
 	import ErrorLine from '$components/error/ErrorLine.svelte';
 	import IconBack from '$components/icons/IconBack.svelte';
 	import IconEmail from '$components/icons/IconEmail.svelte';
+	import Button from '$components/primitives/buttons/Button.svelte';
+	import NoBgButton from '$components/primitives/buttons/NoBgButton.svelte';
+	import DropdownItem from '$components/primitives/dropdown/DropdownItem.svelte';
 	import Input from '$components/primitives/Input.svelte';
 	import MetaTag from '$components/utils/MetaTag.svelte';
 	import PageWrapper from '$components/wrappers/PageWrapper.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
-	import { canonicalUrl } from '$ts/constants/main';
-	import { quadOut } from 'svelte/easing';
+	import { auxBucketStaticUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
-	import NoBgButton from '$components/primitives/buttons/NoBgButton.svelte';
 	import { supabaseStore } from '$ts/constants/supabase';
+	import { quadOut } from 'svelte/easing';
 
 	export let data;
 
@@ -71,7 +71,7 @@
 <MetaTag
 	title="Change Email | Stablecog"
 	description="Change your account's email address on Stablecog. Free, multilingual and open-source AI image generator using Stable Diffusion, FLUX, and Kandinsky."
-	image_url="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
+	image_url="{auxBucketStaticUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 />
 
 <PageWrapper>

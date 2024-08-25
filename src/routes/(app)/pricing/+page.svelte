@@ -8,7 +8,7 @@
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import PlanCard from '$routes/(app)/pricing/PlanCard.svelte';
 	import type { TCreditPackCard, TSubscriptionCard } from '$routes/(app)/pricing/types.js';
-	import { getApiUrl, canonicalUrl } from '$ts/constants/main';
+	import { auxBucketStaticUrl, getApiUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { socialAppUrls } from '$ts/constants/social';
 	import {
@@ -439,7 +439,7 @@
 <MetaTag
 	title="Pricing | Stablecog"
 	description="Choose a plan that works for you and start using Stablecog. Free, multilingual and open-source AI image generator using Stable Diffusion, FLUX, and Kandinsky."
-	image_url="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
+	image_url="{auxBucketStaticUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 />
 
 <PageWrapper>

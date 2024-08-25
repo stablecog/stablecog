@@ -1,63 +1,63 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
-	import SettingsPanel from '$components/generate/SettingsPanel.svelte';
-	import { activeGeneration, generations, type TGeneration } from '$ts/stores/user/generation';
-	import { onMount, tick } from 'svelte';
-	import PromptBar from '$components/generate/PromptBar.svelte';
-	import { quadOut } from 'svelte/easing';
-	import { fade, fly } from 'svelte/transition';
-	import { clickoutside } from '$ts/actions/clickoutside';
+	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { createInfiniteQuery } from '@tanstack/svelte-query';
-	import { generatePageHistoryFullOutputsQueryKey } from '$ts/stores/user/queryKeys.js';
-	import { windowWidth } from '$ts/stores/window';
-	import SidebarWrapper from '$components/generate/SidebarWrapper.svelte';
+	import InpaintingCanvas from '$components/canvas/inpainting/InpaintingCanvas.svelte';
+	import { baseOutputForInpainting } from '$components/canvas/stores/baseOutputForInpainting.js';
+	import LowOnCreditsCard from '$components/cards/LowOnCreditsCard.svelte';
+	import GalleryLikeLoadingPlaceholder from '$components/galleryLike/GalleryLikeLoadingPlaceholder.svelte';
+	import GenerateGridPlaceholder from '$components/generate/GenerateGridPlaceholder.svelte';
+	import GenerateHorizontalList from '$components/generate/GenerateHorizontalList.svelte';
+	import GenerateHorizontalListLoadingPlaceholder from '$components/generate/GenerateHorizontalListLoadingPlaceholder.svelte';
+	import GenerateHorizontalListPlaceholder from '$components/generate/GenerateHorizontalListPlaceholder.svelte';
+	import GenerationSettingsProvider from '$components/generate/GenerationSettingsProvider.svelte';
 	import GenerationStage from '$components/generate/GenerationStage.svelte';
-	import { generationAspectRatio, generationNumOutputs } from '$ts/stores/generationSettings.js';
-	import { generateSSEId } from '$ts/helpers/generateSSEId.js';
-	import { generationModelIdDefault, generationModels } from '$ts/constants/generationModels.js';
-	import { schedulerIdDefault } from '$ts/constants/schedulers.js';
+	import PromptBar from '$components/generate/PromptBar.svelte';
+	import SettingsPanel from '$components/generate/SettingsPanel.svelte';
+	import SettingsSheet from '$components/generate/SettingsSheet.svelte';
+	import SidebarCollapseButton from '$components/generate/SidebarCollapseButton.svelte';
+	import SidebarWrapper from '$components/generate/SidebarWrapper.svelte';
 	import type { TIsReadyMap } from '$components/generate/types.js';
 	import {
 		lgBreakpoint,
 		mdBreakpoint,
 		xlBreakpoint
 	} from '$components/generationFullScreen/constants.js';
-	import GenerateHorizontalList from '$components/generate/GenerateHorizontalList.svelte';
-	import LL from '$i18n/i18n-svelte.js';
-	import GenerateGridPlaceholder from '$components/generate/GenerateGridPlaceholder.svelte';
-	import GenerateHorizontalListPlaceholder from '$components/generate/GenerateHorizontalListPlaceholder.svelte';
-	import { expandCollapse } from '$ts/animation/transitions.js';
-	import { userSummary } from '$ts/stores/user/summary.js';
-	import LowOnCreditsCard from '$components/cards/LowOnCreditsCard.svelte';
-	import { removeRepeatingOutputs } from '$ts/helpers/removeRepeatingOutputs.js';
-	import GenerationSettingsProvider from '$components/generate/GenerationSettingsProvider.svelte';
-	import { heightDefault, widthDefault } from '$ts/constants/generationSize.js';
-	import { setActiveGenerationToOutputIndex } from '$ts/helpers/goToOutputIndex.js';
+	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
 	import AutoSize from '$components/utils/AutoSize.svelte';
-	import { canonicalUrl } from '$ts/constants/main.js';
 	import MetaTag from '$components/utils/MetaTag.svelte';
-	import SidebarCollapseButton from '$components/generate/SidebarCollapseButton.svelte';
-	import { isLeftSidebarHidden, isLeftSidebarHiddenApp } from '$ts/stores/sidebars.js';
-	import { previewImageVersion } from '$ts/constants/previewImageVersion.js';
-	import { goto } from '$app/navigation';
-	import { lowOnCreditsThreshold } from '$ts/constants/credits.js';
-	import SettingsSheet from '$components/generate/SettingsSheet.svelte';
-	import { isSignInModalOpen } from '$ts/stores/isSignInModalOpen.js';
-	import { writable } from 'svelte/store';
 	import WithChangeUsernameModal from '$components/utils/WithChangeUsernameModal.svelte';
-	import InpaintingCanvas from '$components/canvas/inpainting/InpaintingCanvas.svelte';
-	import { generateMode } from '$ts/stores/generate/generateMode.js';
-	import { baseOutputForInpainting } from '$components/canvas/stores/baseOutputForInpainting.js';
-	import { sessionStore } from '$ts/constants/supabase';
-	import { getModelPreviewImageUrl } from '$ts/helpers/getPreviewImageUrl.js';
+	import LL from '$i18n/i18n-svelte.js';
+	import { clickoutside } from '$ts/actions/clickoutside';
+	import { expandCollapse } from '$ts/animation/transitions.js';
+	import { lowOnCreditsThreshold } from '$ts/constants/credits.js';
+	import { generationModelIdDefault, generationModels } from '$ts/constants/generationModels.js';
+	import { heightDefault, widthDefault } from '$ts/constants/generationSize.js';
+	import { auxBucketStaticUrl } from '$ts/constants/main.js';
 	import { metaDescriptionDefault } from '$ts/constants/meta.js';
+	import { previewImageVersion } from '$ts/constants/previewImageVersion.js';
+	import { schedulerIdDefault } from '$ts/constants/schedulers.js';
+	import { sessionStore } from '$ts/constants/supabase';
+	import { generateSSEId } from '$ts/helpers/generateSSEId.js';
+	import { getModelPreviewImageUrl } from '$ts/helpers/getPreviewImageUrl.js';
+	import { setActiveGenerationToOutputIndex } from '$ts/helpers/goToOutputIndex.js';
+	import { removeRepeatingOutputs } from '$ts/helpers/removeRepeatingOutputs.js';
 	import { getHistoryFullOutputs } from '$ts/queries/galleryLike/historyOutputs.js';
 	import type { TGalleryFullOutputsPage } from '$ts/queries/galleryLike/types.js';
-	import GalleryLikeLoadingPlaceholder from '$components/galleryLike/GalleryLikeLoadingPlaceholder.svelte';
-	import GenerateHorizontalListLoadingPlaceholder from '$components/generate/GenerateHorizontalListLoadingPlaceholder.svelte';
+	import { generateMode } from '$ts/stores/generate/generateMode.js';
+	import { generationAspectRatio, generationNumOutputs } from '$ts/stores/generationSettings.js';
+	import { isSignInModalOpen } from '$ts/stores/isSignInModalOpen.js';
+	import { isLeftSidebarHidden, isLeftSidebarHiddenApp } from '$ts/stores/sidebars.js';
+	import { activeGeneration, generations, type TGeneration } from '$ts/stores/user/generation';
+	import { generatePageHistoryFullOutputsQueryKey } from '$ts/stores/user/queryKeys.js';
+	import { userSummary } from '$ts/stores/user/summary.js';
+	import { windowWidth } from '$ts/stores/window';
+	import { createInfiniteQuery } from '@tanstack/svelte-query';
+	import { onMount, tick } from 'svelte';
+	import { quadOut } from 'svelte/easing';
+	import { writable } from 'svelte/store';
+	import { fade, fly } from 'svelte/transition';
 
 	export let data;
 
@@ -284,7 +284,7 @@
 				: metaDescriptionDefault,
 		image_url: data.model_id
 			? getModelPreviewImageUrl(data.model_id)
-			: `${canonicalUrl}/previews/home-${previewImageVersion}.png`
+			: `${auxBucketStaticUrl}/previews/home-${previewImageVersion}.png`
 	};
 </script>
 

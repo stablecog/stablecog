@@ -4,7 +4,7 @@
 	import LL from '$i18n/i18n-svelte';
 	import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 	import { aspectRatioToImageSize } from '$ts/constants/generationSize';
-	import { canonicalUrl } from '$ts/constants/main';
+	import { auxBucketStaticUrl } from '$ts/constants/main';
 	import { getImgProxySrcDefault, getImgProxySrcSet } from '$ts/helpers/imgproxy';
 	import { generationAspectRatio } from '$ts/stores/generationSettings';
 
@@ -31,7 +31,7 @@
 		modelId: TAvailableGenerationModelId;
 		folder: string;
 	}) {
-		return `${canonicalUrl}/images/models/${modelImageVersion}/${folder}/${modelId}.jpeg`;
+		return `${auxBucketStaticUrl}/images/models/${modelImageVersion}/${folder}/${modelId}.jpeg`;
 	}
 </script>
 

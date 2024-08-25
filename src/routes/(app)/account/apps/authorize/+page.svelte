@@ -1,22 +1,22 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import MetaTag from '$components/utils/MetaTag.svelte';
-	import LL from '$i18n/i18n-svelte';
-	import { canonicalUrl } from '$ts/constants/main';
-	import PageWrapper from '$components/wrappers/PageWrapper.svelte';
-	import { previewImageVersion } from '$ts/constants/previewImageVersion';
-	import Button from '$components/primitives/buttons/Button.svelte';
-	import IconLink from '$components/icons/IconLink.svelte';
-	import { userSummary } from '$ts/stores/user/summary.js';
 	import SignInCard from '$components/cards/SignInCard.svelte';
-	import { expandCollapse } from '$ts/animation/transitions.js';
-	import IconSadFaceOutline from '$components/icons/IconSadFaceOutline.svelte';
 	import ErrorChip from '$components/error/ErrorChip.svelte';
-	import type { TConnectionStatus } from '$routes/(app)/connect/types.js';
+	import IconLink from '$components/icons/IconLink.svelte';
+	import IconSadFaceOutline from '$components/icons/IconSadFaceOutline.svelte';
+	import Button from '$components/primitives/buttons/Button.svelte';
+	import MetaTag from '$components/utils/MetaTag.svelte';
+	import PageWrapper from '$components/wrappers/PageWrapper.svelte';
+	import LL from '$i18n/i18n-svelte';
 	import PlatformCard from '$routes/(app)/account/apps/authorize/PlatformCard.svelte';
-	import { approveAppAuthorization } from '$ts/helpers/user/user.js';
 	import { getAppFromAppId } from '$routes/(app)/account/apps/helpers.js';
+	import type { TConnectionStatus } from '$routes/(app)/connect/types.js';
+	import { expandCollapse } from '$ts/animation/transitions.js';
+	import { auxBucketStaticUrl } from '$ts/constants/main';
+	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { sessionStore } from '$ts/constants/supabase';
+	import { approveAppAuthorization } from '$ts/helpers/user/user.js';
+	import { userSummary } from '$ts/stores/user/summary.js';
 
 	export let data;
 
@@ -52,7 +52,7 @@
 <MetaTag
 	title="Authorize App | Stablecog"
 	description="Authorize an app to use Stablecog."
-	image_url="{canonicalUrl}/previews/home-{previewImageVersion}.png"
+	image_url="{auxBucketStaticUrl}/previews/home-{previewImageVersion}.png"
 />
 
 <PageWrapper>

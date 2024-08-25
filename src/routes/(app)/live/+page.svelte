@@ -1,24 +1,24 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import MetaTag from '$components/utils/MetaTag.svelte';
-	import { elementreceive, elementsend, expandCollapse } from '$ts/animation/transitions';
-	import { getApiUrl, canonicalUrl } from '$ts/constants/main';
-	import { onMount, onDestroy } from 'svelte';
-	import { quadOut } from 'svelte/easing';
-	import { tweened } from 'svelte/motion';
-	import IconPulsing from '$components/icons/IconPulsing.svelte';
-	import LL, { locale } from '$i18n/i18n-svelte';
 	import { browser } from '$app/environment';
-	import { getAspectRatioFromWidthAndHeight } from '$ts/constants/generationSize';
-	import { previewImageVersion } from '$ts/constants/previewImageVersion';
+	import { page } from '$app/stores';
+	import LiveBubble from '$approutes/live/LiveBubble.svelte';
 	import type {
 		TAnyRealtimePayloadExt,
 		TGenerationRealtimePayloadExt,
 		TUpscaleRealtimePayloadExt
 	} from '$approutes/live/types';
-	import LiveBubble from '$approutes/live/LiveBubble.svelte';
-	import { flip } from 'svelte/animate';
+	import IconPulsing from '$components/icons/IconPulsing.svelte';
+	import MetaTag from '$components/utils/MetaTag.svelte';
+	import LL, { locale } from '$i18n/i18n-svelte';
 	import type { TRow } from '$ts/actions/tooltip';
+	import { elementreceive, elementsend, expandCollapse } from '$ts/animation/transitions';
+	import { getAspectRatioFromWidthAndHeight } from '$ts/constants/generationSize';
+	import { auxBucketStaticUrl, getApiUrl } from '$ts/constants/main';
+	import { previewImageVersion } from '$ts/constants/previewImageVersion';
+	import { onDestroy, onMount } from 'svelte';
+	import { flip } from 'svelte/animate';
+	import { quadOut } from 'svelte/easing';
+	import { tweened } from 'svelte/motion';
 
 	let sse: EventSource | undefined = undefined;
 	$: if (browser && (!sse || sse.readyState === sse.CLOSED)) {
@@ -211,7 +211,7 @@
 <MetaTag
 	title="Live | Stablecog"
 	description="Watch generations happening live on Stablecog. Free, multilingual and open-source AI image generator using Stable Diffusion, FLUX, and Kandinsky."
-	image_url="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
+	image_url="{auxBucketStaticUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 />
 
 <div class="flex w-full flex-1 justify-center pb-[calc(2vh)]">

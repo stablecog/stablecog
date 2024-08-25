@@ -3,7 +3,7 @@
 	import { page } from '$app/stores';
 	import IconPulsing from '$components/icons/IconPulsing.svelte';
 	import MetaTag from '$components/utils/MetaTag.svelte';
-	import { canonicalUrl } from '$ts/constants/main';
+	import { auxBucketStaticUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { onMount } from 'svelte';
 
@@ -12,7 +12,7 @@
 	export let redirectingText: string;
 	export let title: string;
 	export let description: string;
-	export let image_url = `${canonicalUrl}/previews${
+	export let image_url = `${auxBucketStaticUrl}/previews${
 		$page.url.pathname !== '/' ? $page.url.pathname : 'home'
 	}-${previewImageVersion}.png`;
 

@@ -23,7 +23,7 @@
 	import { clickoutside } from '$ts/actions/clickoutside.js';
 	import { expandCollapse } from '$ts/animation/transitions.js';
 	import { lowOnCreditsThreshold } from '$ts/constants/credits.js';
-	import { canonicalUrl } from '$ts/constants/main.js';
+	import { auxBucketStaticUrl } from '$ts/constants/main.js';
 	import { sessionStore } from '$ts/constants/supabase';
 	import { voiceoverLocale, voiceoverModelId } from '$ts/constants/voiceover/models.js';
 	import {
@@ -172,7 +172,7 @@
 <MetaTag
 	title="Voiceover | Stablecog"
 	description="Create voiceovers with AI on Stablecog: Free, multilingual and open-source AI image generator using Stable Diffusion, FLUX, and Kandinsky."
-	image_url="{canonicalUrl}/previews/voiceover-v2.png"
+	image_url="{auxBucketStaticUrl}/previews/voiceover-v2.png"
 />
 
 <VoiceoverSettingsProvider serverData={data}>

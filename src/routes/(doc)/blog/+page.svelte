@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import BlogPostCard from '$components/docs/BlogPostCard.svelte';
 	import MetaTag from '$components/utils/MetaTag.svelte';
 	import PageWrapper from '$components/wrappers/PageWrapper.svelte';
-	import BlogPostCard from '$components/docs/BlogPostCard.svelte';
 	import LL from '$i18n/i18n-svelte';
-	import { canonicalUrl } from '$ts/constants/main';
+	import { auxBucketStaticUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 
 	export let data;
@@ -13,7 +13,7 @@
 <MetaTag
 	title="Blog | Stablecog"
 	description="Articles about Stable Diffusion tips and tricks, Stable Diffusion experiments, other AI related topics and the latest Stablecog news."
-	image_url="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
+	image_url="{auxBucketStaticUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 />
 
 <PageWrapper>

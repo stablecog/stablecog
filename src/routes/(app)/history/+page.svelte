@@ -31,7 +31,7 @@
 		getHistoryInfiniteQueryProps,
 		userGallerySearchString
 	} from '$routes/(app)/history/constants';
-	import { canonicalUrl } from '$ts/constants/main';
+	import { auxBucketStaticUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { sessionStore } from '$ts/constants/supabase';
 	import { setActiveGenerationToOutputIndex } from '$ts/helpers/goToOutputIndex';
@@ -195,7 +195,7 @@
 <MetaTag
 	title="History | Stablecog"
 	description="See your generation history on Stablecog. Free, multilingual and open-source AI image generator using Stable Diffusion, FLUX, and Kandinsky."
-	image_url="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
+	image_url="{auxBucketStaticUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 />
 
 <svelte:window on:keydown={onKeyDown} />

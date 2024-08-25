@@ -1,29 +1,29 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import Input from '$components/primitives/Input.svelte';
-	import MetaTag from '$components/utils/MetaTag.svelte';
+	import AccountPageCard from '$approutes/account/AccountPageCard.svelte';
+	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
+	import IconCommandLineOutlined from '$components/icons/IconCommandLineOutlined.svelte';
+	import IconKey from '$components/icons/IconKey.svelte';
+	import IconPlusThick from '$components/icons/IconPlusThick.svelte';
+	import IconSadFaceOutline from '$components/icons/IconSadFaceOutline.svelte';
+	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 	import ModalWrapper from '$components/modals/ModalWrapper.svelte';
 	import Button from '$components/primitives/buttons/Button.svelte';
 	import CopyButton from '$components/primitives/buttons/CopyButton.svelte';
 	import IconButton from '$components/primitives/buttons/IconButton.svelte';
 	import ShowHideButton from '$components/primitives/buttons/ShowHideButton.svelte';
-	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
-	import IconKey from '$components/icons/IconKey.svelte';
-	import IconPlusThick from '$components/icons/IconPlusThick.svelte';
-	import IconSadFaceOutline from '$components/icons/IconSadFaceOutline.svelte';
-	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
+	import Input from '$components/primitives/Input.svelte';
+	import MetaTag from '$components/utils/MetaTag.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
-	import AccountPageCard from '$approutes/account/AccountPageCard.svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { expandCollapse } from '$ts/animation/transitions';
-	import { canonicalUrl } from '$ts/constants/main';
+	import { auxBucketStaticUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
+	import { sessionStore } from '$ts/constants/supabase';
 	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
 	import { createUserToken, deleteUserToken, getUserTokens } from '$ts/queries/tokens';
 	import { createMutation, createQuery } from '@tanstack/svelte-query';
 	import { quadOut } from 'svelte/easing';
-	import IconCommandLineOutlined from '$components/icons/IconCommandLineOutlined.svelte';
-	import { sessionStore } from '$ts/constants/supabase';
 
 	const maxAllowedTokenCount = 10;
 	const maxTokenNameLength = 50;
@@ -112,7 +112,7 @@
 <MetaTag
 	title="API Keys | Account"
 	description="Manage your Stablecog account. Free, multilingual and open-source AI image generator using Stable Diffusion, FLUX, and Kandinsky."
-	image_url="{canonicalUrl}/previews/account-{previewImageVersion}.png"
+	image_url="{auxBucketStaticUrl}/previews/account-{previewImageVersion}.png"
 />
 
 <div class="flex w-full justify-center pb-6 pt-4 md:px-3 md:pb-8 md:pt-6">

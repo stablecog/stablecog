@@ -1,18 +1,18 @@
 <script>
 	import { page } from '$app/stores';
-	import Button from '$components/primitives/buttons/Button.svelte';
 	import IconSadFace from '$components/icons/IconSadFace.svelte';
+	import Button from '$components/primitives/buttons/Button.svelte';
 	import MetaTag from '$components/utils/MetaTag.svelte';
 	import PageWrapper from '$components/wrappers/PageWrapper.svelte';
 	import LL from '$i18n/i18n-svelte';
-	import { canonicalUrl } from '$ts/constants/main';
+	import { auxBucketStaticUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 </script>
 
 <MetaTag
 	title="Change Plan | Stablecog"
 	description="Change your Stablecog subscription plan. Free, multilingual and open-source AI image generator using Stable Diffusion, FLUX, and Kandinsky."
-	image_url="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
+	image_url="{auxBucketStaticUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 />
 
 <PageWrapper>

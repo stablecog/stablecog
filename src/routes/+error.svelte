@@ -1,25 +1,25 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import LayoutWrapper from '$components/wrappers/LayoutWrapper.svelte';
-	import Button from '$components/primitives/buttons/Button.svelte';
 	import Drawer from '$components/navigation/Drawer.svelte';
 	import Footer from '$components/navigation/Footer.svelte';
 	import Navbar from '$components/navigation/navbar/Navbar.svelte';
+	import Button from '$components/primitives/buttons/Button.svelte';
+	import MetaTag from '$components/utils/MetaTag.svelte';
+	import LayoutWrapper from '$components/wrappers/LayoutWrapper.svelte';
 	import '$css/app.css';
 	import LL from '$i18n/i18n-svelte';
+	import { auxBucketStaticUrl } from '$ts/constants/main';
+	import { metaDescriptionDefault } from '$ts/constants/meta';
+	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { rawRoutes } from '$ts/constants/routes';
 	import { navbarStickyType } from '$ts/stores/navbar';
 	import { navbarHeight } from '$ts/stores/navbarHeight';
-	import MetaTag from '$components/utils/MetaTag.svelte';
-	import { metaDescriptionDefault } from '$ts/constants/meta';
-	import { canonicalUrl } from '$ts/constants/main';
-	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 </script>
 
 <MetaTag
 	title="Error | Stablecog"
 	description={metaDescriptionDefault}
-	image_url="{canonicalUrl}/previews/home-{previewImageVersion}.png"
+	image_url="{auxBucketStaticUrl}/previews/home-{previewImageVersion}.png"
 	robots="noindex"
 />
 

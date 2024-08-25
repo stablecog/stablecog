@@ -18,7 +18,6 @@
 	import GenerationFullScreen from '$components/generationFullScreen/GenerationFullScreen.svelte';
 	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
 	import GenerationGridInfiniteWrapper from '$components/grids/GenerationGridInfiniteWrapper.svelte';
-	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconFunnel from '$components/icons/IconFunnel.svelte';
 	import IconSadFace from '$components/icons/IconSadFace.svelte';
 	import IconTick from '$components/icons/IconTick.svelte';
@@ -34,7 +33,7 @@
 		getAdminFullOutputsQueryProps
 	} from '$routes/(app)/admin/gallery/constants';
 	import type { TRequestNavigationEventParams } from '$routes/(app)/admin/gallery/types.js';
-	import { canonicalUrl } from '$ts/constants/main';
+	import { auxBucketStaticUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { sessionStore } from '$ts/constants/supabase';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
@@ -216,7 +215,7 @@
 <MetaTag
 	title="Gallery | Admin"
 	description="Stablecog admin panel. Free, multilingual and open-source AI image generator using Stable Diffusion, FLUX, and Kandinsky."
-	image_url="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
+	image_url="{auxBucketStaticUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 />
 
 <svelte:window on:keydown={onKeyDown} />

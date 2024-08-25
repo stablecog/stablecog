@@ -2,32 +2,31 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import Avatar from '$components/avatar/Avatar.svelte';
-	import Button from '$components/primitives/buttons/Button.svelte';
-	import DropdownItem from '$components/primitives/dropdown/DropdownItem.svelte';
-	import IconHome from '$components/icons/IconHome.svelte';
-	import IconSignOut from '$components/icons/IconSignOut.svelte';
-	import MetaTag from '$components/utils/MetaTag.svelte';
 	import ProductIdBadge from '$components/badges/ProductIdBadge.svelte';
-	import LL, { locale } from '$i18n/i18n-svelte';
-	import { canonicalUrl } from '$ts/constants/main';
-	import { logSignOut } from '$ts/helpers/loggers';
-	import { userSummary } from '$ts/stores/user/summary';
-	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
-	import { appVersion } from '$ts/stores/appVersion';
-	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import WantsEmailCard from '$components/cards/WantsEmailCard.svelte';
-	import { onMount } from 'svelte';
-	import { wantsEmail } from '$ts/stores/user/wantsEmail.js';
-	import IconPen from '$components/icons/IconPen.svelte';
-	import WithChangeUsernameModal from '$components/utils/WithChangeUsernameModal.svelte';
-	import NoBgButton from '$components/primitives/buttons/NoBgButton.svelte';
-	import SubtleButton from '$components/primitives/buttons/SubtleButton.svelte';
+	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconExternalLink from '$components/icons/IconExternalLink.svelte';
-	import AccountDetailLine from '$routes/(app)/account/AccountDetailLine.svelte';
-	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
-	import AccountPageCard from '$routes/(app)/account/AccountPageCard.svelte';
+	import IconHome from '$components/icons/IconHome.svelte';
+	import IconPen from '$components/icons/IconPen.svelte';
+	import IconSignOut from '$components/icons/IconSignOut.svelte';
 	import IconToken from '$components/icons/IconToken.svelte';
+	import Button from '$components/primitives/buttons/Button.svelte';
+	import NoBgButton from '$components/primitives/buttons/NoBgButton.svelte';
+	import DropdownItem from '$components/primitives/dropdown/DropdownItem.svelte';
+	import MetaTag from '$components/utils/MetaTag.svelte';
+	import WithChangeUsernameModal from '$components/utils/WithChangeUsernameModal.svelte';
+	import LL, { locale } from '$i18n/i18n-svelte';
+	import AccountDetailLine from '$routes/(app)/account/AccountDetailLine.svelte';
+	import AccountPageCard from '$routes/(app)/account/AccountPageCard.svelte';
+	import { auxBucketStaticUrl } from '$ts/constants/main';
+	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { sessionStore, supabaseStore } from '$ts/constants/supabase';
+	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
+	import { logSignOut } from '$ts/helpers/loggers';
+	import { appVersion } from '$ts/stores/appVersion';
+	import { userSummary } from '$ts/stores/user/summary';
+	import { wantsEmail } from '$ts/stores/user/wantsEmail.js';
+	import { onMount } from 'svelte';
 	import { writable } from 'svelte/store';
 
 	$: if (!$sessionStore?.user.id) {
@@ -80,7 +79,7 @@
 <MetaTag
 	title="Account | Stablecog"
 	description="Manage your Stablecog account. Free, multilingual and open-source AI image generator using Stable Diffusion, FLUX, and Kandinsky."
-	image_url="{canonicalUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
+	image_url="{auxBucketStaticUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 />
 
 {#if !$sessionStore?.user.email}

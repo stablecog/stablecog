@@ -1,48 +1,48 @@
 <script lang="ts">
-	import MetaTag from '$components/utils/MetaTag.svelte';
-	import LL, { locale } from '$i18n/i18n-svelte';
-	import { canonicalUrl } from '$ts/constants/main';
-	import PageWrapper from '$components/wrappers/PageWrapper.svelte';
-	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
-	import { navbarHeight } from '$ts/stores/navbarHeight';
-	import Input from '$components/primitives/Input.svelte';
-	import IconSearch from '$components/icons/IconSearch.svelte';
 	import { browser } from '$app/environment';
-	import { createInfiniteQuery, createQuery } from '@tanstack/svelte-query';
+	import ProductIdBadge from '$components/badges/ProductIdBadge.svelte';
+	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
+	import IconSearch from '$components/icons/IconSearch.svelte';
+	import IconWarning from '$components/icons/IconWarning.svelte';
+	import Input from '$components/primitives/Input.svelte';
+	import ToggleIndicator from '$components/primitives/ToggleIndicator.svelte';
+	import Button from '$components/primitives/buttons/Button.svelte';
+	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
+	import DropdownItem from '$components/primitives/dropdown/DropdownItem.svelte';
+	import DropdownWrapper from '$components/primitives/dropdown/DropdownWrapper.svelte';
+	import TabLikeDropdown from '$components/primitives/tabBars/TabLikeDropdown.svelte';
+	import MetaTag from '$components/utils/MetaTag.svelte';
+	import ScrollAreaWithChevron from '$components/utils/ScrollAreaWithChevron.svelte';
+	import PageWrapper from '$components/wrappers/PageWrapper.svelte';
+	import { env } from '$env/dynamic/public';
+	import LL, { locale } from '$i18n/i18n-svelte';
+	import {
+		adminPanelUsersSearchString,
+		adminPanelUsersView
+	} from '$routes/(app)/admin/users/constants.js';
+	import { clickoutside } from '$ts/actions/clickoutside';
+	import { auxBucketStaticUrl } from '$ts/constants/main';
+	import { previewImageVersion } from '$ts/constants/previewImageVersion';
+	import type { TStripeSupportedProductIdSubscriptions } from '$ts/constants/stripePublic';
+	import { sessionStore } from '$ts/constants/supabase';
+	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
+	import { getTitleFromProductId } from '$ts/helpers/stripe/plan';
 	import {
 		banOrUnbanDomains,
 		banOrUnbanUsers,
 		getAllUsers,
 		type TAllUsersPage
 	} from '$ts/queries/getAllUsers';
-	import ProductIdBadge from '$components/badges/ProductIdBadge.svelte';
-	import { scale } from 'svelte/transition';
-	import { quadOut } from 'svelte/easing';
-	import Button from '$components/primitives/buttons/Button.svelte';
-	import IntersectionObserver from 'svelte-intersection-observer';
-	import { getTitleFromProductId } from '$ts/helpers/stripe/plan';
-	import type { TStripeSupportedProductIdSubscriptions } from '$ts/constants/stripePublic';
-	import type { TTab } from '$ts/types/main';
-	import { env } from '$env/dynamic/public';
-	import TabLikeDropdown from '$components/primitives/tabBars/TabLikeDropdown.svelte';
-	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import { getCreditOptions } from '$ts/queries/getCreditsList';
-	import DropdownWrapper from '$components/primitives/dropdown/DropdownWrapper.svelte';
-	import DropdownItem from '$components/primitives/dropdown/DropdownItem.svelte';
-	import { clickoutside } from '$ts/actions/clickoutside';
-	import ScrollAreaWithChevron from '$components/utils/ScrollAreaWithChevron.svelte';
 	import { giftCreditsToUser } from '$ts/queries/giftCreditsToUser';
-	import IconWarning from '$components/icons/IconWarning.svelte';
-	import { previewImageVersion } from '$ts/constants/previewImageVersion';
-	import ToggleIndicator from '$components/primitives/ToggleIndicator.svelte';
-	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
-	import { sessionStore } from '$ts/constants/supabase';
-	import {
-		adminPanelUsersSearchString,
-		adminPanelUsersView
-	} from '$routes/(app)/admin/users/constants.js';
 	import { hydrated } from '$ts/stores/hydrated.js';
+	import { navbarHeight } from '$ts/stores/navbarHeight';
+	import type { TTab } from '$ts/types/main';
+	import { createInfiniteQuery, createQuery } from '@tanstack/svelte-query';
 	import { onMount } from 'svelte';
+	import IntersectionObserver from 'svelte-intersection-observer';
+	import { quadOut } from 'svelte/easing';
+	import { scale } from 'svelte/transition';
 
 	export let data;
 
@@ -293,7 +293,7 @@
 <MetaTag
 	title="Users | Admin"
 	description="Stablecog admin panel. Free, multilingual and open-source AI image generator using Stable Diffusion, FLUX, and Kandinsky."
-	image_url="{canonicalUrl}/previews/home-{previewImageVersion}.png"
+	image_url="{auxBucketStaticUrl}/previews/home-{previewImageVersion}.png"
 />
 
 <svelte:window
