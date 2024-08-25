@@ -1,0 +1,112 @@
+name: 💫 CI (Stablecog Website)
+
+on:
+  push:
+    branches: [master]
+
+concurrency:
+  group: environment-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  setup_env:
+    name: ⚙️ Setup environment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add SHORT_SHA env property
+        run: echo "SHORT_SHA=`echo ${GITHUB_SHA::7}`" >> $GITHUB_ENV
+
+      - name: Put commit msg in environment
+        run: echo "COMMIT_MSG=${{ github.event.head_commit.message }}" >> $GITHUB_ENV
+
+      - name: Escape commit message
+        run: |
+          echo "COMMIT_MSG=$(echo $COMMIT_MSG | tr -d \'\\\")" >> $GITHUB_ENV
+
+      - name: Get branch name (merge)
+        if: github.event_name != 'pull_request'
+        shell: bash
+        run: echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | tr / -)" >> $GITHUB_ENV
+
+      - name: Get branch name (pull request)
+        if: github.event_name == 'pull_request'
+        shell: bash
+        run: echo "BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
+
+    outputs:
+      short_sha: ${{ env.SHORT_SHA }}
+      commit_msg: ${{ env.COMMIT_MSG }}
+      branch_name: ${{ env.BRANCH_NAME }}
+
+  build:
+    name: 🔨 Build Docker Image
+    runs-on: ubuntu-latest
+    needs: setup_env
+
+    env:
+      GITHUB_RUN_ID: ${{ github.run_id }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Send Discord Webhook
+        uses: ./.github/actions/discord-webhook
+        with:
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+          embed-color: 16776960
+          embed-title: '[sc-web] ${{ needs.setup_env.outputs.commit_msg }}  •  ${{ needs.setup_env.outputs.short_sha }}'
+          embed-description: '```Build Started```'
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Set build start in env variable
+        run: echo "BUILD_START=$(date +%s)" >> $GITHUB_ENV
+
+      - name: Login to registry
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USER }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push image
+        if: success()
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          file: ./Dockerfile
+          tags: |
+            stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ env.GITHUB_RUN_ID }}
+            stablecog/sc-web:latest
+
+      - name: Send Discord Webhook
+        if: failure()
+        uses: ./.github/actions/discord-webhook
+        with:
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+          embed-color: 15548997
+          embed-title: '[sc-web] ${{ needs.setup_env.outputs.commit_msg }}  •  ${{ needs.setup_env.outputs.short_sha }}'
+          embed-description: '```🚨 Build FAILED 🚨```'
+
+  deploy:
+    name: 🚀 Deploy Stablecog Website
+    runs-on: ubuntu-latest
+    needs:
+      - setup_env
+      - build
+    env:
+      GITHUB_RUN_ID: ${{ github.run_id }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Deploy
+        uses: ./.github/actions/k3s-deploy
+        with:
+          image: stablecog/sc-web:${{ needs.setup_env.outputs.branch_name}}-${{ env.GITHUB_RUN_ID }}
+          embed-title: '${{ needs.setup_env.outputs.commit_msg }}  •  ${{ needs.setup_env.outputs.short_sha }}'
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+          kube_config: ${{ secrets.K3S_KUBE_CONFIG }}

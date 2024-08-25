@@ -1,0 +1,30 @@
+name: Send Discord Webhook
+description: Sends a webhook to Discord
+inputs:
+  embed-color:
+    description: Color of the embed
+    required: true
+  embed-title:
+    description: Title of the embed
+    required: true
+  embed-description:
+    description: Description of the embed
+    required: true
+  webhook-url:
+    description: Webhook URL
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: Update current date as env variable
+      shell: bash
+      run: echo "NOW=$(date +'%a, %d %b %Y %T %Z' )" >> $GITHUB_ENV
+
+    - name: Webhook
+      uses: tsickert/discord-webhook@v5.3.0
+      with:
+        webhook-url: ${{ inputs.webhook-url }}
+        embed-color: ${{ inputs.embed-color }}
+        embed-title: ${{ inputs.embed-title }}
+        embed-description: ${{ inputs.embed-description }}
+        embed-footer-text: "${{ env.NOW }}"
