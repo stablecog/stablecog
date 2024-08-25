@@ -31,36 +31,18 @@ jobs:
         if: github.event_name == 'pull_request'
         run: echo "BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
 
-      - name: Output Variables
-        run: |
-          echo "branch_name=${BRANCH_NAME}"
-          echo "short_sha=${SHORT_SHA}"
-          echo "commit_msg=${COMMIT_MSG}"
-
-      - name: Set Outputs
-        id: set_outputs
-        run: |
-          echo "short_sha=${SHORT_SHA}" >> $GITHUB_ENV
-          echo "branch_name=${BRANCH_NAME}" >> $GITHUB_ENV
-          echo "commit_msg=${COMMIT_MSG}" >> $GITHUB_ENV
-
     outputs:
-      short_sha: ${{ env.short_sha }}
-      branch_name: ${{ env.branch_name }}
-      commit_msg: ${{ env.commit_msg }}
+      short_sha: ${{ env.SHORT_SHA }}
+      branch_name: ${{ env.BRANCH_NAME }}
+      commit_msg: ${{ env.COMMIT_MSG }}
 
   build_amd64:
     name: 🔨 Build Docker Image (amd64)
-    runs-on: ubuntu-latest
+    runs-on: warp-ubuntu-latest-x64-8x
     needs: setup_env
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
-
-      - name: Debug Outputs in build_amd64
-        run: |
-          echo "BRANCH_NAME=${{ needs.setup_env.outputs.branch_name }}"
-          echo "SHORT_SHA=${{ needs.setup_env.outputs.short_sha }}"
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -82,16 +64,11 @@ jobs:
 
   build_arm64:
     name: 🔨 Build Docker Image (arm64)
-    runs-on: ubuntu-latest
+    runs-on: warp-ubuntu-latest-arm64-8x
     needs: setup_env
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
-
-      - name: Debug Outputs in build_arm64
-        run: |
-          echo "BRANCH_NAME=${{ needs.setup_env.outputs.branch_name }}"
-          echo "SHORT_SHA=${{ needs.setup_env.outputs.short_sha }}"
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -125,49 +102,37 @@ jobs:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Debug Outputs in push_manifest
+      - name: Ensure Variables Are Set
         run: |
           echo "BRANCH_NAME=${{ needs.setup_env.outputs.branch_name }}"
           echo "SHORT_SHA=${{ needs.setup_env.outputs.short_sha }}"
-
-      - name: Create and push multi-arch manifest
-        run: |
-          BRANCH_NAME=${{ needs.setup_env.outputs.branch_name }}
-          SHORT_SHA=${{ needs.setup_env.outputs.short_sha }}
-          if [ -z "$BRANCH_NAME" ] || [ -z "$SHORT_SHA" ]; then
+          if [ -z "${{ needs.setup_env.outputs.branch_name }}" ] || [ -z "${{ needs.setup_env.outputs.short_sha }}" ]; then
             echo "Error: BRANCH_NAME or SHORT_SHA is not set"
             exit 1
           fi
 
-          docker manifest create stablecog/sc-web:$BRANCH_NAME-$SHORT_SHA \
-            --amend stablecog/sc-web:$BRANCH_NAME-$SHORT_SHA-amd64 \
-            --amend stablecog/sc-web:$BRANCH_NAME-$SHORT_SHA-arm64
-          docker manifest push stablecog/sc-web:$BRANCH_NAME-$SHORT_SHA
+      - name: Create and push multi-arch manifest
+        run: |
+          docker manifest create stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ needs.setup_env.outputs.short_sha }} \
+            --amend stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ needs.setup_env.outputs.short_sha }}-amd64 \
+            --amend stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ needs.setup_env.outputs.short_sha }}-arm64
+          docker manifest push stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ needs.setup_env.outputs.short_sha }}
 
       - name: Tag and push 'latest'
         run: |
-          BRANCH_NAME=${{ needs.setup_env.outputs.branch_name }}
-          SHORT_SHA=${{ needs.setup_env.outputs.short_sha }}
           docker manifest create stablecog/sc-web:latest \
-            --amend stablecog/sc-web:$BRANCH_NAME-$SHORT_SHA-amd64 \
-            --amend stablecog/sc-web:$BRANCH_NAME-$SHORT_SHA-arm64
+            --amend stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ needs.setup_env.outputs.short_sha }}-amd64 \
+            --amend stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ needs.setup_env.outputs.short_sha }}-arm64
           docker manifest push stablecog/sc-web:latest
 
   deploy:
     name: 🚀 Deploy Stablecog Website
-    runs-on: ubuntu-latest
+    runs-on: warp-ubuntu-latest-x64-8x
     needs:
-      - setup_env
       - push_manifest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
-
-      - name: Debug Outputs in deploy
-        run: |
-          echo "BRANCH_NAME=${{ needs.setup_env.outputs.branch_name }}"
-          echo "SHORT_SHA=${{ needs.setup_env.outputs.short_sha }}"
-          echo "COMMIT_MSG=${{ needs.setup_env.outputs.commit_msg }}"
 
       - name: Deploy
         uses: ./.github/actions/k3s-deploy
