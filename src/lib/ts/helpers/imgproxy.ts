@@ -1,4 +1,4 @@
-import { PUBLIC_IMGPROXY_URL } from '$env/static/public';
+import { env } from '$env/dynamic/public';
 import { Base64 } from 'js-base64';
 
 type TImgProxyPreset =
@@ -51,7 +51,7 @@ export function getImgProxySrc({
 	if (quality !== undefined) {
 		presets.push(quality);
 	}
-	return `${PUBLIC_IMGPROXY_URL}/insecure/${presets.join(':')}/${Base64.encodeURL(src)}.${extension}`;
+	return `${env.PUBLIC_IMGPROXY_URL}/insecure/${presets.join(':')}/${Base64.encodeURL(src)}.${extension}`;
 }
 
 export function getImgProxySrcFull({

@@ -16,7 +16,7 @@
 	import { globalSeed } from '$ts/stores/globalSeed';
 	import { userSummary } from '$ts/stores/user/summary';
 	import posthog from 'posthog-js';
-	import { PUBLIC_PH_ID, PUBLIC_PH_URL } from '$env/static/public';
+	import { env } from '$env/dynamic/public';
 	import { isHydrated, setIsHydratedToTrue } from '$ts/helpers/isHydrated';
 	import { setBodyClasses } from '$ts/helpers/setBodyClasses';
 	import { isLeftSidebarHidden, isLeftSidebarHiddenApp } from '$ts/stores/sidebars';
@@ -118,8 +118,8 @@
 				invalidate('supabase:auth');
 			}
 		});
-		posthog.init(PUBLIC_PH_ID, {
-			api_host: PUBLIC_PH_URL
+		posthog.init(env.PUBLIC_PH_ID, {
+			api_host: env.PUBLIC_PH_URL
 		});
 		appVersion.set(document.body.getAttribute('app-version') ?? 'unknown');
 		if ($page.url.hash === confirmOtherEmailHash) {

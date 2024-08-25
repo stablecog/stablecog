@@ -23,11 +23,7 @@
 	import { getTitleFromProductId } from '$ts/helpers/stripe/plan';
 	import type { TStripeSupportedProductIdSubscriptions } from '$ts/constants/stripePublic';
 	import type { TTab } from '$ts/types/main';
-	import {
-		PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION,
-		PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION,
-		PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
-	} from '$env/static/public';
+	import { env } from '$env/dynamic/public';
 	import TabLikeDropdown from '$components/primitives/tabBars/TabLikeDropdown.svelte';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import { getCreditOptions } from '$ts/queries/getCreditsList';
@@ -71,16 +67,16 @@
 			value: ''
 		},
 		{
-			label: getTitleFromProductId($LL, PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION),
-			value: PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION
+			label: getTitleFromProductId($LL, env.PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION),
+			value: env.PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION
 		},
 		{
-			label: getTitleFromProductId($LL, PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION),
-			value: PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION
+			label: getTitleFromProductId($LL, env.PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION),
+			value: env.PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION
 		},
 		{
-			label: getTitleFromProductId($LL, PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION),
-			value: PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
+			label: getTitleFromProductId($LL, env.PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION),
+			value: env.PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
 		},
 		{
 			label: $LL.Admin.Users.BannedTitle(),

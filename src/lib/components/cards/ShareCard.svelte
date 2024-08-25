@@ -7,7 +7,7 @@
 	import IconCopy from '$components/icons/IconCopy.svelte';
 	import IconSc from '$components/icons/IconSc.svelte';
 	import IconTick from '$components/icons/IconTick.svelte';
-	import { PUBLIC_FACEBOOK_APP_ID } from '$env/static/public';
+	import { env } from '$env/dynamic/public';
 	import LL from '$i18n/i18n-svelte';
 	import { modelIdToDisplayName } from '$ts/constants/generationModels';
 	import { logShareButtonClicked } from '$ts/helpers/loggers';
@@ -69,7 +69,7 @@
 			buttonText: $LL.Platform.Facebook(),
 			href: `https://facebook.com/dialog/share?display=popup&href=${encodeURIComponent(
 				url
-			)}&app_id=${PUBLIC_FACEBOOK_APP_ID}`
+			)}&app_id=${env.PUBLIC_FACEBOOK_APP_ID}`
 		},
 		{
 			icon: 'reddit',

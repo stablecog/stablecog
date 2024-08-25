@@ -1,4 +1,4 @@
-import { PUBLIC_OG_IMAGE_API_URL } from '$env/static/public';
+import { env } from '$env/dynamic/public';
 import { mainSorts, sortsDefault, type TGalleryMainSort } from '$routes/(app)/gallery/constants';
 import { searchParamsToBase64 } from '$ts/helpers/base64';
 import { getGalleryLikeParamsFromSearchParams } from '$ts/helpers/galleryLike';
@@ -40,7 +40,7 @@ export const load = async ({ url, parent }) => {
 		searchParamsFiltered.set('un', usernameFilters.join(','));
 	}
 	const base64SearchParams = searchParamsToBase64(searchParamsFiltered);
-	const previewImageUrl = `${PUBLIC_OG_IMAGE_API_URL}/api/gallery/preview/${searchParamsFiltered.toString() !== '' ? base64SearchParams : 'main'}.png`;
+	const previewImageUrl = `${env.PUBLIC_OG_IMAGE_API_URL}/api/gallery/preview/${searchParamsFiltered.toString() !== '' ? base64SearchParams : 'main'}.png`;
 
 	return {
 		...galleryLikeParams,

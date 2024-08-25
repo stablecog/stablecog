@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { PUBLIC_BUCKET_AUX_URL } from '$env/static/public';
+	import { env } from '$env/dynamic/public';
 	import type { TVoiceoverSpeakerId } from '$ts/constants/voiceover/models';
 	import { getImgProxySrc, getImgProxySrcSetSmall } from '$ts/helpers/imgproxy';
 
@@ -8,7 +8,7 @@
 	export let sizes = '32px';
 	let classes = 'w-6 h-6';
 
-	$: _src = `${PUBLIC_BUCKET_AUX_URL}/voiceover/speakers/${type}.jpeg`;
+	$: _src = `${env.PUBLIC_BUCKET_AUX_URL}/voiceover/speakers/${type}.jpeg`;
 	$: src = getImgProxySrc({ src: _src, preset: '64w' });
 	$: srcset = getImgProxySrcSetSmall({ src: _src });
 

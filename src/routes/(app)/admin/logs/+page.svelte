@@ -16,7 +16,7 @@
 	import TabLikeFilterDropdown from '$components/primitives/tabBars/TabLikeFilterDropdown.svelte';
 	import TabLikeInput from '$components/primitives/tabBars/TabLikeInput.svelte';
 	import MetaTag from '$components/utils/MetaTag.svelte';
-	import { PUBLIC_LOKI_HOST } from '$env/static/public';
+	import { env } from '$env/dynamic/public';
 	import {
 		selectedAppsDefault,
 		selectedLayoutsDefault,
@@ -99,7 +99,7 @@
 
 	let query = `{logger="root"}`;
 	$: [$search, $selectedWorkers, $selectedApps], setQuery();
-	$: lokiWebsocketEndpoint = `wss://${PUBLIC_LOKI_HOST}/loki/api/v1/tail?query=${query}&limit=${initialMessageCount}&start=${start}&token=${data.lokiToken}`;
+	$: lokiWebsocketEndpoint = `wss://${env.PUBLIC_LOKI_HOST}/loki/api/v1/tail?query=${query}&limit=${initialMessageCount}&start=${start}&token=${data.lokiToken}`;
 	$: [lokiWebsocketEndpoint, mounted], setupWebsocket();
 	$: [$search, $selectedWorkers], scrollToBottom();
 
