@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Add SHORT_SHA env property
-        run: echo "SHORT_SHA=`echo ${GITHUB_SHA::7}`" >> $GITHUB_ENV
+        run: echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
 
       - name: Put commit msg in environment
         run: echo "COMMIT_MSG=${{ github.event.head_commit.message }}" >> $GITHUB_ENV
@@ -42,9 +42,6 @@ jobs:
     name: 🔨 Build Docker Image (amd64)
     runs-on: warp-ubuntu-latest-x64-8x
     needs: setup_env
-
-    env:
-      GITHUB_RUN_ID: ${{ github.run_id }}
     steps:
       - uses: actions/checkout@v3
 
@@ -57,22 +54,19 @@ jobs:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build amd64 image
+      - name: Build and push amd64 image
         uses: docker/build-push-action@v3
         with:
           context: .
           platforms: linux/amd64
           push: true
           file: ./Dockerfile
-          tags: stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ env.GITHUB_RUN_ID }}-amd64
+          tags: stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ needs.setup_env.outputs.short_sha }}-amd64
 
   build_arm64:
     name: 🔨 Build Docker Image (arm64)
     runs-on: warp-ubuntu-latest-arm64-8x
     needs: setup_env
-
-    env:
-      GITHUB_RUN_ID: ${{ github.run_id }}
     steps:
       - uses: actions/checkout@v3
 
@@ -85,14 +79,14 @@ jobs:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build arm64 image
+      - name: Build and push arm64 image
         uses: docker/build-push-action@v3
         with:
           context: .
           platforms: linux/arm64
           push: true
           file: ./Dockerfile
-          tags: stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ env.GITHUB_RUN_ID }}-arm64
+          tags: stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ needs.setup_env.outputs.short_sha }}-arm64
 
   push_manifest:
     name: 🏷️ Push Multi-Arch Manifest
@@ -110,16 +104,16 @@ jobs:
 
       - name: Create and push multi-arch manifest
         run: |
-          docker manifest create stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ env.GITHUB_RUN_ID }} \
-            --amend stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ env.GITHUB_RUN_ID }}-amd64 \
-            --amend stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ env.GITHUB_RUN_ID }}-arm64
-          docker manifest push stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ env.GITHUB_RUN_ID }}
+          docker manifest create stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ needs.setup_env.outputs.short_sha }} \
+            --amend stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ needs.setup_env.outputs.short_sha }}-amd64 \
+            --amend stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ needs.setup_env.outputs.short_sha }}-arm64
+          docker manifest push stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ needs.setup_env.outputs.short_sha }}
 
       - name: Tag and push 'latest'
         run: |
           docker manifest create stablecog/sc-web:latest \
-            --amend stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ env.GITHUB_RUN_ID }}-amd64 \
-            --amend stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ env.GITHUB_RUN_ID }}-arm64
+            --amend stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ needs.setup_env.outputs.short_sha }}-amd64 \
+            --amend stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ needs.setup_env.outputs.short_sha }}-arm64
           docker manifest push stablecog/sc-web:latest
 
   deploy:
@@ -128,15 +122,13 @@ jobs:
     needs:
       - setup_env
       - push_manifest
-    env:
-      GITHUB_RUN_ID: ${{ github.run_id }}
     steps:
       - uses: actions/checkout@v3
 
       - name: Deploy
         uses: ./.github/actions/k3s-deploy
         with:
-          image: stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ env.GITHUB_RUN_ID }}
+          image: stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ needs.setup_env.outputs.short_sha }}
           embed-title: '${{ needs.setup_env.outputs.commit_msg }}  •  ${{ needs.setup_env.outputs.short_sha }}'
           webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
           kube_config: ${{ secrets.K3S_KUBE_CONFIG }}
