@@ -40,7 +40,7 @@ jobs:
 
   build:
     name: 🔨 Build Docker Image
-    runs-on: ubuntu-latest
+    runs-on: warp-ubuntu-latest-arm64-8x
     needs: setup_env
 
     env:
@@ -91,7 +91,7 @@ jobs:
 
   deploy:
     name: 🚀 Deploy Stablecog Website
-    runs-on: ubuntu-latest
+    runs-on: warp-ubuntu-latest-arm64-8x
     needs:
       - setup_env
       - build
