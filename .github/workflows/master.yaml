@@ -11,7 +11,7 @@ concurrency:
 jobs:
   setup_env:
     name: ⚙️ Setup environment
-    runs-on: ubuntu-latest
+    runs-on: warp-ubuntu-latest-x64-8x-spot
     steps:
       - name: Add SHORT_SHA env property
         run: echo "SHORT_SHA=`echo ${GITHUB_SHA::7}`" >> $GITHUB_ENV
