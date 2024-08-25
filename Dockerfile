@@ -4,6 +4,10 @@ FROM node:lts-alpine as build
 # Set working directory
 WORKDIR /app
 
+
+ARG DISCORD_WEBSITE_DEPLOYMENT_WEBHOOK
+ARG VERCEL_WEBHOOK_SECRET
+
 # Copy package.json and package-lock.json
 COPY package*.json ./
 

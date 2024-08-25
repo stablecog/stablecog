@@ -79,7 +79,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           file: ./Dockerfile
-          build-args: |
+          secrets: |
             DISCORD_WEBSITE_DEPLOYMENT_WEBHOOK: ${{ secrets.DISCORD_WEBSITE_DEPLOYMENT_WEBHOOK }}
           tags: |
             stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ env.GITHUB_RUN_ID }}
