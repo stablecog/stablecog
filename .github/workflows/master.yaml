@@ -21,7 +21,7 @@ jobs:
 
       - name: Escape commit message
         run: |
-          echo "COMMIT_MSG=$(echo $COMMIT_MSG | tr -d \'\\\")" >> $GITHUB_ENV
+          echo "COMMIT_MSG=$(echo $COMMIT_MSG | tr -d '\"')" >> $GITHUB_ENV
 
       - name: Get branch name (merge)
         if: github.event_name != 'pull_request'
@@ -62,8 +62,7 @@ jobs:
         with:
           context: .
           platforms: linux/amd64
-          load: true
-          push: false
+          push: true
           file: ./Dockerfile
           tags: stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ env.GITHUB_RUN_ID }}-amd64
 
@@ -91,8 +90,7 @@ jobs:
         with:
           context: .
           platforms: linux/arm64
-          load: true
-          push: false
+          push: true
           file: ./Dockerfile
           tags: stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ env.GITHUB_RUN_ID }}-arm64
 
@@ -113,15 +111,15 @@ jobs:
       - name: Create and push multi-arch manifest
         run: |
           docker manifest create stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ env.GITHUB_RUN_ID }} \
-            stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ env.GITHUB_RUN_ID }}-amd64 \
-            stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ env.GITHUB_RUN_ID }}-arm64
+            --amend stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ env.GITHUB_RUN_ID }}-amd64 \
+            --amend stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ env.GITHUB_RUN_ID }}-arm64
           docker manifest push stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ env.GITHUB_RUN_ID }}
 
       - name: Tag and push 'latest'
         run: |
           docker manifest create stablecog/sc-web:latest \
-            stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ env.GITHUB_RUN_ID }}-amd64 \
-            stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ env.GITHUB_RUN_ID }}-arm64
+            --amend stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ env.GITHUB_RUN_ID }}-amd64 \
+            --amend stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ env.GITHUB_RUN_ID }}-arm64
           docker manifest push stablecog/sc-web:latest
 
   deploy:
