@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { apiUrl } from '$ts/constants/main';
+	import { getApiUrl } from '$ts/constants/main';
 	import { sseExcludedRoutes } from '$ts/constants/routes';
 	import { generateSSEId } from '$ts/helpers/generateSSEId';
 	import {
@@ -26,7 +26,7 @@
 		}
 
 		sseId.set(generateSSEId());
-		const sseUrl = `${apiUrl.origin}/v1/sse?id=${$sseId}`;
+		const sseUrl = `${getApiUrl().origin}/v1/sse?id=${$sseId}`;
 		eventSource = new EventSource(sseUrl);
 		sse.set(eventSource);
 

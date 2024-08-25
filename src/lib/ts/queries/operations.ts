@@ -1,4 +1,4 @@
-import { apiUrl } from '$ts/constants/main';
+import { getApiUrl } from '$ts/constants/main';
 import type { TOperationSource, TOperationType } from '$ts/helpers/user/operations';
 
 const operationsPerPage = 50;
@@ -15,7 +15,7 @@ export async function getUserOperations({
 	if (cursor) {
 		query.append('cursor', cursor.toString());
 	}
-	const url = `${apiUrl.origin}/v1/user/operations?${query.toString()}`;
+	const url = `${getApiUrl().origin}/v1/user/operations?${query.toString()}`;
 	const res = await fetch(url, {
 		headers: {
 			'Content-Type': 'application/json',

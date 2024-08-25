@@ -12,7 +12,7 @@
 	import PinInput from '$components/primitives/PinInput.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
-	import { apiUrl } from '$ts/constants/main';
+	import { getApiUrl } from '$ts/constants/main';
 	import { sessionStore, supabaseStore } from '$ts/constants/supabase';
 	import { getUserSummary } from '$ts/helpers/user/user';
 	import { signInCardCodeSignInStatus, signInCardStatus } from '$ts/stores/signInCardState';
@@ -53,7 +53,7 @@
 		signInCardStatus.set('loading');
 		provider = 'email';
 		try {
-			const res = await fetch(`${apiUrl.origin}/v1/email/check`, {
+			const res = await fetch(`${getApiUrl().origin}/v1/email/check`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'

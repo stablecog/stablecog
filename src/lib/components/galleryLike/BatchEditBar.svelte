@@ -11,7 +11,7 @@
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
-	import { apiUrl } from '$ts/constants/main';
+	import { getApiUrl } from '$ts/constants/main';
 	import {
 		logGenerationOutputDeleted,
 		logGenerationOutputFavoritedChange
@@ -156,7 +156,7 @@
 	}) {
 		try {
 			actionStatus = 'loading';
-			const res = await fetch(`${apiUrl.origin}/v1/user/outputs/favorite`, {
+			const res = await fetch(`${getApiUrl().origin}/v1/user/outputs/favorite`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -213,7 +213,7 @@
 	}) {
 		try {
 			actionStatus = 'loading';
-			const res = await fetch(`${apiUrl.origin}/v1/user/generation`, {
+			const res = await fetch(`${getApiUrl().origin}/v1/user/generation`, {
 				method: 'DELETE',
 				headers: {
 					'Content-Type': 'application/json',
@@ -266,7 +266,7 @@
 			actionStatus = 'loading';
 			actionType = action;
 			const ids = [...$adminGallerySelectedOutputIds];
-			const res = await fetch(`${apiUrl.origin}/v1/admin/gallery`, {
+			const res = await fetch(`${getApiUrl().origin}/v1/admin/gallery`, {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json',

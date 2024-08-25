@@ -8,7 +8,7 @@
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import PlanCard from '$routes/(app)/pricing/PlanCard.svelte';
 	import type { TCreditPackCard, TSubscriptionCard } from '$routes/(app)/pricing/types.js';
-	import { apiUrl, canonicalUrl } from '$ts/constants/main';
+	import { getApiUrl, canonicalUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { socialAppUrls } from '$ts/constants/social';
 	import {
@@ -120,16 +120,16 @@
 			amount:
 				data.currency === 'eur'
 					? STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
-							env.PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION
-						].prices[env.PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_MO].currencies.eur.amount
+							env.PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION!
+						].prices[env.PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_MO!].currencies.eur.amount
 					: STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
-							env.PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION
-						].prices[env.PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_MO].currencies.usd.amount,
+							env.PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION!
+						].prices[env.PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_MO!].currencies.usd.amount,
 			mainFeatures: [
 				{
 					title:
 						STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
-							env.PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION
+							env.PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION!
 						].monthly_images.toLocaleString($locale),
 					subtitle: $LL.Pricing.ImagesPerMonthSubtitle()
 				}
@@ -138,7 +138,7 @@
 				$LL,
 				parallelGenerations:
 					STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
-						env.PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION
+						env.PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION!
 					].parallel_generations
 			}),
 			ringClass: 'ring-c-bg-secondary',
@@ -155,16 +155,16 @@
 			amount:
 				data.currency === 'eur'
 					? STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
-							env.PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION
-						].prices[env.PUBLIC_STRIPE_PRICE_ID_PRO_SUBSCRIPTION_MO].currencies.eur.amount
+							env.PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION!
+						].prices[env.PUBLIC_STRIPE_PRICE_ID_PRO_SUBSCRIPTION_MO!].currencies.eur.amount
 					: STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
-							env.PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION
-						].prices[env.PUBLIC_STRIPE_PRICE_ID_PRO_SUBSCRIPTION_MO].currencies.usd.amount,
+							env.PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION!
+						].prices[env.PUBLIC_STRIPE_PRICE_ID_PRO_SUBSCRIPTION_MO!].currencies.usd.amount,
 			mainFeatures: [
 				{
 					title:
 						STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
-							env.PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION
+							env.PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION!
 						].monthly_images.toLocaleString($locale),
 					subtitle: $LL.Pricing.ImagesPerMonthSubtitle()
 				}
@@ -172,7 +172,7 @@
 			features: getPaidSubscriptionFeatures({
 				$LL,
 				parallelGenerations:
-					STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[env.PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION]
+					STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[env.PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION!]
 						.parallel_generations
 			}),
 			ringClass: 'ring-c-bg-secondary',
@@ -191,16 +191,16 @@
 			amount:
 				data.currency === 'eur'
 					? STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
-							env.PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
-						].prices[env.PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_MO].currencies.eur.amount
+							env.PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION!
+						].prices[env.PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_MO!].currencies.eur.amount
 					: STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
-							env.PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
-						].prices[env.PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_MO].currencies.usd.amount,
+							env.PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION!
+						].prices[env.PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_MO!].currencies.usd.amount,
 			mainFeatures: [
 				{
 					title:
 						STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
-							env.PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
+							env.PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION!
 						].monthly_images.toLocaleString($locale),
 					subtitle: $LL.Pricing.ImagesPerMonthSubtitle()
 				}
@@ -209,7 +209,7 @@
 				$LL,
 				parallelGenerations:
 					STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
-						env.PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
+						env.PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION!
 					].parallel_generations
 			}),
 			ringClass: 'ring-c-bg-secondary',
@@ -222,23 +222,21 @@
 		{
 			id: 'credit-pack-medium',
 			title: $LL.Pricing.CreditPacks.MediumTitle(),
-			priceId: env.PUBLIC_STRIPE_PRICE_ID_MEDIUM_PACK,
-			productId: env.PUBLIC_STRIPE_PRICE_ID_MEDIUM_PACK,
+			priceId: env.PUBLIC_STRIPE_PRICE_ID_MEDIUM_PACK!,
+			productId: env.PUBLIC_STRIPE_PRICE_ID_MEDIUM_PACK!,
 			currency: data.currency,
 			currencySymbol: STRIPE_CURRENCY_TO_SYMBOL[data.currency],
 			amount:
 				data.currency === 'eur'
-					? STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[env.PUBLIC_STRIPE_PRODUCT_ID_MEDIUM_PACK].prices[
-							env.PUBLIC_STRIPE_PRICE_ID_MEDIUM_PACK
-						].currencies.eur.amount
-					: STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[env.PUBLIC_STRIPE_PRODUCT_ID_MEDIUM_PACK].prices[
-							env.PUBLIC_STRIPE_PRICE_ID_MEDIUM_PACK
-						].currencies.usd.amount,
+					? STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[env.PUBLIC_STRIPE_PRODUCT_ID_MEDIUM_PACK!]
+							.prices[env.PUBLIC_STRIPE_PRICE_ID_MEDIUM_PACK!].currencies.eur.amount
+					: STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[env.PUBLIC_STRIPE_PRODUCT_ID_MEDIUM_PACK!]
+							.prices[env.PUBLIC_STRIPE_PRICE_ID_MEDIUM_PACK!].currencies.usd.amount,
 			mainFeatures: [
 				{
 					title:
 						STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[
-							env.PUBLIC_STRIPE_PRODUCT_ID_MEDIUM_PACK
+							env.PUBLIC_STRIPE_PRODUCT_ID_MEDIUM_PACK!
 						].images.toLocaleString($locale),
 					subtitle: $LL.Pricing.ImagesSubtitle()
 				}
@@ -251,23 +249,23 @@
 		{
 			id: 'credit-pack-large',
 			title: $LL.Pricing.CreditPacks.LargeTitle(),
-			priceId: env.PUBLIC_STRIPE_PRICE_ID_LARGE_PACK,
-			productId: env.PUBLIC_STRIPE_PRICE_ID_LARGE_PACK,
+			priceId: env.PUBLIC_STRIPE_PRICE_ID_LARGE_PACK!,
+			productId: env.PUBLIC_STRIPE_PRICE_ID_LARGE_PACK!,
 			currency: data.currency,
 			currencySymbol: STRIPE_CURRENCY_TO_SYMBOL[data.currency],
 			amount:
 				data.currency === 'eur'
-					? STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[env.PUBLIC_STRIPE_PRODUCT_ID_LARGE_PACK].prices[
-							env.PUBLIC_STRIPE_PRICE_ID_LARGE_PACK
+					? STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[env.PUBLIC_STRIPE_PRODUCT_ID_LARGE_PACK!].prices[
+							env.PUBLIC_STRIPE_PRICE_ID_LARGE_PACK!
 						].currencies.eur.amount
-					: STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[env.PUBLIC_STRIPE_PRODUCT_ID_LARGE_PACK].prices[
-							env.PUBLIC_STRIPE_PRICE_ID_LARGE_PACK
+					: STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[env.PUBLIC_STRIPE_PRODUCT_ID_LARGE_PACK!].prices[
+							env.PUBLIC_STRIPE_PRICE_ID_LARGE_PACK!
 						].currencies.usd.amount,
 			mainFeatures: [
 				{
 					title:
 						STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[
-							env.PUBLIC_STRIPE_PRODUCT_ID_LARGE_PACK
+							env.PUBLIC_STRIPE_PRODUCT_ID_LARGE_PACK!
 						].images.toLocaleString($locale),
 					subtitle: $LL.Pricing.ImagesSubtitle()
 				}
@@ -280,23 +278,23 @@
 		{
 			id: 'credit-pack-mega',
 			title: $LL.Pricing.CreditPacks.MegaTitle(),
-			priceId: env.PUBLIC_STRIPE_PRICE_ID_MEGA_PACK,
-			productId: env.PUBLIC_STRIPE_PRICE_ID_MEGA_PACK,
+			priceId: env.PUBLIC_STRIPE_PRICE_ID_MEGA_PACK!,
+			productId: env.PUBLIC_STRIPE_PRICE_ID_MEGA_PACK!,
 			currency: data.currency,
 			currencySymbol: STRIPE_CURRENCY_TO_SYMBOL[data.currency],
 			amount:
 				data.currency === 'eur'
-					? STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[env.PUBLIC_STRIPE_PRODUCT_ID_MEGA_PACK].prices[
-							env.PUBLIC_STRIPE_PRICE_ID_MEGA_PACK
+					? STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[env.PUBLIC_STRIPE_PRODUCT_ID_MEGA_PACK!].prices[
+							env.PUBLIC_STRIPE_PRICE_ID_MEGA_PACK!
 						].currencies.eur.amount
-					: STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[env.PUBLIC_STRIPE_PRODUCT_ID_MEGA_PACK].prices[
-							env.PUBLIC_STRIPE_PRICE_ID_MEGA_PACK
+					: STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[env.PUBLIC_STRIPE_PRODUCT_ID_MEGA_PACK!].prices[
+							env.PUBLIC_STRIPE_PRICE_ID_MEGA_PACK!
 						].currencies.usd.amount,
 			mainFeatures: [
 				{
 					title:
 						STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[
-							env.PUBLIC_STRIPE_PRODUCT_ID_MEGA_PACK
+							env.PUBLIC_STRIPE_PRODUCT_ID_MEGA_PACK!
 						].images.toLocaleString($locale),
 					subtitle: $LL.Pricing.ImagesSubtitle()
 				}
@@ -389,7 +387,7 @@
 		}
 		try {
 			checkoutCreationStatus = 'loading';
-			const res = await fetch(`${apiUrl.origin}/v1/user/subscription/checkout`, {
+			const res = await fetch(`${getApiUrl().origin}/v1/user/subscription/checkout`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

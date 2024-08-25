@@ -1,4 +1,4 @@
-import { apiUrl } from '$ts/constants/main';
+import { getApiUrl } from '$ts/constants/main';
 import { get, writable } from 'svelte/store';
 import { generateSSEId } from '$ts/helpers/generateSSEId';
 import {
@@ -173,7 +173,7 @@ export async function submitInitialVoiceoverRequest(
 		prompt: promptText,
 		speaker_id: speaker.id
 	};
-	const response = await fetch(`${apiUrl.origin}/v1/user/audio/voiceover/create`, {
+	const response = await fetch(`${getApiUrl().origin}/v1/user/audio/voiceover/create`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

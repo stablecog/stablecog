@@ -8,7 +8,7 @@
 	import IconStar from '$components/icons/IconStar.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { getUserProfileInfiniteQueryKey } from '$routes/(app)/[username]/constants';
-	import { apiUrl } from '$ts/constants/main';
+	import { getApiUrl } from '$ts/constants/main';
 	import { isGalleryAdmin, isSuperAdmin } from '$ts/helpers/admin/roles';
 	import {
 		logGenerationOutputMadePrivate,
@@ -61,7 +61,7 @@
 	) {
 		try {
 			const res = await fetch(
-				`${apiUrl.origin}/v1/user/image/generation/outputs/${
+				`${getApiUrl().origin}/v1/user/image/generation/outputs/${
 					newVisibility === 'make-public' ? 'make_public' : 'make_private'
 				}`,
 				{

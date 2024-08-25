@@ -6,7 +6,7 @@
 	import ErrorLine from '$components/error/ErrorLine.svelte';
 	import IconCancel from '$components/icons/IconCancel.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
-	import { apiUrl } from '$ts/constants/main';
+	import { getApiUrl } from '$ts/constants/main';
 	import { getUserSummary } from '$ts/helpers/user/user';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { createDialog } from '@melt-ui/svelte';
@@ -89,7 +89,7 @@
 			return;
 		}
 		const oldUsername = $userSummary?.username || '';
-		const res = await fetch(`${apiUrl.origin}/v1/user/username/change`, {
+		const res = await fetch(`${getApiUrl().origin}/v1/user/username/change`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

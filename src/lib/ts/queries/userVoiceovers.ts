@@ -1,5 +1,5 @@
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
-import { apiUrl } from '$ts/constants/main';
+import { getApiUrl } from '$ts/constants/main';
 import type { TVoiceoverFullOutput } from '$ts/stores/user/voiceovers';
 
 const SEARCH_SCORE_THRESHOLD_DEFAULT = 50;
@@ -26,7 +26,7 @@ export async function getUserVoiceoverFullOutputs({
 	if (is_favorited !== undefined) {
 		query.append('is_favorited', is_favorited.toString());
 	}
-	const url = `${apiUrl.origin}/v1/user/audio/voiceover/outputs?${query.toString()}`;
+	const url = `${getApiUrl().origin}/v1/user/audio/voiceover/outputs?${query.toString()}`;
 	const res = await fetch(url, {
 		headers: {
 			'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ export async function getAllUserGenerationFullOutputs({
 	if (order_by) {
 		query.append('order_by', order_by);
 	}
-	const url = `${apiUrl.origin}/v1/admin/outputs?${query.toString()}`;
+	const url = `${getApiUrl().origin}/v1/admin/outputs?${query.toString()}`;
 	const res = await fetch(url, {
 		headers: {
 			'Content-Type': 'application/json',

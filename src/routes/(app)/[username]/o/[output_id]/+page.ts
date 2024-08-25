@@ -1,5 +1,5 @@
 import { similarCount } from '$routes/(app)/gallery/o/[output_id]/constants';
-import { apiUrl } from '$ts/constants/main';
+import { getApiUrl } from '$ts/constants/main';
 import type { TUserProfileFullOutputsPage } from '$ts/queries/galleryLike/types';
 import { getUserProfileFullOutputs } from '$ts/queries/galleryLike/userProfileOutputs';
 import type { TGenerationFullOutput } from '$ts/stores/user/generation';
@@ -30,7 +30,7 @@ export const load: PageLoad = async ({ params, parent }) => {
 		};
 	}
 	const [generationFullOutputRes, similarGenerationFullOutputsRes] = await Promise.all([
-		fetch(`${apiUrl.origin}/v1/profile/${username}/outputs?output_id=${outputId}`, {
+		fetch(`${getApiUrl().origin}/v1/profile/${username}/outputs?output_id=${outputId}`, {
 			headers
 		}),
 		getUserProfileFullOutputs({

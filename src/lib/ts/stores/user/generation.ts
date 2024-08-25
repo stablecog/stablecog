@@ -5,7 +5,7 @@ import {
 	newGenerationStartAnimation
 } from '$ts/animation/processAnimation';
 import { type TAvailableGenerationModelId } from '$ts/constants/generationModels';
-import { apiUrl } from '$ts/constants/main';
+import { getApiUrl } from '$ts/constants/main';
 import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
 import {
 	STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO,
@@ -248,7 +248,7 @@ export async function submitInitialGenerationRequest({
 		negative_prompt: negativePromptText,
 		mask_image_url
 	};
-	const response = await fetch(`${apiUrl.origin}/v1/user/generation`, {
+	const response = await fetch(`${getApiUrl().origin}/v1/user/generation`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

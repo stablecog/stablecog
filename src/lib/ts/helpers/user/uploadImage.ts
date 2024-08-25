@@ -1,4 +1,4 @@
-import { apiUrl } from '$ts/constants/main';
+import { getApiUrl } from '$ts/constants/main';
 
 export async function uploadImage({
 	access_token,
@@ -7,7 +7,7 @@ export async function uploadImage({
 	access_token: string;
 	formData: FormData;
 }): Promise<string> {
-	const res = await fetch(`${apiUrl.origin}/upload`, {
+	const res = await fetch(`${getApiUrl().origin}/upload`, {
 		method: 'POST',
 		body: formData,
 		headers: {

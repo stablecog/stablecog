@@ -1,4 +1,4 @@
-import { apiUrl } from '$ts/constants/main';
+import { getApiUrl } from '$ts/constants/main';
 
 export async function getCustomerPortalUrl({
 	returnUrl,
@@ -7,7 +7,7 @@ export async function getCustomerPortalUrl({
 	returnUrl: string;
 	accessToken: string;
 }) {
-	const res = await fetch(`${apiUrl.origin}/v1/user/subscription/portal`, {
+	const res = await fetch(`${getApiUrl().origin}/v1/user/subscription/portal`, {
 		body: JSON.stringify({
 			return_url: returnUrl
 		}),

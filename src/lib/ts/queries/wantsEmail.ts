@@ -1,4 +1,4 @@
-import { apiUrl } from '$ts/constants/main';
+import { getApiUrl } from '$ts/constants/main';
 
 export async function setWantsEmail({
 	wants_email,
@@ -7,7 +7,7 @@ export async function setWantsEmail({
 	wants_email: boolean;
 	access_token: string;
 }) {
-	const res = await fetch(`${apiUrl.origin}/v1/user/email`, {
+	const res = await fetch(`${getApiUrl().origin}/v1/user/email`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

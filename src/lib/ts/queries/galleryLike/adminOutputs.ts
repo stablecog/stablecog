@@ -1,6 +1,6 @@
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 import type { TAvailableAspectRatio } from '$ts/constants/generationSize';
-import { apiUrl } from '$ts/constants/main';
+import { getApiUrl } from '$ts/constants/main';
 import { SEARCH_SCORE_THRESHOLD_DEFAULT } from '$ts/queries/galleryLike/constants';
 import type {
 	TGalleryFullOutputsPage,
@@ -67,7 +67,7 @@ export async function getAdminFullOutputs({
 	if (order_by) {
 		query.append('order_by', order_by);
 	}
-	const url = `${apiUrl.origin}/v1/admin/outputs?${query.toString()}`;
+	const url = `${getApiUrl().origin}/v1/admin/outputs?${query.toString()}`;
 	const res = await fetch(url, {
 		headers: {
 			'Content-Type': 'application/json',

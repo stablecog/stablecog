@@ -1,5 +1,5 @@
 import { similarCount } from '$routes/(app)/gallery/o/[output_id]/constants';
-import { apiUrl } from '$ts/constants/main';
+import { getApiUrl } from '$ts/constants/main';
 import { getGalleryFullOutputs } from '$ts/queries/galleryLike/galleryOutputs';
 import type {
 	TGalleryFullOutputsPage,
@@ -31,7 +31,7 @@ export const load: PageLoad = async ({ params, parent, fetch }) => {
 		};
 	}
 	const [generationFullOutputsRes, similarGenerationFullOutputsRes] = await Promise.all([
-		fetch(`${apiUrl.origin}/v1/gallery?output_id=${outputId}`, {
+		fetch(`${getApiUrl().origin}/v1/gallery?output_id=${outputId}`, {
 			headers
 		}),
 		getGalleryFullOutputs({

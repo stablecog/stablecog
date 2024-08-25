@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 	import MetaTag from '$components/utils/MetaTag.svelte';
 	import { elementreceive, elementsend, expandCollapse } from '$ts/animation/transitions';
-	import { apiUrl, canonicalUrl } from '$ts/constants/main';
+	import { getApiUrl, canonicalUrl } from '$ts/constants/main';
 	import { onMount, onDestroy } from 'svelte';
 	import { quadOut } from 'svelte/easing';
 	import { tweened } from 'svelte/motion';
@@ -22,7 +22,7 @@
 
 	let sse: EventSource | undefined = undefined;
 	$: if (browser && (!sse || sse.readyState === sse.CLOSED)) {
-		sse = new EventSource(`${apiUrl.href}v1/sse?id=live`);
+		sse = new EventSource(`${getApiUrl().href}v1/sse?id=live`);
 		sse.onopen = () => {
 			console.log(`Connected to SSE with ID: live`);
 		};
@@ -178,7 +178,7 @@
 	});
 
 	async function getAndSetTotals() {
-		const res = await fetch(`${apiUrl.origin}/v1/stats`);
+		const res = await fetch(`${getApiUrl().origin}/v1/stats`);
 		if (!res.ok) {
 			console.error('Failed to fetch stats');
 			return;

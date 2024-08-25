@@ -1,4 +1,4 @@
-import { apiUrl } from '$ts/constants/main';
+import { getApiUrl } from '$ts/constants/main';
 
 export async function giftCreditsToUser({
 	access_token,
@@ -10,7 +10,7 @@ export async function giftCreditsToUser({
 	credit_type_id: string;
 }) {
 	console.log('giftCreditsToUser');
-	const url = `${apiUrl.origin}/v1/admin/credit/add`;
+	const url = `${getApiUrl().origin}/v1/admin/credit/add`;
 	const res = await fetch(url, {
 		method: 'POST',
 		headers: {

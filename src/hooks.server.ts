@@ -4,7 +4,7 @@ import { initAcceptLanguageHeaderDetector } from 'typesafe-i18n/detectors';
 import { detectLocale, isLocale } from '$i18n/i18n-util';
 import { loadAllLocales } from '$i18n/i18n-util.sync';
 import type { TAvailableTheme } from '$ts/stores/theme';
-import { apiUrl } from '$ts/constants/main';
+import { getApiUrl } from '$ts/constants/main';
 import { galleryAdminAllowedRoutes, isGalleryAdmin, isSuperAdmin } from '$ts/helpers/admin/roles';
 import { supabaseAnonKey, supabaseUrl } from '$ts/constants/supabase';
 
@@ -67,7 +67,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 			if (!session || !user || !user.id) {
 				return notSignedInResponse(notSignedInRedirectRoute);
 			}
-			const res = await fetch(`${apiUrl.origin}/v1/user`, {
+			const res = await fetch(`${getApiUrl().origin}/v1/user`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',

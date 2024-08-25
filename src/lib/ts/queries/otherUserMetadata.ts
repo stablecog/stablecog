@@ -1,4 +1,4 @@
-import { apiUrl } from '$ts/constants/main';
+import { getApiUrl } from '$ts/constants/main';
 
 export async function getOtherUserMetadata({
 	username,
@@ -7,7 +7,7 @@ export async function getOtherUserMetadata({
 	username: string;
 	custom_fetch?: typeof fetch;
 }): Promise<TOtherUserMetadata> {
-	const url = `${apiUrl.origin}/v1/profile/${username}/metadata`;
+	const url = `${getApiUrl().origin}/v1/profile/${username}/metadata`;
 	const f = custom_fetch || fetch;
 	const res = await f(url, {
 		headers: {

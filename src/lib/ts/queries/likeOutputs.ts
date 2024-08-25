@@ -1,4 +1,4 @@
-import { apiUrl } from '$ts/constants/main';
+import { getApiUrl } from '$ts/constants/main';
 
 export async function likeOutputs({
 	action,
@@ -11,7 +11,7 @@ export async function likeOutputs({
 	output_ids: string[];
 	abortController: AbortController;
 }) {
-	const res = await fetch(`${apiUrl.origin}/v1/user/like`, {
+	const res = await fetch(`${getApiUrl().origin}/v1/user/like`, {
 		method: 'POST',
 		signal: abortController.signal,
 		headers: {

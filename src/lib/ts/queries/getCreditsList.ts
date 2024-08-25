@@ -1,8 +1,8 @@
-import { apiUrl } from '$ts/constants/main';
+import { getApiUrl } from '$ts/constants/main';
 
 export async function getCreditOptions({ access_token }: { access_token?: string }) {
 	console.log('getCreditOptions');
-	const url = `${apiUrl.origin}/v1/admin/credit/types`;
+	const url = `${getApiUrl().origin}/v1/admin/credit/types`;
 	const res = await fetch(url, {
 		method: 'GET',
 		headers: {

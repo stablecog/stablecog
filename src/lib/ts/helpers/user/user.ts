@@ -1,4 +1,4 @@
-import { apiUrl, authServerUrl } from '$ts/constants/main';
+import { getApiUrl, authServerUrl } from '$ts/constants/main';
 import type { TStripeSupportedPriceIdSubscriptionsMo } from '$ts/constants/stripePublic';
 import type { TUserSummary } from '$ts/stores/user/summary';
 
@@ -8,7 +8,7 @@ export async function getUserSummary(
 	if (!access_token) return null;
 	console.log('Getting userSummary');
 	let userSummary: TUserSummary | null = null;
-	const userRes = await fetch(`${apiUrl.origin}/v1/user`, {
+	const userRes = await fetch(`${getApiUrl().origin}/v1/user`, {
 		headers: {
 			'Content-Type': 'application/json',
 			Authorization: `Bearer ${access_token}`
@@ -26,7 +26,7 @@ export async function downgradeSubscription(
 	price_id: TStripeSupportedPriceIdSubscriptionsMo,
 	access_token: string
 ) {
-	const res = await fetch(`${apiUrl.origin}/v1/user/subscription/downgrade`, {
+	const res = await fetch(`${getApiUrl().origin}/v1/user/subscription/downgrade`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -64,7 +64,7 @@ export async function connectAccountToDiscord({
 	platform_token: string;
 }): Promise<TConnectAccountResponse> {
 	console.log('connecting account to Discord');
-	const res = await fetch(`${apiUrl.origin}/v1/user/connect/discord`, {
+	const res = await fetch(`${getApiUrl().origin}/v1/user/connect/discord`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

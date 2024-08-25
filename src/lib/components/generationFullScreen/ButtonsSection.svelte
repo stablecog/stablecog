@@ -21,7 +21,7 @@
 		TSetButtonObjectWithState
 	} from '$components/generationFullScreen/types';
 	import IconWand from '$components/icons/IconWand.svelte';
-	import { apiUrl } from '$ts/constants/main';
+	import { getApiUrl } from '$ts/constants/main';
 	import { page } from '$app/stores';
 	import { useQueryClient } from '@tanstack/svelte-query';
 	import {
@@ -124,7 +124,7 @@
 		}
 		deleteStatus = 'loading';
 		try {
-			const res = await fetch(`${apiUrl.origin}/v1/user/generation`, {
+			const res = await fetch(`${getApiUrl().origin}/v1/user/generation`, {
 				method: 'DELETE',
 				headers: {
 					'Content-Type': 'application/json',

@@ -1,4 +1,4 @@
-import { apiUrl } from '$ts/constants/main';
+import { getApiUrl } from '$ts/constants/main';
 
 export async function getUserTokens({
 	access_token,
@@ -7,7 +7,7 @@ export async function getUserTokens({
 	access_token: string;
 	type: 'any' | 'client' | 'manual';
 }) {
-	const url = new URL(`${apiUrl.origin}/v1/user/tokens`);
+	const url = new URL(`${getApiUrl().origin}/v1/user/tokens`);
 	url.searchParams.append('type', type);
 	const res = await fetch(url.toString(), {
 		method: 'GET',
@@ -28,7 +28,7 @@ export async function createUserToken({
 	access_token: string;
 	name?: string;
 }) {
-	const res = await fetch(`${apiUrl.origin}/v1/user/tokens`, {
+	const res = await fetch(`${getApiUrl().origin}/v1/user/tokens`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ export async function createUserToken({
 }
 
 export async function deleteUserToken({ access_token, id }: { access_token: string; id: string }) {
-	const res = await fetch(`${apiUrl.origin}/v1/user/tokens`, {
+	const res = await fetch(`${getApiUrl().origin}/v1/user/tokens`, {
 		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json',

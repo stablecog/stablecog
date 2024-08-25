@@ -28,7 +28,7 @@
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import Button from '$components/primitives/buttons/Button.svelte';
-	import { apiUrl } from '$ts/constants/main';
+	import { getApiUrl } from '$ts/constants/main';
 	import { page } from '$app/stores';
 	import { logVoiceoverOutputDeleted } from '$ts/helpers/loggers';
 	import { appVersion } from '$ts/stores/appVersion';
@@ -122,7 +122,7 @@
 	async function deleteVoiceoverOutputs(idObjects: { output_id: string; voiceover_id: string }[]) {
 		actionStatus = 'loading';
 		try {
-			const res = await fetch(`${apiUrl.origin}/v1/user/audio/voiceover`, {
+			const res = await fetch(`${getApiUrl().origin}/v1/user/audio/voiceover`, {
 				method: 'DELETE',
 				headers: {
 					'Content-Type': 'application/json',

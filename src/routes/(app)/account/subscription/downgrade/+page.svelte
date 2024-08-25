@@ -8,7 +8,7 @@
 	import MetaTag from '$components/utils/MetaTag.svelte';
 	import PageWrapper from '$components/wrappers/PageWrapper.svelte';
 	import LL from '$i18n/i18n-svelte';
-	import { apiUrl, canonicalUrl } from '$ts/constants/main';
+	import { getApiUrl, canonicalUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import {
 		STRIPE_CURRENCY_TO_SYMBOL,
@@ -52,7 +52,7 @@
 	async function changePlan() {
 		changePlanStatus = 'loading';
 		try {
-			const res = await fetch(`${apiUrl.origin}/v1/user/subscription/downgrade`, {
+			const res = await fetch(`${getApiUrl().origin}/v1/user/subscription/downgrade`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

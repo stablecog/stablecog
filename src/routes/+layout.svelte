@@ -118,7 +118,7 @@
 				invalidate('supabase:auth');
 			}
 		});
-		posthog.init(env.PUBLIC_PH_ID, {
+		posthog.init(env.PUBLIC_PH_ID || '', {
 			api_host: env.PUBLIC_PH_URL
 		});
 		appVersion.set(document.body.getAttribute('app-version') ?? 'unknown');

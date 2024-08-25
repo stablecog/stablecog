@@ -2,7 +2,7 @@ import {
 	newUpscaleCompleteAnimation,
 	newUpscaleStartAnimation
 } from '$ts/animation/processAnimation';
-import { apiUrl } from '$ts/constants/main';
+import { getApiUrl } from '$ts/constants/main';
 import type { TAvailableUpscaleModelId } from '$ts/constants/upscaleModels';
 import { estimatedUpscaleDurationMs } from '$ts/stores/cost';
 import { userSummary } from '$ts/stores/user/summary';
@@ -167,7 +167,7 @@ export async function submitInitialUpscaleRequest({
 	app_version: string;
 	thumbmark_id?: string;
 }) {
-	const response = await fetch(`${apiUrl.origin}/v1/user/upscale`, {
+	const response = await fetch(`${getApiUrl().origin}/v1/user/upscale`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

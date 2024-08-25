@@ -1,4 +1,4 @@
-import { apiUrl } from '$ts/constants/main';
+import { getApiUrl } from '$ts/constants/main';
 import type { TStripeSupportedProductIdSubscriptions } from '$ts/constants/stripePublic';
 
 const perPage = 50;
@@ -35,7 +35,7 @@ export async function getAllUsers({
 	if (banned !== undefined) {
 		query.append('banned', banned.toString());
 	}
-	const url = `${apiUrl.origin}/v1/admin/users?${query.toString()}`;
+	const url = `${getApiUrl().origin}/v1/admin/users?${query.toString()}`;
 	const res = await fetch(url, {
 		method: 'GET',
 		headers: {
@@ -76,7 +76,7 @@ export async function banOrUnbanUsers({
 	action: 'ban' | 'unban';
 	delete_data?: boolean;
 }) {
-	const url = `${apiUrl.origin}/v1/admin/users/ban`;
+	const url = `${getApiUrl().origin}/v1/admin/users/ban`;
 	const res = await fetch(url, {
 		method: 'POST',
 		headers: {
@@ -105,7 +105,7 @@ export async function banOrUnbanDomains({
 	access_token: string;
 	action: 'ban' | 'unban';
 }) {
-	const url = `${apiUrl.origin}/v1/admin/domains/ban`;
+	const url = `${getApiUrl().origin}/v1/admin/domains/ban`;
 	const res = await fetch(url, {
 		method: 'POST',
 		headers: {

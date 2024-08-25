@@ -1,4 +1,4 @@
-import { apiUrl } from '$ts/constants/main';
+import { getApiUrl } from '$ts/constants/main';
 
 export async function favoriteOutputs({
 	action,
@@ -9,7 +9,7 @@ export async function favoriteOutputs({
 	access_token: string;
 	output_ids: string[];
 }) {
-	const res = await fetch(`${apiUrl.origin}/v1/user/outputs/favorite`, {
+	const res = await fetch(`${getApiUrl().origin}/v1/user/outputs/favorite`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

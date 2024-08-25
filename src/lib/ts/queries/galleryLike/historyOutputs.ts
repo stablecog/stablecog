@@ -1,6 +1,6 @@
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
 import type { TAvailableAspectRatio } from '$ts/constants/generationSize';
-import { apiUrl } from '$ts/constants/main';
+import { getApiUrl } from '$ts/constants/main';
 import type {
 	TGalleryFullOutputsPage,
 	TGalleryFullOutputsPageShallow
@@ -57,7 +57,7 @@ export async function getHistoryFullOutputs({
 			aspect_ratios.map((i) => i.replaceAll('.', '_').replaceAll(':', '-')).join(',')
 		);
 	}
-	const url = `${apiUrl.origin}/v1/user/outputs?${query.toString()}`;
+	const url = `${getApiUrl().origin}/v1/user/outputs?${query.toString()}`;
 	const res = await fetch(url, {
 		headers: {
 			'Content-Type': 'application/json',

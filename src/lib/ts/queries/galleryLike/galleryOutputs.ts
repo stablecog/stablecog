@@ -1,6 +1,6 @@
 import { mainSortViewDefault } from '$routes/(app)/gallery/constants';
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
-import { apiUrl } from '$ts/constants/main';
+import { getApiUrl } from '$ts/constants/main';
 import type {
 	TGalleryFullOutputsPage,
 	TGalleryFullOutputsPageShallow
@@ -83,7 +83,7 @@ export async function getGalleryFullOutputs({
 	}
 	let queryString = query.toString();
 	if (queryString) queryString = `?${queryString}`;
-	const url = `${apiUrl.origin}/v1/gallery${queryString}`;
+	const url = `${getApiUrl().origin}/v1/gallery${queryString}`;
 	const f = custom_fetch || fetch;
 	let headers: Record<string, string> = {
 		'Content-Type': 'application/json'
