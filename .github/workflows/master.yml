@@ -45,6 +45,11 @@ jobs:
 
     env:
       GITHUB_RUN_ID: ${{ github.run_id }}
+      PUBLIC_APP_MODE: production
+      PUBLIC_GO_SERVER_URL_QA: https://qa-api.stablecog.com
+      PUBLIC_GO_SERVER_URL_DEV: https://api.stablecog.com
+      PUBLIC_GO_SERVER_URL_PROD: https://api.stablecog.com
+      PUBLIC_AUTH_SERVER_URL: https://auth.stablecog.com
     steps:
       - uses: actions/checkout@v3
 
