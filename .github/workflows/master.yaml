@@ -33,6 +33,11 @@ jobs:
         shell: bash
         run: echo "BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
 
+      - name: Debug Outputs
+        run: |
+          echo "BRANCH_NAME=${{ env.BRANCH_NAME }}"
+          echo "SHORT_SHA=${{ env.SHORT_SHA }}"
+
     outputs:
       short_sha: ${{ env.SHORT_SHA }}
       commit_msg: ${{ env.COMMIT_MSG }}
@@ -40,7 +45,7 @@ jobs:
 
   build_amd64:
     name: 🔨 Build Docker Image (amd64)
-    runs-on: warp-ubuntu-latest-x64-4x
+    runs-on: warp-ubuntu-latest-x64-8x
     needs: setup_env
     steps:
       - uses: actions/checkout@v3
@@ -65,7 +70,7 @@ jobs:
 
   build_arm64:
     name: 🔨 Build Docker Image (arm64)
-    runs-on: warp-ubuntu-latest-arm64-4x
+    runs-on: warp-ubuntu-latest-arm64-8x
     needs: setup_env
     steps:
       - uses: actions/checkout@v3
@@ -102,37 +107,25 @@ jobs:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Debug - Print constructed tag name
-        run: |
-          echo "Constructed Tag Name: stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ needs.setup_env.outputs.short_sha }}"
-
       - name: Create and push multi-arch manifest
         run: |
-          docker manifest create stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ needs.setup_env.outputs.short_sha }} \
-            --amend stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ needs.setup_env.outputs.short_sha }}-amd64 \
-            --amend stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ needs.setup_env.outputs.short_sha }}-arm64
-          docker manifest push stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ needs.setup_env.outputs.short_sha }}
+          BRANCH_NAME=${{ needs.setup_env.outputs.branch_name }}
+          SHORT_SHA=${{ needs.setup_env.outputs.short_sha }}
+          if [ -z "$BRANCH_NAME" ] || [ -z "$SHORT_SHA" ]; then
+            echo "Error: BRANCH_NAME or SHORT_SHA is not set"
+            exit 1
+          fi
+
+          docker manifest create stablecog/sc-web:$BRANCH_NAME-$SHORT_SHA \
+            --amend stablecog/sc-web:$BRANCH_NAME-$SHORT_SHA-amd64 \
+            --amend stablecog/sc-web:$BRANCH_NAME-$SHORT_SHA-arm64
+          docker manifest push stablecog/sc-web:$BRANCH_NAME-$SHORT_SHA
 
       - name: Tag and push 'latest'
         run: |
+          BRANCH_NAME=${{ needs.setup_env.outputs.branch_name }}
+          SHORT_SHA=${{ needs.setup_env.outputs.short_sha }}
           docker manifest create stablecog/sc-web:latest \
-            --amend stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ needs.setup_env.outputs.short_sha }}-amd64 \
-            --amend stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ needs.setup_env.outputs.short_sha }}-arm64
+            --amend stablecog/sc-web:$BRANCH_NAME-$SHORT_SHA-amd64 \
+            --amend stablecog/sc-web:$BRANCH_NAME-$SHORT_SHA-arm64
           docker manifest push stablecog/sc-web:latest
-
-  deploy:
-    name: 🚀 Deploy Stablecog Website
-    runs-on: ubuntu-latest
-    needs:
-      - setup_env
-      - push_manifest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Deploy
-        uses: ./.github/actions/k3s-deploy
-        with:
-          image: stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ needs.setup_env.outputs.short_sha }}
-          embed-title: '${{ needs.setup_env.outputs.commit_msg }}  •  ${{ needs.setup_env.outputs.short_sha }}'
-          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-          kube_config: ${{ secrets.K3S_KUBE_CONFIG }}
