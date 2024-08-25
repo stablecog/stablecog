@@ -100,13 +100,14 @@ export const handle: Handle = async ({ event, resolve }) => {
 			return name === 'content-range' || name === 'x-supabase-api-version';
 		}
 	});
-	const linkHeaders = response.headers.get('Link');
+	response.headers.delete('link');
+	/* const linkHeaders = response.headers.get('Link');
 	if (linkHeaders) {
 		const newLinkHeadersArr = linkHeaders.split(', ');
 		if (newLinkHeadersArr.length > LINK_HEADER_LENGTH) {
 			response.headers.set('Link', newLinkHeadersArr.slice(0, LINK_HEADER_LENGTH).join(', '));
 		}
-	}
+	} */
 	return response;
 };
 
