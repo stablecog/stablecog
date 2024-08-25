@@ -13,49 +13,49 @@ jobs:
     name: ⚙️ Setup environment
     runs-on: ubuntu-latest
     steps:
-      - name: Add SHORT_SHA env property
+      - name: Set SHORT_SHA
         run: echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
 
-      - name: Put commit msg in environment
+      - name: Set COMMIT_MSG
         run: echo "COMMIT_MSG=${{ github.event.head_commit.message }}" >> $GITHUB_ENV
 
-      - name: Escape commit message
+      - name: Escape COMMIT_MSG
         run: |
           echo "COMMIT_MSG=$(echo $COMMIT_MSG | tr -d '\"')" >> $GITHUB_ENV
 
-      - name: Get branch name (merge)
+      - name: Set BRANCH_NAME (merge)
         if: github.event_name != 'pull_request'
-        shell: bash
         run: echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | tr / -)" >> $GITHUB_ENV
 
-      - name: Get branch name (pull request)
+      - name: Set BRANCH_NAME (pull request)
         if: github.event_name == 'pull_request'
-        shell: bash
         run: echo "BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
 
-      - name: Debug Outputs
+      - name: Output Variables
         run: |
-          echo "BRANCH_NAME=${BRANCH_NAME}"
-          echo "SHORT_SHA=${SHORT_SHA}"
+          echo "branch_name=${BRANCH_NAME}"
+          echo "short_sha=${SHORT_SHA}"
+          echo "commit_msg=${COMMIT_MSG}"
 
       - name: Set Outputs
         id: set_outputs
         run: |
-          echo "::set-output name=short_sha::${SHORT_SHA}"
-          echo "::set-output name=branch_name::${BRANCH_NAME}"
-          echo "::set-output name=commit_msg::${COMMIT_MSG}"
+          echo "short_sha=${SHORT_SHA}" >> $GITHUB_ENV
+          echo "branch_name=${BRANCH_NAME}" >> $GITHUB_ENV
+          echo "commit_msg=${COMMIT_MSG}" >> $GITHUB_ENV
 
     outputs:
-      short_sha: ${{ steps.set_outputs.outputs.short_sha }}
-      branch_name: ${{ steps.set_outputs.outputs.branch_name }}
-      commit_msg: ${{ steps.set_outputs.outputs.commit_msg }}
+      short_sha: ${{ env.short_sha }}
+      branch_name: ${{ env.branch_name }}
+      commit_msg: ${{ env.commit_msg }}
 
   build_amd64:
     name: 🔨 Build Docker Image (amd64)
-    runs-on: warp-ubuntu-latest-x64-8x
+    runs-on: ubuntu-latest
     needs: setup_env
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
       - name: Debug Outputs in build_amd64
         run: |
@@ -82,10 +82,11 @@ jobs:
 
   build_arm64:
     name: 🔨 Build Docker Image (arm64)
-    runs-on: warp-ubuntu-latest-arm64-8x
+    runs-on: ubuntu-latest
     needs: setup_env
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
       - name: Debug Outputs in build_arm64
         run: |
@@ -159,7 +160,8 @@ jobs:
       - setup_env
       - push_manifest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
       - name: Debug Outputs in deploy
         run: |
