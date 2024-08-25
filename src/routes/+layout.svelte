@@ -29,6 +29,8 @@
 
 	export let data;
 
+	// Test deploy
+
 	let { supabase, session } = data;
 	$: ({ supabase, session } = data);
 
