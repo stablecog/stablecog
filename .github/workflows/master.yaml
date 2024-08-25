@@ -11,16 +11,13 @@ concurrency:
 jobs:
   build_amd64:
     name: 🔨 Build Docker Image (amd64)
-    runs-on: warp-ubuntu-latest-x64-8x
+    runs-on: warp-ubuntu-latest-x64-4x
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
 
       - name: Set SHORT_SHA
         run: echo "SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_ENV
-
-      - name: Set COMMIT_MSG
-        run: echo "COMMIT_MSG=${{ github.event.head_commit.message }}" >> $GITHUB_ENV
 
       - name: Set BRANCH_NAME
         run: |
@@ -57,16 +54,13 @@ jobs:
 
   build_arm64:
     name: 🔨 Build Docker Image (arm64)
-    runs-on: warp-ubuntu-latest-arm64-8x
+    runs-on: warp-ubuntu-latest-arm64-4x
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
 
       - name: Set SHORT_SHA
         run: echo "SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_ENV
-
-      - name: Set COMMIT_MSG
-        run: echo "COMMIT_MSG=${{ github.event.head_commit.message }}" >> $GITHUB_ENV
 
       - name: Set BRANCH_NAME
         run: |
@@ -115,9 +109,6 @@ jobs:
       - name: Set SHORT_SHA
         run: echo "SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_ENV
 
-      - name: Set COMMIT_MSG
-        run: echo "COMMIT_MSG=${{ github.event.head_commit.message }}" >> $GITHUB_ENV
-
       - name: Set BRANCH_NAME
         run: |
           if [ "${{ github.event_name }}" != 'pull_request' ]; then
@@ -156,7 +147,7 @@ jobs:
 
   deploy:
     name: 🚀 Deploy Stablecog Website
-    runs-on: warp-ubuntu-latest-x64-8x
+    runs-on: warp-ubuntu-latest-x64-4x
     needs:
       - push_manifest
     steps:
