@@ -75,7 +75,6 @@
 		"@tanstack/svelte-query": "^5.50.3",
 		"@tanstack/svelte-virtual": "^3.8.2",
 		"@thumbmarkjs/thumbmarkjs": "^0.14.6",
-		"canvas": "^2.11.2",
 		"copy-anything": "^3.0.5",
 		"deep-equal": "^2.2.3",
 		"discord.js": "^14.14.1",
