@@ -6,7 +6,7 @@ metadata:
   labels:
     app: sc-web
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: sc-web

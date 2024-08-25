@@ -16,10 +16,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - test.stablecog.com
-      secretName: sc-web-test-stablecog-com-secret
+        - web.stablecog.com
+      secretName: sc-web-web-stablecog-com-secret
   rules:
-    - host: test.stablecog.com
+    - host: web.stablecog.com
       http:
         paths:
           - path: /
