@@ -38,75 +38,68 @@ jobs:
       commit_msg: ${{ env.COMMIT_MSG }}
       branch_name: ${{ env.BRANCH_NAME }}
 
-  build:
-    name: 🔨 Build Docker Image
+  build_amd64:
+    name: 🔨 Build Docker Image (amd64)
     runs-on: ubuntu-latest
     needs: setup_env
-
     env:
       GITHUB_RUN_ID: ${{ github.run_id }}
     steps:
       - uses: actions/checkout@v3
-
-      - name: Send Discord Webhook
-        uses: ./.github/actions/discord-webhook
-        with:
-          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-          embed-color: 16776960
-          embed-title: '[sc-web] ${{ needs.setup_env.outputs.commit_msg }}  •  ${{ needs.setup_env.outputs.short_sha }}'
-          embed-description: '```Build Started```'
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Set build start in env variable
-        run: echo "BUILD_START=$(date +%s)" >> $GITHUB_ENV
-
       - name: Login to registry
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Build and push image
-        if: success()
+      - name: Build and push image for amd64
         uses: docker/build-push-action@v3
         with:
           context: .
-          platforms: linux/amd64,linux/arm64
-          push: true
+          platforms: linux/amd64
+          load: true # load the image locally for pushing it together
           file: ./Dockerfile
           tags: |
-            stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ env.GITHUB_RUN_ID }}
-            stablecog/sc-web:latest
+            stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ env.GITHUB_RUN_ID }}-amd64
 
-      - name: Send Discord Webhook
-        if: failure()
-        uses: ./.github/actions/discord-webhook
-        with:
-          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-          embed-color: 15548997
-          embed-title: '[sc-web] ${{ needs.setup_env.outputs.commit_msg }}  •  ${{ needs.setup_env.outputs.short_sha }}'
-          embed-description: '```🚨 Build FAILED 🚨```'
-
-  deploy:
-    name: 🚀 Deploy Stablecog Website
-    runs-on: ubuntu-latest
-    needs:
-      - setup_env
-      - build
+  build_arm64:
+    name: 🔨 Build Docker Image (arm64)
+    runs-on: ubuntu-22.04
+    needs: setup_env
     env:
       GITHUB_RUN_ID: ${{ github.run_id }}
     steps:
       - uses: actions/checkout@v3
-
-      - name: Deploy
-        uses: ./.github/actions/k3s-deploy
+      - name: Login to registry
+        uses: docker/login-action@v2
         with:
-          image: stablecog/sc-web:${{ needs.setup_env.outputs.branch_name}}-${{ env.GITHUB_RUN_ID }}
-          embed-title: '${{ needs.setup_env.outputs.commit_msg }}  •  ${{ needs.setup_env.outputs.short_sha }}'
-          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-          kube_config: ${{ secrets.K3S_KUBE_CONFIG }}
+          username: ${{ secrets.DOCKER_USER }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build and push image for arm64
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          platforms: linux/arm64
+          load: true # load the image locally for pushing it together
+          file: ./Dockerfile
+          tags: |
+            stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ env.GITHUB_RUN_ID }}-arm64
+
+  push_manifest:
+    name: 🖇️ Push multi-arch image
+    runs-on: ubuntu-latest
+    needs:
+      - build_amd64
+      - build_arm64
+    steps:
+      - name: Login to registry
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USER }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Create and push multi-arch image
+        run: |
+          docker buildx imagetools create \
+            --tag stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ env.GITHUB_RUN_ID }} \
+            --tag stablecog/sc-web:latest \
+            stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ env.GITHUB_RUN_ID }}-amd64 \
+            stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ env.GITHUB_RUN_ID }}-arm64
