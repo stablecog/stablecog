@@ -10,8 +10,6 @@ import { supabaseAnonKey, supabaseUrl } from '$ts/constants/supabase';
 
 loadAllLocales();
 
-const LINK_HEADER_LENGTH = 60;
-
 export const handle: Handle = async ({ event, resolve }) => {
 	event.locals.supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
 		cookies: {
@@ -101,7 +99,8 @@ export const handle: Handle = async ({ event, resolve }) => {
 		}
 	});
 	response.headers.delete('link');
-	/* const linkHeaders = response.headers.get('Link');
+	/* const LINK_HEADER_LENGTH = 60;
+	const linkHeaders = response.headers.get('Link');
 	if (linkHeaders) {
 		const newLinkHeadersArr = linkHeaders.split(', ');
 		if (newLinkHeadersArr.length > LINK_HEADER_LENGTH) {
