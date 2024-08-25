@@ -40,7 +40,7 @@ jobs:
 
   build_amd64:
     name: 🔨 Build Docker Image (amd64)
-    runs-on: ubuntu-latest
+    runs-on: warp-ubuntu-latest-x64-8x
     needs: setup_env
 
     env:
@@ -69,7 +69,7 @@ jobs:
 
   build_arm64:
     name: 🔨 Build Docker Image (arm64)
-    runs-on: ubuntu-latest-arm64
+    runs-on: warp-ubuntu-latest-arm64-8x
     needs: setup_env
 
     env:
