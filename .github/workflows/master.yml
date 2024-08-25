@@ -45,6 +45,7 @@ jobs:
 
     env:
       GITHUB_RUN_ID: ${{ github.run_id }}
+      DISCORD_WEBSITE_DEPLOYMENT_WEBHOOK: ${{ secrets.DISCORD_WEBSITE_DEPLOYMENT_WEBHOOK }}
     steps:
       - uses: actions/checkout@v3
 
@@ -79,8 +80,6 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           file: ./Dockerfile
-          secrets: |
-            DISCORD_WEBSITE_DEPLOYMENT_WEBHOOK: ${{ secrets.DISCORD_WEBSITE_DEPLOYMENT_WEBHOOK }}
           tags: |
             stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ env.GITHUB_RUN_ID }}
             stablecog/sc-web:latest
