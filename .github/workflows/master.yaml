@@ -165,8 +165,8 @@ jobs:
 
       - name: Set SHORT_SHA, BRANCH_NAME, and COMMIT_MSG
         run: |
-          SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)
-          COMMIT_MSG=${{ github.event.head_commit.message }}
+          SHORT_SHA=$(echo '${{ github.sha }}' | cut -c1-7)
+          COMMIT_MSG="${{ github.event.head_commit.message }}"
           if [ "${{ github.event_name }}" != 'pull_request' ]; then
             BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | tr / -)
           else
