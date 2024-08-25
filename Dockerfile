@@ -14,7 +14,12 @@ RUN npm ci
 COPY . .
 
 # Build the app
-RUN npm run build
+RUN export PUBLIC_APP_MODE=production && \
+  export PUBLIC_GO_SERVER_URL_PROD=https://api.stablecog.com && \
+  export PUBLIC_GO_SERVER_URL_DEV=https://api.stablecog.com && \ 
+  export PUBLIC_GO_SERVER_URL_QA=https://qa-api.stablecog.com && \ 
+  export PUBLIC_AUTH_SERVER_URL=https://auth.stablecog.com && \ 
+  npm run build
 
 # Remove dev dependencies
 RUN npm prune --production
