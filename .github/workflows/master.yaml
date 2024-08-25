@@ -40,7 +40,7 @@ jobs:
 
   build_amd64:
     name: 🔨 Build Docker Image (amd64)
-    runs-on: warp-ubuntu-latest-x64-8x
+    runs-on: warp-ubuntu-latest-x64-4x
     needs: setup_env
     steps:
       - uses: actions/checkout@v3
@@ -65,7 +65,7 @@ jobs:
 
   build_arm64:
     name: 🔨 Build Docker Image (arm64)
-    runs-on: warp-ubuntu-latest-arm64-8x
+    runs-on: warp-ubuntu-latest-arm64-4x
     needs: setup_env
     steps:
       - uses: actions/checkout@v3
@@ -101,6 +101,10 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Debug - Print constructed tag name
+        run: |
+          echo "Constructed Tag Name: stablecog/sc-web:${{ needs.setup_env.outputs.branch_name }}-${{ needs.setup_env.outputs.short_sha }}"
 
       - name: Create and push multi-arch manifest
         run: |
