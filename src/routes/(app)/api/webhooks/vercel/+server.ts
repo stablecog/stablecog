@@ -1,8 +1,7 @@
 import { env } from '$env/dynamic/private';
+import { placeholderUrl } from '$ts/constants/placeholderUrl.js';
 import crypto from 'crypto';
 import { WebhookClient, EmbedBuilder } from 'discord.js';
-
-const webhookClient = new WebhookClient({ url: env.DISCORD_WEBSITE_DEPLOYMENT_WEBHOOK });
 
 export async function POST({ request }) {
 	const isVercel = verifySignature(request);
@@ -65,6 +64,9 @@ async function sendDiscordNotification({
 	footer: string;
 	color: number;
 }) {
+	const webhookClient = new WebhookClient({
+		url: env.DISCORD_WEBSITE_DEPLOYMENT_WEBHOOK || placeholderUrl
+	});
 	const embed = new EmbedBuilder()
 		.setTitle(title)
 		.setDescription('```' + description + '```')
@@ -81,7 +83,7 @@ async function verifySignature(req: Request) {
 	const clonedReq = req.clone();
 	const payload = await clonedReq.text();
 	const signature = crypto
-		.createHmac('sha1', env.VERCEL_WEBHOOK_SECRET)
+		.createHmac('sha1', env.VERCEL_WEBHOOK_SECRET || '')
 		.update(payload)
 		.digest('hex');
 	return signature === clonedReq.headers.get('x-vercel-signature');

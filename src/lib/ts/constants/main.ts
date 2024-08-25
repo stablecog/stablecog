@@ -1,16 +1,17 @@
 import { env } from '$env/dynamic/public';
+import { placeholderUrl } from '$ts/constants/placeholderUrl';
 import type { TTab } from '$ts/types/main';
 
 export const canonicalUrl = 'https://stablecog.com';
 export const defaultLocale: Locales = 'en';
-export const apiUrl = new URL(
+const selectedUrlStr =
 	env.PUBLIC_APP_MODE === 'qa'
 		? env.PUBLIC_GO_SERVER_URL_QA
 		: env.PUBLIC_APP_MODE === 'dev'
 			? env.PUBLIC_GO_SERVER_URL_DEV
-			: env.PUBLIC_GO_SERVER_URL_PROD
-);
-export const authServerUrl = new URL(env.PUBLIC_AUTH_SERVER_URL);
+			: env.PUBLIC_GO_SERVER_URL_PROD;
+export const apiUrl = new URL(selectedUrlStr || placeholderUrl);
+export const authServerUrl = new URL(env.PUBLIC_AUTH_SERVER_URL || placeholderUrl);
 
 export const navbarEstimatedHeight = 72;
 
