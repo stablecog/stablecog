@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { auxBucketStaticUrl } from '$ts/constants/main';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { themeApp } from '$ts/stores/theme';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
@@ -9,8 +10,8 @@
 <div
 	style="
 		background-image: url({$themeApp === 'light'
-		? '/illustrations/grid-on-light.svg'
-		: '/illustrations/grid-on-dark.svg'});
+		? `${auxBucketStaticUrl}/illustrations/grid-on-light.svg`
+		: `${auxBucketStaticUrl}/illustrations/grid-on-dark.svg`});
 				background-size: 24px;
         {isAppRoute
 		? $windowHeight && $windowWidth

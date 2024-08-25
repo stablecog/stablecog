@@ -16,10 +16,6 @@ Copyrighted assets include, but are not limited to:
 - static/icon-any-512.png
 - static/icon-maskable-192.png
 - static/icon-maskable-512.png
-- static/images/mockups/home-default.png
-- static/images/mockups/home-advanced-light.png
-- static/images/mockups/gallery.png
-- static/images/mockups/live.png
 - src/lib/components/Logo.svelte
 
 All code is copyrighted by Stablecog, Inc. under the MIT license.
