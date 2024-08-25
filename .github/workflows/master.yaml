@@ -33,22 +33,17 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: Login to registry
+      - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build amd64 image
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          platforms: linux/amd64
-          push: false
-          file: ./Dockerfile
-          tags: stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-amd64
+      - name: Build and Tag amd64 Image
+        run: |
+          docker buildx build --platform linux/amd64 -t stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-amd64 --load .
 
-      - name: Push amd64 image
+      - name: Push amd64 Image
         run: |
           docker push stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-amd64
 
@@ -76,22 +71,17 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: Login to registry
+      - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build arm64 image
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          platforms: linux/arm64
-          push: false
-          file: ./Dockerfile
-          tags: stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-arm64
+      - name: Build and Tag arm64 Image
+        run: |
+          docker buildx build --platform linux/arm64 -t stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-arm64 --load .
 
-      - name: Push arm64 image
+      - name: Push arm64 Image
         run: |
           docker push stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-arm64
 
@@ -103,24 +93,24 @@ jobs:
       - build_arm64
 
     steps:
-      - name: Login to registry
+      - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Create and push multi-arch manifest
+      - name: Create and Push Multi-Arch Manifest
         run: |
           docker manifest create stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }} \
-            stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-amd64 \
-            stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-arm64
+            --amend stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-amd64 \
+            --amend stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-arm64
           docker manifest push stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}
 
-      - name: Tag and push 'latest'
+      - name: Tag and Push 'latest'
         run: |
           docker manifest create stablecog/sc-web:latest \
-            stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-amd64 \
-            stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-arm64
+            --amend stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-amd64 \
+            --amend stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-arm64
           docker manifest push stablecog/sc-web:latest
 
   deploy:
