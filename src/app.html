@@ -28,6 +28,16 @@
 				font-style: normal;
 			}
 		</style>
+		<script>
+			if ('serviceWorker' in navigator) {
+				navigator.serviceWorker.getRegistrations().then(function (registrations) {
+					for (const registration of registrations) {
+						console.log('serviceWorker unregistered');
+						registration.unregister();
+					}
+				});
+			}
+		</script>
 		%sveltekit.head%
 	</head>
 	<body app-version="5.84">
