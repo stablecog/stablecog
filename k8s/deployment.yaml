@@ -21,6 +21,13 @@ spec:
           ports:
             - containerPort: 3000
           imagePullPolicy: 'Always'
+          resources:
+            requests:
+              memory: '2048Mi'
+              cpu: '1000m'
+            limits:
+              memory: '4096Mi'
+              cpu: '4000m'
           readinessProbe:
             httpGet:
               path: /
