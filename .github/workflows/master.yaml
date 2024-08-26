@@ -9,8 +9,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  discord_notification:
-    name: 📡 Discord Notification
+  discord_notification_build_started:
+    name: 📡 Discord Notification (Build Started)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
