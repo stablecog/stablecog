@@ -13,6 +13,9 @@ jobs:
     name: 📡 Discord Notification
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
       - name: Add SHORT_SHA env property
         run: echo "SHORT_SHA=`echo ${GITHUB_SHA::7}`" >> $GITHUB_ENV
 
