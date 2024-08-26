@@ -7,6 +7,7 @@
 		"build": "vite build",
 		"preview": "vite preview",
 		"host": "vite --host",
+		"start": "npm run build && npm run preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"update-types": "export $(xargs <.env) && npx supabase gen types typescript --project-id $SUPABASE_PROJECT_ID > src/lib/ts/types/supabase.ts",
