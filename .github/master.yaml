@@ -96,7 +96,7 @@ jobs:
           docker push stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-arm64
 
   push_manifest:
-    name: 🏷️ Push Multi-Architecture Image
+    name: 🏷️ Push Multi-architecture Image
     runs-on: ubuntu-latest
     needs:
       - build_amd64
