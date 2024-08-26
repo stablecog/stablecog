@@ -9,6 +9,27 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  discord_notification:
+    name: 📡 Discord Notification
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add SHORT_SHA env property
+        run: echo "SHORT_SHA=`echo ${GITHUB_SHA::7}`" >> $GITHUB_ENV
+
+      - name: Put commit msg in environment
+        run: echo "COMMIT_MSG=${{ github.event.head_commit.message }}" >> $GITHUB_ENV
+
+      - name: Escape commit message
+        run: |
+          echo "COMMIT_MSG=$(echo $COMMIT_MSG | tr -d \'\\\")" >> $GITHUB_ENV
+
+      - name: Send Discord Webhook
+        uses: ./.github/actions/discord-webhook
+        with:
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+          embed-color: 16776960
+          embed-title: '[sc-web] ${{ env.COMMIT_MSG }}  •  ${{ env.SHORT_SHA }}'
+          embed-description: '```Build Started```'
   build_amd64:
     name: 🔨 Build Docker Image (amd64)
     runs-on: warp-ubuntu-latest-x64-4x
