@@ -16,6 +16,9 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-buffer-size: '64k'
     nginx.ingress.kubernetes.io/proxy-buffers-number: '32'
     nginx.ingress.kubernetes.io/large-client-header-buffers: '32 64k'
+    nginx.ingress.kubernetes.io/affinity: 'cookie'
+    nginx.ingress.kubernetes.io/session-cookie-name: 'sc-web-route'
+    nginx.ingress.kubernetes.io/session-cookie-hash: 'sha1'
 spec:
   tls:
     - hosts:
