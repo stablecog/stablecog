@@ -111,7 +111,8 @@ export const handle: Handle = async ({ event, resolve }) => {
 		logger.info(
 			asTable([
 				['URL', `${url.pathname + url.search}`],
-				['Duration', `${Date.now() - start}ms`]
+				['Duration', `${Date.now() - start}ms`],
+				['UA', event.request.headers.get('User-Agent') || 'Unknown']
 			])
 		);
 	}
