@@ -12,6 +12,11 @@ let logger:
 			warn: typeof console.warn;
 	  };
 
+export function isKubeProbe(headers: Headers): boolean {
+	const userAgent = headers.get('User-Agent');
+	return userAgent && userAgent.includes('kube-probe') ? true : false;
+}
+
 if (env.IS_NODE && env.LOKI_URL && env.LOKI_PASSWORD) {
 	const basicAuth = `${env.LOKI_USERNAME}:${env.LOKI_PASSWORD}`;
 	const customFormat = format.printf(({ level, message, label, timestamp }) => {
