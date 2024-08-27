@@ -13,6 +13,9 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: 'true'
     nginx.ingress.kubernetes.io/proxy-body-size: 50m
     nginx.ingress.kubernetes.io/upstream-hash-by: $realip_remote_addr
+    nginx.ingress.kubernetes.io/proxy-buffer-size: '64k'
+    nginx.ingress.kubernetes.io/proxy-buffers-number: '32'
+    nginx.ingress.kubernetes.io/large-client-header-buffers: '32 64k'
 spec:
   tls:
     - hosts:
