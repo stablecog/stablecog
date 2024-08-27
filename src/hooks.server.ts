@@ -7,7 +7,7 @@ import type { TAvailableTheme } from '$ts/stores/theme';
 import { getApiUrl } from '$ts/constants/main';
 import { galleryAdminAllowedRoutes, isGalleryAdmin, isSuperAdmin } from '$ts/helpers/admin/roles';
 import { supabaseAnonKey, supabaseUrl } from '$ts/constants/supabase';
-import { isKubeProbe, logger } from '$ts/constants/logger';
+import { asTable, isKubeProbe, logger } from '$ts/constants/logger';
 
 loadAllLocales();
 
@@ -108,7 +108,12 @@ export const handle: Handle = async ({ event, resolve }) => {
 	});
 	response.headers.delete('link');
 	if (!isKubeProbe(event.request.headers)) {
-		logger.info(`'${url.pathname + url.search}' | ${Date.now() - start}ms`);
+		logger.info(
+			asTable([
+				['URL', `${url.pathname + url.search}`],
+				['Duration', `${Date.now() - start}ms`]
+			])
+		);
 	}
 	/* const LINK_HEADER_LENGTH = 60;
 	const linkHeaders = response.headers.get('Link');
