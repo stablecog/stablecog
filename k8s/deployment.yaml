@@ -1,0 +1,45 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: sc-web-deployment
+  namespace: prod-stablecog
+  labels:
+    app: sc-web
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: sc-web
+  template:
+    metadata:
+      labels:
+        app: sc-web
+    spec:
+      containers:
+        - name: sc-web
+          image: replaceme
+          ports:
+            - containerPort: 3000
+          imagePullPolicy: 'Always'
+          resources:
+            requests:
+              memory: '2048Mi'
+              cpu: '1000m'
+            limits:
+              memory: '4096Mi'
+              cpu: '4000m'
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 3
+            periodSeconds: 3
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          envFrom:
+            - secretRef:
+                name: sc-web-secrets
