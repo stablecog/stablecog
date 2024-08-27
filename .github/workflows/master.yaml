@@ -35,7 +35,7 @@ jobs:
           embed-description: '```Build Started```'
   build_amd64:
     name: 🔨 Build Docker Image (amd64)
-    runs-on: warp-ubuntu-latest-x64-4x
+    runs-on: warp-ubuntu-latest-x64-2x
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -78,7 +78,7 @@ jobs:
 
   build_arm64:
     name: 🔨 Build Docker Image (arm64)
-    runs-on: warp-ubuntu-latest-arm64-4x
+    runs-on: warp-ubuntu-latest-arm64-2x
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -171,7 +171,7 @@ jobs:
 
   deploy:
     name: 🚀 Deploy Stablecog Website
-    runs-on: warp-ubuntu-latest-x64-4x
+    runs-on: warp-ubuntu-latest-x64-2x
     needs:
       - push_manifest
     steps:
