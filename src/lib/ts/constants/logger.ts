@@ -15,7 +15,7 @@ let logger:
 if (env.IS_NODE && env.LOKI_URL && env.LOKI_PASSWORD) {
 	const basicAuth = `${env.LOKI_USERNAME}:${env.LOKI_PASSWORD}`;
 	const customFormat = format.printf(({ level, message, label, timestamp }) => {
-		return `[${level.toUpperCase()}] ${message}`;
+		return `[${level.toUpperCase().slice(0, 4)}] ${message}`;
 	});
 	logger = createLogger({
 		transports: [
