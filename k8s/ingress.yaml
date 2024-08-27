@@ -22,10 +22,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - web.stablecog.com
-      secretName: sc-web-web-stablecog-com-secret
+        - stablecog.com
+      secretName: sc-web-stablecog-com-secret
   rules:
-    - host: web.stablecog.com
+    - host: stablecog.com
       http:
         paths:
           - path: /
