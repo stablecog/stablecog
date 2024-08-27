@@ -9,6 +9,7 @@ import { createBrowserClient, createServerClient, isBrowser } from '@supabase/ss
 import { browser } from '$app/environment';
 
 export const load: LayoutLoad = async (event) => {
+	const s = Date.now();
 	const { depends, data, fetch } = event;
 	depends('supabase:auth');
 
@@ -53,6 +54,9 @@ export const load: LayoutLoad = async (event) => {
 	const theme = event.data.theme;
 	const isLeftSidebarHidden = event.data.isLeftSidebarHidden;
 
+	if (!browser) {
+		console.log(`[layout.ts] | ${Date.now() - s}ms`);
+	}
 	return {
 		locale,
 		session,

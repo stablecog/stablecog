@@ -11,6 +11,7 @@ import { supabaseAnonKey, supabaseUrl } from '$ts/constants/supabase';
 loadAllLocales();
 
 export const handle: Handle = async ({ event, resolve }) => {
+	const s = Date.now();
 	event.locals.supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
 		cookies: {
 			getAll: () => event.cookies.getAll(),
@@ -107,6 +108,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 			response.headers.set('Link', newLinkHeadersArr.slice(0, LINK_HEADER_LENGTH).join(', '));
 		}
 	} */
+	console.log(`[hooks.server.ts] | ${Date.now() - s}ms`);
 	return response;
 };
 
