@@ -5,7 +5,7 @@
 	import MetaTag from '$components/utils/MetaTag.svelte';
 	import PageWrapper from '$components/wrappers/PageWrapper.svelte';
 	import LL from '$i18n/i18n-svelte';
-	import { auxBucketStaticUrl } from '$ts/constants/main';
+	import { staticAssetBaseUrl } from '$ts/constants/main';
 	import { metaDescriptionDefault } from '$ts/constants/meta';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { socialAppUrls } from '$ts/constants/social';
@@ -25,7 +25,7 @@
 <MetaTag
 	title={metaTitle}
 	description={metaDescriptionDefault}
-	image_url="{auxBucketStaticUrl}/previews/home-{previewImageVersion}.png"
+	image_url="{staticAssetBaseUrl}/previews/home-{previewImageVersion}.png"
 />
 
 <PageWrapper>

@@ -5,7 +5,8 @@ import type { TTab } from '$ts/types/main';
 
 export const canonicalUrl = 'https://stablecog.com';
 export const auxBucketUrl = 'https://ba.stablecog.com';
-export const auxBucketStaticUrl = `${auxBucketUrl}/static`;
+export const staticAssetBaseUrl = `${canonicalUrl}`;
+export const staticAssetBaseUrlRelative = ``;
 export const defaultLocale: Locales = 'en';
 
 const apiUrlStr =

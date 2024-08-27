@@ -11,7 +11,7 @@
 	import PageWrapper from '$components/wrappers/PageWrapper.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
-	import { auxBucketStaticUrl } from '$ts/constants/main';
+	import { staticAssetBaseUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { supabaseStore } from '$ts/constants/supabase';
 	import { quadOut } from 'svelte/easing';
@@ -71,7 +71,7 @@
 <MetaTag
 	title="Change Email | Stablecog"
 	description="Change your account's email address on Stablecog. Free, multilingual and open-source AI image generator using Stable Diffusion, FLUX, and Kandinsky."
-	image_url="{auxBucketStaticUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
+	image_url="{staticAssetBaseUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 />
 
 <PageWrapper>

@@ -8,7 +8,7 @@
 	import LayoutWrapper from '$components/wrappers/LayoutWrapper.svelte';
 	import '$css/app.css';
 	import LL from '$i18n/i18n-svelte';
-	import { auxBucketStaticUrl } from '$ts/constants/main';
+	import { staticAssetBaseUrl } from '$ts/constants/main';
 	import { metaDescriptionDefault } from '$ts/constants/meta';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { rawRoutes } from '$ts/constants/routes';
@@ -19,7 +19,7 @@
 <MetaTag
 	title="Error | Stablecog"
 	description={metaDescriptionDefault}
-	image_url="{auxBucketStaticUrl}/previews/home-{previewImageVersion}.png"
+	image_url="{staticAssetBaseUrl}/previews/home-{previewImageVersion}.png"
 	robots="noindex"
 />
 

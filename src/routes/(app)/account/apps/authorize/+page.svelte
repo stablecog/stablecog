@@ -12,7 +12,7 @@
 	import { getAppFromAppId } from '$routes/(app)/account/apps/helpers.js';
 	import type { TConnectionStatus } from '$routes/(app)/connect/types.js';
 	import { expandCollapse } from '$ts/animation/transitions.js';
-	import { auxBucketStaticUrl } from '$ts/constants/main';
+	import { staticAssetBaseUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { sessionStore } from '$ts/constants/supabase';
 	import { approveAppAuthorization } from '$ts/helpers/user/user.js';
@@ -52,7 +52,7 @@
 <MetaTag
 	title="Authorize App | Stablecog"
 	description="Authorize an app to use Stablecog."
-	image_url="{auxBucketStaticUrl}/previews/home-{previewImageVersion}.png"
+	image_url="{staticAssetBaseUrl}/previews/home-{previewImageVersion}.png"
 />
 
 <PageWrapper>

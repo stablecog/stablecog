@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { modelImageVersion } from '$components/cards/modelCard/constants';
 	import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
-	import { auxBucketStaticUrl } from '$ts/constants/main';
+	import { staticAssetBaseUrl } from '$ts/constants/main';
+
 	import { getImgProxySrc, getImgProxySrcSetSmall } from '$ts/helpers/imgproxy';
 
 	export let type: TAvailableGenerationModelId;
@@ -16,7 +17,7 @@
 	const height = '64';
 
 	function imageUrlFromModelId(type: TAvailableGenerationModelId) {
-		return `${auxBucketStaticUrl}/images/models/${modelImageVersion}/${imageFolder}/${type}.jpeg`;
+		return `${staticAssetBaseUrl}/images/models/${modelImageVersion}/${imageFolder}/${type}.jpeg`;
 	}
 </script>
 

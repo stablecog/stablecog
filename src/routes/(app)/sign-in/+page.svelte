@@ -5,7 +5,7 @@
 	import SignInCard from '$components/cards/SignInCard.svelte';
 	import MetaTag from '$components/utils/MetaTag.svelte';
 	import PageWrapper from '$components/wrappers/PageWrapper.svelte';
-	import { auxBucketStaticUrl } from '$ts/constants/main';
+	import { staticAssetBaseUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { sessionStore } from '$ts/constants/supabase';
 
@@ -27,7 +27,7 @@
 <MetaTag
 	title="Sign In | Stablecog"
 	description="Sign in to Stablecog. Create amazing art in seconds with AI. Free, multilingual and open-source AI image generator using Stable Diffusion, FLUX, and Kandinsky."
-	image_url="{auxBucketStaticUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
+	image_url="{staticAssetBaseUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 />
 
 <PageWrapper>

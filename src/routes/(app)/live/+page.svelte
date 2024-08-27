@@ -13,7 +13,7 @@
 	import type { TRow } from '$ts/actions/tooltip';
 	import { elementreceive, elementsend, expandCollapse } from '$ts/animation/transitions';
 	import { getAspectRatioFromWidthAndHeight } from '$ts/constants/generationSize';
-	import { auxBucketStaticUrl, getApiUrl } from '$ts/constants/main';
+	import { staticAssetBaseUrl, getApiUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { onDestroy, onMount } from 'svelte';
 	import { flip } from 'svelte/animate';
@@ -211,7 +211,7 @@
 <MetaTag
 	title="Live | Stablecog"
 	description="Watch generations happening live on Stablecog. Free, multilingual and open-source AI image generator using Stable Diffusion, FLUX, and Kandinsky."
-	image_url="{auxBucketStaticUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
+	image_url="{staticAssetBaseUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 />
 
 <div class="flex w-full flex-1 justify-center pb-[calc(2vh)]">

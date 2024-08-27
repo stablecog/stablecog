@@ -34,7 +34,7 @@
 	import { lowOnCreditsThreshold } from '$ts/constants/credits.js';
 	import { generationModelIdDefault, generationModels } from '$ts/constants/generationModels.js';
 	import { heightDefault, widthDefault } from '$ts/constants/generationSize.js';
-	import { auxBucketStaticUrl } from '$ts/constants/main.js';
+	import { staticAssetBaseUrl } from '$ts/constants/main.js';
 	import { metaDescriptionDefault } from '$ts/constants/meta.js';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion.js';
 	import { schedulerIdDefault } from '$ts/constants/schedulers.js';
@@ -284,7 +284,7 @@
 				: metaDescriptionDefault,
 		image_url: data.model_id
 			? getModelPreviewImageUrl(data.model_id)
-			: `${auxBucketStaticUrl}/previews/home-${previewImageVersion}.png`
+			: `${staticAssetBaseUrl}/previews/home-${previewImageVersion}.png`
 	};
 </script>
 

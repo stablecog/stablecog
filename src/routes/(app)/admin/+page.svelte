@@ -3,7 +3,7 @@
 	import type { TNavbarRouteOption } from '$components/navigation/routes';
 	import MetaTag from '$components/utils/MetaTag.svelte';
 	import LL from '$i18n/i18n-svelte';
-	import { auxBucketStaticUrl } from '$ts/constants/main';
+	import { staticAssetBaseUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
 	import { userSummary } from '$ts/stores/user/summary';
@@ -40,7 +40,7 @@
 <MetaTag
 	title="Admin | Stablecog"
 	description="Stablecog admin panel. Free, multilingual and open-source AI image generator using Stable Diffusion, FLUX, and Kandinsky."
-	image_url="{auxBucketStaticUrl}/previews/home-{previewImageVersion}.png"
+	image_url="{staticAssetBaseUrl}/previews/home-{previewImageVersion}.png"
 />
 
 <div class="flex w-full flex-1 justify-center px-5 py-6 pb-[calc(3vh)] md:py-8">

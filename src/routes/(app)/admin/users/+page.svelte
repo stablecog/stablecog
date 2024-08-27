@@ -21,7 +21,7 @@
 		adminPanelUsersView
 	} from '$routes/(app)/admin/users/constants.js';
 	import { clickoutside } from '$ts/actions/clickoutside';
-	import { auxBucketStaticUrl } from '$ts/constants/main';
+	import { staticAssetBaseUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import type { TStripeSupportedProductIdSubscriptions } from '$ts/constants/stripePublic';
 	import { sessionStore } from '$ts/constants/supabase';
@@ -293,7 +293,7 @@
 <MetaTag
 	title="Users | Admin"
 	description="Stablecog admin panel. Free, multilingual and open-source AI image generator using Stable Diffusion, FLUX, and Kandinsky."
-	image_url="{auxBucketStaticUrl}/previews/home-{previewImageVersion}.png"
+	image_url="{staticAssetBaseUrl}/previews/home-{previewImageVersion}.png"
 />
 
 <svelte:window

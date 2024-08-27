@@ -2,7 +2,7 @@
 	import RedirectPage from '$components/RedirectPage.svelte';
 	import LL from '$i18n/i18n-svelte.js';
 	import { generationModels } from '$ts/constants/generationModels.js';
-	import { auxBucketStaticUrl } from '$ts/constants/main.js';
+	import { staticAssetBaseUrl } from '$ts/constants/main.js';
 	import { metaDescriptionDefault } from '$ts/constants/meta.js';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion.js';
 	import { getModelPreviewImageUrl } from '$ts/helpers/getPreviewImageUrl.js';
@@ -24,7 +24,7 @@
 				: metaDescriptionDefault,
 		image_url: data.model_id
 			? getModelPreviewImageUrl(data.model_id)
-			: `${auxBucketStaticUrl}/previews/home-${previewImageVersion}.png`
+			: `${staticAssetBaseUrl}/previews/home-${previewImageVersion}.png`
 	};
 </script>
 

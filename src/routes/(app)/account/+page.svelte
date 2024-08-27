@@ -18,7 +18,7 @@
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import AccountDetailLine from '$routes/(app)/account/AccountDetailLine.svelte';
 	import AccountPageCard from '$routes/(app)/account/AccountPageCard.svelte';
-	import { auxBucketStaticUrl } from '$ts/constants/main';
+	import { staticAssetBaseUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { sessionStore, supabaseStore } from '$ts/constants/supabase';
 	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
@@ -79,7 +79,7 @@
 <MetaTag
 	title="Account | Stablecog"
 	description="Manage your Stablecog account. Free, multilingual and open-source AI image generator using Stable Diffusion, FLUX, and Kandinsky."
-	image_url="{auxBucketStaticUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
+	image_url="{staticAssetBaseUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 />
 
 {#if !$sessionStore?.user.email}

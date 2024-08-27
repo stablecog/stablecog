@@ -4,7 +4,7 @@
 	import UsageInfiniteList from '$approutes/account/usage/UsageInfiniteList.svelte';
 	import MetaTag from '$components/utils/MetaTag.svelte';
 	import LL from '$i18n/i18n-svelte';
-	import { auxBucketStaticUrl } from '$ts/constants/main';
+	import { staticAssetBaseUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { sessionStore } from '$ts/constants/supabase';
 	import { getUserOperations, type TUserOperationsPageExtended } from '$ts/queries/operations';
@@ -31,7 +31,7 @@
 <MetaTag
 	title="Usage | Account"
 	description="Manage your Stablecog account. Free, multilingual and open-source AI image generator using Stable Diffusion, FLUX, and Kandinsky."
-	image_url="{auxBucketStaticUrl}/previews/account-{previewImageVersion}.png"
+	image_url="{staticAssetBaseUrl}/previews/account-{previewImageVersion}.png"
 />
 
 <div class="flex w-full justify-center pb-6 pt-4 md:px-3 md:pb-8 md:pt-6">

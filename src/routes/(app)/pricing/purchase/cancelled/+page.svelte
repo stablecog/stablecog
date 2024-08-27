@@ -5,14 +5,14 @@
 	import MetaTag from '$components/utils/MetaTag.svelte';
 	import PageWrapper from '$components/wrappers/PageWrapper.svelte';
 	import LL from '$i18n/i18n-svelte';
-	import { auxBucketStaticUrl } from '$ts/constants/main';
+	import { staticAssetBaseUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 </script>
 
 <MetaTag
 	title="Cancelled | Stablecog"
 	description="Choose a plan that works for you and start using Stablecog. Free, multilingual and open-source AI image generator using Stable Diffusion, FLUX, and Kandinsky."
-	image_url="{auxBucketStaticUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
+	image_url="{staticAssetBaseUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 />
 
 <PageWrapper>

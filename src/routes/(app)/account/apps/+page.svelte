@@ -14,7 +14,7 @@
 	import { getAppFromAppId } from '$routes/(app)/account/apps/helpers';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { expandCollapse } from '$ts/animation/transitions';
-	import { auxBucketStaticUrl } from '$ts/constants/main';
+	import { staticAssetBaseUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { sessionStore } from '$ts/constants/supabase';
 	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
@@ -72,7 +72,7 @@
 <MetaTag
 	title="Applications | Account"
 	description="Manage the applications that you've connect to your Stablecog account. Free, multilingual and open-source AI image generator using Stable Diffusion, FLUX, and Kandinsky."
-	image_url="{auxBucketStaticUrl}/previews/account-{previewImageVersion}.png"
+	image_url="{staticAssetBaseUrl}/previews/account-{previewImageVersion}.png"
 />
 
 <div class="flex w-full justify-center pb-6 pt-4 md:px-3 md:pb-8 md:pt-6">

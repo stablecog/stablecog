@@ -33,7 +33,7 @@
 		getAdminFullOutputsQueryProps
 	} from '$routes/(app)/admin/gallery/constants';
 	import type { TRequestNavigationEventParams } from '$routes/(app)/admin/gallery/types.js';
-	import { auxBucketStaticUrl } from '$ts/constants/main';
+	import { staticAssetBaseUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { sessionStore } from '$ts/constants/supabase';
 	import { isSuperAdmin } from '$ts/helpers/admin/roles';
@@ -215,7 +215,7 @@
 <MetaTag
 	title="Gallery | Admin"
 	description="Stablecog admin panel. Free, multilingual and open-source AI image generator using Stable Diffusion, FLUX, and Kandinsky."
-	image_url="{auxBucketStaticUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
+	image_url="{staticAssetBaseUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
 />
 
 <svelte:window on:keydown={onKeyDown} />
