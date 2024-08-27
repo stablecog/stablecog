@@ -7,10 +7,12 @@ import type { TAvailableTheme } from '$ts/stores/theme';
 import { getApiUrl } from '$ts/constants/main';
 import { galleryAdminAllowedRoutes, isGalleryAdmin, isSuperAdmin } from '$ts/helpers/admin/roles';
 import { supabaseAnonKey, supabaseUrl } from '$ts/constants/supabase';
+import { logger } from '$ts/constants/logger';
 
 loadAllLocales();
 
 export const handle: Handle = async ({ event, resolve }) => {
+	const start = Date.now();
 	event.locals.supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
 		cookies: {
 			getAll: () => event.cookies.getAll(),
@@ -107,6 +109,8 @@ export const handle: Handle = async ({ event, resolve }) => {
 			response.headers.set('Link', newLinkHeadersArr.slice(0, LINK_HEADER_LENGTH).join(', '));
 		}
 	} */
+	const url = new URL(event.request.url);
+	logger.info(`"${url.pathname + url.search}" | ${Date.now() - start}ms`);
 	return response;
 };
 
