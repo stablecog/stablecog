@@ -110,7 +110,9 @@ export const handle: Handle = async ({ event, resolve }) => {
 		}
 	} */
 	const url = new URL(event.request.url);
-	logger.info(`"${url.pathname + url.search}" | ${Date.now() - start}ms`);
+	logger.info(
+		`"${url.pathname + url.search}" | ${Date.now() - start}ms | ${event.request.headers.get('User-Agent')}`
+	);
 	return response;
 };
 
