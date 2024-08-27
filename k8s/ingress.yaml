@@ -13,11 +13,6 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: 'true'
     nginx.ingress.kubernetes.io/proxy-body-size: 50m
     nginx.ingress.kubernetes.io/upstream-hash-by: $realip_remote_addr
-    nginx.ingress.kubernetes.io/enable-brotli: 'true'
-    nginx.ingress.kubernetes.io/brotli-level: '5'
-    nginx.ingress.kubernetes.io/enable-gzip: 'true'
-    nginx.ingress.kubernetes.io/gzip-level: '5'
-    nginx.ingress.kubernetes.io/gzip-types: 'application/javascript application/x-javascript text/css application/json application/xml text/plain text/xml image/svg+xml'
 spec:
   tls:
     - hosts:
