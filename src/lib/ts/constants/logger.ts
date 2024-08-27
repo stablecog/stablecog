@@ -2,7 +2,7 @@ import winston, { createLogger, format } from 'winston';
 import LokiTransport from 'winston-loki';
 import { env } from '$env/dynamic/private';
 
-export const isNode = process.env.IS_NODE === 'true';
+export const isNode = process.env.PUBLIC_IS_NODE === 'true';
 
 let logger:
 	| winston.Logger
@@ -17,7 +17,7 @@ export function isKubeProbe(headers: Headers): boolean {
 	return userAgent && userAgent.includes('kube-probe') ? true : false;
 }
 
-if (env.IS_NODE && env.LOKI_URL && env.LOKI_PASSWORD) {
+if (isNode && env.LOKI_URL && env.LOKI_PASSWORD) {
 	const basicAuth = `${env.LOKI_USERNAME}:${env.LOKI_PASSWORD}`;
 	const customFormat = format.printf(({ level, message, label, timestamp }) => {
 		return `[${level.toUpperCase().slice(0, 4)}] ${message}`;
