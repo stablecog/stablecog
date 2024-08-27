@@ -33,12 +33,12 @@ spec:
               path: /
               port: 3000
             initialDelaySeconds: 3
-            periodSeconds: 3
+            periodSeconds: 10
           livenessProbe:
             httpGet:
               path: /
               port: 3000
-            initialDelaySeconds: 15
+            initialDelaySeconds: 3
             periodSeconds: 10
           envFrom:
             - secretRef:
