@@ -13,6 +13,7 @@ loadAllLocales();
 
 export const handle: Handle = async ({ event, resolve }) => {
 	const start = Date.now();
+	const url = new URL(event.request.url);
 	event.locals.supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
 		cookies: {
 			getAll: () => event.cookies.getAll(),
@@ -85,11 +86,16 @@ export const handle: Handle = async ({ event, resolve }) => {
 			if (isGalleryAdmin(roles) && !galleryAdminAllowedRoutes.includes(event.url.pathname)) {
 				return notAuthorizedResponse('/admin');
 			}
-			return resolve(event, {
+			const response = await resolve(event, {
 				filterSerializedResponseHeaders(name) {
 					return name === 'content-range';
 				}
 			});
+			response.headers.delete('link');
+			if (!isKubeProbe(event.request.headers)) {
+				logger.info(`'${url.pathname + url.search}' | ${Date.now() - start}ms`);
+			}
+			return response;
 		} catch (error) {
 			console.log('Admin access error:', error);
 			return notAuthorizedResponse(notAuthorizedRedirectRoute);
@@ -101,6 +107,9 @@ export const handle: Handle = async ({ event, resolve }) => {
 		}
 	});
 	response.headers.delete('link');
+	if (!isKubeProbe(event.request.headers)) {
+		logger.info(`'${url.pathname + url.search}' | ${Date.now() - start}ms`);
+	}
 	/* const LINK_HEADER_LENGTH = 60;
 	const linkHeaders = response.headers.get('Link');
 	if (linkHeaders) {
@@ -109,10 +118,6 @@ export const handle: Handle = async ({ event, resolve }) => {
 			response.headers.set('Link', newLinkHeadersArr.slice(0, LINK_HEADER_LENGTH).join(', '));
 		}
 	} */
-	const url = new URL(event.request.url);
-	if (!isKubeProbe(event.request.headers)) {
-		logger.info(`"${url.pathname + url.search}" | ${Date.now() - start}ms`);
-	}
 	return response;
 };
 
