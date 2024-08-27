@@ -59,6 +59,18 @@ export const handle: Handle = async ({ event, resolve }) => {
 	let countryCode = event.request.headers.get('x-vercel-ip-country');
 	event.locals.countryCode = countryCode;
 
+	const logRequest = () => {
+		if (!isKubeProbe(event.request.headers)) {
+			logger.info(
+				asTable([
+					['URL', `${url.pathname + url.search}`],
+					['Duration', `${Date.now() - start}ms`],
+					['UA', event.request.headers.get('User-Agent') || 'Unknown']
+				])
+			);
+		}
+	};
+
 	// protect requests to all routes that start with /admin
 	if (event.url.pathname.startsWith('/admin')) {
 		const notSignedInRedirectRoute = `/sign-in?rd_to=${encodeURIComponent(event.url.pathname)}`;
@@ -92,9 +104,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 				}
 			});
 			response.headers.delete('link');
-			if (!isKubeProbe(event.request.headers)) {
-				logger.info(`'${url.pathname + url.search}' | ${Date.now() - start}ms`);
-			}
+			logRequest();
 			return response;
 		} catch (error) {
 			console.log('Admin access error:', error);
@@ -107,15 +117,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 		}
 	});
 	response.headers.delete('link');
-	if (!isKubeProbe(event.request.headers)) {
-		logger.info(
-			asTable([
-				['URL', `${url.pathname + url.search}`],
-				['Duration', `${Date.now() - start}ms`],
-				['UA', event.request.headers.get('User-Agent') || 'Unknown']
-			])
-		);
-	}
+	logRequest();
 	/* const LINK_HEADER_LENGTH = 60;
 	const linkHeaders = response.headers.get('Link');
 	if (linkHeaders) {

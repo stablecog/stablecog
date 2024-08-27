@@ -1,14 +1,13 @@
 <script>
-	import { page } from '$app/stores';
+	import SubtleButton from '$components/primitives/buttons/SubtleButton.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import { expandCollapse } from '$ts/animation/transitions';
+	import { sessionStore } from '$ts/constants/supabase';
 	import { logSubmitToGallery } from '$ts/helpers/loggers';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { appVersion } from '$ts/stores/appVersion';
 	import { shouldSubmitToGallery } from '$ts/stores/shouldSubmitToGallery';
 	import { userSummary } from '$ts/stores/user/summary';
-	import SubtleButton from '$components/primitives/buttons/SubtleButton.svelte';
-	import { sessionStore } from '$ts/constants/supabase';
 
 	$: logProps = {
 		'SC - User Id': $sessionStore?.user.id,
