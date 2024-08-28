@@ -320,7 +320,7 @@
 				const dashRegex = /-{3,}/g; // Matches strings of 3 or more dashes
 				const pipeRegex = /\s\|+\s/g;
 				const bigDotRegex = /•{1,}/g; // Matches big dots
-				const urlRegex = /\b(?:https?:\/\/)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\/[^\s]*)?\b/g;
+				const urlRegex = /\b(?:https?:\/\/)?(?!:\/\/)([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/[^\s]*)?/g;
 
 				let htmlContent = textNode.textContent;
 
