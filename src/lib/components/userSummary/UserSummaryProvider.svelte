@@ -56,7 +56,7 @@
 		if (browser && $userSummaryQuery && $userSummaryQuery.isSuccess && $userSummaryQuery.data) {
 			userSummary.set({ ...$userSummaryQuery.data, refetch: $userSummaryQuery.refetch });
 		} else if (browser && $userSummaryQuery && $userSummaryQuery.isError) {
-			userSummary.set(null);
+			console.log('Error getting user summary', $userSummaryQuery.error);
 		}
 	}
 
