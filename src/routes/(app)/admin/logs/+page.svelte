@@ -199,7 +199,6 @@
 	}
 
 	function scrollContainerOnScroll() {
-		console.log('executing');
 		isAtBottom = getIsAtBottom();
 		isAtTop = getIsAtTop();
 		if (isAtBottom) {

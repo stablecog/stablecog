@@ -25,7 +25,7 @@ jobs:
         with:
           webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
           embed-color: 16776960
-          embed-title: '[sc-web] ${{ steps.setup-env.outputs.COMMIT_MSG }}  •  ${{ steps.setup-env.outputs.SHORT_SHA }}'
+          embed-title: '[sc-web] ${{ steps.setup_env.outputs.COMMIT_MSG }}  •  ${{ steps.setup_env.outputs.SHORT_SHA }}'
           embed-description: '```Build Started```'
 
   build_amd64:
@@ -54,7 +54,7 @@ jobs:
           context: .
           platforms: linux/amd64
           push: true
-          tags: stablecog/sc-web:${{ steps.setup-env.outputs.BRANCH_NAME }}-${{ steps.setup-env.outputs.SHORT_SHA }}-amd64
+          tags: stablecog/sc-web:${{ steps.setup_env.outputs.BRANCH_NAME }}-${{ steps.setup_env.outputs.SHORT_SHA }}-amd64
           cache-from: type=gha
           cache-to: type=gha,mode=max
           provenance: false
@@ -85,7 +85,7 @@ jobs:
           context: .
           platforms: linux/arm64
           push: true
-          tags: stablecog/sc-web:${{ steps.setup-env.outputs.BRANCH_NAME }}-${{ steps.setup-env.outputs.SHORT_SHA }}-arm64
+          tags: stablecog/sc-web:${{ steps.setup_env.outputs.BRANCH_NAME }}-${{ steps.setup_env.outputs.SHORT_SHA }}-arm64
           cache-from: type=gha
           cache-to: type=gha,mode=max
           provenance: false
@@ -113,15 +113,15 @@ jobs:
 
       - name: Create and Push Multi-Arch Manifest
         run: |
-          docker buildx imagetools create -t stablecog/sc-web:${{ steps.setup-env.outputs.BRANCH_NAME }}-${{ steps.setup-env.outputs.SHORT_SHA }} \
-            stablecog/sc-web:${{ steps.setup-env.outputs.BRANCH_NAME }}-${{ steps.setup-env.outputs.SHORT_SHA }}-amd64 \
-            stablecog/sc-web:${{ steps.setup-env.outputs.BRANCH_NAME }}-${{ steps.setup-env.outputs.SHORT_SHA }}-arm64
+          docker buildx imagetools create -t stablecog/sc-web:${{ steps.setup_env.outputs.BRANCH_NAME }}-${{ steps.setup_env.outputs.SHORT_SHA }} \
+            stablecog/sc-web:${{ steps.setup_env.outputs.BRANCH_NAME }}-${{ steps.setup_env.outputs.SHORT_SHA }}-amd64 \
+            stablecog/sc-web:${{ steps.setup_env.outputs.BRANCH_NAME }}-${{ steps.setup_env.outputs.SHORT_SHA }}-arm64
 
       - name: Tag and Push 'latest'
         run: |
           docker buildx imagetools create -t stablecog/sc-web:latest \
-            stablecog/sc-web:${{ steps.setup-env.outputs.BRANCH_NAME }}-${{ steps.setup-env.outputs.SHORT_SHA }}-amd64 \
-            stablecog/sc-web:${{ steps.setup-env.outputs.BRANCH_NAME }}-${{ steps.setup-env.outputs.SHORT_SHA }}-arm64
+            stablecog/sc-web:${{ steps.setup_env.outputs.BRANCH_NAME }}-${{ steps.setup_env.outputs.SHORT_SHA }}-amd64 \
+            stablecog/sc-web:${{ steps.setup_env.outputs.BRANCH_NAME }}-${{ steps.setup_env.outputs.SHORT_SHA }}-arm64
 
   deploy:
     name: 🚀 Deploy Stablecog Website
@@ -138,7 +138,7 @@ jobs:
       - name: Deploy
         uses: ./.github/actions/k3s-deploy
         with:
-          image: stablecog/sc-web:${{ steps.setup-env.outputs.BRANCH_NAME }}-${{ steps.setup-env.outputs.SHORT_SHA }}
-          embed-title: '${{ steps.setup-env.outputs.COMMIT_MSG }}  •  ${{ steps.setup-env.outputs.SHORT_SHA }}'
+          image: stablecog/sc-web:${{ steps.setup_env.outputs.BRANCH_NAME }}-${{ steps.setup_env.outputs.SHORT_SHA }}
+          embed-title: '${{ steps.setup_env.outputs.COMMIT_MSG }}  •  ${{ steps.setup_env.outputs.SHORT_SHA }}'
           webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
           kube_config: ${{ secrets.K3S_KUBE_CONFIG }}
