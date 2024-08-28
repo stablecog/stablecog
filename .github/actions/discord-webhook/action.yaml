@@ -21,7 +21,7 @@ runs:
       run: echo "NOW=$(date +'%a, %d %b %Y %T %Z' )" >> $GITHUB_ENV
 
     - name: Webhook
-      uses: tsickert/discord-webhook@v5.3.0
+      uses: tsickert/discord-webhook@v6
       with:
         webhook-url: ${{ inputs.webhook-url }}
         embed-color: ${{ inputs.embed-color }}

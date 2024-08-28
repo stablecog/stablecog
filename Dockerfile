@@ -2,8 +2,7 @@ FROM node:lts-alpine AS builder
 ENV PUBLIC_IS_NODE=true
 WORKDIR /app
 COPY package*.json .
-RUN --mount=type=cache,target=/root/.npm \
-  npm ci
+RUN npm ci
 COPY . .
 RUN npm run build
 RUN npm prune --production

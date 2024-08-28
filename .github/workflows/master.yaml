@@ -48,14 +48,6 @@ jobs:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Cache npm packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-node-
-
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
@@ -63,10 +55,6 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: stablecog/sc-web:${{ steps.setup_env.outputs.BRANCH_NAME }}-${{ steps.setup_env.outputs.SHORT_SHA }}-amd64
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          build-args: |
-            BUILDPLATFORM=amd64
           provenance: false
 
   build_arm64:
@@ -89,14 +77,6 @@ jobs:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Cache npm packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-node-
-
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
@@ -104,10 +84,6 @@ jobs:
           platforms: linux/arm64
           push: true
           tags: stablecog/sc-web:${{ steps.setup_env.outputs.BRANCH_NAME }}-${{ steps.setup_env.outputs.SHORT_SHA }}-arm64
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          build-args: |
-            BUILDPLATFORM=arm64
           provenance: false
 
   create_and_push_manifest:
