@@ -1,11 +1,6 @@
-import winston, { createLogger, format } from 'winston';
-import LokiTransport from 'winston-loki';
-import { env as envPublic } from '$env/dynamic/public';
-import { env as envPrivate } from '$env/dynamic/private';
+import type winston from 'winston';
 
-export const isNode = envPublic.PUBLIC_IS_NODE === 'true';
-
-let logger:
+type TLogger =
 	| winston.Logger
 	| {
 			info: typeof console.info;
@@ -13,39 +8,19 @@ let logger:
 			warn: typeof console.warn;
 	  };
 
+export let logger: TLogger = {
+	info: console.info,
+	error: console.error,
+	warn: console.warn
+};
+
+export function setLogger(newLogger: TLogger): void {
+	logger = newLogger;
+}
+
 export function isKubeProbe(headers: Headers): boolean {
 	const userAgent = headers.get('User-Agent');
 	return userAgent && userAgent.includes('kube-probe') ? true : false;
-}
-
-if (isNode && envPrivate.LOKI_URL && envPrivate.LOKI_PASSWORD) {
-	const basicAuth = `${envPrivate.LOKI_USERNAME}:${envPrivate.LOKI_PASSWORD}`;
-	const customFormat = format.printf(({ level, message, label, timestamp }) => {
-		return `[${level.toUpperCase().slice(0, 4)}] ${message}`;
-	});
-	logger = createLogger({
-		transports: [
-			new winston.transports.Console({
-				format: customFormat
-			}),
-			new LokiTransport({
-				host: envPrivate.LOKI_URL,
-				basicAuth,
-				json: true,
-				format: customFormat,
-				replaceTimestamp: true,
-				labels: { logger: 'root', application: 'sc-web' },
-				batching: true,
-				interval: 3
-			})
-		]
-	});
-} else {
-	logger = {
-		info: console.info,
-		error: console.error,
-		warn: console.warn
-	};
 }
 
 type TableRow = [string, string];
@@ -108,5 +83,3 @@ function wrapText(text: string, maxLength: number): string {
 
 	return lines.join('\n');
 }
-
-export { logger };

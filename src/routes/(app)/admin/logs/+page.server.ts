@@ -1,6 +1,6 @@
 import { env as envPrivate } from '$env/dynamic/private';
 import { env as envPublic } from '$env/dynamic/public';
-import { logger } from '$ts/constants/logger';
+import { logger } from '$ts/constants/loggerBrowser';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {

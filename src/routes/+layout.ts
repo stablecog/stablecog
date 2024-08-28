@@ -7,6 +7,7 @@ import { getUserSummary } from '$ts/helpers/user/user';
 import { supabaseAnonKey, supabaseUrl } from '$ts/constants/supabase';
 import { createBrowserClient, createServerClient, isBrowser } from '@supabase/ssr';
 import { browser } from '$app/environment';
+import { logger } from '$ts/constants/loggerBrowser';
 
 export const load: LayoutLoad = async (event) => {
 	const { depends, data, fetch } = event;
@@ -39,13 +40,13 @@ export const load: LayoutLoad = async (event) => {
 		try {
 			const summary = await getUserSummary(session.access_token);
 			if (!browser) {
-				console.log(`+layout.ts | getUserSummary | ${Date.now() - startUserSummary}ms`);
+				logger.info(`[+layout.ts] | getUserSummary | ${Date.now() - startUserSummary}ms`);
 			}
 			if (summary) {
 				userSummary = summary;
 			}
 		} catch (error) {
-			console.log('getUserSummary error', error);
+			logger.error('getUserSummary error', error);
 		}
 	}
 	const locale = event.data.locale;

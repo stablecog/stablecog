@@ -1,14 +1,15 @@
+import { detectLocale, isLocale } from '$i18n/i18n-util';
+import { loadAllLocales } from '$i18n/i18n-util.sync';
+import { asTable, isKubeProbe, logger } from '$ts/constants/loggerBrowser';
+import '$ts/constants/loggerServer';
+import { canonicalUrlObject, getApiUrl } from '$ts/constants/main';
+import { supabaseAnonKey, supabaseUrl } from '$ts/constants/supabase';
+import { galleryAdminAllowedRoutes, isGalleryAdmin, isSuperAdmin } from '$ts/helpers/admin/roles';
+import { shortenString } from '$ts/helpers/metaTag';
+import type { TAvailableTheme } from '$ts/stores/theme';
 import { createServerClient } from '@supabase/ssr';
 import type { Handle, RequestEvent } from '@sveltejs/kit';
 import { initAcceptLanguageHeaderDetector } from 'typesafe-i18n/detectors';
-import { detectLocale, isLocale } from '$i18n/i18n-util';
-import { loadAllLocales } from '$i18n/i18n-util.sync';
-import type { TAvailableTheme } from '$ts/stores/theme';
-import { canonicalUrl, canonicalUrlObject, getApiUrl } from '$ts/constants/main';
-import { galleryAdminAllowedRoutes, isGalleryAdmin, isSuperAdmin } from '$ts/helpers/admin/roles';
-import { supabaseAnonKey, supabaseUrl } from '$ts/constants/supabase';
-import { asTable, isKubeProbe, logger } from '$ts/constants/logger';
-import { shortenString } from '$ts/helpers/metaTag';
 
 loadAllLocales();
 
