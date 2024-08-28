@@ -48,6 +48,14 @@ jobs:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: Cache Docker layers
+        uses: actions/cache@v4
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-amd64-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-amd64-
+
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
@@ -76,6 +84,14 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Cache Docker layers
+        uses: actions/cache@v4
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-arm64-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-arm64-
 
       - name: Build and push
         uses: docker/build-push-action@v6
