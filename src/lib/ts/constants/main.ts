@@ -4,6 +4,7 @@ import { placeholderUrl } from '$ts/constants/placeholderUrl';
 import type { TTab } from '$ts/types/main';
 
 export const canonicalUrl = 'https://stablecog.com';
+export const canonicalUrlObject = new URL(canonicalUrl);
 export const auxBucketUrl = 'https://ba.stablecog.com';
 export const staticAssetBaseUrl = `${canonicalUrl}`;
 export const staticAssetBaseUrlRelative = ``;

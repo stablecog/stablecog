@@ -30,7 +30,7 @@
 		type ReceivedMessage,
 		type TLogRow
 	} from '$routes/(app)/admin/logs/helpers.js';
-	import { staticAssetBaseUrl } from '$ts/constants/main.js';
+	import { canonicalUrlObject, staticAssetBaseUrl } from '$ts/constants/main.js';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion.js';
 	import { throttle } from '$ts/helpers/general/throttle.js';
 	import type { TTab } from '$ts/types/main';
@@ -298,6 +298,9 @@
 	}
 
 	function colorize(logString: string) {
+		// Define the array of hostnames for which URLs should be made relative in the visible text
+		const relativeHostnames = [canonicalUrlObject.hostname];
+
 		// Create a new DOMParser instance
 		const parser = new DOMParser();
 
@@ -309,72 +312,93 @@
 
 		while (walker.nextNode()) {
 			const textNode = walker.currentNode;
-			const msRegex = /\b\d+(\.\d+)?\s*m\s*s\b/g;
-			const errorRegex = /\[ERRO\]/g;
-			const infoRegex = /\[INFO\]/g;
-			const dashRegex = /-{3,}/g; // Matches strings of 6 or more dashes
-			const pipeRegex = /\s\|+\s/g;
-			const bigDotRegex = /•{1,}/g; // Matches strings of 6 or more dashes
 
-			let htmlContent = textNode.textContent;
+			if (textNode && textNode.textContent) {
+				const msRegex = /\b\d+(\.\d+)?\s*m\s*s\b/g;
+				const errorRegex = /\[ERRO\]/g;
+				const infoRegex = /\[INFO\]/g;
+				const dashRegex = /-{3,}/g; // Matches strings of 3 or more dashes
+				const pipeRegex = /\s\|+\s/g;
+				const bigDotRegex = /•{1,}/g; // Matches big dots
+				const urlRegex = /\b(?:https?:\/\/)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\/[^\s]*)?\b/g;
 
-			// Replace big dots with a span containing the same value
-			if (htmlContent && bigDotRegex.test(htmlContent)) {
-				htmlContent = htmlContent.replace(bigDotRegex, (match) => {
-					return `<span class="text-c-on-bg/50">${match}</span>`;
-				});
-			}
+				let htmlContent = textNode.textContent;
 
-			// Replace | characters surrounded by spaces with a span containing the same value
-			if (htmlContent && pipeRegex.test(htmlContent)) {
-				htmlContent = htmlContent.replace(pipeRegex, (match) => {
-					return `<span class="text-c-on-bg/50">${match}</span>`;
-				});
-			}
-
-			// Replace strings of 6 or more dashes with a span containing the same value
-			if (htmlContent && dashRegex.test(htmlContent)) {
-				htmlContent = htmlContent.replace(dashRegex, (match) => {
-					return `<span class="text-c-on-bg/50">${match}</span>`;
-				});
-			}
-
-			// Replace millisecond values with a span containing the same value
-			if (htmlContent && msRegex.test(htmlContent)) {
-				htmlContent = htmlContent.replace(msRegex, (match) => {
-					return `<span class="text-c-success">${match}</span>`;
-				});
-			}
-
-			// Replace [ERRO] with a span containing the same value
-			if (htmlContent && errorRegex.test(htmlContent)) {
-				htmlContent = htmlContent.replace(errorRegex, (match) => {
-					return `<span class="text-c-danger">${match}</span>`;
-				});
-			}
-
-			// Replace [INFO] with a span containing the same value
-			if (htmlContent && infoRegex.test(htmlContent)) {
-				htmlContent = htmlContent.replace(infoRegex, (match) => {
-					return `<span class="text-c-on-bg/50">${match}</span>`;
-				});
-			}
-
-			// If any replacements were made, replace the current text node with a new HTML structure
-			if (htmlContent !== textNode.textContent) {
-				const tempDiv = document.createElement('span');
-				tempDiv.innerHTML = htmlContent || '';
-
-				while (tempDiv.firstChild) {
-					textNode?.parentNode?.insertBefore(tempDiv.firstChild, textNode);
+				// Replace big dots with a span containing the same value
+				if (bigDotRegex.test(htmlContent)) {
+					htmlContent = htmlContent.replace(bigDotRegex, (match) => {
+						return `<span class="text-c-on-bg/50">${match}</span>`;
+					});
 				}
 
-				// @ts-ignore
-				textNode.remove();
+				// Replace | characters surrounded by spaces with a span containing the same value
+				if (pipeRegex.test(htmlContent)) {
+					htmlContent = htmlContent.replace(pipeRegex, (match) => {
+						return `<span class="text-c-on-bg/50">${match}</span>`;
+					});
+				}
+
+				// Replace strings of dashes with a span containing the same value
+				if (dashRegex.test(htmlContent)) {
+					htmlContent = htmlContent.replace(dashRegex, (match) => {
+						return `<span class="text-c-on-bg/50">${match}</span>`;
+					});
+				}
+
+				// Replace millisecond values with a span containing the same value
+				if (msRegex.test(htmlContent)) {
+					htmlContent = htmlContent.replace(msRegex, (match) => {
+						return `<span class="text-c-success">${match}</span>`;
+					});
+				}
+
+				// Replace [ERRO] with a span containing the same value
+				if (errorRegex.test(htmlContent)) {
+					htmlContent = htmlContent.replace(errorRegex, (match) => {
+						return `<span class="text-c-danger">${match}</span>`;
+					});
+				}
+
+				// Replace [INFO] with a span containing the same value
+				if (infoRegex.test(htmlContent)) {
+					htmlContent = htmlContent.replace(infoRegex, (match) => {
+						return `<span class="text-c-on-bg/50">${match}</span>`;
+					});
+				}
+
+				// Replace URLs with <a> tags linking to the URLs
+				if (urlRegex.test(htmlContent)) {
+					htmlContent = htmlContent.replace(urlRegex, (match) => {
+						let url = match.startsWith('http') ? match : `https://${match}`;
+						let displayText = match;
+						try {
+							const urlObj = new URL(url);
+							if (relativeHostnames.includes(urlObj.hostname)) {
+								displayText = urlObj.pathname + urlObj.search + urlObj.hash;
+								displayText =
+									`<span class='text-c-on-bg/50'>${urlObj.hostname}</span>` + displayText;
+							}
+						} catch (e) {
+							console.log('Error parsing URL:', e);
+						}
+						return `<a class='hover:underline text-c-on-bg' href="${url}" target="_blank" rel="noopener noreferrer">${displayText}</a>`;
+					});
+				}
+
+				// If any replacements were made, replace the current text node with a new HTML structure
+				if (htmlContent !== textNode.textContent) {
+					const tempDiv = document.createElement('span');
+					tempDiv.innerHTML = htmlContent;
+
+					while (tempDiv.firstChild) {
+						textNode?.parentNode?.insertBefore(tempDiv.firstChild, textNode);
+					}
+
+					// @ts-ignore
+					textNode.remove();
+				}
 			}
 		}
-
-		// Serialize the HTML document back to a string
 		return doc.body.innerHTML;
 	}
 

@@ -4,7 +4,7 @@ import { initAcceptLanguageHeaderDetector } from 'typesafe-i18n/detectors';
 import { detectLocale, isLocale } from '$i18n/i18n-util';
 import { loadAllLocales } from '$i18n/i18n-util.sync';
 import type { TAvailableTheme } from '$ts/stores/theme';
-import { getApiUrl } from '$ts/constants/main';
+import { canonicalUrl, canonicalUrlObject, getApiUrl } from '$ts/constants/main';
 import { galleryAdminAllowedRoutes, isGalleryAdmin, isSuperAdmin } from '$ts/helpers/admin/roles';
 import { supabaseAnonKey, supabaseUrl } from '$ts/constants/supabase';
 import { asTable, isKubeProbe, logger } from '$ts/constants/logger';
@@ -63,7 +63,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 	const logRequest = (status: number) => {
 		if (!isKubeProbe(event.request.headers)) {
 			const logLine = asTable([
-				['URL', `${url.pathname + url.search}`],
+				['URL', `${canonicalUrlObject.hostname + url.pathname + url.search}`],
 				['DMS', `${Date.now() - start}ms • ${event.request.method} • ${status}`],
 				['UA', shortenString(event.request.headers.get('User-Agent') || 'Unknown', 148)]
 			]);
