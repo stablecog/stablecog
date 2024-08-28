@@ -45,7 +45,11 @@
 </script>
 
 <QueryClientProvider client={data.queryClient}>
-	<UserSummaryProvider queryClient={data.queryClient} supabase={data.supabase}>
+	<UserSummaryProvider
+		userSummaryFromServer={data.userSummary || null}
+		queryClient={data.queryClient}
+		supabase={data.supabase}
+	>
 		<SSEConnector>
 			<GenerationWorker>
 				<UpscaleWorker>

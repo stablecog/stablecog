@@ -7,12 +7,13 @@
 	import { getUserSummary } from '$ts/helpers/user/user';
 	import { setWantsEmail } from '$ts/queries/wantsEmail';
 	import { appVersion } from '$ts/stores/appVersion';
-	import { userSummary } from '$ts/stores/user/summary';
+	import { userSummary, type TUserSummary } from '$ts/stores/user/summary';
 	import { wantsEmail } from '$ts/stores/user/wantsEmail';
 	import { QueryClient, createMutation, createQuery } from '@tanstack/svelte-query';
 	import { onMount } from 'svelte';
 	import { sessionStore } from '$ts/constants/supabase';
 
+	export let userSummaryFromServer: TUserSummary | null;
 	export let queryClient: QueryClient;
 	export let supabase: SupabaseClient;
 
@@ -25,8 +26,11 @@
 	$: userSummaryQuery =
 		browser && userId
 			? createQuery({
+					initialData: userSummaryFromServer,
 					queryKey: getUserSummaryQueryKey(userId),
+					refetchOnMount: () => userSummaryFromServer === null,
 					queryFn: async () => {
+						if (!accessToken) return null;
 						const { error: userError } = await supabase.auth.getUser(accessToken);
 						if (userError) {
 							console.log('Error getting user', userError);
