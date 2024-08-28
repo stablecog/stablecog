@@ -70,7 +70,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build and Push amd64 Image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v5
         with:
           context: .
           platforms: linux/amd64
@@ -113,7 +113,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build and Push arm64 Image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v5
         with:
           context: .
           platforms: linux/arm64
@@ -158,16 +158,16 @@ jobs:
 
       - name: Create and Push Multi-Arch Manifest
         run: |
-          docker manifest create stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }} \
-            --amend stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-amd64 \
-            --amend stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-arm64
+          docker manifest create --amend stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }} \
+            stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-amd64 \
+            stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-arm64
           docker manifest push stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}
 
       - name: Tag and Push 'latest'
         run: |
-          docker manifest create stablecog/sc-web:latest \
-            --amend stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-amd64 \
-            --amend stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-arm64
+          docker manifest create --amend stablecog/sc-web:latest \
+            stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-amd64 \
+            stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-arm64
           docker manifest push stablecog/sc-web:latest
 
   deploy:
