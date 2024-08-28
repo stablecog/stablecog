@@ -1,0 +1,28 @@
+name: 'Setup Environment Variables'
+description: 'Sets up common environment variables for the workflow'
+
+outputs:
+  SHORT_SHA:
+    description: 'Short SHA of the commit'
+    value: ${{ steps.set_env.outputs.SHORT_SHA }}
+  BRANCH_NAME:
+    description: 'Name of the branch'
+    value: ${{ steps.set_env.outputs.BRANCH_NAME }}
+  COMMIT_MSG:
+    description: 'Commit message'
+    value: ${{ steps.set_env.outputs.COMMIT_MSG }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Set environment variables
+      id: set_env
+      shell: bash
+      run: |
+        echo "SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_OUTPUT
+        if [ "${{ github.event_name }}" != 'pull_request' ]; then
+          echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | tr / -)" >> $GITHUB_OUTPUT
+        else
+          echo "BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_OUTPUT
+        fi
+        echo "COMMIT_MSG=$(echo "${{ github.event.head_commit.message }}" | tr -d \'\\\")" >> $GITHUB_OUTPUT
