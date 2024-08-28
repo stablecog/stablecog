@@ -62,13 +62,16 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	const logRequest = (status: number) => {
 		if (!isKubeProbe(event.request.headers)) {
-			logger.info(
-				asTable([
-					['URL', `${url.pathname + url.search}`],
-					['DMS', `${Date.now() - start}ms • ${event.request.method} • ${status}`],
-					['UA', shortenString(event.request.headers.get('User-Agent') || 'Unknown', 149)]
-				])
-			);
+			const logLine = asTable([
+				['URL', `${url.pathname + url.search}`],
+				['DMS', `${Date.now() - start}ms • ${event.request.method} • ${status}`],
+				['UA', shortenString(event.request.headers.get('User-Agent') || 'Unknown', 148)]
+			]);
+			if (status >= 400) {
+				logger.error(logLine);
+			} else {
+				logger.info(logLine);
+			}
 		}
 	};
 

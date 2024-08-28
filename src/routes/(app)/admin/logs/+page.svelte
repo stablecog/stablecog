@@ -297,6 +297,79 @@
 		ws.addEventListener(WebsocketEvent.message, onMessage);
 	}
 
+	function colorize(logString: string) {
+		// Create a new DOMParser instance
+		const parser = new DOMParser();
+
+		// Parse the string into an HTML document
+		const doc = parser.parseFromString(`<span>${logString}</span>`, 'text/html');
+
+		// Use querySelectorAll to find and replace millisecond values
+		const walker = document.createTreeWalker(doc.body, NodeFilter.SHOW_TEXT, null);
+
+		while (walker.nextNode()) {
+			const textNode = walker.currentNode;
+			const msRegex = /\b\d+(\.\d+)?\s*m\s*s\b/g;
+			const errorRegex = /\[ERRO\]/g;
+			const infoRegex = /\[INFO\]/g;
+			const dashRegex = /-{3,}/g; // Matches strings of 6 or more dashes
+			const pipeRegex = /\s\|+\s/g;
+
+			let htmlContent = textNode.textContent;
+
+			// Replace | characters surrounded by spaces with a span containing the same value
+			if (htmlContent && pipeRegex.test(htmlContent)) {
+				htmlContent = htmlContent.replace(pipeRegex, (match) => {
+					return `<span class="text-c-on-bg/50">${match}</span>`;
+				});
+			}
+
+			// Replace strings of 6 or more dashes with a span containing the same value
+			if (htmlContent && dashRegex.test(htmlContent)) {
+				htmlContent = htmlContent.replace(dashRegex, (match) => {
+					return `<span class="text-c-on-bg/50">${match}</span>`;
+				});
+			}
+
+			// Replace millisecond values with a span containing the same value
+			if (htmlContent && msRegex.test(htmlContent)) {
+				htmlContent = htmlContent.replace(msRegex, (match) => {
+					return `<span class="text-c-success">${match}</span>`;
+				});
+			}
+
+			// Replace [ERRO] with a span containing the same value
+			if (htmlContent && errorRegex.test(htmlContent)) {
+				htmlContent = htmlContent.replace(errorRegex, (match) => {
+					return `<span class="text-c-danger">${match}</span>`;
+				});
+			}
+
+			// Replace [INFO] with a span containing the same value
+			if (htmlContent && infoRegex.test(htmlContent)) {
+				htmlContent = htmlContent.replace(infoRegex, (match) => {
+					return `<span class="text-c-on-bg/50">${match}</span>`;
+				});
+			}
+
+			// If any replacements were made, replace the current text node with a new HTML structure
+			if (htmlContent !== textNode.textContent) {
+				const tempDiv = document.createElement('span');
+				tempDiv.innerHTML = htmlContent || '';
+
+				while (tempDiv.firstChild) {
+					textNode?.parentNode?.insertBefore(tempDiv.firstChild, textNode);
+				}
+
+				// @ts-ignore
+				textNode.remove();
+			}
+		}
+
+		// Serialize the HTML document back to a string
+		return doc.body.innerHTML;
+	}
+
 	onMount(() => {
 		mounted = true;
 		return () => {
@@ -450,7 +523,7 @@
 									</p>
 								{/if}
 								<p class="flex w-full whitespace-pre md:whitespace-pre-wrap">
-									{item.value[1]}
+									{@html colorize(item.value[1])}
 								</p>
 							</div>
 						</div>

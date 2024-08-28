@@ -33,7 +33,6 @@ jobs:
           embed-color: 16776960
           embed-title: '[sc-web] ${{ env.COMMIT_MSG }}  •  ${{ env.SHORT_SHA }}'
           embed-description: '```Build Started```'
-
   build_amd64:
     name: 🔨 Build Docker Image (amd64)
     runs-on: warp-ubuntu-latest-x64-2x
@@ -69,14 +68,13 @@ jobs:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and Push amd64 Image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          platforms: linux/amd64
-          push: true
-          tags: stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-amd64
-          load: false # Ensure it's pushed directly, not as a manifest
+      - name: Build and Tag amd64 Image
+        run: |
+          docker buildx build --platform linux/amd64 -t stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-amd64 --load .
+
+      - name: Push amd64 Image
+        run: |
+          docker push stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-amd64
 
   build_arm64:
     name: 🔨 Build Docker Image (arm64)
@@ -113,14 +111,13 @@ jobs:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and Push arm64 Image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          platforms: linux/arm64
-          push: true
-          tags: stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-arm64
-          load: false # Ensure it's pushed directly, not as a manifest
+      - name: Build and Tag arm64 Image
+        run: |
+          docker buildx build --platform linux/arm64 -t stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-arm64 --load .
+
+      - name: Push arm64 Image
+        run: |
+          docker push stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-arm64
 
   push_manifest:
     name: 🏷️ Push Multi-architecture Image
