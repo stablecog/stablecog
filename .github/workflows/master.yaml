@@ -62,7 +62,9 @@ jobs:
           context: .
           platforms: linux/amd64
           push: true
-          tags: stablecog/sc-web:${{ steps.setup_env.outputs.BRANCH_NAME }}-${{ steps.setup_env.outputs.SHORT_SHA }}-amd64
+          tags: stablecog/sc-web:${{ steps.setup-env.outputs.BRANCH_NAME }}-${{ steps.setup-env.outputs.SHORT_SHA }}-amd64
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
           provenance: false
 
   build_arm64:
@@ -99,7 +101,9 @@ jobs:
           context: .
           platforms: linux/arm64
           push: true
-          tags: stablecog/sc-web:${{ steps.setup_env.outputs.BRANCH_NAME }}-${{ steps.setup_env.outputs.SHORT_SHA }}-arm64
+          tags: stablecog/sc-web:${{ steps.setup-env.outputs.BRANCH_NAME }}-${{ steps.setup-env.outputs.SHORT_SHA }}-arm64
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
           provenance: false
 
   create_and_push_manifest:
