@@ -1,5 +1,6 @@
 import { env as envPrivate } from '$env/dynamic/private';
 import { env as envPublic } from '$env/dynamic/public';
+import { logger } from '$ts/constants/logger';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
@@ -10,11 +11,21 @@ export const load: PageServerLoad = async () => {
 		fetch(appNamesEndpoint),
 		fetch(workerNamesEndpoint)
 	]);
-	const workerNamesJSON: { data: string[] } = await workerNamesRes.json();
-	const appNamesJSON: { data: string[] } = await appNamesRes.json();
+	if (!appNamesRes.ok) {
+		logger.error(`Failed to fetch app names: ${appNamesRes.status}`);
+		throw new Error(`Failed to fetch app names: ${appNamesRes.status}`);
+	}
+	if (!workerNamesRes.ok) {
+		logger.error(`Failed to fetch worker names: ${workerNamesRes.status}`);
+		throw new Error(`Failed to fetch worker names: ${workerNamesRes.status}`);
+	}
+	const workerNamesJSON: { data?: string[] } = await workerNamesRes.json();
+	const appNamesJSON: { data?: string[] } = await appNamesRes.json();
+	const workerNames = (workerNamesJSON.data || []).sort();
+	const appNames = (appNamesJSON.data || []).sort();
 	return {
 		lokiToken: envPrivate.LOKI_TOKEN,
-		workerNames: workerNamesJSON.data.sort(),
-		appNames: appNamesJSON.data.sort()
+		workerNames,
+		appNames
 	};
 };
