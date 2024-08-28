@@ -450,7 +450,7 @@
 									</p>
 								{/if}
 								<p class="flex w-full whitespace-pre md:whitespace-pre-wrap">
-									{@html item.value[1]}
+									{item.value[1]}
 								</p>
 							</div>
 						</div>

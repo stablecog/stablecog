@@ -66,7 +66,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 				asTable([
 					['URL', `${url.pathname + url.search}`],
 					['DMS', `${Date.now() - start}ms • ${event.request.method} • ${status}`],
-					['UA', shortenString(event.request.headers.get('User-Agent') || 'Unknown', 138)]
+					['UA', shortenString(event.request.headers.get('User-Agent') || 'Unknown', 149)]
 				])
 			);
 		}
