@@ -8,6 +8,7 @@ import { getApiUrl } from '$ts/constants/main';
 import { galleryAdminAllowedRoutes, isGalleryAdmin, isSuperAdmin } from '$ts/helpers/admin/roles';
 import { supabaseAnonKey, supabaseUrl } from '$ts/constants/supabase';
 import { asTable, isKubeProbe, logger } from '$ts/constants/logger';
+import { shortenString } from '$ts/helpers/metaTag';
 
 loadAllLocales();
 
@@ -59,13 +60,15 @@ export const handle: Handle = async ({ event, resolve }) => {
 	let countryCode = event.request.headers.get('x-vercel-ip-country');
 	event.locals.countryCode = countryCode;
 
-	const logRequest = () => {
+	const logRequest = (status: number) => {
 		if (!isKubeProbe(event.request.headers)) {
 			logger.info(
 				asTable([
 					['URL', `${url.pathname + url.search}`],
+					['Method', event.request.method],
+					['Status', status.toString()],
 					['Duration', `${Date.now() - start}ms`],
-					['UA', event.request.headers.get('User-Agent') || 'Unknown']
+					['UA', shortenString(event.request.headers.get('User-Agent') || 'Unknown', 138)]
 				])
 			);
 		}
@@ -104,7 +107,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 				}
 			});
 			response.headers.delete('link');
-			logRequest();
+			logRequest(response.status);
 			return response;
 		} catch (error) {
 			console.log('Admin access error:', error);
@@ -117,7 +120,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 		}
 	});
 	response.headers.delete('link');
-	logRequest();
+	logRequest(response.status);
 	/* const LINK_HEADER_LENGTH = 60;
 	const linkHeaders = response.headers.get('Link');
 	if (linkHeaders) {
