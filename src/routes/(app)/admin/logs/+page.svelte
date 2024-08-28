@@ -314,8 +314,16 @@
 			const infoRegex = /\[INFO\]/g;
 			const dashRegex = /-{3,}/g; // Matches strings of 6 or more dashes
 			const pipeRegex = /\s\|+\s/g;
+			const bigDotRegex = /•{1,}/g; // Matches strings of 6 or more dashes
 
 			let htmlContent = textNode.textContent;
+
+			// Replace big dots with a span containing the same value
+			if (htmlContent && bigDotRegex.test(htmlContent)) {
+				htmlContent = htmlContent.replace(bigDotRegex, (match) => {
+					return `<span class="text-c-on-bg/50">${match}</span>`;
+				});
+			}
 
 			// Replace | characters surrounded by spaces with a span containing the same value
 			if (htmlContent && pipeRegex.test(htmlContent)) {
