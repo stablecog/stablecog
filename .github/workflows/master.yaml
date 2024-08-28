@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Add SHORT_SHA env property
         run: echo "SHORT_SHA=`echo ${GITHUB_SHA::7}`" >> $GITHUB_ENV
@@ -39,7 +39,7 @@ jobs:
     runs-on: warp-ubuntu-latest-x64-2x
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -60,19 +60,20 @@ jobs:
           fi
 
       - name: Build and push
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v6
         with:
           context: .
           platforms: linux/amd64
           push: true
           tags: stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-amd64
+          provenance: false
 
   build_arm64:
     name: 🔨 Build Docker Image (arm64)
     runs-on: warp-ubuntu-latest-arm64-2x
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -93,18 +94,22 @@ jobs:
           fi
 
       - name: Build and push
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v6
         with:
           context: .
           platforms: linux/arm64
           push: true
           tags: stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-arm64
+          provenance: false
 
   create_and_push_manifest:
     name: 🏷️ Create and Push Multi-architecture Manifest
     needs: [build_amd64, build_arm64]
     runs-on: ubuntu-latest
     steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
       - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
@@ -122,17 +127,15 @@ jobs:
 
       - name: Create and Push Multi-Arch Manifest
         run: |
-          docker manifest create stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }} \
-            --amend stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-amd64 \
-            --amend stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-arm64
-          docker manifest push stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}
+          docker buildx imagetools create -t stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }} \
+            stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-amd64 \
+            stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-arm64
 
       - name: Tag and Push 'latest'
         run: |
-          docker manifest create stablecog/sc-web:latest \
-            --amend stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-amd64 \
-            --amend stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-arm64
-          docker manifest push stablecog/sc-web:latest
+          docker buildx imagetools create -t stablecog/sc-web:latest \
+            stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-amd64 \
+            stablecog/sc-web:${{ env.BRANCH_NAME }}-${{ env.SHORT_SHA }}-arm64
 
   deploy:
     name: 🚀 Deploy Stablecog Website
@@ -140,7 +143,7 @@ jobs:
     needs: create_and_push_manifest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set SHORT_SHA, BRANCH_NAME, and COMMIT_MSG
         run: |
