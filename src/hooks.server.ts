@@ -1,7 +1,7 @@
+import '$ts/constants/loggerServer';
 import { detectLocale, isLocale } from '$i18n/i18n-util';
 import { loadAllLocales } from '$i18n/i18n-util.sync';
 import { asTable, isKubeProbe, logger } from '$ts/constants/loggerBrowser';
-import '$ts/constants/loggerServer';
 import { canonicalUrlObject, getApiUrl } from '$ts/constants/main';
 import { supabaseAnonKey, supabaseUrl } from '$ts/constants/supabase';
 import { galleryAdminAllowedRoutes, isGalleryAdmin, isSuperAdmin } from '$ts/helpers/admin/roles';
