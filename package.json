@@ -70,7 +70,7 @@
 		"@floating-ui/core": "^1.6.0",
 		"@macfja/svelte-persistent-store": "^2.4.1",
 		"@melt-ui/svelte": "^0.70.0",
-		"@supabase/ssr": "^0.4.0",
+		"@supabase/ssr": "^0.5.1",
 		"@supabase/supabase-js": "^2.45.1",
 		"@sveltejs/vite-plugin-svelte": "^3.0.1",
 		"@tanstack/svelte-query": "^5.50.3",
