@@ -1097,7 +1097,7 @@ const en: BaseTranslation = {
 	},
 	UnderDevelopment: {
 		PageTitle: "We'll be back soon!",
-		PageParagraph: "We're upgrading our systems. We'll be back in a couple of hours."
+		PageParagraph: "We are upgrading our systems. We'll be back in a couple of hours."
 	}
 };
 

@@ -11,8 +11,8 @@
       text-center shadow-xl shadow-c-shadow/[var(--o-shadow-normal)] ring-2 ring-c-bg-secondary md:max-w-md md:px-8 md:py-8"
 		>
 			<Logo class="w-16 md:w-18" />
-			<p class="mt-5 text-2xl font-bold">{$LL.UnderDevelopment.PageTitle()}</p>
-			<p class="mt-2 text-c-on-bg/60">
+			<p class="mt-5 text-balance text-2xl font-bold">{$LL.UnderDevelopment.PageTitle()}</p>
+			<p class="mt-2 text-balance text-c-on-bg/60">
 				{$LL.UnderDevelopment.PageParagraph()}
 			</p>
 			<ScBar isInline withAbsoluteUrls noGuide noBlog class="mt-2" />
