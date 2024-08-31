@@ -259,9 +259,12 @@ export async function submitInitialGenerationRequest({
 		body: JSON.stringify(finalRequest)
 	});
 	if (!response.ok) {
-		const error = await response.json();
-		console.error('Generation request failed:', error);
-		setGenerationToFailed({ id: request.ui_id, error: error.error });
+		const erroredResJSON: TInitialGenerationResponse = await response.json();
+		if (erroredResJSON.error === 'nsfw_prompt') {
+			console.log('erroredResJSON:', erroredResJSON);
+			return { ...erroredResJSON, ui_id: request.ui_id };
+		}
+		console.error('Generation request failed:', erroredResJSON);
 		throw new Error(`Failed to submit generation request: ${response.status}`);
 	}
 	const resJSON: TInitialGenerationResponse = await response.json();
