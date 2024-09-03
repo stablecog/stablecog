@@ -68,6 +68,8 @@
 		}
 	}
 
+	$: deletionRequestText = `🟡 Please make sure you are sending this email from your account's owner: "${$sessionStore?.user.email}". 🟡\n\n✅ I checked the email and I confirm this email is from: "${$sessionStore?.user.email}".\n✅ I confirm that this action is irreversible and all my data will be gone.\n\nPlease delete my account.`;
+
 	onMount(() => {
 		if ($wantsEmail !== null) {
 			wantsEmailChecked.set($wantsEmail);
@@ -316,7 +318,9 @@
 						class="w-full px-4.5 py-3 md:-my-0.75 md:w-auto"
 						size="sm"
 						target="_blank"
-						href="mailto:privacy@stablecog.com?subject=Delete%20my%20account&body=Please%20delete%20my%20account."
+						href="mailto:privacy@stablecog.com?subject=Delete%20my%20account&body={encodeURIComponent(
+							deletionRequestText
+						)}"
 					>
 						{$LL.Account.RequestDeletionButton()}
 					</Button>
