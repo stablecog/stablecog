@@ -510,7 +510,7 @@
 								</div>
 							</div>
 						{/if}
-						<div class="flex flex-row">
+						<div class="flex flex-row not-touch:hover:bg-c-bg-secondary">
 							<div
 								class="flex flex-col items-start justify-start gap-0.5 px-4 py-1 text-left font-mono text-xxs md:flex-row md:gap-0 md:py-0.75 md:text-xs"
 							>
