@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
+	import CopyButton from '$components/docs/CopyButton.svelte';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconApp from '$components/icons/IconApp.svelte';
 	import IconArrowRight from '$components/icons/IconArrowRight.svelte';
@@ -510,7 +511,7 @@
 								</div>
 							</div>
 						{/if}
-						<div class="flex flex-row not-touch:hover:bg-c-bg-secondary">
+						<div class="group/line relative flex flex-row hover:z-10 hover:bg-c-bg-secondary">
 							<div
 								class="flex flex-col items-start justify-start gap-0.5 px-4 py-1 text-left font-mono text-xxs md:flex-row md:gap-0 md:py-0.75 md:text-xs"
 							>
@@ -557,6 +558,16 @@
 									{@html colorize(item.value[1])}
 								</p>
 							</div>
+							<!-- Copy button -->
+							<CopyButton
+								internalState={true}
+								onCopied={() => null}
+								class="group absolute right-0 top-0 flex items-stretch justify-center self-stretch rounded-bl-lg bg-c-bg-secondary p-0.25 opacity-0 group-hover/line:opacity-100"
+								textToCopy={item.value[1]}
+								iconCopySizeClass="size-5"
+								iconTickSizeClass="size-7"
+								noHoverEffectPadding={true}
+							/>
 						</div>
 					</VList>
 				{/if}

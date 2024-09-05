@@ -9,25 +9,51 @@
 	export let textToCopy: string;
 	export let onCopied: () => void;
 	export let isCopied: boolean = false;
+	export { classes as class };
+	export let internalState = false;
+	export let iconCopySizeClass = 'size-6';
+	export let iconTickSizeClass = 'size-9';
+	export let innerPadding = 'p-2';
+	export let noHoverEffectPadding = false;
+	let classes = 'group relative flex items-stretch justify-center self-stretch p-1';
+
+	let timeout: NodeJS.Timeout;
+	if (internalState) {
+		onCopied = () => {
+			clearTimeout(timeout);
+			isCopied = true;
+			timeout = setTimeout(() => {
+				isCopied = false;
+			}, 1500);
+		};
+	}
 </script>
 
 <button
 	aria-label={$LL.Shared.CopyButton()}
-	class="group relative flex items-stretch justify-center self-stretch p-1"
+	class={classes}
 	use:copy={textToCopy || ''}
 	on:svelte-copy={onCopied}
 	on:svelte-copy:error={(e) => console.log(e)}
 >
-	<ButtonHoverEffect color="success" hoverFrom="bottom" size="sm" hovered={isCopied} />
+	<ButtonHoverEffect
+		noPadding={noHoverEffectPadding}
+		color="success"
+		hoverFrom="bottom"
+		size="sm"
+		hovered={isCopied}
+	/>
 	<div
-		class="relative flex items-center justify-center self-stretch rounded-lg p-2 text-sm transition"
+		class="relative flex items-center justify-center self-stretch rounded-lg {innerPadding} text-sm transition"
 	>
 		<Morpher morphed={isCopied}>
 			<div slot="0" class="flex items-center justify-center">
-				<IconCopy class="h-6 w-6 text-c-on-bg transition not-touch:group-hover:text-c-success" />
+				<IconCopy
+					class="{iconCopySizeClass} text-c-on-bg transition not-touch:group-hover:text-c-success"
+				/>
 			</div>
 			<div slot="1" class="flex items-center justify-center">
-				<IconTick class="h-9 w-9 flex-shrink-0 text-c-success" />
+				<IconTick class="{iconTickSizeClass} flex-shrink-0 text-c-success" />
 			</div>
 		</Morpher>
 	</div>
