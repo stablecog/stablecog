@@ -9,6 +9,8 @@
 	export let paddingRight = 0;
 	export let paddingTop = 0;
 	export let paddingBottom = 0;
+	export { classes as class };
+	let classes = '';
 
 	const rowCount = 20;
 	const items = Array.from({ length: rowCount }, (_, i) => i);
@@ -23,7 +25,7 @@
 			padding-top: {paddingTop}px; 
 			padding-bottom: {paddingBottom}px;
 	"
-	class="flex w-full flex-1 flex-col items-center justify-center text-center text-c-on-bg/60"
+	class="flex w-full flex-1 flex-col items-center justify-center text-center text-c-on-bg/60 {classes}"
 >
 	{#if type === 'with-loader'}
 		<div class="flex flex-col">

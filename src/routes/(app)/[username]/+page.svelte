@@ -14,7 +14,6 @@
 		xlBreakpoint
 	} from '$components/generationFullScreen/constants';
 	import GenerationGridInfinite from '$components/grids/GenerationGridInfinite.svelte';
-	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconBirthday from '$components/icons/IconBirthday.svelte';
 	import IconFreePlan from '$components/icons/IconFreePlan.svelte';
 	import IconHeart from '$components/icons/IconHeart.svelte';
@@ -46,8 +45,6 @@
 	import { userSummary } from '$ts/stores/user/summary.js';
 	import { windowWidth } from '$ts/stores/window';
 	import { createInfiniteQuery } from '@tanstack/svelte-query';
-	import { quadOut } from 'svelte/easing';
-	import { scale } from 'svelte/transition';
 
 	export let data;
 
@@ -267,7 +264,7 @@
 			/>
 		</div>
 	</div>
-	<GalleryLikeGridWrapper class="relative flex w-full flex-1 flex-col pb-3 pt-1 md:pt-3">
+	<GalleryLikeGridWrapper class="relative flex w-full flex-1 flex-col pb-3 pt-2 md:pt-3.5">
 		{#if galleryGenerationFullOutputsQuery === undefined || $galleryGenerationFullOutputsQuery === undefined || $galleryGenerationFullOutputsQuery?.isLoading}
 			<GalleryLikeLoadingPlaceholder />
 		{:else if $galleryGenerationFullOutputsQuery?.isError || ($galleryGenerationFullOutputsQuery?.data && !$galleryGenerationFullOutputsQuery?.data?.pages)}
@@ -290,7 +287,7 @@
 				<div class="h-[2vh]" />
 			</div>
 		{:else if galleryGenerationFullOutputsQuery !== undefined && $windowWidth}
-			<div class="mt-1 flex w-full flex-1 flex-col md:mt-0.5">
+			<div class="flex w-full flex-1 flex-col">
 				<GenerationGridInfinite
 					cardType="user-profile"
 					generationsQuery={galleryGenerationFullOutputsQuery}
