@@ -6,7 +6,7 @@ export function convertToDBTimeString(timestamp: number): string {
 	const hour = date.getUTCHours().toString().padStart(2, '0');
 	const minute = date.getUTCMinutes().toString().padStart(2, '0');
 	const second = date.getUTCSeconds().toString().padStart(2, '0');
-	const millisecond = date.getUTCMilliseconds().toString().padStart(6, '0');
+	const millisecond = date.getUTCMilliseconds().toString().padEnd(6, '0');
 
 	const formattedDate = `${year}-${month}-${day}T${hour}:${minute}:${second}.${millisecond}Z`;
 
