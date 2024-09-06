@@ -80,14 +80,15 @@ export const numOutputsMin = 1;
 export const numOutputsMax = 4;
 export const numOutputsMaxFree = 1;
 
-export const availableInferenceSteps = ['30', '40', '50'] as const;
+export const availableInferenceSteps = ['25', '30', '40', '50'] as const;
 export type TAvailableInferenceSteps = (typeof availableInferenceSteps)[number];
 export const inferenceStepsTabs: TTab<TAvailableInferenceSteps>[] = [
+	{ label: '25', value: '25' },
 	{ label: '30', value: '30' },
 	{ label: '40', value: '40' },
 	{ label: '50', value: '50' }
 ];
-export const inferenceStepsDefault: TAvailableInferenceSteps = '30';
+export const inferenceStepsDefault: TAvailableInferenceSteps = '25';
 
 export const guidanceScaleMax = 20;
 export const guidanceScaleMin = 1;

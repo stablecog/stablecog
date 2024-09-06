@@ -24,6 +24,7 @@
 		guidanceScaleDefault,
 		guidanceScaleMax,
 		guidanceScaleMin,
+		inferenceStepsDefault,
 		initImageStrengthDefault,
 		initImageStrengthMax,
 		initImageStrengthMin,
@@ -49,6 +50,7 @@
 		generationAspectRatio,
 		generationGuidanceScale,
 		generationHeight,
+		generationInferenceSteps,
 		generationInitImageStrength,
 		generationModelId,
 		generationNegativePrompt,
@@ -60,6 +62,7 @@
 		generationWidth,
 		guidanceScale,
 		imageSize,
+		inferenceSteps,
 		initImageStrength,
 		modelId,
 		negativePrompt,
@@ -128,6 +131,7 @@
 			? serverData.num_outputs
 			: numOutputsDefault
 	);
+	generationInferenceSteps.set(inferenceStepsDefault);
 
 	$: [$generationModelId], withCheck(setLocalModelId);
 	$: [$generationAspectRatio], withCheck(setLocalImageSizeBasedOnAspectRatio);
@@ -135,6 +139,7 @@
 	$: [$generationNegativePrompt], withCheck(setLocalNegativePrompt);
 	$: [$generationGuidanceScale], withCheck(setLocalGuidanceScale);
 	$: [$generationSchedulerId], withCheck(setLocalSchedulerId);
+	$: [$generationInferenceSteps], withCheck(setLocalInferenceSteps);
 	$: [$generationSeed], withCheck(setLocalSeed);
 	$: [$advancedModeApp], withCheck(setLocalAdvancedMode);
 	$: [$generationShouldSubmitToGallery], withCheck(setLocalShouldSubmitToGallery);
@@ -249,6 +254,11 @@
 		guidanceScale.set($generationGuidanceScale);
 	}
 
+	function setLocalInferenceSteps() {
+		if ($generationInferenceSteps === undefined) return;
+		inferenceSteps.set($generationInferenceSteps);
+	}
+
 	function setLocalSchedulerId() {
 		if ($generationSchedulerId === undefined) return;
 		schedulerId.set($generationSchedulerId);
@@ -310,6 +320,9 @@
 		) {
 			generationGuidanceScale.set($guidanceScale);
 		}
+
+		// Set the inference steps to the default value
+		inferenceSteps.set(inferenceStepsDefault);
 
 		if (
 			!isValue(serverData.seed) &&
