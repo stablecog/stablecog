@@ -160,7 +160,9 @@
 
 	function enforceNumOutputs() {
 		if (!canEditNumOutputs && $generationNumOutputs > numOutputsMaxFree) {
-			generationNumOutputs.set(Math.min(numOutputsMaxFree, $generationNumOutputs));
+			const count = Math.min(numOutputsMaxFree, $generationNumOutputs);
+			generationNumOutputs.set(count);
+			numOutputs.set(count);
 		}
 	}
 

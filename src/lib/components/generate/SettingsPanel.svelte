@@ -29,7 +29,6 @@
 		numOutputsMin
 	} from '$ts/constants/main';
 	import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
-	import { isAdmin } from '$ts/helpers/admin/roles';
 	import { canUserEditNumOutputs } from '$ts/helpers/canUserEditNumOutputs';
 	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { generateMode } from '$ts/stores/generate/generateMode';
