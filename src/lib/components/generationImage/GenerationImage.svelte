@@ -43,6 +43,7 @@
 	import { pushState } from '$app/navigation';
 	import type { TImgProxyQuality } from '$ts/helpers/imgproxy';
 	import LikeButton from '$components/primitives/buttons/LikeButton.svelte';
+	import { onDestroy, onMount } from 'svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let cardType: TGenerationImageCardType;
@@ -117,6 +118,17 @@
 				: `${$page.url.pathname}?${params}`;
 	}
 
+	let hasTransition = false;
+	let timeout: NodeJS.Timeout;
+
+	function setHasTransition() {
+		hasTransition = false;
+		clearTimeout(timeout);
+		timeout = setTimeout(() => {
+			hasTransition = true;
+		}, 20);
+	}
+
 	function onImageClick(e: MouseEvent & { currentTarget: HTMLAnchorElement }) {
 		if (!modalShouldOpen) {
 			e.preventDefault();
@@ -167,6 +179,14 @@
 			isInGallerySelectedIds
 		});
 	}
+
+	onMount(() => {
+		setHasTransition();
+	});
+
+	onDestroy(() => {
+		clearTimeout(timeout);
+	});
 </script>
 
 {#if generation.selected_output.image_url.includes('placeholder')}
@@ -188,7 +208,9 @@
 		<div class="absolute left-0 top-0 h-full w-full">
 			<img
 				loading="lazy"
-				class="absolute left-0 top-0 h-full w-full transform object-cover transition-[transform,opacity] duration-[0.2s,0.1s] ease-[ease-out,ease-in] {!naturalWidth
+				class="absolute left-0 top-0 h-full w-full transform object-cover {hasTransition
+					? 'transition-[transform,opacity] duration-[0.2s,0.1s] ease-[ease-out,ease-in]'
+					: 'transition-[transform] duration-[0.2s] ease-[ease-out]'} {!naturalWidth
 					? 'opacity-0'
 					: 'opacity-100'} {isInGallerySelectedIds ? 'scale-110' : 'scale-100'}"
 				{sizes}
