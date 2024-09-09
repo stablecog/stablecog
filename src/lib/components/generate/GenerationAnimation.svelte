@@ -4,10 +4,12 @@
 
 	export let type: TGenerateMode = 'regular';
 	export let animation: Tweened<number>;
+
+	const minPx = 6;
 </script>
 
 <div
-	style="transform: translateX(calc({-100 + $animation * 100}% + {(1 - $animation) * 6}px))"
+	style="transform: translateX(calc({-100 + $animation * 100}% + {(1 - $animation) * minPx}px))"
 	class="{type === 'inpainting'
 		? 'bg-c-primary/40'
 		: 'bg-c-primary/25'} animate-generation pointer-events-none absolute left-0 top-0 flex
