@@ -211,11 +211,8 @@
 				data-has-transition={hasTransition ? true : undefined}
 				data-has-big-scale={isInGallerySelectedIds ? true : undefined}
 				data-full-opacity={naturalWidth ? true : undefined}
-				class="absolute left-0 top-0 h-full w-full scale-100
-					transform object-cover opacity-0
-					transition-[transform]
-					duration-[0.2s]
-					ease-[ease-out]
+				class="absolute left-0 top-0 h-full w-full scale-100 transform object-cover opacity-0
+					transition-[transform] duration-[0.2s] ease-[ease-out]
 					data-[has-big-scale]:scale-110 data-[full-opacity]:opacity-100 data-[has-transition]:transition-[transform,opacity]
 					data-[has-transition]:duration-[0.2s,0.1s] data-[has-transition]:ease-[ease-out,ease-in]"
 				{sizes}
