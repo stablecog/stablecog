@@ -126,7 +126,7 @@
 		clearTimeout(timeout);
 		timeout = setTimeout(() => {
 			hasTransition = true;
-		}, 20);
+		}, 30);
 	}
 
 	function onImageClick(e: MouseEvent & { currentTarget: HTMLAnchorElement }) {
@@ -208,11 +208,16 @@
 		<div class="absolute left-0 top-0 h-full w-full">
 			<img
 				loading="lazy"
-				class="absolute left-0 top-0 h-full w-full transform object-cover {hasTransition
-					? 'transition-[transform,opacity] duration-[0.2s,0.1s] ease-[ease-out,ease-in]'
-					: 'transition-[transform] duration-[0.2s] ease-[ease-out]'} {!naturalWidth
-					? 'opacity-0'
-					: 'opacity-100'} {isInGallerySelectedIds ? 'scale-110' : 'scale-100'}"
+				data-has-transition={hasTransition ? true : undefined}
+				data-has-big-scale={isInGallerySelectedIds ? true : undefined}
+				data-full-opacity={naturalWidth ? true : undefined}
+				class="absolute left-0 top-0 h-full w-full scale-100
+					transform object-cover opacity-0
+					transition-[transform]
+					duration-[0.2s]
+					ease-[ease-out]
+					data-[has-big-scale]:scale-110 data-[full-opacity]:opacity-100 data-[has-transition]:transition-[transform,opacity]
+					data-[has-transition]:duration-[0.2s,0.1s] data-[has-transition]:ease-[ease-out,ease-in]"
 				{sizes}
 				src={srcPicked}
 				{srcset}
