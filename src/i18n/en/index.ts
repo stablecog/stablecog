@@ -613,6 +613,7 @@ const en: BaseTranslation = {
 		AccountScheduledForDeletionTitle: 'Scheduled for Deletion',
 		ManageSubscriptionTitle: 'Manage Subscription',
 		DeleteAccountModal: {
+			InputPlaceholder: 'Confirm',
 			Title: 'Delete Account',
 			Paragraph:
 				'Your account will be scheduled for deletion. Deletion of an account is permanent.',

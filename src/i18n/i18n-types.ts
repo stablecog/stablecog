@@ -1910,6 +1910,10 @@ type RootTranslation = {
 		ManageSubscriptionTitle: string
 		DeleteAccountModal: {
 			/**
+			 * C​o​n​f​i​r​m
+			 */
+			InputPlaceholder: string
+			/**
 			 * D​e​l​e​t​e​ ​A​c​c​o​u​n​t
 			 */
 			Title: string
@@ -5333,6 +5337,10 @@ export type TranslationFunctions = {
 		 */
 		ManageSubscriptionTitle: () => LocalizedString
 		DeleteAccountModal: {
+			/**
+			 * Confirm
+			 */
+			InputPlaceholder: () => LocalizedString
 			/**
 			 * Delete Account
 			 */

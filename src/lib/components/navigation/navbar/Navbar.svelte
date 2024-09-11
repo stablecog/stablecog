@@ -5,6 +5,7 @@
 	import IconChevronDown from '$components/icons/IconChevronDown.svelte';
 	import IconSc from '$components/icons/IconSc.svelte';
 	import IconSidebar from '$components/icons/IconSidebar.svelte';
+	import IconWarning from '$components/icons/IconWarning.svelte';
 	import SignInModal from '$components/modals/SignInModal.svelte';
 	import BannerWrapper from '$components/navigation/navbar/BannerWrapper.svelte';
 	import RemainingCredits from '$components/navigation/navbar/RemainingCredits.svelte';
@@ -145,34 +146,43 @@
 						use:clickoutside={{ callback: closeAccountMenu }}
 						class="relative flex flex-col items-end"
 					>
-						<div class="py-3.5">
-							<IconButton
-								class="shadow-lg ring-2 {$page.url.pathname === '/' &&
-								$themeApp === 'light' &&
-								!$notAtTheVeryTop
-									? 'ring-c-bg/25'
-									: 'ring-c-on-bg/25'} flex items-center justify-center rounded-full shadow-c-shadow/[var(--o-shadow-strong)]"
-								noPadding
-								name="Account"
-								onClick={() => {
-									toggleAccountMenu();
-									if (isAccountMenuOpen && $userSummary && $userSummary.refetch) {
-										$userSummary.refetch();
-									}
-								}}
-							>
-								<Avatar
-									text={$userSummary.username}
-									class="relative h-9 w-9 transform overflow-hidden rounded-full transition duration-250
+						<div class="relative py-3.5">
+							<div class="relative">
+								<IconButton
+									class="shadow-lg ring-2 {$page.url.pathname === '/' &&
+									$themeApp === 'light' &&
+									!$notAtTheVeryTop
+										? 'ring-c-bg/25'
+										: 'ring-c-on-bg/25'} flex items-center justify-center rounded-full shadow-c-shadow/[var(--o-shadow-strong)]"
+									noPadding
+									name="Account"
+									onClick={() => {
+										toggleAccountMenu();
+										if (isAccountMenuOpen && $userSummary && $userSummary.refetch) {
+											$userSummary.refetch();
+										}
+									}}
+								>
+									<Avatar
+										text={$userSummary.username}
+										class="relative size-9 transform overflow-hidden rounded-full transition duration-250
 									{$page.url.pathname === '/' && $themeApp === 'light' && !$notAtTheVeryTop
-										? 'not-touch:group-hover/iconbutton:ring-c-bg'
-										: 'not-touch:group-hover/iconbutton:ring-c-on-bg'} {isAccountMenuOpen
-										? 'rotate-360'
-										: !isAccountMenuOpen
-											? 'not-touch:group-hover/iconbutton:rotate-45'
-											: ''}"
-								/>
-							</IconButton>
+											? 'not-touch:group-hover/iconbutton:ring-c-bg'
+											: 'not-touch:group-hover/iconbutton:ring-c-on-bg'} {isAccountMenuOpen
+											? 'rotate-360'
+											: !isAccountMenuOpen
+												? 'not-touch:group-hover/iconbutton:rotate-45'
+												: ''}"
+									/>
+								</IconButton>
+								{#if $userSummary.scheduled_for_deletion_on}
+									<div
+										class="pointer-events-none absolute -right-1 -top-1 rounded-full bg-c-danger p-0.5"
+									>
+										<IconWarning class="size-3.5 text-c-bg" />
+									</div>
+								{/if}
+							</div>
 						</div>
 						<div class="relative -mr-1">
 							{#if isAccountMenuOpen}

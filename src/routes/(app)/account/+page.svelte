@@ -470,7 +470,11 @@
 						confirmationPhrase: `<span class='text-c-danger font-medium'>${$LL.Account.DeleteAccountModal.ConfirmationPhrase()}</span>`
 					})}
 				</p>
-				<Input class="mt-3" title="Confirm" bind:value={deleteAccountInput} />
+				<Input
+					class="mt-3"
+					title={$LL.Account.DeleteAccountModal.InputPlaceholder()}
+					bind:value={deleteAccountInput}
+				/>
 				<div class="mt-6 flex w-full flex-wrap items-stretch justify-end gap-2">
 					<Button
 						disabled={$scheduleForDeletion?.isPending}
