@@ -607,9 +607,20 @@ const ko: Translation = {
 		SubscriptionCancellationTitle: 'Subscription Cancellation',
 		DeleteButton: 'Delete',
 		RequestDeletionButton: 'Request Deletion',
+		CancelAccountDeletionButton: 'Cancel Deletion',
 		DeleteAccountTitle: 'Delete Account',
 		DeleteAccountParagraph: 'This action is permanent and cannot be undone.',
+		AccountScheduledForDeletionTitle: 'Scheduled for Deletion',
 		ManageSubscriptionTitle: 'Manage Subscription',
+		DeleteAccountModal: {
+			Title: 'Delete Account',
+			Paragraph:
+				'Your account will be scheduled for deletion. Deletion of an account is permanent.',
+			ConfirmationPhrase: 'delete my account permanently',
+			ConfimationParagraph: `Type "{confirmationPhrase}" to confirm:`,
+			ConfirmButton: 'Confirm',
+			CancelButton: 'Cancel'
+		},
 		ManageTitle: 'Manage',
 		Apps: {
 			Authorize: {

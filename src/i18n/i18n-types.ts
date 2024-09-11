@@ -1889,6 +1889,10 @@ type RootTranslation = {
 		 */
 		RequestDeletionButton: string
 		/**
+		 * C​a​n​c​e​l​ ​D​e​l​e​t​i​o​n
+		 */
+		CancelAccountDeletionButton: string
+		/**
 		 * D​e​l​e​t​e​ ​A​c​c​o​u​n​t
 		 */
 		DeleteAccountTitle: string
@@ -1897,9 +1901,40 @@ type RootTranslation = {
 		 */
 		DeleteAccountParagraph: string
 		/**
+		 * S​c​h​e​d​u​l​e​d​ ​f​o​r​ ​D​e​l​e​t​i​o​n
+		 */
+		AccountScheduledForDeletionTitle: string
+		/**
 		 * M​a​n​a​g​e​ ​S​u​b​s​c​r​i​p​t​i​o​n
 		 */
 		ManageSubscriptionTitle: string
+		DeleteAccountModal: {
+			/**
+			 * D​e​l​e​t​e​ ​A​c​c​o​u​n​t
+			 */
+			Title: string
+			/**
+			 * Y​o​u​r​ ​a​c​c​o​u​n​t​ ​w​i​l​l​ ​b​e​ ​s​c​h​e​d​u​l​e​d​ ​f​o​r​ ​d​e​l​e​t​i​o​n​.​ ​D​e​l​e​t​i​o​n​ ​o​f​ ​a​n​ ​a​c​c​o​u​n​t​ ​i​s​ ​p​e​r​m​a​n​e​n​t​.
+			 */
+			Paragraph: string
+			/**
+			 * d​e​l​e​t​e​ ​m​y​ ​a​c​c​o​u​n​t​ ​p​e​r​m​a​n​e​n​t​l​y
+			 */
+			ConfirmationPhrase: string
+			/**
+			 * T​y​p​e​ ​"​{​c​o​n​f​i​r​m​a​t​i​o​n​P​h​r​a​s​e​}​"​ ​t​o​ ​c​o​n​f​i​r​m​:
+			 * @param {unknown} confirmationPhrase
+			 */
+			ConfimationParagraph: RequiredParams<'confirmationPhrase'>
+			/**
+			 * C​o​n​f​i​r​m
+			 */
+			ConfirmButton: string
+			/**
+			 * C​a​n​c​e​l
+			 */
+			CancelButton: string
+		}
 		/**
 		 * M​a​n​a​g​e
 		 */
@@ -5278,6 +5313,10 @@ export type TranslationFunctions = {
 		 */
 		RequestDeletionButton: () => LocalizedString
 		/**
+		 * Cancel Deletion
+		 */
+		CancelAccountDeletionButton: () => LocalizedString
+		/**
 		 * Delete Account
 		 */
 		DeleteAccountTitle: () => LocalizedString
@@ -5286,9 +5325,39 @@ export type TranslationFunctions = {
 		 */
 		DeleteAccountParagraph: () => LocalizedString
 		/**
+		 * Scheduled for Deletion
+		 */
+		AccountScheduledForDeletionTitle: () => LocalizedString
+		/**
 		 * Manage Subscription
 		 */
 		ManageSubscriptionTitle: () => LocalizedString
+		DeleteAccountModal: {
+			/**
+			 * Delete Account
+			 */
+			Title: () => LocalizedString
+			/**
+			 * Your account will be scheduled for deletion. Deletion of an account is permanent.
+			 */
+			Paragraph: () => LocalizedString
+			/**
+			 * delete my account permanently
+			 */
+			ConfirmationPhrase: () => LocalizedString
+			/**
+			 * Type "{confirmationPhrase}" to confirm:
+			 */
+			ConfimationParagraph: (arg: { confirmationPhrase: unknown }) => LocalizedString
+			/**
+			 * Confirm
+			 */
+			ConfirmButton: () => LocalizedString
+			/**
+			 * Cancel
+			 */
+			CancelButton: () => LocalizedString
+		}
 		/**
 		 * Manage
 		 */

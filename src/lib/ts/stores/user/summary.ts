@@ -29,6 +29,7 @@ export interface TUserSummary {
 	username: string;
 	has_purchase?: boolean;
 	username_changed_at?: string;
+	scheduled_for_deletion_on?: string;
 	refetch?: (
 		options?: (RefetchOptions & RefetchQueryFilters) | undefined
 	) => Promise<QueryObserverResult<TUserSummary | null, unknown>>;

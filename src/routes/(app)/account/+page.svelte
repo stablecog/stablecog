@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import Avatar from '$components/avatar/Avatar.svelte';
@@ -10,15 +11,19 @@
 	import IconPen from '$components/icons/IconPen.svelte';
 	import IconSignOut from '$components/icons/IconSignOut.svelte';
 	import IconToken from '$components/icons/IconToken.svelte';
+	import ModalWrapper from '$components/modals/ModalWrapper.svelte';
 	import Button from '$components/primitives/buttons/Button.svelte';
 	import NoBgButton from '$components/primitives/buttons/NoBgButton.svelte';
 	import DropdownItem from '$components/primitives/dropdown/DropdownItem.svelte';
+	import Input from '$components/primitives/Input.svelte';
+	import { getUserSummaryQueryKey } from '$components/userSummary/helpers.js';
 	import MetaTag from '$components/utils/MetaTag.svelte';
 	import WithChangeUsernameModal from '$components/utils/WithChangeUsernameModal.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import AccountDetailLine from '$routes/(app)/account/AccountDetailLine.svelte';
 	import AccountPageCard from '$routes/(app)/account/AccountPageCard.svelte';
-	import { staticAssetBaseUrl } from '$ts/constants/main';
+	import { clickoutside } from '$ts/actions/clickoutside';
+	import { getApiUrl, staticAssetBaseUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { sessionStore, supabaseStore } from '$ts/constants/supabase';
 	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
@@ -26,8 +31,11 @@
 	import { appVersion } from '$ts/stores/appVersion';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { wantsEmail } from '$ts/stores/user/wantsEmail.js';
-	import { onMount } from 'svelte';
+	import { createMutation } from '@tanstack/svelte-query';
+	import { onDestroy, onMount } from 'svelte';
 	import { writable } from 'svelte/store';
+
+	export let data;
 
 	$: if (!$sessionStore?.user.id) {
 		goto(`/sign-in?rd_to=${encodeURIComponent($page.url.pathname)}`);
@@ -56,6 +64,79 @@
 	$: [$wantsEmailChecked], onWantsEmailCheckedChanged();
 	$: [$wantsEmail], onWantsEmailChanged();
 
+	$: userId = $sessionStore?.user.id;
+
+	let isDeleteAccountModalOpen = false;
+	let deleteAccountInput = '';
+
+	$: scheduleForDeletion = browser
+		? createMutation({
+				mutationKey: ['schedule-for-deletion', userId],
+				mutationFn: async ({ action }: { action: 'schedule-for-deletion' | 'cancel-deletion' }) => {
+					data.queryClient.cancelQueries({ queryKey: getUserSummaryQueryKey(userId) });
+
+					const res = await fetch(`${getApiUrl().origin}/v1/user/account/schedule-for-deletion`, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+							Authorization: `Bearer ${$sessionStore?.access_token}`
+						},
+						body: JSON.stringify({
+							action
+						})
+					});
+					if (!res.ok) {
+						throw new Error('Failed to schedule for deletion');
+					}
+					const resJson: {
+						scheduled_for_deletion_on: string;
+						success: boolean;
+					} = await res.json();
+					await data.queryClient.invalidateQueries({ queryKey: getUserSummaryQueryKey(userId) });
+
+					return resJson;
+				},
+				onSuccess: () => {
+					deleteAccountInput = '';
+					isDeleteAccountModalOpen = false;
+				}
+			})
+		: undefined;
+
+	let nowTimeout: NodeJS.Timeout;
+	let now = Date.now();
+
+	$: scheduledForDeletionOn = $userSummary?.scheduled_for_deletion_on;
+	$: untilDeletion = scheduledForDeletionOn
+		? new Date(scheduledForDeletionOn).getTime() - now
+		: null;
+
+	$: untilDeletion, signOutWhenDeleted();
+
+	let signingOut = false;
+	async function signOutWhenDeleted() {
+		if (signingOut) return;
+		if (untilDeletion === null) return;
+		if (!$supabaseStore) return;
+		if (untilDeletion <= 0) {
+			try {
+				signingOut = true;
+				await $supabaseStore.auth.signOut();
+			} catch (error) {
+				console.log(error);
+			} finally {
+				signingOut = false;
+			}
+		}
+	}
+
+	function openDeleteAccountModal() {
+		isDeleteAccountModalOpen = true;
+	}
+	function closeDeleteAccountModal() {
+		isDeleteAccountModalOpen = false;
+	}
+
 	function onWantsEmailCheckedChanged() {
 		if (mounted) {
 			wantsEmail.set($wantsEmailChecked);
@@ -68,13 +149,23 @@
 		}
 	}
 
-	$: deletionRequestText = `🟡 Please make sure you are sending this email from your account's owner: "${$sessionStore?.user.email}". 🟡\n\n✅ I checked the email and I confirm this email is from: "${$sessionStore?.user.email}".\n✅ I confirm that this action is irreversible and all my data will be gone.\n\nPlease delete my account.`;
-
 	onMount(() => {
 		if ($wantsEmail !== null) {
 			wantsEmailChecked.set($wantsEmail);
 		}
+		clearTimeout(nowTimeout);
+		nowTimeout = setInterval(() => {
+			now = Date.now();
+		}, 1000);
 		mounted = true;
+
+		return () => {
+			clearInterval(nowTimeout);
+		};
+	});
+
+	onDestroy(() => {
+		clearInterval(nowTimeout);
 	});
 </script>
 
@@ -309,23 +400,91 @@
 					class="flex w-full flex-wrap items-center justify-between gap-4 px-4 py-5 md:px-5"
 				>
 					<div class="-mt-1 flex flex-col px-1 md:-my-0.75 md:max-w-128">
-						<p class="font-semibold text-c-danger">{$LL.Account.DeleteAccountTitle()}</p>
-						<p class="mt-0.5 text-c-on-bg/75">{$LL.Account.DeleteAccountParagraph()}</p>
+						<p class="font-semibold text-c-danger">
+							{scheduledForDeletionOn
+								? $LL.Account.AccountScheduledForDeletionTitle()
+								: $LL.Account.DeleteAccountTitle()}
+						</p>
+						<p class="mt-0.5 text-c-on-bg/75">
+							{scheduledForDeletionOn
+								? getRelativeDate({
+										date: scheduledForDeletionOn,
+										now,
+										locale: $locale
+									})
+								: $LL.Account.DeleteAccountParagraph()}
+						</p>
 					</div>
 					<Button
 						noPadding
-						type="danger"
+						withSpinner
+						loading={$scheduleForDeletion?.isPending}
+						type={scheduledForDeletionOn ? 'on-bg' : 'danger'}
 						class="w-full px-4.5 py-3 md:-my-0.75 md:w-auto"
 						size="sm"
 						target="_blank"
-						href="mailto:privacy@stablecog.com?subject=Delete%20my%20account&body={encodeURIComponent(
-							deletionRequestText
-						)}"
+						onClick={scheduledForDeletionOn
+							? () => $scheduleForDeletion?.mutate({ action: 'cancel-deletion' })
+							: () => openDeleteAccountModal()}
 					>
-						{$LL.Account.RequestDeletionButton()}
+						{scheduledForDeletionOn
+							? $LL.Account.CancelAccountDeletionButton()
+							: $LL.Account.DeleteButton()}
 					</Button>
 				</div>
 			</AccountPageCard>
 		</div>
 	</div>
+{/if}
+
+{#if isDeleteAccountModalOpen}
+	<ModalWrapper>
+		<div
+			use:clickoutside={{
+				callback: () => {
+					if ($scheduleForDeletion?.isPending) return;
+					isDeleteAccountModalOpen = false;
+				}
+			}}
+			class="my-auto max-w-full"
+		>
+			<div
+				class="w-full max-w-md rounded-xl bg-c-bg p-5 shadow-2xl shadow-c-shadow/[var(--o-shadow-stronger)] ring-2 ring-c-bg-secondary md:p-6"
+			>
+				<h1 class="-mt-1 text-xl font-bold text-c-danger">
+					{$LL.Account.DeleteAccountModal.Title()}
+				</h1>
+				<p class="mt-3 leading-relaxed text-c-on-bg/75">
+					{$LL.Account.DeleteAccountModal.Paragraph()}
+				</p>
+				<p class="mt-6 text-c-on-bg/75">
+					{@html $LL.Account.DeleteAccountModal.ConfimationParagraph({
+						confirmationPhrase: `<span class='text-c-danger font-medium'>${$LL.Account.DeleteAccountModal.ConfirmationPhrase()}</span>`
+					})}
+				</p>
+				<Input class="mt-3" title="Confirm" bind:value={deleteAccountInput} />
+				<div class="mt-6 flex w-full flex-wrap items-stretch justify-end gap-2">
+					<Button
+						disabled={$scheduleForDeletion?.isPending}
+						onClick={closeDeleteAccountModal}
+						size="sm"
+						type="no-bg-on-bg"
+					>
+						{$LL.Account.DeleteAccountModal.CancelButton()}
+					</Button>
+					<Button
+						disabled={deleteAccountInput !== $LL.Account.DeleteAccountModal.ConfirmationPhrase()}
+						fadeOnDisabled
+						withSpinner
+						loading={$scheduleForDeletion?.isPending}
+						type="danger"
+						size="sm"
+						onClick={() => $scheduleForDeletion?.mutate({ action: 'schedule-for-deletion' })}
+					>
+						{$LL.Account.DeleteAccountModal.ConfirmButton()}
+					</Button>
+				</div>
+			</div>
+		</div>
+	</ModalWrapper>
 {/if}

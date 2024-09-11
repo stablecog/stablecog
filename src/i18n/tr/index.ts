@@ -634,9 +634,20 @@ const tr: Translation = {
 		SubscriptionCancellationTitle: 'Abonelik İptali',
 		DeleteButton: 'Sil',
 		RequestDeletionButton: 'Silme Talep Et',
+		CancelAccountDeletionButton: 'Cancel Deletion',
 		DeleteAccountTitle: 'Üyeliği Sil',
 		DeleteAccountParagraph: 'Bu işlem kalıcıdır ve geri alınamaz.',
+		AccountScheduledForDeletionTitle: 'Scheduled for Deletion',
 		ManageSubscriptionTitle: 'Aboneliği Yönet',
+		DeleteAccountModal: {
+			Title: 'Delete Account',
+			Paragraph:
+				'Your account will be scheduled for deletion. Deletion of an account is permanent.',
+			ConfirmationPhrase: 'delete my account permanently',
+			ConfimationParagraph: `Type "{confirmationPhrase}" to confirm:`,
+			ConfirmButton: 'Confirm',
+			CancelButton: 'Cancel'
+		},
 		ManageTitle: 'Yönet',
 		Apps: {
 			Authorize: {

@@ -83,10 +83,7 @@
 			if (sError) {
 				console.log(sError);
 				signInCardStatus.set('error');
-				if (
-					sError.message ===
-					'For security purposes, you can only request this once every 60 seconds'
-				) {
+				if (sError.code === 'over_email_send_rate_limit') {
 					errorText = $LL.Error.OnceEvery60Seconds();
 				} else {
 					errorText = $LL.Error.SomethingWentWrong();
