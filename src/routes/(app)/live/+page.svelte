@@ -122,48 +122,6 @@
 		} as TGenerationRealtimePayloadExt | TUpscaleRealtimePayloadExt;
 	}
 
-	function getCountryName(locale: Locales, countryCode: string) {
-		try {
-			const displayName = new Intl.DisplayNames([locale], { type: 'region' });
-			const countryName = displayName.of(countryCode);
-			return countryName ?? 'Unknown';
-		} catch (error) {
-			return 'Unknown';
-		}
-	}
-
-	function getDurationSec(processObject: TAnyRealtimePayloadExt) {
-		const createdAt = new Date(processObject.created_at).getTime();
-		const completedAt = processObject.completed_at
-			? new Date(processObject.completed_at).getTime()
-			: Date.now();
-		return (completedAt - createdAt) / 1000;
-	}
-
-	function planBasedColor(entry: TAnyRealtimePayloadExt) {
-		return entry.product_id
-			? entry.status === 'succeeded'
-				? 'rgb(var(--c-success-secondary))'
-				: entry.status === 'failed'
-					? 'rgb(var(--c-danger-secondary))'
-					: 'rgb(var(--c-primary-secondary))'
-			: 'transparent';
-	}
-
-	function getOptionalInfo(
-		$LL: TranslationFunctions,
-		processObject: TAnyRealtimePayloadExt
-	): TRow[] {
-		const asGeneration = processObject as TGenerationRealtimePayloadExt;
-		const asUpscale = processObject as TUpscaleRealtimePayloadExt;
-		if (processObject.process_type === 'upscale') {
-			return [];
-		} else if (processObject.process_type === 'generate') {
-			return [];
-		}
-		return [];
-	}
-
 	let getAndSetTotalsInterval: NodeJS.Timeout;
 	const getAndSetTotalsIntervalTime = 10 * 1000;
 
@@ -242,13 +200,7 @@
 							animate:flip={{ duration: 300, easing: quadOut }}
 							class="relative z-0 -m-3 flex items-center justify-center"
 						>
-							<LiveBubble
-								{processObject}
-								{getDurationSec}
-								{getCountryName}
-								{getOptionalInfo}
-								{planBasedColor}
-							/>
+							<LiveBubble {processObject} />
 						</div>
 					{/each}
 				</div>

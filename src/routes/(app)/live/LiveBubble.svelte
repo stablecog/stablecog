@@ -2,7 +2,12 @@
 	import IconRobot from '$components/icons/IconRobot.svelte';
 	import IconServer from '$components/icons/IconServer.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
-	import type { TAnyRealtimePayloadExt, TRow } from '$approutes/live/types';
+	import type {
+		TAnyRealtimePayloadExt,
+		TGenerationRealtimePayloadExt,
+		TRow,
+		TUpscaleRealtimePayloadExt
+	} from '$approutes/live/types';
 	import { getTitleFromProductId } from '$ts/helpers/stripe/plan';
 	import { operationSourceToLocaleString } from '$ts/helpers/user/operations';
 	import { quadOut } from 'svelte/easing';
@@ -11,13 +16,6 @@
 	import WithTooltip from '$components/utils/WithTooltip.svelte';
 
 	export let processObject: TAnyRealtimePayloadExt;
-	export let planBasedColor: (processObject: TAnyRealtimePayloadExt) => string;
-	export let getCountryName: (locale: Locales, countryCode: string) => string | undefined;
-	export let getOptionalInfo: (
-		$LL: TranslationFunctions,
-		processObject: TAnyRealtimePayloadExt
-	) => TRow[];
-	export let getDurationSec: (processObject: TAnyRealtimePayloadExt) => number;
 
 	$: rows = [
 		{
@@ -89,6 +87,48 @@
 						: $LL.Live.GenerationTooltip.Status.Failed()
 		}
 	];
+
+	function planBasedColor(entry: TAnyRealtimePayloadExt) {
+		return entry.product_id
+			? entry.status === 'succeeded'
+				? 'rgb(var(--c-success-secondary))'
+				: entry.status === 'failed'
+					? 'rgb(var(--c-danger-secondary))'
+					: 'rgb(var(--c-primary-secondary))'
+			: 'transparent';
+	}
+
+	function getDurationSec(processObject: TAnyRealtimePayloadExt) {
+		const createdAt = new Date(processObject.created_at).getTime();
+		const completedAt = processObject.completed_at
+			? new Date(processObject.completed_at).getTime()
+			: Date.now();
+		return (completedAt - createdAt) / 1000;
+	}
+
+	function getCountryName(locale: Locales, countryCode: string) {
+		try {
+			const displayName = new Intl.DisplayNames([locale], { type: 'region' });
+			const countryName = displayName.of(countryCode);
+			return countryName ?? 'Unknown';
+		} catch (error) {
+			return 'Unknown';
+		}
+	}
+
+	function getOptionalInfo(
+		$LL: TranslationFunctions,
+		processObject: TAnyRealtimePayloadExt
+	): TRow[] {
+		const asGeneration = processObject as TGenerationRealtimePayloadExt;
+		const asUpscale = processObject as TUpscaleRealtimePayloadExt;
+		if (processObject.process_type === 'upscale') {
+			return [];
+		} else if (processObject.process_type === 'generate') {
+			return [];
+		}
+		return [];
+	}
 </script>
 
 <div
@@ -168,20 +208,20 @@
 					)} 25%, transparent 25%), linear-gradient(315deg, {planBasedColor(
 						processObject
 					)} 25%, transparent 25%);
-					background-position:  8px 0, 8px 0, 0 0, 0 0;
-					background-size: 8px 8px;
+					background-position:  10px 0, 10px 0, 0 0, 0 0;
+					background-size: 10px 10px;
 					background-repeat: repeat;
 				"
 				>
 					{#if processObject.system_generated === true}
-						<IconRobot class="-mt-1 h-6 w-6 text-c-on-primary/75" />
+						<IconRobot class="-mt-1 h-6 w-6 text-c-on-primary" />
 					{:else if processObject.country_code}
 						{#if processObject.source === 'api'}
-							<IconServer class="-mb-0.25 -mt-0.5 h-4 w-4 text-c-on-primary/75" />
+							<IconServer class="-mb-0.25 -mt-0.5 h-4 w-4 text-c-on-primary" />
 						{:else if processObject.source === 'discord'}
-							<IconSc type="discord" class="-mb-0.5 -mt-0.5 h-5 w-5 text-c-on-primary/75" />
+							<IconSc type="discord" class="-mb-0.5 -mt-0.5 h-5 w-5 text-c-on-primary" />
 						{/if}
-						<p class="relative cursor-default text-center text-xs font-bold text-c-on-primary/75">
+						<p class="relative cursor-default text-center text-xs font-bold text-c-on-primary">
 							{processObject.country_code}
 						</p>
 					{/if}
