@@ -27,7 +27,7 @@
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { sessionStore, supabaseStore } from '$ts/constants/supabase';
 	import { getRelativeDate } from '$ts/helpers/getRelativeDate';
-	import { logSignOut } from '$ts/helpers/loggers';
+	import { logAccountScheduledForDeletion, logSignOut } from '$ts/helpers/loggers';
 	import { appVersion } from '$ts/stores/appVersion';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { wantsEmail } from '$ts/stores/user/wantsEmail.js';
@@ -93,6 +93,14 @@
 						success: boolean;
 					} = await res.json();
 					await data.queryClient.invalidateQueries({ queryKey: getUserSummaryQueryKey(userId) });
+					logAccountScheduledForDeletion({
+						'SC - Action': action,
+						'SC - App Version': $appVersion,
+						'SC - Locale': $locale,
+						'SC - Page': `${$page.url.pathname}${$page.url.search}`,
+						'SC - Stripe Product Id': $userSummary?.product_id,
+						'SC - User Id': $sessionStore?.user.id
+					});
 
 					return resJson;
 				},

@@ -64,6 +64,14 @@ export function logPageview(props: IPageviewProps) {
 	ph.capture('$pageview', { ...props });
 }
 
+export function logAccountScheduledForDeletion(
+	props: IPageviewProps & {
+		'SC - Action': 'schedule-for-deletion' | 'cancel-deletion';
+	}
+) {
+	ph.capture('Account | Schedule for Deletion', { ...props });
+}
+
 export function logSignIn(props: ISignInProps) {
 	ph.capture('Sign In', { ...props });
 }
@@ -409,14 +417,13 @@ interface IGenerationMinimal {
 	'SC - Number of Outputs': number;
 }
 
-interface IPageviewProps {
+type IPageviewProps = {
 	'SC - Page': string;
 	'SC - Locale': string;
-	'SC - Advanced Mode': boolean;
 	'SC - User Id': string | undefined;
 	'SC - Stripe Product Id': string | undefined;
 	'SC - App Version': string;
-}
+};
 
 interface ISignInProps {
 	'SC - Locale': string;
