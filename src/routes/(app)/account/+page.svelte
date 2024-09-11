@@ -11,6 +11,7 @@
 	import IconPen from '$components/icons/IconPen.svelte';
 	import IconSignOut from '$components/icons/IconSignOut.svelte';
 	import IconToken from '$components/icons/IconToken.svelte';
+	import IconWarning from '$components/icons/IconWarning.svelte';
 	import ModalWrapper from '$components/modals/ModalWrapper.svelte';
 	import Button from '$components/primitives/buttons/Button.svelte';
 	import NoBgButton from '$components/primitives/buttons/NoBgButton.svelte';
@@ -92,6 +93,7 @@
 						scheduled_for_deletion_on: string;
 						success: boolean;
 					} = await res.json();
+
 					await data.queryClient.invalidateQueries({ queryKey: getUserSummaryQueryKey(userId) });
 					logAccountScheduledForDeletion({
 						'SC - Action': action,
@@ -149,6 +151,11 @@
 		if (mounted) {
 			wantsEmail.set($wantsEmailChecked);
 		}
+	}
+
+	function onScheduleForDeletionFormSubmit(e: Event) {
+		if ($scheduleForDeletion?.isPending) return;
+		$scheduleForDeletion?.mutate({ action: 'schedule-for-deletion' });
 	}
 
 	function onWantsEmailChanged() {
@@ -408,12 +415,19 @@
 					class="flex w-full flex-wrap items-center justify-between gap-4 px-4 py-5 md:px-5"
 				>
 					<div class="-mt-1 flex flex-col px-1 md:-my-0.75 md:max-w-128">
-						<p class="font-semibold text-c-danger">
-							{scheduledForDeletionOn
-								? $LL.Account.AccountScheduledForDeletionTitle()
-								: $LL.Account.DeleteAccountTitle()}
-						</p>
-						<p class="mt-0.5 text-c-on-bg/75">
+						<div class="flex items-center gap-1.5">
+							<IconWarning class="size-4 text-c-danger" />
+							<p class="flex-shrink font-semibold text-c-danger">
+								{scheduledForDeletionOn
+									? $LL.Account.AccountScheduledForDeletionTitle()
+									: $LL.Account.DeleteAccountTitle()}
+							</p>
+						</div>
+						<p
+							class="mt-0.5 {scheduledForDeletionOn
+								? 'font-semibold text-c-on-bg'
+								: 'text-c-on-bg/75'}"
+						>
 							{scheduledForDeletionOn
 								? getRelativeDate({
 										date: scheduledForDeletionOn,
@@ -470,32 +484,38 @@
 						confirmationPhrase: `<span class='text-c-danger font-medium'>${$LL.Account.DeleteAccountModal.ConfirmationPhrase()}</span>`
 					})}
 				</p>
-				<Input
-					class="mt-3"
-					title={$LL.Account.DeleteAccountModal.InputPlaceholder()}
-					bind:value={deleteAccountInput}
-				/>
-				<div class="mt-6 flex w-full flex-wrap items-stretch justify-end gap-2">
-					<Button
+				<form
+					on:submit|preventDefault={onScheduleForDeletionFormSubmit}
+					class="mt-3 flex w-full flex-col"
+				>
+					<Input
+						title={$LL.Account.DeleteAccountModal.InputPlaceholder()}
 						disabled={$scheduleForDeletion?.isPending}
-						onClick={closeDeleteAccountModal}
-						size="sm"
-						type="no-bg-on-bg"
-					>
-						{$LL.Account.DeleteAccountModal.CancelButton()}
-					</Button>
-					<Button
-						disabled={deleteAccountInput !== $LL.Account.DeleteAccountModal.ConfirmationPhrase()}
-						fadeOnDisabled
-						withSpinner
-						loading={$scheduleForDeletion?.isPending}
-						type="danger"
-						size="sm"
-						onClick={() => $scheduleForDeletion?.mutate({ action: 'schedule-for-deletion' })}
-					>
-						{$LL.Account.DeleteAccountModal.ConfirmButton()}
-					</Button>
-				</div>
+						bind:value={deleteAccountInput}
+					/>
+					<div class="mt-6 flex w-full flex-wrap items-stretch justify-end gap-2">
+						<Button
+							disabled={$scheduleForDeletion?.isPending}
+							onClick={closeDeleteAccountModal}
+							size="sm"
+							type="no-bg-on-bg"
+							buttonType="button"
+						>
+							{$LL.Account.DeleteAccountModal.CancelButton()}
+						</Button>
+						<Button
+							disabled={deleteAccountInput !== $LL.Account.DeleteAccountModal.ConfirmationPhrase()}
+							fadeOnDisabled
+							withSpinner
+							loading={$scheduleForDeletion?.isPending}
+							type="danger"
+							size="sm"
+							buttonType="submit"
+						>
+							{$LL.Account.DeleteAccountModal.ConfirmButton()}
+						</Button>
+					</div>
+				</form>
 			</div>
 		</div>
 	</ModalWrapper>

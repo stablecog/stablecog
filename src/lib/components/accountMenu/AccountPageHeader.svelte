@@ -25,9 +25,9 @@
 		</p>
 		{#if $userSummary?.scheduled_for_deletion_on}
 			<div
-				class="mt-1 flex items-center gap-1 rounded bg-c-danger/10 px-1.5 py-0.75 text-xs font-medium text-c-danger"
+				class="mt-1 flex items-center gap-1 rounded bg-c-danger/10 px-1.75 py-0.75 text-xs font-semibold text-c-danger"
 			>
-				<IconWarning class="size-3 shrink-0" />
+				<IconWarning class="-ml-0.5 size-3.5 shrink-0" />
 				<p class="flex-shrink">{$LL.Account.AccountScheduledForDeletionTitle()}</p>
 			</div>
 		{/if}

@@ -177,7 +177,7 @@
 								</IconButton>
 								{#if $userSummary.scheduled_for_deletion_on}
 									<div
-										class="pointer-events-none absolute -right-1 -top-1 rounded-full bg-c-danger p-0.5"
+										class="pointer-events-none absolute -right-1.5 -top-1.5 rounded-full bg-c-danger p-0.75 shadow-md shadow-c-shadow/[var(--o-shadow-stronger)]"
 									>
 										<IconWarning class="size-3.5 text-c-bg" />
 									</div>
