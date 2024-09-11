@@ -30,7 +30,7 @@ jobs:
 
   build_amd64:
     name: 🔨 Build Docker Image (amd64)
-    runs-on: warp-ubuntu-latest-x64-2x
+    runs-on: ubicloud-standard-2
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -59,7 +59,7 @@ jobs:
 
   build_arm64:
     name: 🔨 Build Docker Image (arm64)
-    runs-on: warp-ubuntu-latest-arm64-2x
+    runs-on: ubicloud-standard-2-arm
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
