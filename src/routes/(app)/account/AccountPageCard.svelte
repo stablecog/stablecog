@@ -26,7 +26,7 @@
 <div
 	bind:clientWidth={containerWidth}
 	class="relative z-0 flex w-full flex-col items-start justify-start overflow-hidden rounded-2xl
-	bg-c-bg shadow-xl shadow-c-shadow/[var(--o-shadow-strong)] {ringClass}"
+	bg-c-bg shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] {ringClass}"
 >
 	<div
 		on:scroll={onScroll}

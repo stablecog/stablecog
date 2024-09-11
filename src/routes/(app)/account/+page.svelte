@@ -409,7 +409,7 @@
 				</div>
 			</AccountPageCard>
 			<div class="h-6" />
-			<AccountPageCard ringClass="ring-2 ring-c-danger/12">
+			<AccountPageCard ringClass="ring-2 ring-c-danger/14">
 				<div
 					id="delete"
 					class="flex w-full flex-wrap items-center justify-between gap-4 px-4 py-5 md:px-5"
