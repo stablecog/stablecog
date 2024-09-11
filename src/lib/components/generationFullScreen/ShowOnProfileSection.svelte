@@ -1,20 +1,21 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import ToggleIndicator from '$components/primitives/ToggleIndicator.svelte';
-	import WithTooltip from '$components/utils/WithTooltip.svelte';
-	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
 	import type { TGenerationFullScreenModalType } from '$components/generationFullScreen/types';
 	import IconEyeOutline from '$components/icons/IconEyeOutline.svelte';
 	import IconStar from '$components/icons/IconStar.svelte';
+	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
+	import ToggleIndicator from '$components/primitives/ToggleIndicator.svelte';
+	import WithTooltip from '$components/utils/WithTooltip.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { getUserProfileInfiniteQueryKey } from '$routes/(app)/[username]/constants';
 	import { getApiUrl } from '$ts/constants/main';
+	import { sessionStore } from '$ts/constants/supabase';
 	import { isGalleryAdmin, isSuperAdmin } from '$ts/helpers/admin/roles';
 	import {
 		logGenerationOutputMadePrivate,
 		logGenerationOutputMadePublic
 	} from '$ts/helpers/loggers';
-	import { advancedModeApp } from '$ts/stores/advancedMode';
+	import type { TGalleryFullOutputsPage } from '$ts/queries/galleryLike/types';
 	import { appVersion } from '$ts/stores/appVersion';
 	import {
 		setGenerationOutputVisibility,
@@ -28,8 +29,6 @@
 	import { createCheckbox } from '@melt-ui/svelte';
 	import { useQueryClient } from '@tanstack/svelte-query';
 	import { writable } from 'svelte/store';
-	import { sessionStore } from '$ts/constants/supabase';
-	import type { TGalleryFullOutputsPage } from '$ts/queries/galleryLike/types';
 
 	export let modalType: TGenerationFullScreenModalType;
 	export let generation: TGenerationWithSelectedOutput;
@@ -79,7 +78,6 @@
 			}
 			outputIds.forEach((id) => {
 				const props = {
-					'SC - Advanced Mode': $advancedModeApp,
 					'SC - App Version': $appVersion,
 					'SC - Locale': $locale,
 					'SC - Output Id': id,

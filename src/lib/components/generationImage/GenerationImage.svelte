@@ -1,12 +1,7 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
+	import { pushState } from '$app/navigation';
 	import { page } from '$app/stores';
-	import CopyButton from '$components/primitives/buttons/CopyButton.svelte';
-	import DownloadGenerationButton from '$components/primitives/buttons/DownloadGenerationButton.svelte';
-	import ExploreSimilarButton from '$components/primitives/buttons/ExploreSimilarButton.svelte';
-	import FavoriteButton from '$components/primitives/buttons/FavoriteButton.svelte';
-	import GenerateButton from '$components/primitives/buttons/GenerateButton.svelte';
-	import IconButton from '$components/primitives/buttons/IconButton.svelte';
 	import UpscaleAnimation from '$components/generate/UpscaleAnimation.svelte';
 	import SrcsetProvider from '$components/generationImage/SrcsetProvider.svelte';
 	import { onSelectButtonClicked } from '$components/generationImage/helpers';
@@ -18,14 +13,22 @@
 	import IconPulsing from '$components/icons/IconPulsing.svelte';
 	import IconTick from '$components/icons/IconTick.svelte';
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
+	import CopyButton from '$components/primitives/buttons/CopyButton.svelte';
+	import DownloadGenerationButton from '$components/primitives/buttons/DownloadGenerationButton.svelte';
+	import ExploreSimilarButton from '$components/primitives/buttons/ExploreSimilarButton.svelte';
+	import FavoriteButton from '$components/primitives/buttons/FavoriteButton.svelte';
+	import GenerateButton from '$components/primitives/buttons/GenerateButton.svelte';
+	import IconButton from '$components/primitives/buttons/IconButton.svelte';
+	import LikeButton from '$components/primitives/buttons/LikeButton.svelte';
+	import { sessionStore } from '$ts/constants/supabase';
 	import { doesContainTarget } from '$ts/helpers/doesContainTarget';
+	import type { TImgProxyQuality } from '$ts/helpers/imgproxy';
 	import { logGalleryGenerationOpened } from '$ts/helpers/loggers';
 	import {
 		adminGalleryCurrentFilter,
 		adminGallerySelectedOutputIds,
 		isAdminGalleryEditActive
 	} from '$ts/stores/admin/gallery';
-	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { appVersion } from '$ts/stores/appVersion';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { lastClickedOutputId } from '$ts/stores/lastClickedOutputId';
@@ -39,10 +42,6 @@
 	import { userSummary } from '$ts/stores/user/summary';
 	import { upscales } from '$ts/stores/user/upscale';
 	import { activeGeneration, type TGenerationWithSelectedOutput } from '$userStores/generation';
-	import { sessionStore } from '$ts/constants/supabase';
-	import { pushState } from '$app/navigation';
-	import type { TImgProxyQuality } from '$ts/helpers/imgproxy';
-	import LikeButton from '$components/primitives/buttons/LikeButton.svelte';
 	import { onDestroy, onMount } from 'svelte';
 
 	export let generation: TGenerationWithSelectedOutput;
@@ -157,7 +156,6 @@
 				'SC - Output Id': generation.selected_output.id,
 				'SC - User Id': $sessionStore?.user.id,
 				'SC - Stripe Product Id': $userSummary?.product_id,
-				'SC - Advanced Mode': $advancedModeApp,
 				'SC - App Version': $appVersion
 			});
 		}

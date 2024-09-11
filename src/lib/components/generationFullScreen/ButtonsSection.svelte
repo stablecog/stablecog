@@ -1,48 +1,47 @@
 <script lang="ts">
-	import SubtleButton from '$components/primitives/buttons/SubtleButton.svelte';
-	import IconCopy from '$components/icons/IconCopy.svelte';
-	import IconDownload from '$components/icons/IconDownload.svelte';
-	import IconTick from '$components/icons/IconTick.svelte';
-	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
-	import IconTrashcanFilledOpen from '$components/icons/IconTrashcanFilledOpen.svelte';
-	import Morpher from '$components/utils/Morpher.svelte';
-	import LL, { locale } from '$i18n/i18n-svelte';
-	import { clickoutside } from '$ts/actions/clickoutside';
-	import { downloadGenerationImage } from '$ts/helpers/downloadGenerationImage';
-	import {
-		activeGeneration,
-		setGenerationOutputToDeleted,
-		type TGenerationWithSelectedOutput
-	} from '$ts/stores/user/generation';
-	import { copy } from 'svelte-copy';
+	import { page } from '$app/stores';
+	import ShareButton from '$components/generationFullScreen/ShareButton.svelte';
 	import type {
 		TButtonObjectsWithState,
 		TGenerationFullScreenModalType,
 		TSetButtonObjectWithState
 	} from '$components/generationFullScreen/types';
+	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
+	import IconCopy from '$components/icons/IconCopy.svelte';
+	import IconDownload from '$components/icons/IconDownload.svelte';
+	import IconImageSearch from '$components/icons/IconImageSearch.svelte';
+	import IconTick from '$components/icons/IconTick.svelte';
+	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
+	import IconTrashcanFilledOpen from '$components/icons/IconTrashcanFilledOpen.svelte';
 	import IconWand from '$components/icons/IconWand.svelte';
+	import LikeButton from '$components/primitives/buttons/LikeButton.svelte';
+	import SubtleButton from '$components/primitives/buttons/SubtleButton.svelte';
+	import Morpher from '$components/utils/Morpher.svelte';
+	import LL, { locale } from '$i18n/i18n-svelte';
+	import { clickoutside } from '$ts/actions/clickoutside';
 	import { getApiUrl } from '$ts/constants/main';
-	import { page } from '$app/stores';
-	import { useQueryClient } from '@tanstack/svelte-query';
+	import { sessionStore } from '$ts/constants/supabase';
+	import { downloadGenerationImage } from '$ts/helpers/downloadGenerationImage';
 	import {
 		logGalleryExploreSimilarClicked,
 		logGalleryGenerateSimilarClicked,
 		logGenerationOutputDeleted,
 		logUserProfileExploreSimilarClicked
 	} from '$ts/helpers/loggers';
-	import { advancedModeApp } from '$ts/stores/advancedMode';
-	import { userSummary } from '$ts/stores/user/summary';
-	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
+	import { replaceOutputInUserQueryData } from '$ts/helpers/replaceOutputInUserQueryData';
+	import { appVersion } from '$ts/stores/appVersion';
+	import {
+		activeGeneration,
+		setGenerationOutputToDeleted,
+		type TGenerationWithSelectedOutput
+	} from '$ts/stores/user/generation';
 	import {
 		generatePageHistoryFullOutputsQueryKey,
 		historyFullOutputsQueryKey
 	} from '$ts/stores/user/queryKeys';
-	import { appVersion } from '$ts/stores/appVersion';
-	import { replaceOutputInUserQueryData } from '$ts/helpers/replaceOutputInUserQueryData';
-	import IconImageSearch from '$components/icons/IconImageSearch.svelte';
-	import ShareButton from '$components/generationFullScreen/ShareButton.svelte';
-	import LikeButton from '$components/primitives/buttons/LikeButton.svelte';
-	import { sessionStore } from '$ts/constants/supabase';
+	import { userSummary } from '$ts/stores/user/summary';
+	import { useQueryClient } from '@tanstack/svelte-query';
+	import { copy } from 'svelte-copy';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let generateSimilarUrl: string;
@@ -109,7 +108,6 @@
 	$: logProps = {
 		'SC - Generation Id': generation.id,
 		'SC - Output Id': generation.selected_output.id,
-		'SC - Advanced Mode': $advancedModeApp,
 		'SC - Locale': $locale,
 		'SC - Page': `${$page.url.pathname}${$page.url.search}`,
 		'SC - User Id': $sessionStore?.user.id,
@@ -164,7 +162,6 @@
 		onClick={() => {
 			if (modalType === 'gallery') {
 				logGalleryGenerateSimilarClicked({
-					'SC - Advanced Mode': $advancedModeApp,
 					'SC - Output Id': generation.selected_output.id,
 					'SC - User Id': $sessionStore?.user.id,
 					'SC - Stripe Product Id': $userSummary?.product_id,

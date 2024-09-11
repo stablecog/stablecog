@@ -4,7 +4,6 @@
 	import { expandCollapse } from '$ts/animation/transitions';
 	import { sessionStore } from '$ts/constants/supabase';
 	import { logSubmitToGallery } from '$ts/helpers/loggers';
-	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { appVersion } from '$ts/stores/appVersion';
 	import { shouldSubmitToGallery } from '$ts/stores/shouldSubmitToGallery';
 	import { userSummary } from '$ts/stores/user/summary';
@@ -12,7 +11,6 @@
 	$: logProps = {
 		'SC - User Id': $sessionStore?.user.id,
 		'SC - Stripe Product Id': $userSummary?.product_id,
-		'SC - Advanced Mode': $advancedModeApp,
 		'SC - App Version': $appVersion
 	};
 </script>

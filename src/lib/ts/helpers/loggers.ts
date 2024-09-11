@@ -259,14 +259,12 @@ export function logGenerationPropsFromGeneration({
 
 export function logUpscaleFailed({
 	upscale,
-	advancedModeApp,
 	locale,
 	appVersion,
 	userId,
 	stripeProductId
 }: {
 	upscale: TUpscale | TInitialUpscaleRequest;
-	advancedModeApp: boolean;
 	locale: string;
 	appVersion: string;
 	userId?: string;
@@ -274,7 +272,6 @@ export function logUpscaleFailed({
 }) {
 	const props = logUpscalePropsFromUpscale({
 		upscale,
-		advancedModeApp,
 		appVersion,
 		locale,
 		userId,
@@ -285,14 +282,12 @@ export function logUpscaleFailed({
 
 export function logUpscalePropsFromUpscale({
 	upscale,
-	advancedModeApp,
 	locale,
 	appVersion,
 	userId,
 	stripeProductId
 }: {
 	upscale: TUpscale | TInitialUpscaleRequest;
-	advancedModeApp: boolean;
 	locale: string;
 	appVersion: string;
 	userId?: string;
@@ -301,7 +296,6 @@ export function logUpscalePropsFromUpscale({
 	return {
 		'SC - Type': upscale.type,
 		'SC - Input': upscale.input,
-		'SC - Advanced Mode': advancedModeApp,
 		'SC - Locale': locale,
 		'SC - User Id': userId,
 		'SC - Stripe Product Id': stripeProductId,
@@ -310,7 +304,6 @@ export function logUpscalePropsFromUpscale({
 }
 
 interface ISubmitToGalleryToggledMinimal {
-	'SC - Advanced Mode': boolean;
 	'SC - User Id': string | undefined;
 	'SC - Stripe Product Id': string | undefined;
 	'SC - App Version': string;
@@ -321,7 +314,6 @@ interface IGalleryGenerationOpenedProps {
 	'SC - Output Id': string;
 	'SC - User Id': string | undefined;
 	'SC - Stripe Product Id': string | undefined;
-	'SC - Advanced Mode': boolean;
 	'SC - App Version': string;
 }
 
@@ -329,7 +321,6 @@ interface IGalleryGenerateClickedProps {
 	'SC - Output Id': string;
 	'SC - User Id': string | undefined;
 	'SC - Stripe Product Id': string | undefined;
-	'SC - Advanced Mode': boolean;
 	'SC - App Version': string;
 }
 
@@ -389,7 +380,6 @@ interface IAdvancedModeToggledProps {
 interface IUpscaleMinimal {
 	'SC - Image to Upscale'?: string;
 	'SC - Output ID'?: string;
-	'SC - Advanced Mode': boolean;
 	'SC - Locale': string;
 	'SC - Duration'?: number;
 	'SC - User Id': string | undefined;
@@ -447,7 +437,6 @@ interface IWantsEmailProps {
 
 interface IGallerySearchProps {
 	'SC - Locale': string;
-	'SC - Advanced Mode': boolean;
 	'SC - User Id': string | undefined;
 	'SC - Stripe Product Id': string | undefined;
 	'SC - App Version': string;
@@ -463,7 +452,6 @@ interface IGalleryMainSortChangedProps {
 
 interface IHistorySearchProps {
 	'SC - Locale': string;
-	'SC - Advanced Mode': boolean;
 	'SC - User Id': string | undefined;
 	'SC - Stripe Product Id': string | undefined;
 	'SC - App Version': string;

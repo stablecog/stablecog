@@ -26,7 +26,6 @@
 	import { sessionStore } from '$ts/constants/supabase';
 	import { logGallerySearch, logHistorySearch } from '$ts/helpers/loggers';
 	import { isUUID } from '$ts/helpers/uuid';
-	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { appVersion } from '$ts/stores/appVersion';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen';
 	import { userSummary } from '$ts/stores/user/summary';
@@ -71,7 +70,6 @@
 		setSearchString();
 		if ($page.url.pathname === '/gallery') {
 			logGallerySearch({
-				'SC - Advanced Mode': $advancedModeApp,
 				'SC - Locale': $locale,
 				'SC - User Id': $sessionStore?.user.id,
 				'SC - Stripe Product Id': $userSummary?.product_id,
@@ -79,7 +77,6 @@
 			});
 		} else if ($page.url.pathname === '/history') {
 			logHistorySearch({
-				'SC - Advanced Mode': $advancedModeApp,
 				'SC - Locale': $locale,
 				'SC - User Id': $sessionStore?.user.id,
 				'SC - Stripe Product Id': $userSummary?.product_id,

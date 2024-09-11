@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import IconButton from '$components/primitives/buttons/IconButton.svelte';
 	import type { TGenerationFullScreenModalType } from '$components/generationFullScreen/types';
 	import IconFavorite from '$components/icons/IconFavorite.svelte';
+	import IconButton from '$components/primitives/buttons/IconButton.svelte';
 	import { locale } from '$i18n/i18n-svelte';
+	import { sessionStore } from '$ts/constants/supabase';
 	import { logGenerationOutputFavoritedChange } from '$ts/helpers/loggers';
 	import { replaceOutputInUserQueryData } from '$ts/helpers/replaceOutputInUserQueryData';
 	import { favoriteOutputs } from '$ts/queries/favoriteOutput';
-	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { appVersion } from '$ts/stores/appVersion';
 	import {
 		activeGeneration,
@@ -20,7 +20,6 @@
 	} from '$ts/stores/user/queryKeys';
 	import { userSummary } from '$ts/stores/user/summary';
 	import { useQueryClient } from '@tanstack/svelte-query';
-	import { sessionStore } from '$ts/constants/supabase';
 
 	export let generation: TGenerationWithSelectedOutput;
 	export let modalType: TGenerationFullScreenModalType;
@@ -35,7 +34,6 @@
 	$: logProps = {
 		'SC - Generation Id': generation.id,
 		'SC - Output Id': generation.selected_output.id,
-		'SC - Advanced Mode': $advancedModeApp,
 		'SC - Locale': $locale,
 		'SC - Page': `${$page.url.pathname}${$page.url.search}`,
 		'SC - User Id': $sessionStore?.user.id,

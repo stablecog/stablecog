@@ -1,31 +1,30 @@
 <script lang="ts">
-	import '$css/app.css';
-	import { theme, themeApp } from '$ts/stores/theme';
-	import { onMount } from 'svelte';
-	import { page, updated } from '$app/stores';
-	import { windowHeight, windowWidth } from '$ts/stores/window';
-	import { locale, setLocale } from '$i18n/i18n-svelte';
-	import { localeLS } from '$ts/stores/localeLS';
-	import { loadLocaleAsync } from '$i18n/i18n-util.async';
-	import { isLocale } from '$i18n/i18n-util';
-	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { afterNavigate, beforeNavigate, goto, invalidate } from '$app/navigation';
+	import { page, updated } from '$app/stores';
+	import '$css/app.css';
+	import { env } from '$env/dynamic/public';
+	import { locale, setLocale } from '$i18n/i18n-svelte';
+	import { isLocale } from '$i18n/i18n-util';
+	import { loadLocaleAsync } from '$i18n/i18n-util.async';
+	import { appRoutes } from '$ts/constants/routes.js';
+	import { sessionStore, supabaseStore } from '$ts/constants/supabase.js';
+	import { isHydrated, setIsHydratedToTrue } from '$ts/helpers/isHydrated';
 	import { logPageview } from '$ts/helpers/loggers';
+	import { setBodyClasses } from '$ts/helpers/setBodyClasses';
 	import { setCookie } from '$ts/helpers/setCookie';
 	import { appVersion } from '$ts/stores/appVersion';
 	import { globalSeed } from '$ts/stores/globalSeed';
-	import { userSummary } from '$ts/stores/user/summary';
-	import posthog from 'posthog-js';
-	import { env } from '$env/dynamic/public';
-	import { isHydrated, setIsHydratedToTrue } from '$ts/helpers/isHydrated';
-	import { setBodyClasses } from '$ts/helpers/setBodyClasses';
-	import { isLeftSidebarHidden, isLeftSidebarHiddenApp } from '$ts/stores/sidebars';
 	import { isTouchscreen } from '$ts/stores/isTouchscreen.js';
-	import { appRoutes } from '$ts/constants/routes.js';
+	import { localeLS } from '$ts/stores/localeLS';
 	import { notAtTheVeryTop, scrollDirection } from '$ts/stores/scroll.js';
-	import { sessionStore, supabaseStore } from '$ts/constants/supabase.js';
+	import { isLeftSidebarHidden, isLeftSidebarHiddenApp } from '$ts/stores/sidebars';
+	import { theme, themeApp } from '$ts/stores/theme';
 	import { thumbmarkId } from '$ts/stores/thumbmark.js';
+	import { userSummary } from '$ts/stores/user/summary';
+	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import deepEqual from 'deep-equal';
+	import posthog from 'posthog-js';
+	import { onMount } from 'svelte';
 
 	export let data;
 
@@ -156,7 +155,6 @@
 			const props = {
 				'SC - Page': `${$page.url.pathname}${$page.url.search}`,
 				'SC - Locale': $locale,
-				'SC - Advanced Mode': $advancedModeApp,
 				'SC - User Id': $sessionStore?.user.id,
 				'SC - Stripe Product Id': $userSummary?.product_id,
 				'SC - App Version': $appVersion,

@@ -1,31 +1,32 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import ModalWrapper from '$components/modals/ModalWrapper.svelte';
-	import Button from '$components/primitives/buttons/Button.svelte';
-	import SubtleButton from '$components/primitives/buttons/SubtleButton.svelte';
 	import IconCancel from '$components/icons/IconCancel.svelte';
 	import IconPause from '$components/icons/IconPause.svelte';
 	import IconStarCrossedOutlined from '$components/icons/IconStarCrossedOutlined.svelte';
 	import IconStarOutlined from '$components/icons/IconStarOutlined.svelte';
 	import IconTickOnly from '$components/icons/IconTickOnly.svelte';
 	import IconTrashcan from '$components/icons/IconTrashcan.svelte';
+	import ModalWrapper from '$components/modals/ModalWrapper.svelte';
+	import Button from '$components/primitives/buttons/Button.svelte';
+	import SubtleButton from '$components/primitives/buttons/SubtleButton.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import { clickoutside } from '$ts/actions/clickoutside';
 	import { getApiUrl } from '$ts/constants/main';
+	import { sessionStore } from '$ts/constants/supabase';
 	import {
 		logGenerationOutputDeleted,
 		logGenerationOutputFavoritedChange
 	} from '$ts/helpers/loggers';
+	import type { TGalleryFullOutputsPage } from '$ts/queries/galleryLike/types';
 	import {
+		adminFullOutputsQueryKey,
 		adminGalleryActionableItems,
 		adminGalleryCurrentFilter,
 		adminGallerySelectedOutputIds,
 		adminGallerySelectedOutputObjects,
-		adminFullOutputsQueryKey,
 		isAdminGalleryEditActive,
 		type TAdminGalleryAction
 	} from '$ts/stores/admin/gallery';
-	import { advancedModeApp } from '$ts/stores/advancedMode';
 	import { appVersion } from '$ts/stores/appVersion';
 	import {
 		isUserGalleryEditActive,
@@ -39,8 +40,6 @@
 	import { useQueryClient } from '@tanstack/svelte-query';
 	import { quadOut } from 'svelte/easing';
 	import { fly } from 'svelte/transition';
-	import { sessionStore } from '$ts/constants/supabase';
-	import type { TGalleryFullOutputsPage } from '$ts/queries/galleryLike/types';
 
 	export let type: 'history' | 'admin-gallery';
 
@@ -173,7 +172,6 @@
 				const logProps = {
 					'SC - Generation Id': idObject.generation_id,
 					'SC - Output Id': idObject.output_id,
-					'SC - Advanced Mode': $advancedModeApp,
 					'SC - Locale': $locale,
 					'SC - Page': `${$page.url.pathname}${$page.url.search}`,
 					'SC - User Id': $sessionStore?.user.id,
@@ -242,7 +240,6 @@
 					const logProps = {
 						'SC - Generation Id': idObject.generation_id,
 						'SC - Output Id': idObject.output_id,
-						'SC - Advanced Mode': $advancedModeApp,
 						'SC - Locale': $locale,
 						'SC - Page': `${$page.url.pathname}${$page.url.search}`,
 						'SC - User Id': $sessionStore?.user.id,
