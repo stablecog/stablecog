@@ -89,7 +89,9 @@
 				>
 					{#each $systemStatusQuery.data.backends as backend}
 						<button
-							on:click={() => $systemBackendMutation?.mutate({ backend })}
+							on:click={$systemStatusQuery.data.backend !== backend
+								? () => $systemBackendMutation?.mutate({ backend })
+								: () => null}
 							disabled={$systemBackendMutation?.isPending}
 							class="max-w-full rounded-lg px-5 py-3 text-left text-lg font-medium {$systemStatusQuery
 								.data.backend === backend
