@@ -133,7 +133,7 @@
 						route.icon === 'resources' &&
 						isResourcesDropdownOpen}
 					onClick={route.onClick}
-					floatingRef={route.icon === 'resources' ? resourceDropdownFloatingRef : undefined}
+					floatingRef={route.icon === 'resources' ? resourceDropdownFloatingRef : () => undefined}
 				>
 					<div
 						slot="dropdown"

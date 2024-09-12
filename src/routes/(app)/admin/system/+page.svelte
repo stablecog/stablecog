@@ -85,7 +85,7 @@
 			<div class="flex max-w-full flex-col">
 				<h1 class="px-2 text-center text-2xl font-bold">Backends</h1>
 				<div
-					class="mt-3 flex max-w-full flex-col gap-1 rounded-xl bg-c-bg p-1 shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-secondary md:max-w-xs"
+					class="mt-4 flex max-w-full flex-col rounded-xl bg-c-bg shadow-lg shadow-c-shadow/[var(--o-shadow-strong)] ring-2 ring-c-bg-secondary md:max-w-xs"
 				>
 					{#each $systemStatusQuery.data.backends as backend}
 						<button
@@ -93,29 +93,38 @@
 								? () => $systemBackendMutation?.mutate({ backend })
 								: () => null}
 							disabled={$systemBackendMutation?.isPending}
-							class="max-w-full rounded-lg px-5 py-3 text-left text-lg font-medium {$systemStatusQuery
-								.data.backend === backend
-								? 'bg-c-bg-secondary text-c-on-bg shadow-lg shadow-c-shadow/[var(--o-shadow-stronger)]'
-								: 'text-c-on-bg/60'} group relative flex flex-row items-center gap-2"
+							class="group relative -mt-1 flex max-w-full flex-row items-center rounded-lg p-1 text-left text-lg font-medium first:mt-0"
 						>
-							<ButtonHoverEffect noPadding size="md" color="bg-secondary" />
-							<div class="size-5 shrink-0">
-								<IconAnimatedSpinner
-									loading={$systemBackendMutation?.isPending && pendingSystemBackend === backend}
-									class="size-5 transition duration-150 {$systemBackendMutation?.isPending &&
-									pendingSystemBackend === backend
-										? 'scale-100 opacity-100'
-										: 'scale-0 opacity-0'}"
-								/>
-							</div>
-							<p
-								class="relative min-w-0 flex-shrink overflow-hidden overflow-ellipsis whitespace-nowrap transition duration-150 {$systemBackendMutation?.isPending &&
-								pendingSystemBackend === backend
-									? 'translate-x-0'
-									: '-translate-x-7'}"
+							<div
+								class="relative flex w-full flex-row items-center gap-2 rounded-lg px-5 py-3 {$systemStatusQuery
+									.data.backend === backend
+									? 'bg-c-bg-secondary text-c-on-bg shadow-lg shadow-c-shadow/[var(--o-shadow-stronger)]'
+									: 'text-c-on-bg/60'}"
 							>
-								{backend}
-							</p>
+								<ButtonHoverEffect
+									noPadding
+									size="md"
+									color="bg-secondary"
+									hovered={$systemBackendMutation?.isPending && pendingSystemBackend === backend}
+								/>
+								<div class="size-5 shrink-0">
+									<IconAnimatedSpinner
+										loading={$systemBackendMutation?.isPending && pendingSystemBackend === backend}
+										class="size-5 transition duration-150 {$systemBackendMutation?.isPending &&
+										pendingSystemBackend === backend
+											? 'scale-100 opacity-100'
+											: 'scale-0 opacity-0'}"
+									/>
+								</div>
+								<p
+									class="relative min-w-0 flex-shrink overflow-hidden overflow-ellipsis whitespace-nowrap transition duration-150 {$systemBackendMutation?.isPending &&
+									pendingSystemBackend === backend
+										? 'translate-x-0'
+										: '-translate-x-7'}"
+								>
+									{backend}
+								</p>
+							</div>
 						</button>
 					{/each}
 				</div>

@@ -22,7 +22,7 @@
 	export let length: number;
 	export let hasDropdown = false;
 	export let isDropdownOpen = false;
-	export let floatingRef: ReferenceAction | undefined = undefined;
+	export let floatingRef: ReferenceAction | (() => undefined) = () => undefined;
 </script>
 
 <AnchorOrButton
