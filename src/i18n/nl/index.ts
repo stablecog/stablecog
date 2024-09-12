@@ -502,6 +502,7 @@ const nl: Translation = {
 		ServersTab: 'Servers',
 		AdminGalleryTab: 'Galerij',
 		LogsTab: 'Logs',
+		SystemTab: 'System',
 		UsersTab: 'Gebruikers',
 		Users: {
 			ConfirmAction: {

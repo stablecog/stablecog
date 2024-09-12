@@ -33,6 +33,12 @@
 			href: '/admin/logs',
 			show: isSuperAdmin($userSummary?.roles || []),
 			icon: 'logs'
+		},
+		{
+			title: $LL.Admin.SystemTab(),
+			href: '/admin/system',
+			show: isSuperAdmin($userSummary?.roles || []),
+			icon: 'system'
 		}
 	];
 </script>
@@ -52,7 +58,7 @@
 				class="group relative z-0 flex w-full max-w-md flex-col items-center gap-2 self-stretch overflow-hidden rounded-xl bg-c-bg-secondary
 					p-5 shadow-lg shadow-c-shadow/[var(--o-shadow-normal)] ring-2 ring-c-bg-tertiary transition not-touch:hover:-translate-y-1.5 not-touch:hover:shadow-xl
 					not-touch:hover:shadow-c-shadow/[var(--o-shadow-strong)] not-touch:hover:ring-4
-					md:max-w-xs md:p-6"
+					md:max-w-[15rem] md:p-6"
 			>
 				<IconNavbarRoute
 					class="-mt-0.5 h-14 w-14 transition not-touch:group-hover:text-c-primary"

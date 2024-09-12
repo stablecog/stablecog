@@ -524,6 +524,7 @@ const tr: Translation = {
 		ServersTab: 'Sunucular',
 		AdminGalleryTab: 'Admin Galerisi',
 		LogsTab: 'Logs',
+		SystemTab: 'System',
 		UsersTab: 'Kullanıcılar',
 		Users: {
 			ConfirmAction: {

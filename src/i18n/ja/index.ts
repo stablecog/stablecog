@@ -510,6 +510,7 @@ const ja: Translation = {
 		ServersTab: 'サーバ',
 		AdminGalleryTab: '管理用ギャラリー',
 		LogsTab: 'Logs',
+		SystemTab: 'System',
 		UsersTab: 'ユーザー',
 		Users: {
 			ConfirmAction: {

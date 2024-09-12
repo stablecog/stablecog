@@ -47,6 +47,11 @@ export const superAdminRoutes = derived([LL], ([$LL]) => {
 			name: $LL.Admin.LogsTab(),
 			href: '/admin/logs',
 			icon: 'logs'
+		},
+		{
+			name: $LL.Admin.SystemTab(),
+			href: '/admin/system',
+			icon: 'system'
 		}
 	];
 	return routes;
@@ -138,7 +143,8 @@ export type TNavbarRouteOption =
 	| 'documentation'
 	| 'voiceover'
 	| 'resources'
-	| 'logs';
+	| 'logs'
+	| 'system';
 
 export interface TNavbarRoute {
 	name: string;

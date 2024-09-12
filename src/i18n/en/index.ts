@@ -500,6 +500,7 @@ const en: BaseTranslation = {
 		ServersTab: 'Servers',
 		AdminGalleryTab: 'Admin Gallery',
 		LogsTab: 'Logs',
+		SystemTab: 'System',
 		UsersTab: 'Users',
 		Users: {
 			ConfirmAction: {

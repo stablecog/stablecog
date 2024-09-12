@@ -1530,6 +1530,10 @@ type RootTranslation = {
 		 */
 		LogsTab: string
 		/**
+		 * S​y​s​t​e​m
+		 */
+		SystemTab: string
+		/**
 		 * U​s​e​r​s
 		 */
 		UsersTab: string
@@ -4962,6 +4966,10 @@ export type TranslationFunctions = {
 		 * Logs
 		 */
 		LogsTab: () => LocalizedString
+		/**
+		 * System
+		 */
+		SystemTab: () => LocalizedString
 		/**
 		 * Users
 		 */

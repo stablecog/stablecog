@@ -500,6 +500,7 @@ const ko: Translation = {
 		ServersTab: '서버',
 		AdminGalleryTab: '갤러리',
 		LogsTab: 'Logs',
+		SystemTab: 'System',
 		UsersTab: '사용자',
 		Users: {
 			ConfirmAction: {

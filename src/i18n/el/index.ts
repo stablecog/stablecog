@@ -518,6 +518,7 @@ const es: Translation = {
 		ServersTab: 'Διακομιστές',
 		AdminGalleryTab: 'Συλλογή Διαχειριστή',
 		LogsTab: 'Logs',
+		SystemTab: 'System',
 		UsersTab: 'Χρήστες',
 		Users: {
 			ConfirmAction: {
