@@ -4,16 +4,19 @@
 	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
 	import MetaTag from '$components/utils/MetaTag.svelte';
 	import PageWrapper from '$components/wrappers/PageWrapper.svelte';
-	import { getSystemBackends, systemStatusQueryKey } from '$routes/(app)/admin/system/helpers.js';
+	import { getSystemStatus, systemStatusQueryKey } from '$routes/(app)/admin/system/helpers.js';
 	import { getApiUrl, staticAssetBaseUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { sessionStore } from '$ts/constants/supabase';
 	import { createMutation, createQuery } from '@tanstack/svelte-query';
 
+	export let data;
+
 	$: systemStatusQuery = $sessionStore?.access_token
 		? createQuery({
 				queryKey: systemStatusQueryKey,
-				queryFn: () => getSystemBackends($sessionStore.access_token)
+				queryFn: () => getSystemStatus($sessionStore.access_token),
+				initialData: data.systemStatus
 			})
 		: undefined;
 

@@ -2,7 +2,7 @@ import { getApiUrl } from '$ts/constants/main';
 
 export const systemStatusQueryKey = ['system-status'];
 
-export async function getSystemBackends(accessToken: string) {
+export async function getSystemStatus(accessToken: string) {
 	const res = await fetch(`${getApiUrl().origin}/v1/admin/system/status`, {
 		headers: {
 			Authorization: `Bearer ${accessToken}`
