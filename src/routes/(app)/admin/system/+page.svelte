@@ -34,6 +34,10 @@
 			if (!res.ok) {
 				throw new Error('Failed to set system backend');
 			}
+			const resJson: { backend: string; error?: string } = await res.json();
+			if (resJson.error) {
+				throw new Error(resJson.error);
+			}
 			await $systemStatusQuery?.refetch();
 		},
 		onSuccess: () => {
