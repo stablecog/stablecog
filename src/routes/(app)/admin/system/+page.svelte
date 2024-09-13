@@ -1,64 +1,48 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
 	import IconAnimatedSpinner from '$components/icons/IconAnimatedSpinner.svelte';
 	import IconSadFaceOutline from '$components/icons/IconSadFaceOutline.svelte';
 	import ButtonHoverEffect from '$components/primitives/buttons/ButtonHoverEffect.svelte';
 	import MetaTag from '$components/utils/MetaTag.svelte';
 	import PageWrapper from '$components/wrappers/PageWrapper.svelte';
+	import { getSystemBackends, systemStatusQueryKey } from '$routes/(app)/admin/system/helpers.js';
 	import { getApiUrl, staticAssetBaseUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { sessionStore } from '$ts/constants/supabase';
 	import { createMutation, createQuery } from '@tanstack/svelte-query';
 
-	$: systemStatusQuery = browser
+	$: systemStatusQuery = $sessionStore?.access_token
 		? createQuery({
-				queryKey: ['system-status'],
-				queryFn: async () => {
-					const res = await fetch(`${getApiUrl().origin}/v1/admin/system/status`, {
-						headers: {
-							Authorization: `Bearer ${$sessionStore?.access_token}`
-						}
-					});
-					if (!res.ok) {
-						throw new Error('Failed to fetch system status');
-					}
-					const resJson: { backend: string; backends: string[] } = await res.json();
-					if (!resJson.backends) {
-						throw new Error('No backends key found in system status response');
-					}
-					return resJson;
-				}
+				queryKey: systemStatusQueryKey,
+				queryFn: () => getSystemBackends($sessionStore.access_token)
 			})
 		: undefined;
 
 	let pendingSystemBackend: string | null = null;
-	$: systemBackendMutation = browser
-		? createMutation({
-				mutationKey: ['change-system-backend'],
-				mutationFn: async ({ backend }: { backend: string }) => {
-					if (!$systemStatusQuery?.data?.backend) return;
-					pendingSystemBackend = backend;
-					const res = await fetch(`${getApiUrl().origin}/v1/admin/system/change-backend`, {
-						method: 'POST',
-						headers: {
-							Authorization: `Bearer ${$sessionStore?.access_token}`,
-							'Content-Type': 'application/json'
-						},
-						body: JSON.stringify({ backend })
-					});
-					if (!res.ok) {
-						throw new Error('Failed to set system backend');
-					}
-					await $systemStatusQuery?.refetch();
+	$: systemBackendMutation = createMutation({
+		mutationKey: ['change-system-backend'],
+		mutationFn: async ({ backend }: { backend: string }) => {
+			if (!$systemStatusQuery?.data?.backend) return;
+			pendingSystemBackend = backend;
+			const res = await fetch(`${getApiUrl().origin}/v1/admin/system/change-backend`, {
+				method: 'POST',
+				headers: {
+					Authorization: `Bearer ${$sessionStore?.access_token}`,
+					'Content-Type': 'application/json'
 				},
-				onSuccess: () => {
-					pendingSystemBackend = null;
-				},
-				onError: () => {
-					pendingSystemBackend = null;
-				}
-			})
-		: undefined;
+				body: JSON.stringify({ backend })
+			});
+			if (!res.ok) {
+				throw new Error('Failed to set system backend');
+			}
+			await $systemStatusQuery?.refetch();
+		},
+		onSuccess: () => {
+			pendingSystemBackend = null;
+		},
+		onError: () => {
+			pendingSystemBackend = null;
+		}
+	});
 </script>
 
 <MetaTag
