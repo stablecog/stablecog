@@ -57,19 +57,19 @@
 
 <PageWrapper noPadding class="z-10 py-3">
 	{#if systemStatusQuery === undefined || $systemStatusQuery === undefined || $systemStatusQuery.isPending}
-		<div class="flex w-full flex-1 flex-col items-center justify-center pb-12 pt-8">
+		<div class="flex w-full flex-1 flex-col items-center justify-center pb-[calc(5vh+3rem)] pt-8">
 			<IconAnimatedSpinner class="size-10 text-c-on-bg/50" />
 		</div>
 	{:else if $systemStatusQuery.isError}
-		<div class="flex w-full flex-1 flex-col items-center justify-center pb-12 pt-8">
+		<div class="flex w-full flex-1 flex-col items-center justify-center pb-[calc(5vh+3rem)] pt-8">
 			<IconSadFaceOutline class="size-10 text-c-on-bg/50" />
 		</div>
 	{:else if $systemStatusQuery.data.backends.length < 1}
-		<div class="flex w-full flex-1 flex-col items-center justify-center pb-12 pt-8">
+		<div class="flex w-full flex-1 flex-col items-center justify-center pb-[calc(5vh+3rem)] pt-8">
 			<p class="text-c-on-bg/50">No backends found</p>
 		</div>
 	{:else}
-		<div class="flex w-full flex-1 flex-col items-center justify-center pb-12 pt-8">
+		<div class="flex w-full flex-1 flex-col items-center justify-center pb-[calc(5vh+3rem)] pt-8">
 			<div class="flex max-w-full flex-col">
 				<h1 class="px-2 text-center text-2xl font-bold">Backends</h1>
 				<div
