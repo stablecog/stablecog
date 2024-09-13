@@ -617,7 +617,7 @@ const de: Translation = {
 			InputPlaceholder: 'Confirm',
 			Title: 'Delete Account',
 			Paragraph:
-				'Your account will be scheduled for deletion. Deletion of an account is permanent.',
+				'Your account will be scheduled for deletion. Deletion of an account is permanent and cannot be undone.',
 			ConfirmationPhrase: 'delete my account permanently',
 			ConfimationParagraph: `Type "{confirmationPhrase}" to confirm:`,
 			ConfirmButton: 'Confirm',

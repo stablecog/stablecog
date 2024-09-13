@@ -468,18 +468,21 @@
 					isDeleteAccountModalOpen = false;
 				}
 			}}
-			class="my-auto max-w-full"
+			class="my-auto max-w-full break-words"
 		>
 			<div
 				class="w-full max-w-md rounded-xl bg-c-bg p-5 shadow-2xl shadow-c-shadow/[var(--o-shadow-stronger)] ring-2 ring-c-bg-secondary md:p-6"
 			>
-				<h1 class="-mt-1 text-xl font-bold text-c-danger">
-					{$LL.Account.DeleteAccountModal.Title()}
-				</h1>
-				<p class="mt-3 leading-relaxed text-c-on-bg/75">
+				<div class="-mt-1 flex w-full items-center gap-1.5">
+					<IconWarning class="size-5 shrink-0 text-c-danger" />
+					<h1 class="w-full min-w-0 flex-shrink text-xl font-bold text-c-danger">
+						{$LL.Account.DeleteAccountModal.Title()}
+					</h1>
+				</div>
+				<p class="mt-3 w-full leading-relaxed text-c-on-bg/75">
 					{$LL.Account.DeleteAccountModal.Paragraph()}
 				</p>
-				<p class="mt-6 text-c-on-bg/75">
+				<p class="mt-6 w-full text-c-on-bg/75">
 					{@html $LL.Account.DeleteAccountModal.ConfimationParagraph({
 						confirmationPhrase: `<span class='text-c-danger font-medium'>${$LL.Account.DeleteAccountModal.ConfirmationPhrase()}</span>`
 					})}
@@ -492,6 +495,7 @@
 						title={$LL.Account.DeleteAccountModal.InputPlaceholder()}
 						disabled={$scheduleForDeletion?.isPending}
 						bind:value={deleteAccountInput}
+						accent="danger"
 					/>
 					<div class="mt-6 flex w-full flex-wrap items-stretch justify-end gap-2">
 						<Button

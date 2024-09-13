@@ -11,6 +11,7 @@
 	export let hasIcon = false;
 	export let inputElement: HTMLInputElement | undefined = undefined;
 	export let bg: 'bg-secondary' | 'bg-tertiary' = 'bg-tertiary';
+	export let accent: 'primary' | 'danger' = 'primary';
 	export let hasClearButton = false;
 	export let shadow: 'normal' | 'strong' | 'strongest' = 'normal';
 	export let onClearButtonClicked: (() => void) | undefined = undefined;
@@ -82,8 +83,12 @@
 				: shadow === 'strong'
 					? 'shadow-c-shadow/[var(--o-shadow-strong)'
 					: 'shadow-c-shadow/[var(--o-shadow-normal)]'} ring-0 focus:ring-2 {bg === 'bg-secondary'
-				? 'ring-c-primary/20 focus:ring-c-primary/30'
-				: 'ring-c-primary/20 focus:ring-c-primary/35'}  
+				? accent === 'danger'
+					? 'ring-c-danger/20 focus:ring-c-danger/30'
+					: 'ring-c-primary/20 focus:ring-c-primary/30'
+				: accent === 'danger'
+					? 'ring-c-danger/20 focus:ring-c-danger/35'
+					: 'ring-c-primary/20 focus:ring-c-primary/35'}  
       placeholder:text-c-on-bg/50 not-touch:enabled:hover:ring-2 not-touch:enabled:group-hover:ring-2"
 		/>
 	{:else if type === 'password'}
@@ -117,8 +122,12 @@
 				: shadow === 'strong'
 					? 'shadow-c-shadow/[var(--o-shadow-strong)'
 					: 'shadow-c-shadow/[var(--o-shadow-normal)]'} ring-0 focus:ring-2 {bg === 'bg-secondary'
-				? 'ring-c-primary/20 focus:ring-c-primary/30'
-				: 'ring-c-primary/20 focus:ring-c-primary/35'} 
+				? accent === 'danger'
+					? 'ring-c-danger/20 focus:ring-c-danger/30'
+					: 'ring-c-primary/20 focus:ring-c-primary/30'
+				: accent === 'danger'
+					? 'ring-c-danger/20 focus:ring-c-danger/35'
+					: 'ring-c-primary/20 focus:ring-c-primary/35'} 
       placeholder:text-c-on-bg/50 not-touch:enabled:hover:ring-2 not-touch:enabled:group-hover:ring-2"
 		/>
 	{:else if type === 'number'}
@@ -152,8 +161,12 @@
 				: shadow === 'strong'
 					? 'shadow-c-shadow/[var(--o-shadow-strong)'
 					: 'shadow-c-shadow/[var(--o-shadow-normal)]'} ring-0 focus:ring-2 {bg === 'bg-secondary'
-				? 'ring-c-primary/20 focus:ring-c-primary/30'
-				: 'ring-c-primary/20 focus:ring-c-primary/35'}  
+				? accent === 'danger'
+					? 'ring-c-danger/20 focus:ring-c-danger/30'
+					: 'ring-c-primary/20 focus:ring-c-primary/30'
+				: accent === 'danger'
+					? 'ring-c-danger/20 focus:ring-c-danger/35'
+					: 'ring-c-primary/20 focus:ring-c-primary/35'}  
       placeholder:text-c-on-bg/50 not-touch:enabled:hover:ring-2 not-touch:enabled:group-hover:ring-2"
 		/>
 	{:else}
@@ -187,8 +200,12 @@
 				: shadow === 'strong'
 					? 'shadow-c-shadow/[var(--o-shadow-strong)'
 					: 'shadow-c-shadow/[var(--o-shadow-normal)]'} ring-0 focus:ring-2 {bg === 'bg-secondary'
-				? 'ring-c-primary/20 focus:ring-c-primary/30'
-				: 'ring-c-primary/20 focus:ring-c-primary/35'}  
+				? accent === 'danger'
+					? 'ring-c-danger/20 focus:ring-c-danger/30'
+					: 'ring-c-primary/20 focus:ring-c-primary/30'
+				: accent === 'danger'
+					? 'ring-c-danger/20 focus:ring-c-danger/35'
+					: 'ring-c-primary/20 focus:ring-c-primary/35'}  
       placeholder:text-c-on-bg/50 not-touch:enabled:hover:ring-2 not-touch:enabled:group-hover:ring-2"
 		/>
 	{/if}

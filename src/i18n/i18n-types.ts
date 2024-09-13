@@ -1922,7 +1922,7 @@ type RootTranslation = {
 			 */
 			Title: string
 			/**
-			 * Y​o​u​r​ ​a​c​c​o​u​n​t​ ​w​i​l​l​ ​b​e​ ​s​c​h​e​d​u​l​e​d​ ​f​o​r​ ​d​e​l​e​t​i​o​n​.​ ​D​e​l​e​t​i​o​n​ ​o​f​ ​a​n​ ​a​c​c​o​u​n​t​ ​i​s​ ​p​e​r​m​a​n​e​n​t​.
+			 * Y​o​u​r​ ​a​c​c​o​u​n​t​ ​w​i​l​l​ ​b​e​ ​s​c​h​e​d​u​l​e​d​ ​f​o​r​ ​d​e​l​e​t​i​o​n​.​ ​D​e​l​e​t​i​o​n​ ​o​f​ ​a​n​ ​a​c​c​o​u​n​t​ ​i​s​ ​p​e​r​m​a​n​e​n​t​ ​a​n​d​ ​c​a​n​n​o​t​ ​b​e​ ​u​n​d​o​n​e​.
 			 */
 			Paragraph: string
 			/**
@@ -5354,7 +5354,7 @@ export type TranslationFunctions = {
 			 */
 			Title: () => LocalizedString
 			/**
-			 * Your account will be scheduled for deletion. Deletion of an account is permanent.
+			 * Your account will be scheduled for deletion. Deletion of an account is permanent and cannot be undone.
 			 */
 			Paragraph: () => LocalizedString
 			/**
