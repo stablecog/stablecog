@@ -10,13 +10,10 @@
 	import { sessionStore } from '$ts/constants/supabase';
 	import { createMutation, createQuery } from '@tanstack/svelte-query';
 
-	export let data;
-
 	$: systemStatusQuery = $sessionStore?.access_token
 		? createQuery({
 				queryKey: systemStatusQueryKey,
-				queryFn: () => getSystemStatus($sessionStore.access_token),
-				initialData: data.systemStatus
+				queryFn: () => getSystemStatus($sessionStore.access_token)
 			})
 		: undefined;
 
