@@ -30,47 +30,55 @@ export const load: PageLoad = async ({ params, parent, fetch }) => {
 			Authorization: `Bearer ${session.access_token}`
 		};
 	}
-	const [generationFullOutputsRes, similarGenerationFullOutputsRes] = await Promise.all([
-		fetch(`${getApiUrl().origin}/v1/gallery?output_id=${outputId}`, {
-			headers
-		}),
-		getGalleryFullOutputs({
-			custom_fetch: fetch,
-			search: outputId,
-			per_page: similarCount + 1,
-			accessToken: session?.access_token
-		})
-	]);
-	if (!generationFullOutputsRes.ok) {
-		error(404, 'Response for generation not ok');
-	}
-	const data: TGalleryFullOutputsPageShallow = await generationFullOutputsRes.json();
-	if (!data.outputs || !data.outputs[0]) {
-		error(404, 'No output found');
-	}
-
-	generationFullOutput = {
-		...data.outputs[0],
-		generation: {
-			...data.outputs[0].generation,
-			outputs: []
+	try {
+		const [generationFullOutputsRes, similarGenerationFullOutputsRes] = await Promise.all([
+			fetch(`${getApiUrl().origin}/v1/gallery?output_id=${outputId}`, {
+				headers
+			}),
+			getGalleryFullOutputs({
+				custom_fetch: fetch,
+				search: outputId,
+				per_page: similarCount + 1,
+				accessToken: session?.access_token
+			})
+		]);
+		if (!generationFullOutputsRes.ok) {
+			error(404, 'Response for generation not ok');
 		}
-	};
+		const data: TGalleryFullOutputsPageShallow = await generationFullOutputsRes.json();
+		if (!data.outputs || !data.outputs[0]) {
+			error(404, 'No output found');
+		}
 
-	similarGenerationFullOutputs = similarGenerationFullOutputsRes.outputs
-		.filter((o) => o.id !== generationFullOutput?.id)
-		.slice(0, similarCount);
+		generationFullOutput = {
+			...data.outputs[0],
+			generation: {
+				...data.outputs[0].generation,
+				outputs: []
+			}
+		};
 
-	const page: TGalleryFullOutputsPage = {
-		outputs: similarGenerationFullOutputs,
-		next: undefined,
-		total: similarGenerationFullOutputsRes.total
-	};
+		similarGenerationFullOutputs = similarGenerationFullOutputsRes.outputs
+			.filter((o) => o.id !== generationFullOutput?.id)
+			.slice(0, similarCount);
 
-	queryClient.setQueryData(['gallery_similar_outputs_short', outputId], page);
+		const page: TGalleryFullOutputsPage = {
+			outputs: similarGenerationFullOutputs,
+			next: undefined,
+			total: similarGenerationFullOutputsRes.total
+		};
 
-	return {
-		generationFullOutput,
-		similarGenerationFullOutputs
-	};
+		queryClient.setQueryData(['gallery_similar_outputs_short', outputId], page);
+
+		return {
+			generationFullOutput,
+			similarGenerationFullOutputs
+		};
+	} catch (err) {
+		if (String(err).includes('404')) {
+			error(404, 'Output not found');
+		} else {
+			error(500, 'Something went wrong');
+		}
+	}
 };
