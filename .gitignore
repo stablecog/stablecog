@@ -10,3 +10,5 @@ tmp
 *.log
 vite.config.ts.*
 index.json
+# Sentry Config File
+.env.sentry-build-plugin

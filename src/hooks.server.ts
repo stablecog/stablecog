@@ -1,3 +1,5 @@
+import { sequence } from '@sveltejs/kit/hooks';
+import * as Sentry from '@sentry/sveltekit';
 import '$ts/constants/loggerServer';
 import { detectLocale, isLocale } from '$i18n/i18n-util';
 import { loadAllLocales } from '$i18n/i18n-util.sync';
@@ -10,10 +12,15 @@ import type { TAvailableTheme } from '$ts/stores/theme';
 import { createServerClient } from '@supabase/ssr';
 import type { Handle, RequestEvent } from '@sveltejs/kit';
 import { initAcceptLanguageHeaderDetector } from 'typesafe-i18n/detectors';
+import { sentryDsn } from '$ts/constants/sentry';
+
+Sentry.init({
+	dsn: sentryDsn
+});
 
 loadAllLocales();
 
-export const handle: Handle = async ({ event, resolve }) => {
+export const handle: Handle = sequence(Sentry.sentryHandle(), async ({ event, resolve }) => {
 	const start = Date.now();
 	const url = new URL(event.request.url);
 	event.locals.supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
@@ -132,7 +139,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 		}
 	} */
 	return response;
-};
+});
 
 const getPreferredLocale = ({ request }: RequestEvent) => {
 	const acceptLanguageDetector = initAcceptLanguageHeaderDetector(request);
@@ -152,3 +159,4 @@ const notSignedInResponse = (route: string) => {
 		headers: { location: route }
 	});
 };
+export const handleError = Sentry.handleErrorWithSentry();
