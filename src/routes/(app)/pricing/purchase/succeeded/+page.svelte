@@ -8,11 +8,15 @@
 	import LL from '$i18n/i18n-svelte';
 	import { staticAssetBaseUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
+	import { userSummary } from '$ts/stores/user/summary';
 	import { onMount } from 'svelte';
 
 	let mounted = false;
-	onMount(() => {
+	onMount(async () => {
 		mounted = true;
+		if ($userSummary?.refetch) {
+			await $userSummary.refetch();
+		}
 	});
 </script>
 
