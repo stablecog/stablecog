@@ -1,3 +1,3 @@
-import { PUBLIC_SENTRY_DSN } from '$env/static/public';
+import { env as envPublic } from '$env/dynamic/public';
 
-export const sentryDsn = PUBLIC_SENTRY_DSN;
+export const sentryDsn = envPublic.PUBLIC_SENTRY_DSN;
