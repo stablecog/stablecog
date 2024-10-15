@@ -67,9 +67,8 @@
 			}
 			const data = await res.json();
 			if (data.success) {
-				const summary = await getUserSummary($sessionStore?.access_token);
-				if (summary) {
-					userSummary.set(summary);
+				if ($userSummary?.refetch) {
+					await $userSummary.refetch();
 				}
 				await goto('/account/subscription/downgrade/succeeded');
 				changePlanStatus = 'success';
