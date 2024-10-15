@@ -12,7 +12,7 @@ import { isSuperAdmin } from '$ts/helpers/admin/roles';
 import { convertToDBTimeString } from '$ts/helpers/convertToDBTimeString';
 import { addToRecentlyUpdatedOutputIds } from '$ts/stores/user/recentlyUpdatedOutputIds';
 import {
-	STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO,
+	STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS,
 	roleToProductId
 } from '$ts/constants/stripePublic';
 import type { TQueueItem } from '$ts/stores/user/queue';
@@ -200,12 +200,12 @@ const productIdToMaxOngoingUpscalesCount = ({
 		for (let i = 0; i < roles.length; i++) {
 			const pId = roleToProductId[roles[i]];
 			if (!pId) continue;
-			const count = STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[pId]?.parallel_upscales;
+			const count = STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[pId]?.parallel_upscales;
 			if (count) return count;
 		}
 		return baseCount;
 	}
-	const count = STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[productId]?.parallel_upscales;
+	const count = STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[productId]?.parallel_upscales;
 	if (!count) return baseCount;
 	return count;
 };

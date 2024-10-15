@@ -9,27 +9,39 @@
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import {
 		STRIPE_CURRENCY_TO_SYMBOL,
-		STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO
+		STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS
 	} from '$ts/constants/stripePublic';
-	import { getTitleFromProductId } from '$ts/helpers/stripe/plan';
+	import { getTitleFromPriceId } from '$ts/helpers/stripe/plan';
 	import { userSummary } from '$ts/stores/user/summary';
 
 	export let data;
 
 	const currency = data.currency;
 
-	$: currentPlan =
+	$: billingInfo =
 		$userSummary?.product_id !== undefined && $userSummary?.price_id !== undefined
+			? getTitleFromPriceId($LL, $userSummary.price_id)
+			: undefined;
+	$: currentPlan =
+		billingInfo && $userSummary?.product_id !== undefined && $userSummary?.price_id !== undefined
 			? {
-					title: getTitleFromProductId($LL, $userSummary.product_id),
+					title: billingInfo.title,
 					amount:
 						currency === 'eur'
-							? STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[$userSummary.product_id].prices[
-									$userSummary.price_id
-								].currencies.eur.amount
-							: STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[$userSummary.product_id].prices[
-									$userSummary.price_id
-								].currencies.usd.amount
+							? billingInfo.billingType === 'yearly'
+								? STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[$userSummary.product_id].prices.yearly[
+										$userSummary.price_id
+									].currencies.eur.amount
+								: STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[$userSummary.product_id].prices.monthly[
+										$userSummary.price_id
+									].currencies.eur.amount
+							: billingInfo.billingType === 'yearly'
+								? STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[$userSummary.product_id].prices.yearly[
+										$userSummary.price_id
+									].currencies.usd.amount
+								: STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[$userSummary.product_id].prices.monthly[
+										$userSummary.price_id
+									].currencies.usd.amount
 				}
 			: undefined;
 </script>
@@ -58,9 +70,10 @@
 				<p class="mt-1 w-full px-1 text-left text-2xl font-bold text-c-on-bg">
 					{currentPlan.title}<span
 						class="ml-2 rounded-md bg-c-primary/15 px-1.5 py-0.75 text-base font-medium text-c-primary"
-						>{STRIPE_CURRENCY_TO_SYMBOL[
-							currency
-						]}{currentPlan.amount}{$LL.Pricing.SlashMonth()}</span
+						>{STRIPE_CURRENCY_TO_SYMBOL[currency]}{currentPlan.amount}{billingInfo?.billingType ===
+						'yearly'
+							? $LL.Pricing.SlashYear()
+							: $LL.Pricing.SlashMonth()}</span
 					>
 				</p>
 			</div>

@@ -2,28 +2,46 @@
 	import { page } from '$app/stores';
 	import IconMinus from '$components/icons/IconMinus.svelte';
 	import Button from '$components/primitives/buttons/Button.svelte';
+	import TabBar from '$components/primitives/tabBars/TabBar.svelte';
 	import MetaTag from '$components/utils/MetaTag.svelte';
 	import PageWrapper from '$components/wrappers/PageWrapper.svelte';
 	import { env } from '$env/dynamic/public';
 	import LL, { locale } from '$i18n/i18n-svelte';
 	import PlanCard from '$routes/(app)/pricing/PlanCard.svelte';
-	import type { TCreditPackCard, TSubscriptionCard } from '$routes/(app)/pricing/types.js';
-	import { staticAssetBaseUrl, getApiUrl } from '$ts/constants/main';
+	import type {
+		TBillingType,
+		TCreditPackCard,
+		TSubscriptionCard
+	} from '$routes/(app)/pricing/types.js';
+	import { getApiUrl, staticAssetBaseUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { socialAppUrls } from '$ts/constants/social';
 	import {
 		STRIPE_CURRENCY_TO_SYMBOL,
 		STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS,
-		STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO,
+		STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS,
 		freeDailyImageCount
 	} from '$ts/constants/stripePublic';
 	import { sessionStore } from '$ts/constants/supabase';
 	import { getCustomerPortalUrl } from '$ts/helpers/user/getCustomerPortalUrl.js';
 	import { isSignInModalOpen } from '$ts/stores/isSignInModalOpen.js';
 	import { userSummary } from '$ts/stores/user/summary';
+	import type { TTab } from '$ts/types/main.js';
 
 	export let data;
 
+	let selectedBillingType: TBillingType = 'yearly';
+	let billingTypes: TTab<TBillingType>[];
+	$: billingTypes = [
+		{
+			label: $LL.Pricing.MonthlyTitle(),
+			value: 'monthly'
+		},
+		{
+			label: $LL.Pricing.YearlyTitle(),
+			value: 'yearly'
+		}
+	];
 	/* $: isFirstPurchase30Off = $userSummary && $userSummary.purchase_count > 0 ? false : true;
 	$: promotionCodeId = isFirstPurchase30Off
 		? env.PUBLIC_STRIPE_PROMOTION_CODE_ID_FIRST_PURCHASE_30_OFF
@@ -68,12 +86,15 @@
 		{ paragraph: $LL.Pricing.Features.ImagesArePrivate() }
 	];
 
+	const yearlyDivider = 12;
+
 	$: subscriptionCards = [
 		{
 			id: 'plan-free',
 			title: $LL.Pricing.Plans.FreeTitle(),
 			currency: data.currency,
 			currencySymbol: STRIPE_CURRENCY_TO_SYMBOL[data.currency],
+			billingType: selectedBillingType === 'yearly' ? 'yearly' : 'monthly',
 			amount: 0,
 			mainFeatures: [
 				{
@@ -112,23 +133,39 @@
 		{
 			id: 'plan-starter',
 			title: $LL.Pricing.Plans.StarterTitle(),
-			priceIdMo: env.PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_MO,
+			priceId:
+				selectedBillingType === 'yearly'
+					? env.PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_YR
+					: env.PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_MO,
 			productId: env.PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION,
 			currency: data.currency,
 			currencySymbol: STRIPE_CURRENCY_TO_SYMBOL[data.currency],
 			promotionCodeId,
+			billingType: selectedBillingType === 'yearly' ? 'yearly' : 'monthly',
 			amount:
 				data.currency === 'eur'
-					? STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
-							env.PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION!
-						].prices[env.PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_MO!].currencies.eur.amount
-					: STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
-							env.PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION!
-						].prices[env.PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_MO!].currencies.usd.amount,
+					? selectedBillingType === 'yearly'
+						? STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[
+								env.PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION!
+							].prices.yearly[env.PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_YR!].currencies.eur
+								.amount / yearlyDivider
+						: STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[
+								env.PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION!
+							].prices.monthly[env.PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_MO!].currencies.eur
+								.amount
+					: selectedBillingType === 'yearly'
+						? STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[
+								env.PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION!
+							].prices.yearly[env.PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_YR!].currencies.usd
+								.amount / yearlyDivider
+						: STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[
+								env.PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION!
+							].prices.monthly[env.PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_MO!].currencies.usd
+								.amount,
 			mainFeatures: [
 				{
 					title:
-						STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
+						STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[
 							env.PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION!
 						].monthly_images.toLocaleString($locale),
 					subtitle: $LL.Pricing.ImagesPerMonthSubtitle()
@@ -137,7 +174,7 @@
 			features: getPaidSubscriptionFeatures({
 				$LL,
 				parallelGenerations:
-					STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
+					STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[
 						env.PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION!
 					].parallel_generations
 			}),
@@ -147,23 +184,39 @@
 		{
 			id: 'plan-pro',
 			title: $LL.Pricing.Plans.ProTitle(),
-			priceIdMo: env.PUBLIC_STRIPE_PRICE_ID_PRO_SUBSCRIPTION_MO,
+			priceId:
+				selectedBillingType === 'yearly'
+					? env.PUBLIC_STRIPE_PRICE_ID_PRO_SUBSCRIPTION_YR
+					: env.PUBLIC_STRIPE_PRICE_ID_PRO_SUBSCRIPTION_MO,
 			productId: env.PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION,
 			currency: data.currency,
 			currencySymbol: STRIPE_CURRENCY_TO_SYMBOL[data.currency],
 			promotionCodeId,
+			billingType: selectedBillingType === 'yearly' ? 'yearly' : 'monthly',
 			amount:
 				data.currency === 'eur'
-					? STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
-							env.PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION!
-						].prices[env.PUBLIC_STRIPE_PRICE_ID_PRO_SUBSCRIPTION_MO!].currencies.eur.amount
-					: STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
-							env.PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION!
-						].prices[env.PUBLIC_STRIPE_PRICE_ID_PRO_SUBSCRIPTION_MO!].currencies.usd.amount,
+					? selectedBillingType === 'yearly'
+						? STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[
+								env.PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION!
+							].prices.yearly[env.PUBLIC_STRIPE_PRICE_ID_PRO_SUBSCRIPTION_YR!].currencies.eur
+								.amount / yearlyDivider
+						: STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[
+								env.PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION!
+							].prices.monthly[env.PUBLIC_STRIPE_PRICE_ID_PRO_SUBSCRIPTION_MO!].currencies.eur
+								.amount
+					: selectedBillingType === 'yearly'
+						? STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[
+								env.PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION!
+							].prices.yearly[env.PUBLIC_STRIPE_PRICE_ID_PRO_SUBSCRIPTION_YR!].currencies.usd
+								.amount / yearlyDivider
+						: STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[
+								env.PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION!
+							].prices.monthly[env.PUBLIC_STRIPE_PRICE_ID_PRO_SUBSCRIPTION_MO!].currencies.usd
+								.amount,
 			mainFeatures: [
 				{
 					title:
-						STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
+						STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[
 							env.PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION!
 						].monthly_images.toLocaleString($locale),
 					subtitle: $LL.Pricing.ImagesPerMonthSubtitle()
@@ -172,7 +225,7 @@
 			features: getPaidSubscriptionFeatures({
 				$LL,
 				parallelGenerations:
-					STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[env.PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION!]
+					STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[env.PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION!]
 						.parallel_generations
 			}),
 			ringClass: 'ring-c-bg-secondary',
@@ -183,23 +236,39 @@
 		{
 			id: 'plan-ultimate',
 			title: $LL.Pricing.Plans.UltimateTitle(),
-			priceIdMo: env.PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_MO,
+			priceId:
+				selectedBillingType === 'yearly'
+					? env.PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_YR
+					: env.PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_MO,
 			productId: env.PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION,
 			currency: data.currency,
 			currencySymbol: STRIPE_CURRENCY_TO_SYMBOL[data.currency],
 			promotionCodeId,
+			billingType: selectedBillingType === 'yearly' ? 'yearly' : 'monthly',
 			amount:
 				data.currency === 'eur'
-					? STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
-							env.PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION!
-						].prices[env.PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_MO!].currencies.eur.amount
-					: STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
-							env.PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION!
-						].prices[env.PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_MO!].currencies.usd.amount,
+					? selectedBillingType === 'yearly'
+						? STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[
+								env.PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION!
+							].prices.monthly[env.PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_YR!].currencies.eur
+								.amount / yearlyDivider
+						: STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[
+								env.PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION!
+							].prices.monthly[env.PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_MO!].currencies.eur
+								.amount
+					: selectedBillingType === 'yearly'
+						? STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[
+								env.PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION!
+							].prices.yearly[env.PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_YR!].currencies.usd
+								.amount / yearlyDivider
+						: STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[
+								env.PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION!
+							].prices.monthly[env.PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_MO!].currencies.usd
+								.amount,
 			mainFeatures: [
 				{
 					title:
-						STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
+						STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[
 							env.PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION!
 						].monthly_images.toLocaleString($locale),
 					subtitle: $LL.Pricing.ImagesPerMonthSubtitle()
@@ -208,7 +277,7 @@
 			features: getPaidSubscriptionFeatures({
 				$LL,
 				parallelGenerations:
-					STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[
+					STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[
 						env.PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION!
 					].parallel_generations
 			}),
@@ -226,6 +295,7 @@
 			productId: env.PUBLIC_STRIPE_PRICE_ID_MEDIUM_PACK!,
 			currency: data.currency,
 			currencySymbol: STRIPE_CURRENCY_TO_SYMBOL[data.currency],
+			billingType: 'one-time',
 			amount:
 				data.currency === 'eur'
 					? STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[env.PUBLIC_STRIPE_PRODUCT_ID_MEDIUM_PACK!]
@@ -253,6 +323,7 @@
 			productId: env.PUBLIC_STRIPE_PRICE_ID_LARGE_PACK!,
 			currency: data.currency,
 			currencySymbol: STRIPE_CURRENCY_TO_SYMBOL[data.currency],
+			billingType: 'one-time',
 			amount:
 				data.currency === 'eur'
 					? STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[env.PUBLIC_STRIPE_PRODUCT_ID_LARGE_PACK!].prices[
@@ -282,6 +353,7 @@
 			productId: env.PUBLIC_STRIPE_PRICE_ID_MEGA_PACK!,
 			currency: data.currency,
 			currencySymbol: STRIPE_CURRENCY_TO_SYMBOL[data.currency],
+			billingType: 'one-time',
 			amount:
 				data.currency === 'eur'
 					? STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS[env.PUBLIC_STRIPE_PRODUCT_ID_MEGA_PACK!].prices[
@@ -449,18 +521,31 @@
 			<p class="mt-3 max-w-xl text-center leading-relaxed text-c-on-bg/75">
 				{$LL.Pricing.PlansParagraph()}
 			</p>
+			<div class="relative mt-6 w-full sm:max-w-sm md:max-w-xs">
+				<TabBar
+					size="sm"
+					class="w-full"
+					textSizeClass="text-base"
+					name="Billing Type"
+					tabs={billingTypes}
+					bind:value={selectedBillingType}
+				/>
+				<p
+					class="pointer-events-none absolute -right-2 top-0 -translate-y-1/2 transform rounded-full bg-c-primary px-2.5 py-0.75 text-right text-xs font-bold text-c-bg"
+				>
+					{$LL.Pricing.Save20Percent()}
+				</p>
+			</div>
 			<div
-				class="mt-5 flex w-full max-w-7xl flex-wrap items-stretch justify-center lg:px-5 xl:px-0"
+				class="mt-3 flex w-full max-w-7xl flex-wrap items-stretch justify-center lg:px-5 xl:px-0"
 			>
 				{#each subscriptionCards as card}
-					{@const subscribedProductId = subscriptionCards.find(
-						(c) => c.productId === $userSummary?.product_id
-					)?.productId}
+					{@const subscribedPriceId = $userSummary?.price_id}
 					{@const subscribedAmount = subscriptionCards.find(
 						(c) => c.productId === $userSummary?.product_id
 					)?.amount}
 					{@const isSubscribed =
-						subscribedProductId === card.productId && $sessionStore?.user.id !== undefined}
+						subscribedPriceId === card.priceId && $sessionStore?.user.id !== undefined}
 					{@const isUpgrade =
 						subscribedAmount !== undefined &&
 						subscribedAmount < card.amount &&
@@ -474,7 +559,7 @@
 						id={card.id}
 						planTitle={card.title}
 						ringClass={card.ringClass}
-						isSelected={isSubscribed && $userSummary?.product_id !== undefined}
+						isSelected={isSubscribed && $userSummary?.price_id !== undefined}
 						badgeText={!isDowngrade ? card.badgeText : undefined}
 						badgeClasses={card.badgeClasses}
 						currencyAmount={card.amount}
@@ -488,6 +573,7 @@
 						discountBadgeType={card.id === 'plan-free' ? 'on-bg' : 'primary'}
 						features={card.features}
 						mainFeatures={card.mainFeatures}
+						billingType={card.billingType}
 					>
 						<div slot="button" class="w-full">
 							{#if $userSummary && accessToken}
@@ -502,18 +588,18 @@
 												: 'primary'}
 									noBorder={!isDowngrade}
 									disabled={isSubscribed}
-									loading={(card.priceIdMo === selectedPriceId &&
+									loading={(card.priceId === selectedPriceId &&
 										checkoutCreationStatus === 'loading') ||
 										(card.id === 'plan-free' && customerPortalCreationStatus === 'loading')}
-									href={isDowngrade && card.priceIdMo
+									href={isDowngrade && card.priceId
 										? `/account/subscription/downgrade?price_id=${
-												card.priceIdMo
+												card.priceId
 											}&from=${encodeURIComponent($page.url.pathname)}`
 										: undefined}
 									onClick={() =>
-										!isDowngrade && card.priceIdMo
+										!isDowngrade && card.priceId
 											? createCheckoutSessionAndRedirect({
-													priceId: card.priceIdMo,
+													priceId: card.priceId,
 													currency: card.currency,
 													promotionCodeId: card.promotionCodeId
 												})
@@ -529,6 +615,10 @@
 									>
 										{#if isSubscribed}
 											{$LL.Pricing.SubscribedButton()}
+										{:else if card.productId === $userSummary.product_id && selectedBillingType === 'yearly' && $userSummary.price_id !== card.priceId}
+											{$LL.Pricing.SwitchToYearlyButton()}
+										{:else if card.productId === $userSummary.product_id && selectedBillingType === 'monthly' && $userSummary.price_id !== card.priceId}
+											{$LL.Pricing.SwitchToMonthtlyButton()}
 										{:else if isUpgrade}
 											{subscribedAmount === 0
 												? $LL.Pricing.SubscribeButton()
@@ -568,6 +658,7 @@
 							currencyAmount={card.amount}
 							currencySymbol={card.currencySymbol}
 							features={card.features}
+							billingType={card.billingType}
 							mainFeatures={card.mainFeatures}
 						>
 							<div slot="button" class="w-full">

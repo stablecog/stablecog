@@ -18,6 +18,7 @@
 	export let vertical: boolean = false;
 	export let iconSet: ConstructorOfATypedSvelteComponent | undefined = undefined;
 	export let fontWeight: 500 | 600 = 500;
+	export let textSizeClass = '';
 
 	let classes = '';
 
@@ -108,10 +109,15 @@
 							class="max-w-full flex-shrink overflow-hidden overflow-ellipsis whitespace-nowrap {fontWeight ===
 							600
 								? 'font-semibold'
-								: 'font-medium'} relative z-0 transition {vertical ? 'text-xxs' : ''}"
+								: 'font-medium'} relative z-0 transition {textSizeClass
+								? textSizeClass
+								: vertical
+									? 'text-xxs'
+									: ''}"
 						>
 							{tab.label}
 						</p>
+						<slot {index} />
 					</div>
 					<p
 						slot="1"
@@ -123,7 +129,7 @@
 							? 'text-c-on-bg'
 							: 'text-c-on-bg/50'} {value === tab.value && !hideSelected
 							? 'not-touch:group-hover:text-c-primary'
-							: ''}"
+							: ''} {textSizeClass}"
 					>
 						•
 					</p>

@@ -35,13 +35,15 @@ export const load: ServerLoad = async (event) => {
 		const countryCode = event.locals.countryCode;
 		const currency: TStripeSupportedCurrency =
 			countryCode && eurCountryCodes.includes(countryCode) ? 'eur' : 'usd';
-		return {
+		const obj = {
 			current_price_id: res.price_id,
 			target_price_id: priceId,
 			current_product_id: res.product_id,
 			target_product_id: productIdOfTargetPriceId,
 			currency
 		};
+		console.log(obj);
+		return obj;
 	} catch (error) {
 		console.log(error);
 	}

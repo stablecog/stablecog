@@ -1,7 +1,7 @@
 <script lang="ts">
 	import IconTickOnly from '$components/icons/IconTickOnly.svelte';
 	import LL, { locale } from '$i18n/i18n-svelte';
-	import type { TFeature, TMainFeature } from '$routes/(app)/pricing/types';
+	import type { TBillingType, TFeature, TMainFeature } from '$routes/(app)/pricing/types';
 	import type { LocalizedString } from 'typesafe-i18n';
 
 	export let isSelected = false;
@@ -17,6 +17,7 @@
 	export let features: TFeature[];
 	export let mainFeatures: TMainFeature[] | undefined = undefined;
 	export let discountRate: number | undefined = undefined;
+	export let billingType: TBillingType = 'monthly';
 </script>
 
 <div {id} class="flex w-full items-stretch py-4 sm:max-w-sm md:w-1/2 md:px-2 xl:w-1/4">
@@ -27,12 +28,12 @@
 			: ringClass} relative"
 	>
 		{#if badgeText && badgeClasses}
-			<div
-				class="absolute -right-2.5 top-0 -translate-y-1/2 transform rounded-full px-3 py-1 text-right text-xs
-				font-bold {isSelected ? 'bg-c-success text-c-on-primary' : badgeClasses}"
+			<p
+				class="pointer-events-none absolute -right-2 top-0 -translate-y-1/2 transform rounded-full px-2.5 py-0.75 text-right
+				text-xs font-bold {isSelected ? 'bg-c-success text-c-on-primary' : badgeClasses}"
 			>
 				{badgeText}
-			</div>
+			</p>
 		{/if}
 		<h3 class="w-full gap-2 py-0.5 text-center text-xl font-semibold text-c-on-bg md:-mt-1.5">
 			{planTitle}
@@ -61,6 +62,17 @@
 				{/if}
 				<span class="mb-0.75 self-end font-medium text-c-on-bg/60">{$LL.Pricing.SlashMonth()}</span>
 			</h4>
+			{#if billingType === 'yearly' || billingType === 'monthly'}
+				<p
+					class="my-1 rounded-full bg-c-on-bg/8 px-2.5 py-0.5 text-center text-sm font-medium text-c-on-bg/75"
+				>
+					{currencyAmount === 0
+						? $LL.Pricing.NoBilling()
+						: billingType === 'yearly'
+							? $LL.Pricing.BilledYearly()
+							: $LL.Pricing.BilledMonthly()}
+				</p>
+			{/if}
 			{#if discountBadgeText}
 				<div class="mt-2 max-w-full px-2 pb-1">
 					<p

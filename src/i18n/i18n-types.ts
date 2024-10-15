@@ -2500,6 +2500,14 @@ type RootTranslation = {
 		 */
 		YearlyTitle: string
 		/**
+		 * S​a​v​e​ ​2​0​%
+		 */
+		Save20Percent: string
+		/**
+		 * /​y​e​a​r
+		 */
+		SlashYear: string
+		/**
 		 * /​m​o​n​t​h
 		 */
 		SlashMonth: string
@@ -2523,6 +2531,36 @@ type RootTranslation = {
 		 * i​m​a​g​e​s​ ​p​e​r​ ​d​a​y
 		 */
 		ImagesPerDaySubtitle: string
+		/**
+		 * {​p​l​a​n​T​i​t​l​e​}​ ​(​m​o​n​t​h​l​y​)
+		 * @param {unknown} planTitle
+		 */
+		Monthly: RequiredParams<'planTitle'>
+		/**
+		 * {​p​l​a​n​T​i​t​l​e​}​ ​(​y​e​a​r​l​y​)
+		 * @param {unknown} planTitle
+		 */
+		Yearly: RequiredParams<'planTitle'>
+		/**
+		 * N​o​ ​b​i​l​l​i​n​g
+		 */
+		NoBilling: string
+		/**
+		 * B​i​l​l​e​d​ ​y​e​a​r​l​y
+		 */
+		BilledYearly: string
+		/**
+		 * B​i​l​l​e​d​ ​m​o​n​t​h​l​y
+		 */
+		BilledMonthly: string
+		/**
+		 * S​w​i​t​c​h​ ​t​o​ ​Y​e​a​r​l​y
+		 */
+		SwitchToYearlyButton: string
+		/**
+		 * S​w​i​t​c​h​ ​t​o​ ​M​o​n​t​h​l​y
+		 */
+		SwitchToMonthtlyButton: string
 		/**
 		 * i​m​a​g​e​s​ ​p​e​r​ ​m​o​n​t​h
 		 */
@@ -5925,6 +5963,14 @@ export type TranslationFunctions = {
 		 */
 		YearlyTitle: () => LocalizedString
 		/**
+		 * Save 20%
+		 */
+		Save20Percent: () => LocalizedString
+		/**
+		 * /year
+		 */
+		SlashYear: () => LocalizedString
+		/**
 		 * /month
 		 */
 		SlashMonth: () => LocalizedString
@@ -5948,6 +5994,34 @@ export type TranslationFunctions = {
 		 * images per day
 		 */
 		ImagesPerDaySubtitle: () => LocalizedString
+		/**
+		 * {planTitle} (monthly)
+		 */
+		Monthly: (arg: { planTitle: unknown }) => LocalizedString
+		/**
+		 * {planTitle} (yearly)
+		 */
+		Yearly: (arg: { planTitle: unknown }) => LocalizedString
+		/**
+		 * No billing
+		 */
+		NoBilling: () => LocalizedString
+		/**
+		 * Billed yearly
+		 */
+		BilledYearly: () => LocalizedString
+		/**
+		 * Billed monthly
+		 */
+		BilledMonthly: () => LocalizedString
+		/**
+		 * Switch to Yearly
+		 */
+		SwitchToYearlyButton: () => LocalizedString
+		/**
+		 * Switch to Monthly
+		 */
+		SwitchToMonthtlyButton: () => LocalizedString
 		/**
 		 * images per month
 		 */
