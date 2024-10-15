@@ -65,9 +65,13 @@
 			if (!res.ok) {
 				throw new Error('Failed to change plan');
 			}
-			const data = await res.json();
+			const data: {
+				success: boolean;
+			} = await res.json();
 			if (data.success) {
+				console.log('Plan changed successfully');
 				if ($userSummary?.refetch) {
+					console.log('Refetching user summary');
 					await $userSummary.refetch();
 				}
 				await goto('/account/subscription/downgrade/succeeded');
