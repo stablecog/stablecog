@@ -9,7 +9,8 @@ const config: UserConfig = {
 			autoUploadSourceMaps: true,
 			sourceMapsUploadOptions: {
 				org: 'stablecog-1',
-				project: 'sveltekit'
+				project: 'sveltekit',
+				authToken: process.env.SENTRY_AUTH_TOKEN
 			}
 		}),
 		sveltekit()
