@@ -51,7 +51,7 @@
 		} catch (error) {
 			console.log(error);
 		}
-		element.blur();
+		if (element) element.blur();
 		downloadStatus = 'idle';
 	};
 </script>
