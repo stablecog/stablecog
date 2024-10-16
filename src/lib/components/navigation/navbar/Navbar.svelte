@@ -38,7 +38,7 @@
 	const toggleAccountMenu = () => (isAccountMenuOpen = !isAccountMenuOpen);
 	const closeAccountMenu = () => (isAccountMenuOpen = false);
 
-	const showBanner = true;
+	const showBanner = false;
 
 	const dontRedirectToRoutes = [
 		{
