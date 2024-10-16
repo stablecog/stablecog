@@ -11,8 +11,6 @@
 	width="24"
 	height="24"
 	viewBox="0 0 24 24"
-	shape-rendering="geometricPrecision"
-	text-rendering="geometricPrecision"
 >
 	<g id="end69mBNOzR2_tr" transform="translate(12,12) rotate(0)"
 		><g transform="translate(-12,-12)"
