@@ -5,6 +5,8 @@ import type { UserConfig } from 'vite';
 const config: UserConfig = {
 	plugins: [
 		sentrySvelteKit({
+			autoInstrument: true,
+			autoUploadSourceMaps: true,
 			sourceMapsUploadOptions: {
 				org: 'stablecog-1',
 				project: 'sveltekit'
