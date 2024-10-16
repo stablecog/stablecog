@@ -29,45 +29,53 @@ export const load: PageLoad = async ({ params, parent }) => {
 			Authorization: `Bearer ${session.access_token}`
 		};
 	}
-	const [generationFullOutputRes, similarGenerationFullOutputsRes] = await Promise.all([
-		fetch(`${getApiUrl().origin}/v1/profile/${username}/outputs?output_id=${outputId}`, {
-			headers
-		}),
-		getUserProfileFullOutputs({
-			custom_fetch: fetch,
-			search: outputId,
-			per_page: similarCount + 1,
-			username,
-			access_token: session?.access_token
-		})
-	]);
-	if (!generationFullOutputRes.ok) {
-		error(404, 'Response for generation not ok');
+	try {
+		const [generationFullOutputRes, similarGenerationFullOutputsRes] = await Promise.all([
+			fetch(`${getApiUrl().origin}/v1/profile/${username}/outputs?output_id=${outputId}`, {
+				headers
+			}),
+			getUserProfileFullOutputs({
+				custom_fetch: fetch,
+				search: outputId,
+				per_page: similarCount + 1,
+				username,
+				access_token: session?.access_token
+			})
+		]);
+		if (!generationFullOutputRes.ok) {
+			error(404, 'Response for generation not ok');
+		}
+		const data: TUserProfileFullOutputsPage = await generationFullOutputRes.json();
+		if (!data.outputs || !data.outputs[0]) {
+			error(404, 'No output found');
+		}
+		generationFullOutput = data.outputs[0];
+
+		similarGenerationFullOutputs = similarGenerationFullOutputsRes.outputs
+			.filter((o) => o.id !== generationFullOutput?.id)
+			.slice(0, similarCount);
+
+		const page: TUserProfileFullOutputsPage = {
+			outputs: similarGenerationFullOutputs,
+			next: undefined,
+			metadata: data.metadata
+		};
+
+		if (username !== data.metadata.username)
+			redirect(302, `/${data.metadata.username}/o/${outputId}`);
+
+		queryClient.setQueryData(['user_profile_similar_outputs_short', outputId], page);
+
+		return {
+			generationFullOutput,
+			similarGenerationFullOutputs,
+			username: data.metadata.username
+		};
+	} catch (err) {
+		if (String(err).includes('404')) {
+			error(404, 'Output not found');
+		} else {
+			error(500, 'Something went wrong');
+		}
 	}
-	const data: TUserProfileFullOutputsPage = await generationFullOutputRes.json();
-	if (!data.outputs || !data.outputs[0]) {
-		error(404, 'No output found');
-	}
-	generationFullOutput = data.outputs[0];
-
-	similarGenerationFullOutputs = similarGenerationFullOutputsRes.outputs
-		.filter((o) => o.id !== generationFullOutput?.id)
-		.slice(0, similarCount);
-
-	const page: TUserProfileFullOutputsPage = {
-		outputs: similarGenerationFullOutputs,
-		next: undefined,
-		metadata: data.metadata
-	};
-
-	if (username !== data.metadata.username)
-		redirect(302, `/${data.metadata.username}/o/${outputId}`);
-
-	queryClient.setQueryData(['user_profile_similar_outputs_short', outputId], page);
-
-	return {
-		generationFullOutput,
-		similarGenerationFullOutputs,
-		username: data.metadata.username
-	};
 };
