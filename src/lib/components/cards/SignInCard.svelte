@@ -42,7 +42,7 @@
 
 	async function signIn() {
 		if (!$supabaseStore) return;
-		if (!email.includes('@')) {
+		if (!email || !email.includes('@')) {
 			errorText = $LL.Error.InvalidEmail();
 			return;
 		}
@@ -153,6 +153,7 @@
 	async function signInWithCode() {
 		if (!$supabaseStore) return;
 		if (!isCodeValid) return;
+		if (!email) return;
 		signInCardCodeSignInStatus.set('loading');
 		try {
 			const { data: sData, error: sError } = await $supabaseStore.auth.verifyOtp({
