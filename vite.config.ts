@@ -10,8 +10,7 @@ const config: UserConfig = {
 			sourceMapsUploadOptions: {
 				org: 'stablecog-1',
 				project: 'sveltekit'
-			},
-			adapter: process.env.VERCEL ? 'vercel' : 'node'
+			}
 		}),
 		sveltekit()
 	]
