@@ -9,6 +9,7 @@ import type { TGenerationFullOutput } from '$ts/stores/user/generation';
 import { error } from '@sveltejs/kit';
 import type { QueryClient } from '@tanstack/svelte-query';
 import type { PageLoad } from './$types';
+import { isUUID } from '$ts/helpers/uuid';
 
 interface TParent {
 	queryClient: QueryClient;
@@ -18,6 +19,9 @@ interface TParent {
 
 export const load: PageLoad = async ({ params, parent, fetch }) => {
 	const outputId = params.output_id;
+	if (!isUUID(outputId)) {
+		error(404, 'Output not found');
+	}
 	let generationFullOutput: TGenerationFullOutput | undefined = undefined;
 	let similarGenerationFullOutputs: TGenerationFullOutput[] | undefined = undefined;
 	const { session, queryClient } = (await parent()) as TParent;

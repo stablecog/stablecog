@@ -7,6 +7,7 @@ import type { Session } from '@supabase/supabase-js';
 import { error, redirect } from '@sveltejs/kit';
 import type { QueryClient } from '@tanstack/svelte-query';
 import type { PageLoad } from './$types';
+import { isUUID } from '$ts/helpers/uuid';
 
 interface TParent {
 	queryClient: QueryClient;
@@ -17,6 +18,9 @@ interface TParent {
 export const load: PageLoad = async ({ params, parent }) => {
 	const { queryClient, session } = (await parent()) as TParent;
 	const outputId = params.output_id;
+	if (!isUUID(outputId)) {
+		error(404, 'Output not found');
+	}
 	const username = params.username;
 	let generationFullOutput: TGenerationFullOutput | undefined = undefined;
 	let similarGenerationFullOutputs: TGenerationFullOutput[] | undefined = undefined;
@@ -47,7 +51,7 @@ export const load: PageLoad = async ({ params, parent }) => {
 		}
 		const data: TUserProfileFullOutputsPage = await generationFullOutputRes.json();
 		if (!data.outputs || !data.outputs[0]) {
-			error(404, 'No output found');
+			error(404, 'Output not found');
 		}
 		generationFullOutput = data.outputs[0];
 
