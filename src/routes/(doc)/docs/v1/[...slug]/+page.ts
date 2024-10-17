@@ -6,6 +6,7 @@ import {
 } from '$docroutes/docs/v1/constants';
 import { getEntryFromPathname, getSidebarItemFromPathname } from '$components/docs/helpers';
 import type { ServerLoad } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
 
 export const load: ServerLoad = async ({ url }) => {
 	const { sidebarItem, parentItem } = getSidebarItemFromPathname({
@@ -19,6 +20,9 @@ export const load: ServerLoad = async ({ url }) => {
 		pathname: url.pathname,
 		previewImageUrl: sidebarItem?.preview_image_url
 	});
+	if (!entry) {
+		return error(404, 'Not found');
+	}
 	return {
 		metadata: entry.metadata,
 		content: entry.default,

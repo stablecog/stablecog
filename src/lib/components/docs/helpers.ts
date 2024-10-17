@@ -45,7 +45,7 @@ export function addImageUrlToSidebarItem({
 				: getPreviewUrlFromEntryPathname({
 						previewBaseUrl,
 						pathname: sidebarItem.pathname
-				  })
+					})
 			: undefined
 	};
 	if (sidebarItem.children) {
@@ -74,6 +74,9 @@ export async function getEntryFromPathname({
 }) {
 	const entries = getEntries(rawEntries);
 	const key = getEntryImportKey(pathname);
+	if (key in entries === false || typeof entries[key] !== 'function') {
+		return null;
+	}
 	const entry = (await entries[key]()) as TGuideEntry;
 	const index = flatSidebarShallow.findIndex((sidebarItem) => sidebarItem.pathname === pathname);
 	const prev = index - 1 >= 0 ? flatSidebarShallow[index - 1] : null;
