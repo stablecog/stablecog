@@ -14,6 +14,8 @@
 	import { rawRoutes } from '$ts/constants/routes';
 	import { navbarStickyType } from '$ts/stores/navbar';
 	import { navbarHeight } from '$ts/stores/navbarHeight';
+
+	$: homeHref = $page.url.pathname.startsWith('/docs/') ? '/docs' : '/generate';
 </script>
 
 <MetaTag
@@ -42,11 +44,7 @@
 							: $LL.Error.SomethingWentWrong()}
 				</p>
 			</div>
-			<Button
-				class="w-56 max-w-full"
-				href={$page.url.pathname.startsWith('/docs/') ? '/docs' : '/generate'}
-				>{$LL.Shared.GoHomeButton()}</Button
-			>
+			<Button class="w-56 max-w-full" href={homeHref}>{$LL.Shared.GoHomeButton()}</Button>
 		</div>
 	</div>
 	<Footer />
