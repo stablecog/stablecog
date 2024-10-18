@@ -12,6 +12,7 @@ import {
 	type TAvailableSchedulerId
 } from '$ts/constants/schedulers';
 import {
+	AvailableGenerationModelIdSchema,
 	generationModelIdDefault,
 	type TAvailableGenerationModelId
 } from '$ts/constants/generationModels';
@@ -83,7 +84,7 @@ export const inferenceSteps = writableLocal({
 export const modelId = writableLocal({
 	key: 'modelId',
 	defaultValue: generationModelIdDefault,
-	schema: z.string()
+	schema: AvailableGenerationModelIdSchema
 });
 
 export const schedulerId = writableLocal({

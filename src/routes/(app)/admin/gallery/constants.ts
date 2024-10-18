@@ -1,4 +1,7 @@
-import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
+import {
+	AvailableGenerationModelIdSchema,
+	type TAvailableGenerationModelId
+} from '$ts/constants/generationModels';
 import {
 	AvailableAspectRatiosSchema,
 	type TAvailableAspectRatio
@@ -23,14 +26,22 @@ export const adminGalleryModelIdFilters = writableSessionAndUrlParam<TAvailableG
 		key: 'adminGalleryModelIdFilters',
 		paramKey: 'mi',
 		defaultValue: [],
-		schema: z.array(z.string())
+		schema: z.array(AvailableGenerationModelIdSchema)
 	}
 );
+const usernameDisallowedStartChars = ['[', ']', '{', '}', '#', '@'];
 export const adminGalleryUsernameFilters = writableSessionAndUrlParam<string[]>({
 	key: 'adminGalleryUsernameFilters',
 	paramKey: 'un',
 	defaultValue: [],
-	schema: z.array(z.string())
+	schema: z.array(
+		z.string().refine(
+			(val) => {
+				return !usernameDisallowedStartChars.some((char) => val.startsWith(char));
+			},
+			{ message: 'Username cannot start with disallowed characters' }
+		)
+	)
 });
 export const adminGalleryAspectRatioFilters = writableSessionAndUrlParam<TAvailableAspectRatio[]>({
 	key: 'adminGalleryAspectRatioFilters',

@@ -1,4 +1,7 @@
-import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
+import {
+	AvailableGenerationModelIdSchema,
+	type TAvailableGenerationModelId
+} from '$ts/constants/generationModels';
 import {
 	AvailableAspectRatiosSchema,
 	type TAvailableAspectRatio
@@ -9,7 +12,7 @@ import type {
 } from '$ts/queries/galleryLike/types';
 import { getUserProfileFullOutputs } from '$ts/queries/galleryLike/userProfileOutputs';
 import { writableSessionAndUrlParam } from '$ts/stores/writableSessionAndUrlParam';
-import { z } from 'zod';
+import { array, z } from 'zod';
 
 export const userProfileSearchString = writableSessionAndUrlParam({
 	key: 'userProfileSearchString',
@@ -21,7 +24,7 @@ export const userProfileModelIdFilters = writableSessionAndUrlParam<TAvailableGe
 	key: 'userProfileModelIdFilters',
 	paramKey: 'mi',
 	defaultValue: [],
-	schema: z.array(z.string())
+	schema: array(AvailableGenerationModelIdSchema)
 });
 export const userProfileAspectRatioFilters = writableSessionAndUrlParam<TAvailableAspectRatio[]>({
 	key: 'userProfileAspectRatioFilters',

@@ -1,4 +1,7 @@
-import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
+import {
+	AvailableGenerationModelIdSchema,
+	type TAvailableGenerationModelId
+} from '$ts/constants/generationModels';
 import {
 	AvailableAspectRatiosSchema,
 	type TAvailableAspectRatio
@@ -14,18 +17,29 @@ export const gallerySearchString = writableSessionAndUrlParam<string>({
 	defaultValue: '',
 	schema: z.string()
 });
+
+const usernameDisallowedStartChars = ['[', ']', '{', '}', '#', '@'];
 export const galleryUsernameFilters = writableSessionAndUrlParam<string[]>({
 	key: 'galleryUsernameFilters',
 	paramKey: 'un',
 	defaultValue: [],
-	schema: z.array(z.string())
+	schema: z.array(
+		z.string().refine(
+			(val) => {
+				return !usernameDisallowedStartChars.some((char) => val.startsWith(char));
+			},
+			{
+				message: `Username cannot start with disallowed characters: ${usernameDisallowedStartChars.join(', ')}`
+			}
+		)
+	)
 });
 
 export const galleryModelIdFilters = writableSessionAndUrlParam<TAvailableGenerationModelId[]>({
 	key: 'galleryModelIdFilters',
 	paramKey: 'mi',
 	defaultValue: [],
-	schema: z.array(z.string())
+	schema: z.array(AvailableGenerationModelIdSchema)
 });
 
 export const galleryAspectRatioFilters = writableSessionAndUrlParam<TAvailableAspectRatio[]>({
@@ -35,16 +49,16 @@ export const galleryAspectRatioFilters = writableSessionAndUrlParam<TAvailableAs
 	schema: z.array(AvailableAspectRatiosSchema)
 });
 
-export const mainSortViewDefault = 'new';
 export const mainSorts = ['new', 'trending', 'top'] as const;
-export const MainSortsSchema = z.enum(mainSorts).default(mainSortViewDefault);
+export const MainSortsSchema = z.enum(mainSorts);
 export type TGalleryMainSort = z.infer<typeof MainSortsSchema>;
+export const mainSortViewDefault: TGalleryMainSort = 'new';
 export const sortsDefault: TGalleryMainSort[] = [mainSortViewDefault];
 export const gallerySorts = writableSessionAndUrlParam({
 	key: 'gallerySorts',
 	paramKey: 'sort',
 	defaultValue: sortsDefault,
-	schema: z.array(MainSortsSchema)
+	schema: z.array(MainSortsSchema).default(sortsDefault)
 });
 
 export const getGalleryInfiniteQueryKey = ({
@@ -88,7 +102,7 @@ export function getGalleryInfiniteQueryProps({
 	accessToken
 }: {
 	searchString?: string | null;
-	modelIdFilters?: string[];
+	modelIdFilters?: TAvailableGenerationModelId[];
 	aspectRatioFilters?: string[];
 	sorts?: string[];
 	usernameFilters?: string[];

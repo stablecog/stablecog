@@ -2,6 +2,7 @@ import LL from '$i18n/i18n-svelte';
 import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
 import type { TTab } from '$ts/types/main';
 import { derived, type Readable } from 'svelte/store';
+import { z } from 'zod';
 
 const sdSharedSchedulerIds: TAvailableSchedulerId[] = [
 	'6fb13b76-9900-4fa4-abf8-8f843e034a7f',
@@ -21,14 +22,30 @@ const kandinsky22SchedulerIds: TAvailableSchedulerId[] = [
 	'9d175114-9a26-4371-861c-729ba9ecb4da'
 ];
 
-export const generationModels: {
-	[key: string]: {
+export const availableGenerationModelIds = [
+	'0a99668b-45bd-4f7e-aa9c-f9aaa41ef13b',
+	'986d447d-c38b-4218-a2c8-6e0b691f47ec',
+	'9fa49c00-109d-430f-9ddd-449f02e2c71a',
+	'4e54440f-ee17-4712-b4b6-0671b94d685d',
+	'8002bc51-7260-468f-8840-cf1e6dbe3f8a',
+	'b6c1372f-31a7-457c-907c-d292a6ffef97',
+	'fc06f6ab-ed14-4186-a7c0-aaec288d4f38',
+	'f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9'
+] as const;
+
+export const AvailableGenerationModelIdSchema = z.enum(availableGenerationModelIds);
+
+export type TAvailableGenerationModelId = z.infer<typeof AvailableGenerationModelIdSchema>;
+
+export const generationModels: Record<
+	string,
+	{
 		name: string;
 		supportedSchedulerIds: TAvailableSchedulerId[];
 		active?: boolean;
 		img2imgNotSupported?: boolean;
-	};
-} = {
+	}
+> = {
 	'0a99668b-45bd-4f7e-aa9c-f9aaa41ef13b': {
 		name: 'FLUX.1',
 		supportedSchedulerIds: sdSharedSchedulerIds,
@@ -100,18 +117,23 @@ export const generationModels: {
 export const generationModelIdDefault: TAvailableGenerationModelId =
 	'0a99668b-45bd-4f7e-aa9c-f9aaa41ef13b';
 
-export const availableGenerationModelIds = Object.keys(generationModels).filter(
-	(k) => generationModels[k].active !== false
-) as TAvailableGenerationModelId[];
-
 export const modelIdToDisplayName = derived<
 	[Readable<TranslationFunctions>],
 	Record<TAvailableGenerationModelId, string>
 >([LL], ([$LL]) => {
-	let obj: Record<TAvailableGenerationModelId, string> = {};
+	let obj: Record<TAvailableGenerationModelId, string> = {
+		'0a99668b-45bd-4f7e-aa9c-f9aaa41ef13b': 'FLUX.1',
+		'986d447d-c38b-4218-a2c8-6e0b691f47ec': 'Stable Diffusion 3',
+		'9fa49c00-109d-430f-9ddd-449f02e2c71a': 'Kandinsky 2.2',
+		'4e54440f-ee17-4712-b4b6-0671b94d685d': 'SSD-1B',
+		'8002bc51-7260-468f-8840-cf1e6dbe3f8a': 'SDXL',
+		'b6c1372f-31a7-457c-907c-d292a6ffef97': 'Luna Diffusion',
+		'fc06f6ab-ed14-4186-a7c0-aaec288d4f38': '22h Diffusion',
+		'f7f3d973-ac6f-4a7a-9db8-e89e4fba03a9': 'Waifu Diffusion'
+	};
 	for (const modelId in generationModels) {
-		// @ts-ignore
-		obj[modelId as TAvailableGenerationModelId] = $LL.Shared.ModelOptions[modelId].realName();
+		obj[modelId as TAvailableGenerationModelId] =
+			$LL.Shared.ModelOptions[modelId as TAvailableGenerationModelId].realName();
 	}
 	return obj;
 });
@@ -158,5 +180,4 @@ export const availableModelIdDropdownItems = derived(
 	}
 );
 
-export type TAvailableGenerationModelId = string;
 export type TGenerationModelNameCog = (typeof generationModels)[TAvailableGenerationModelId];
