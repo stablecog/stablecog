@@ -36,15 +36,18 @@ export function writableShared<T>({
 	}
 
 	const localSet: typeof internalSet = (params) => {
-		if (!browser || !storage) return;
 		try {
 			const value = schema.parse(params);
 			const valueStr = JSON.stringify(value);
-			storage.setItem(key, valueStr);
+			if (browser && storage) {
+				storage.setItem(key, valueStr);
+			}
 			internalSet(value);
 		} catch (error) {
 			console.log(`Error parsing local storage variable "${key}"`, error);
-			storage.removeItem(key);
+			if (browser && storage) {
+				storage.removeItem(key);
+			}
 		}
 	};
 
