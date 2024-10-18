@@ -1,37 +1,44 @@
 import { browser } from '$app/environment';
-import { localWritable as writable } from '@macfja/svelte-persistent-store';
-import { get } from 'svelte/store';
+import { writableSession } from '$ts/stores/writableLocal';
+import { z } from 'zod';
 
-export function localAndUrlParamWritable<T>(key: string, paramKey: string, defaultValue: T) {
+export function writableSessionAndUrlParam<T>({
+	key,
+	paramKey,
+	defaultValue,
+	schema
+}: {
+	key: string;
+	paramKey: string;
+	defaultValue: T;
+	schema: z.Schema<T>;
+}) {
 	const {
 		set: _set,
 		delete: _delete,
 		subscribe: _subscribe,
 		update: _update
-	} = writable<T>(key, defaultValue);
+	} = writableSession({
+		key,
+		defaultValue,
+		schema
+	});
 
 	const set: typeof _set = (params) => {
-		setUrlSearchParam({ key: paramKey, value: params, defaultValue });
 		_set(params);
+		setUrlSearchParam({ key: paramKey, value: params, defaultValue });
 	};
 
 	const del: typeof _delete = () => {
 		_delete();
 	};
 
-	const subscribe: typeof _subscribe = (run, invalidate) => {
-		const unsubscribe = _subscribe(run, invalidate);
-		const currentValue = get({ subscribe: _subscribe });
-		setUrlSearchParam({ key: paramKey, value: currentValue, defaultValue });
-		return unsubscribe;
+	const subscribe: typeof _subscribe = (params) => {
+		return _subscribe(params);
 	};
 
-	const update: typeof _update = (updater) => {
-		_update((currentValue) => {
-			const newValue = updater(currentValue);
-			setUrlSearchParam({ key: paramKey, value: newValue, defaultValue });
-			return newValue;
-		});
+	const update: typeof _update = (params) => {
+		_update(params);
 	};
 
 	return {

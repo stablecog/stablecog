@@ -1,6 +1,7 @@
 import LL from '$i18n/i18n-svelte';
 import type { TTab } from '$ts/types/main';
 import { derived, type Readable } from 'svelte/store';
+import { z } from 'zod';
 
 const aspectRatioRounding = Math.pow(10, 3);
 
@@ -34,7 +35,8 @@ export const availableWidths = [
 	'1280',
 	'1536'
 ] as const;
-export type TAvailableWidth = (typeof availableWidths)[number];
+export const AvailableWidthsSchema = z.enum(availableWidths);
+export type TAvailableWidth = z.infer<typeof AvailableWidthsSchema>;
 export const widthTabs: TTab<TAvailableWidth>[] = [
 	{ label: '320', value: '320' },
 	{ label: '384', value: '384' },
@@ -91,7 +93,8 @@ export const availableHeights = [
 	'1280',
 	'1536'
 ] as const;
-export type TAvailableHeight = (typeof availableWidths)[number];
+export const AvailableHeightsSchema = z.enum(availableHeights);
+export type TAvailableHeight = z.infer<typeof AvailableHeightsSchema>;
 export const heightTabs: TTab<TAvailableHeight>[] = [
 	{ label: '320', value: '320' },
 	{ label: '384', value: '384' },
@@ -123,8 +126,8 @@ export const availableAspectRatioValues = availableAspectRatios.map((ratio) => {
 	const [width, height] = ratio.split(':');
 	return aspectRatioRounded(parseFloat(width) / parseFloat(height));
 });
-
-export type TAvailableAspectRatio = (typeof availableAspectRatios)[number];
+export const AvailableAspectRatiosSchema = z.enum(availableAspectRatios);
+export type TAvailableAspectRatio = z.infer<typeof AvailableAspectRatiosSchema>;
 export const aspectRatioTabs: TTab<TAvailableAspectRatio>[] = [
 	{ label: '1:1', value: '1:1' },
 	{ label: '4:5', value: '4:5' },

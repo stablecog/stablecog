@@ -1,4 +1,11 @@
-import type { Locales } from '$i18n/i18n-types';
-import { writable as writableLocal } from '@macfja/svelte-persistent-store';
+import { locales } from '$i18n/i18n-util';
+import { writableLocal } from '$ts/stores/writableLocal';
+import { z } from 'zod';
 
-export const localeLS = writableLocal<Locales | undefined>('localeLS', undefined);
+export const localeEnum = z.enum(locales as unknown as [Locales, ...Locales[]]).nullable();
+
+export const localeLS = writableLocal({
+	key: 'localeLS',
+	defaultValue: null,
+	schema: localeEnum
+});

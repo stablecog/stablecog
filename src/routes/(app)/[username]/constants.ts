@@ -1,27 +1,34 @@
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
-import type { TAvailableAspectRatio } from '$ts/constants/generationSize';
+import {
+	AvailableAspectRatiosSchema,
+	type TAvailableAspectRatio
+} from '$ts/constants/generationSize';
 import type {
 	TGalleryFullOutputsPage,
 	TGalleryLikeQueryProps
 } from '$ts/queries/galleryLike/types';
 import { getUserProfileFullOutputs } from '$ts/queries/galleryLike/userProfileOutputs';
-import { sessionAndUrlParamWritable } from '$ts/stores/sessionAndUrlParamStore';
+import { writableSessionAndUrlParam } from '$ts/stores/writableSessionAndUrlParam';
+import { z } from 'zod';
 
-export const userProfileSearchString = sessionAndUrlParamWritable<string>(
-	'userProfileSearchString',
-	'q',
-	''
-);
-export const userProfileModelIdFilters = sessionAndUrlParamWritable<TAvailableGenerationModelId[]>(
-	'userProfileModelIdFilters',
-	'mi',
-	[]
-);
-export const userProfileAspectRatioFilters = sessionAndUrlParamWritable<TAvailableAspectRatio[]>(
-	'userProfileAspectRatioFilters',
-	'ar',
-	[]
-);
+export const userProfileSearchString = writableSessionAndUrlParam({
+	key: 'userProfileSearchString',
+	paramKey: 'q',
+	defaultValue: '',
+	schema: z.string()
+});
+export const userProfileModelIdFilters = writableSessionAndUrlParam<TAvailableGenerationModelId[]>({
+	key: 'userProfileModelIdFilters',
+	paramKey: 'mi',
+	defaultValue: [],
+	schema: z.array(z.string())
+});
+export const userProfileAspectRatioFilters = writableSessionAndUrlParam<TAvailableAspectRatio[]>({
+	key: 'userProfileAspectRatioFilters',
+	paramKey: 'ar',
+	defaultValue: [],
+	schema: z.array(AvailableAspectRatiosSchema)
+});
 
 export const getUserProfileInfiniteQueryKey = ({
 	searchString,

@@ -1,30 +1,47 @@
-import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
+import { AvailableAspectRatiosSchema } from '$ts/constants/generationSize';
+import { writableLocal } from '$ts/stores/writableLocal';
+import { writableSessionAndUrlParam } from '$ts/stores/writableSessionAndUrlParam';
 import { derived, writable } from 'svelte/store';
 import { z } from 'zod';
-import { localWritable } from '@macfja/svelte-persistent-store';
-import type { TAvailableAspectRatio } from '$ts/constants/generationSize';
-import { sessionAndUrlParamWritable } from '$ts/stores/sessionAndUrlParamStore';
 
-export const userGalleryActionableItems = localWritable<TUserGalleryActionableItem[]>(
-	'user_gallery_actionable_items',
-	[]
-);
+export interface TUserGalleryActionableItem {
+	output_id: string;
+	generation_id: string;
+	view: TUserGalleryView;
+}
 
-export const userGalleryCurrentView = sessionAndUrlParamWritable<TUserGalleryView>(
-	'userGalleryCurrentView',
-	'view',
-	'all'
-);
-export const userGalleryModelIdFilters = sessionAndUrlParamWritable<TAvailableGenerationModelId[]>(
-	'userGalleryModelIdFilters',
-	'mi',
-	[]
-);
-export const userGalleryAspectRatioFilters = sessionAndUrlParamWritable<TAvailableAspectRatio[]>(
-	'userGalleryAspectRatioFilters',
-	'ar',
-	[]
-);
+export const TUserGalleryViewSchema = z.enum(['all', 'favorites', 'likes']).default('all');
+export type TUserGalleryView = z.infer<typeof TUserGalleryViewSchema>;
+export const TUserGalleryActionableItemSchema = z.object({
+	output_id: z.string(),
+	generation_id: z.string(),
+	view: TUserGalleryViewSchema
+});
+
+export const userGalleryActionableItems = writableLocal({
+	key: 'user_gallery_actionable_items',
+	defaultValue: [],
+	schema: z.array(TUserGalleryActionableItemSchema)
+});
+
+export const userGalleryCurrentView = writableSessionAndUrlParam({
+	key: 'userGalleryCurrentView',
+	paramKey: 'view',
+	defaultValue: 'all',
+	schema: TUserGalleryViewSchema
+});
+export const userGalleryModelIdFilters = writableSessionAndUrlParam({
+	key: 'userGalleryModelIdFilters',
+	paramKey: 'mi',
+	defaultValue: [],
+	schema: z.array(z.string())
+});
+export const userGalleryAspectRatioFilters = writableSessionAndUrlParam({
+	key: 'userGalleryAspectRatioFilters',
+	paramKey: 'ar',
+	defaultValue: [],
+	schema: z.array(AvailableAspectRatiosSchema)
+});
 export const isUserGalleryEditActive = writable<boolean>(false);
 
 export const userGallerySelectedOutputObjects = derived(
@@ -40,12 +57,3 @@ export const userGallerySelectedOutputIds = derived(
 		return $userGallerySelectedOutputObjects.map((i) => i.output_id);
 	}
 );
-
-export interface TUserGalleryActionableItem {
-	output_id: string;
-	generation_id: string;
-	view: TUserGalleryView;
-}
-
-export const TUserGalleryViewSchema = z.enum(['all', 'favorites', 'likes']).default('all');
-export type TUserGalleryView = z.infer<typeof TUserGalleryViewSchema>;

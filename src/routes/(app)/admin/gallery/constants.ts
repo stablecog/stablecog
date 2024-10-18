@@ -1,33 +1,43 @@
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
-import type { TAvailableAspectRatio } from '$ts/constants/generationSize';
+import {
+	AvailableAspectRatiosSchema,
+	type TAvailableAspectRatio
+} from '$ts/constants/generationSize';
 import { getAdminFullOutputs } from '$ts/queries/galleryLike/adminOutputs';
 import type {
 	TGalleryFullOutputsPage,
 	TGalleryLikeQueryProps
 } from '$ts/queries/galleryLike/types';
-import { sessionAndUrlParamWritable } from '$ts/stores/sessionAndUrlParamStore';
+import { writableSessionAndUrlParam } from '$ts/stores/writableSessionAndUrlParam';
 import type { TGalleryStatus } from '$ts/stores/user/generation';
+import { z } from 'zod';
 
-export const adminGallerySearchString = sessionAndUrlParamWritable<string>(
-	'adminGallerySearchString',
-	'q',
-	''
+export const adminGallerySearchString = writableSessionAndUrlParam<string>({
+	key: 'adminGallerySearchString',
+	paramKey: 'q',
+	defaultValue: '',
+	schema: z.string()
+});
+export const adminGalleryModelIdFilters = writableSessionAndUrlParam<TAvailableGenerationModelId[]>(
+	{
+		key: 'adminGalleryModelIdFilters',
+		paramKey: 'mi',
+		defaultValue: [],
+		schema: z.array(z.string())
+	}
 );
-export const adminGalleryModelIdFilters = sessionAndUrlParamWritable<TAvailableGenerationModelId[]>(
-	'adminGalleryModelIdFilters',
-	'mi',
-	[]
-);
-export const adminGalleryUsernameFilters = sessionAndUrlParamWritable<string[]>(
-	'adminGalleryUsernameFilters',
-	'un',
-	[]
-);
-export const adminGalleryAspectRatioFilters = sessionAndUrlParamWritable<TAvailableAspectRatio[]>(
-	'adminGalleryAspectRatioFilters',
-	'ar',
-	[]
-);
+export const adminGalleryUsernameFilters = writableSessionAndUrlParam<string[]>({
+	key: 'adminGalleryUsernameFilters',
+	paramKey: 'un',
+	defaultValue: [],
+	schema: z.array(z.string())
+});
+export const adminGalleryAspectRatioFilters = writableSessionAndUrlParam<TAvailableAspectRatio[]>({
+	key: 'adminGalleryAspectRatioFilters',
+	paramKey: 'ar',
+	defaultValue: [],
+	schema: z.array(AvailableAspectRatiosSchema)
+});
 
 export const getAdminFullOutputsQueryKey = ({
 	adminGalleryCurrentFilter,

@@ -2,15 +2,17 @@ import type { TAvailableGenerationModelId } from '$ts/constants/generationModels
 import type { TAvailableAspectRatio } from '$ts/constants/generationSize';
 import { getHistoryFullOutputs } from '$ts/queries/galleryLike/historyOutputs';
 import type { TGalleryLikeQueryProps } from '$ts/queries/galleryLike/types';
-import { sessionAndUrlParamWritable } from '$ts/stores/sessionAndUrlParamStore';
+import { writableSessionAndUrlParam } from '$ts/stores/writableSessionAndUrlParam';
 import type { TUserGalleryView } from '$ts/stores/user/gallery';
 import type { Session } from '@supabase/supabase-js';
+import { z } from 'zod';
 
-export const userGallerySearchString = sessionAndUrlParamWritable<string>(
-	'userGallerySearchString',
-	'q',
-	''
-);
+export const userGallerySearchString = writableSessionAndUrlParam<string>({
+	key: 'userGallerySearchString',
+	paramKey: 'q',
+	defaultValue: '',
+	schema: z.string()
+});
 
 export const getHistoryInfiniteQueryKey = ({
 	userGalleryCurrentView,

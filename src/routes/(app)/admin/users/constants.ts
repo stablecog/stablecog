@@ -1,13 +1,16 @@
-import { sessionAndUrlParamWritable } from '$ts/stores/sessionAndUrlParamStore';
+import { writableSessionAndUrlParam } from '$ts/stores/writableSessionAndUrlParam';
+import { z } from 'zod';
 
-export const adminPanelUsersSearchString = sessionAndUrlParamWritable<string>(
-	'adminPanelUserSearchString',
-	'q',
-	''
-);
+export const adminPanelUsersSearchString = writableSessionAndUrlParam<string>({
+	key: 'adminPanelUserSearchString',
+	paramKey: 'q',
+	defaultValue: '',
+	schema: z.string()
+});
 
-export const adminPanelUsersView = sessionAndUrlParamWritable<string>(
-	'adminPanelUsersView',
-	'view',
-	''
-);
+export const adminPanelUsersView = writableSessionAndUrlParam<string>({
+	key: 'adminPanelUsersView',
+	paramKey: 'view',
+	defaultValue: '',
+	schema: z.string()
+});

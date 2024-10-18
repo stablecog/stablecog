@@ -1,5 +1,10 @@
-import { writable as writableLocal } from '@macfja/svelte-persistent-store';
+import { writableLocal } from '$ts/stores/writableLocal';
 import { writable } from 'svelte/store';
+import { z } from 'zod';
 
-export const advancedMode = writableLocal<boolean | null>('advancedMode', null);
-export const advancedModeApp = writable<boolean>(false);
+export const advancedMode = writableLocal({
+	key: 'advancedMode',
+	defaultValue: null,
+	schema: z.boolean()
+});
+export const advancedModeApp = writable(false);

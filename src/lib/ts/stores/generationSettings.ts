@@ -1,62 +1,104 @@
-import { writable as writableLocal } from '@macfja/svelte-persistent-store';
 import {
+	AvailableInferenceStepsSchema,
 	guidanceScaleDefault,
 	initImageStrengthDefault,
 	numOutputsDefault
 } from '$ts/constants/main';
 import { inferenceStepsDefault, type TAvailableInferenceSteps } from '$ts/constants/main';
 import { writable } from 'svelte/store';
-import { schedulerIdDefault, type TAvailableSchedulerId } from '$ts/constants/schedulers';
+import {
+	AvailableSchedulerIdSchema,
+	schedulerIdDefault,
+	type TAvailableSchedulerId
+} from '$ts/constants/schedulers';
 import {
 	generationModelIdDefault,
 	type TAvailableGenerationModelId
 } from '$ts/constants/generationModels';
 import {
 	aspectRatioDefault,
+	AvailableAspectRatiosSchema,
+	AvailableHeightsSchema,
+	AvailableWidthsSchema,
 	heightDefault,
 	widthDefault,
 	type TAvailableAspectRatio,
 	type TAvailableHeight,
 	type TAvailableWidth
 } from '$ts/constants/generationSize';
+import { writableLocal } from '$ts/stores/writableLocal';
+import { z } from 'zod';
 
-export const prompt = writableLocal<string | null>('prompt', null);
-export const negativePrompt = writableLocal<string | null>('negativePrompt', null);
-
-export const imageSize = writableLocal<TImageSize>('imageSize', {
-	width: widthDefault,
-	height: heightDefault,
-	aspectRatio: aspectRatioDefault
+export const prompt = writableLocal({
+	key: 'prompt',
+	defaultValue: null,
+	schema: z.string().nullable()
+});
+export const negativePrompt = writableLocal({
+	key: 'negativePrompt',
+	defaultValue: null,
+	schema: z.string().nullable()
 });
 
-export const initImageStrength = writableLocal<number>(
-	'initImageStrength',
-	initImageStrengthDefault
-);
+export const ImageSizeSchema = z.object({
+	width: AvailableWidthsSchema,
+	height: AvailableHeightsSchema,
+	aspectRatio: AvailableAspectRatiosSchema
+});
 
-export const seed = writableLocal<number | null>('seed', null);
+export const imageSize = writableLocal<TImageSize>({
+	key: 'imageSize',
+	defaultValue: {
+		width: widthDefault,
+		height: heightDefault,
+		aspectRatio: aspectRatioDefault
+	},
+	schema: ImageSizeSchema
+});
 
-export const guidanceScale = writableLocal<number>('guidanceScale', guidanceScaleDefault);
+export const initImageStrength = writableLocal({
+	key: 'initImageStrength',
+	defaultValue: initImageStrengthDefault,
+	schema: z.number()
+});
 
-export const inferenceSteps = writableLocal<TAvailableInferenceSteps>(
-	'inferenceSteps',
-	inferenceStepsDefault
-);
+export const seed = writableLocal({
+	key: 'seed',
+	defaultValue: null,
+	schema: z.number().nullable()
+});
 
-export const modelId = writableLocal<TAvailableGenerationModelId>(
-	'modelId',
-	generationModelIdDefault
-);
+export const guidanceScale = writableLocal({
+	key: 'guidanceScale',
+	defaultValue: guidanceScaleDefault,
+	schema: z.number()
+});
 
-export const schedulerId = writableLocal<TAvailableSchedulerId>('schedulerId', schedulerIdDefault);
+export const inferenceSteps = writableLocal({
+	key: 'inferenceSteps',
+	defaultValue: inferenceStepsDefault,
+	schema: AvailableInferenceStepsSchema
+});
 
-export const numOutputs = writableLocal<number>('numOutputs', numOutputsDefault);
+export const modelId = writableLocal({
+	key: 'modelId',
+	defaultValue: generationModelIdDefault,
+	schema: z.string()
+});
 
-export interface TImageSize {
-	width: TAvailableWidth;
-	height: TAvailableHeight;
-	aspectRatio: TAvailableAspectRatio;
-}
+export const schedulerId = writableLocal({
+	key: 'schedulerId',
+	defaultValue: schedulerIdDefault,
+	schema: AvailableSchedulerIdSchema
+});
+
+export const numOutputs = writableLocal<number>({
+	key: 'numOutputs',
+	defaultValue: numOutputsDefault,
+	schema: z.number()
+});
+
+export type TImageSize = z.infer<typeof ImageSizeSchema>;
 
 export const generationPrompt = writable<string | undefined>(undefined);
 export const generationNegativePrompt = writable<string | undefined>(undefined);

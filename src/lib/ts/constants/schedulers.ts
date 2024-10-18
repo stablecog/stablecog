@@ -2,6 +2,19 @@ import LL from '$i18n/i18n-svelte';
 import type { TTab } from '$ts/types/main';
 import { derived, type Readable } from 'svelte/store';
 
+import { z } from 'zod';
+
+export const AvailableSchedulerIdSchema = z.enum([
+	'6fb13b76-9900-4fa4-abf8-8f843e034a7f',
+	'af2679a4-dbbb-4950-8c06-c3bb15416ef6',
+	'9d175114-9a26-4371-861c-729ba9ecb4da',
+	'55027f8b-f046-4e71-bc51-53d5448661e0',
+	'82cf78dd-6afb-48cc-aca6-14224cca6950',
+	'b7224e56-1440-43b9-ac86-66d66f9e8c91',
+	'cc1b8dbf-0aec-4e52-8110-8082506fb7ba',
+	'01e94c28-501d-4c6d-8f00-079f3230bf58'
+]);
+
 export const schedulerIdToSchedulerNameCog = {
 	'6fb13b76-9900-4fa4-abf8-8f843e034a7f': 'K_EULER',
 	'af2679a4-dbbb-4950-8c06-c3bb15416ef6': 'K_EULER_ANCESTRAL',

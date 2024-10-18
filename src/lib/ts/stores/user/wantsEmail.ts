@@ -1,3 +1,8 @@
-import { writable as writableLocal } from '@macfja/svelte-persistent-store';
+import { writableLocal } from '$ts/stores/writableLocal';
+import { z } from 'zod';
 
-export const wantsEmail = writableLocal<boolean | null>('wantsEmail', null);
+export const wantsEmail = writableLocal({
+	key: 'wantsEmail',
+	defaultValue: null,
+	schema: z.boolean().nullable()
+});

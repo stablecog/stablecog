@@ -1,41 +1,51 @@
 import type { TAvailableGenerationModelId } from '$ts/constants/generationModels';
-import type { TAvailableAspectRatio } from '$ts/constants/generationSize';
+import {
+	AvailableAspectRatiosSchema,
+	type TAvailableAspectRatio
+} from '$ts/constants/generationSize';
 import { getGalleryFullOutputs } from '$ts/queries/galleryLike/galleryOutputs';
 import type { TGalleryLikeQueryProps } from '$ts/queries/galleryLike/types';
-import { sessionAndUrlParamWritable } from '$ts/stores/sessionAndUrlParamStore';
+import { writableSessionAndUrlParam } from '$ts/stores/writableSessionAndUrlParam';
+import { z } from 'zod';
 
-export const gallerySearchString = sessionAndUrlParamWritable<string>(
-	'gallerySearchString',
-	'q',
-	''
-);
-export const galleryUsernameFilters = sessionAndUrlParamWritable<string[]>(
-	'galleryUsernameFilters',
-	'un',
-	[]
-);
+export const gallerySearchString = writableSessionAndUrlParam<string>({
+	key: 'gallerySearchString',
+	paramKey: 'q',
+	defaultValue: '',
+	schema: z.string()
+});
+export const galleryUsernameFilters = writableSessionAndUrlParam<string[]>({
+	key: 'galleryUsernameFilters',
+	paramKey: 'un',
+	defaultValue: [],
+	schema: z.array(z.string())
+});
 
-export const galleryModelIdFilters = sessionAndUrlParamWritable<TAvailableGenerationModelId[]>(
-	'galleryModelIdFilters',
-	'mi',
-	[]
-);
+export const galleryModelIdFilters = writableSessionAndUrlParam<TAvailableGenerationModelId[]>({
+	key: 'galleryModelIdFilters',
+	paramKey: 'mi',
+	defaultValue: [],
+	schema: z.array(z.string())
+});
 
-export const galleryAspectRatioFilters = sessionAndUrlParamWritable<TAvailableAspectRatio[]>(
-	'galleryAspectRatioFilters',
-	'ar',
-	[]
-);
+export const galleryAspectRatioFilters = writableSessionAndUrlParam<TAvailableAspectRatio[]>({
+	key: 'galleryAspectRatioFilters',
+	paramKey: 'ar',
+	defaultValue: [],
+	schema: z.array(AvailableAspectRatiosSchema)
+});
 
 export const mainSortViewDefault = 'new';
 export const mainSorts = ['new', 'trending', 'top'] as const;
-export type TGalleryMainSort = (typeof mainSorts)[number];
+export const MainSortsSchema = z.enum(mainSorts).default(mainSortViewDefault);
+export type TGalleryMainSort = z.infer<typeof MainSortsSchema>;
 export const sortsDefault: TGalleryMainSort[] = [mainSortViewDefault];
-export const gallerySorts = sessionAndUrlParamWritable<TGalleryMainSort[]>(
-	'gallerySorts',
-	'sort',
-	sortsDefault
-);
+export const gallerySorts = writableSessionAndUrlParam({
+	key: 'gallerySorts',
+	paramKey: 'sort',
+	defaultValue: sortsDefault,
+	schema: z.array(MainSortsSchema)
+});
 
 export const getGalleryInfiniteQueryKey = ({
 	searchString,

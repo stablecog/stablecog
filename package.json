@@ -68,7 +68,6 @@
 	"dependencies": {
 		"@felte/validator-zod": "^1.0.17",
 		"@floating-ui/core": "^1.6.0",
-		"@macfja/svelte-persistent-store": "^2.4.1",
 		"@melt-ui/svelte": "^0.70.0",
 		"@sentry/sveltekit": "^8.34.0",
 		"@supabase/ssr": "^0.5.1",

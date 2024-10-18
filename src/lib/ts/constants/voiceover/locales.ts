@@ -3,21 +3,27 @@ import { locale } from '$i18n/i18n-svelte';
 import { languageName } from '$ts/helpers/language';
 import type { TTab } from '$ts/types/main';
 import { derived } from 'svelte/store';
+import { z } from 'zod';
 
-export type TVoiceoverLocale =
-	| 'de'
-	| 'en'
-	| 'es'
-	| 'fr'
-	| 'hi'
-	| 'it'
-	| 'ja'
-	| 'ko'
-	| 'pl'
-	| 'pt'
-	| 'ru'
-	| 'tr'
-	| 'zh';
+export const availableVoiceoverLocales = [
+	'de',
+	'en',
+	'es',
+	'fr',
+	'hi',
+	'it',
+	'ja',
+	'ko',
+	'pl',
+	'pt',
+	'ru',
+	'tr',
+	'zh'
+] as const;
+
+export const AvailableVoiceoverLocaleSchema = z.enum(availableVoiceoverLocales);
+
+export type TVoiceoverLocale = z.infer<typeof AvailableVoiceoverLocaleSchema>;
 
 export const voiceoverLocaleDropdownItems = derived([locale], ([$locale]) => {
 	const items: TTab<TVoiceoverLocale>[] = [

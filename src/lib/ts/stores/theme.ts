@@ -1,7 +1,14 @@
-import { writable as writableLocal } from '@macfja/svelte-persistent-store';
+import { writableLocal } from '$ts/stores/writableLocal';
 import { writable } from 'svelte/store';
+import { z } from 'zod';
 
-export const theme = writableLocal<TAvailableTheme | null>('theme', null);
+const themeSchema = z.enum(['light', 'dark']).nullable();
+
+export const theme = writableLocal<TAvailableTheme | null>({
+	key: 'theme',
+	defaultValue: null,
+	schema: themeSchema
+});
 export const themeApp = writable<TAvailableTheme>('dark');
 
-export type TAvailableTheme = 'light' | 'dark';
+export type TAvailableTheme = z.infer<typeof themeSchema>;

@@ -1,18 +1,29 @@
-import type { TGalleryStatus } from '$ts/stores/user/generation';
+import { TGalleryStatusSchema, type TGalleryStatus } from '$ts/stores/user/generation';
 import { derived, writable } from 'svelte/store';
-import { writable as writableLocal } from '@macfja/svelte-persistent-store';
-import { sessionAndUrlParamWritable } from '$ts/stores/sessionAndUrlParamStore';
+import { writableSessionAndUrlParam } from '$ts/stores/writableSessionAndUrlParam';
+import { writableLocal } from '$ts/stores/writableLocal';
+import { z } from 'zod';
 
-export const adminGalleryActionableItems = writableLocal<TAdminGalleryActionableItem[]>(
-	'admin_gallery_actionable_items',
-	[]
-);
-export const adminGalleryCurrentFilterDefault = 'submitted_best';
-export const adminGalleryCurrentFilter = sessionAndUrlParamWritable<TGalleryStatus>(
-	'adminGalleryCurrentView',
-	'view',
-	adminGalleryCurrentFilterDefault
-);
+export const adminGalleryActionableItemSchema = z.object({
+	output_id: z.string(),
+	generation_id: z.string(),
+	filter: TGalleryStatusSchema
+});
+
+export type TAdminGalleryActionableItem = z.infer<typeof adminGalleryActionableItemSchema>;
+
+export const adminGalleryActionableItems = writableLocal({
+	key: 'admin_gallery_actionable_items',
+	defaultValue: [],
+	schema: z.array(adminGalleryActionableItemSchema)
+});
+export const adminGalleryCurrentFilterDefault: TGalleryStatus = 'submitted_best';
+export const adminGalleryCurrentFilter = writableSessionAndUrlParam({
+	key: 'adminGalleryCurrentView',
+	paramKey: 'view',
+	defaultValue: adminGalleryCurrentFilterDefault,
+	schema: TGalleryStatusSchema
+});
 export const adminFullOutputsQueryKey = writable<string[]>(undefined);
 
 export const adminGallerySelectedOutputObjects = derived(
@@ -32,9 +43,3 @@ export const adminGallerySelectedOutputIds = derived(
 export const isAdminGalleryEditActive = writable<boolean>(false);
 
 export type TAdminGalleryAction = 'approve' | 'reject' | 'waiting_for_approval';
-
-export interface TAdminGalleryActionableItem {
-	output_id: string;
-	generation_id: string;
-	filter: TGalleryStatus;
-}

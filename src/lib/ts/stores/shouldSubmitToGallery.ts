@@ -1,3 +1,8 @@
-import { writable as writableLocal } from '@macfja/svelte-persistent-store';
+import { writableLocal } from '$ts/stores/writableLocal';
+import { z } from 'zod';
 
-export const shouldSubmitToGallery = writableLocal<boolean | null>('shouldSubmitToGallery', null);
+export const shouldSubmitToGallery = writableLocal({
+	key: 'shouldSubmitToGallery',
+	defaultValue: null,
+	schema: z.boolean().nullable()
+});

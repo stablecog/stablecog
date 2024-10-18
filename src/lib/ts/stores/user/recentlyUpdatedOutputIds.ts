@@ -1,9 +1,14 @@
 import { activeGeneration } from '$ts/stores/user/generation';
+import { writableLocal } from '$ts/stores/writableLocal';
 import { get } from 'svelte/store';
-import { writable as writableLocal } from '@macfja/svelte-persistent-store';
+import { z } from 'zod';
 
 const maxItems = 50;
-export const recentlyUpdatedOutputIds = writableLocal<string[]>('recentlyUpdatedOutputIds', []);
+export const recentlyUpdatedOutputIds = writableLocal<string[]>({
+	key: 'recentlyUpdatedOutputIds',
+	defaultValue: [],
+	schema: z.array(z.string())
+});
 
 export const addToRecentlyUpdatedOutputIds = (output_id: string) => {
 	recentlyUpdatedOutputIds.update(($recentlyUpdatedOutputIds) => {

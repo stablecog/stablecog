@@ -1,20 +1,23 @@
 import type { TGeneration } from '$ts/stores/user/generation';
-import { writable as writableLocal } from '@macfja/svelte-persistent-store';
+import { writableLocal } from '$ts/stores/writableLocal';
 import { writable } from 'svelte/store';
+import { z } from 'zod';
 
 const defaultUpscaleDurationMs = 20000;
 const defaultGenerationDurationPerOutputMs = 10000;
 const defaultGenerationCostCompletionPerMs = 105;
 
 export const estimatedGenerationDurationMs = writable(defaultGenerationDurationPerOutputMs);
-export const generationCostCompletionPerMs = writableLocal<number | null>(
-	'generationCostCompletionPerMs',
-	defaultGenerationCostCompletionPerMs
-);
-export const estimatedUpscaleDurationMs = writableLocal<number>(
-	'estimatedUpscaleDurationMs',
-	defaultUpscaleDurationMs
-);
+export const generationCostCompletionPerMs = writableLocal({
+	key: 'generationCostCompletionPerMs',
+	defaultValue: defaultGenerationCostCompletionPerMs,
+	schema: z.number()
+});
+export const estimatedUpscaleDurationMs = writableLocal({
+	key: 'estimatedUpscaleDurationMs',
+	defaultValue: defaultUpscaleDurationMs,
+	schema: z.number()
+});
 
 const widthBase = 1024;
 const heightBase = 1024;

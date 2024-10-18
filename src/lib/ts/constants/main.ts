@@ -2,6 +2,7 @@ import { browser } from '$app/environment';
 import { env } from '$env/dynamic/public';
 import { placeholderUrl } from '$ts/constants/placeholderUrl';
 import type { TTab } from '$ts/types/main';
+import { z } from 'zod';
 
 export const canonicalUrl = 'https://stablecog.com';
 export const canonicalUrlObject = new URL(canonicalUrl);
@@ -81,7 +82,8 @@ export const numOutputsMax = 4;
 export const numOutputsMaxFree = 1;
 
 export const availableInferenceSteps = ['25', '30', '40', '50'] as const;
-export type TAvailableInferenceSteps = (typeof availableInferenceSteps)[number];
+export const AvailableInferenceStepsSchema = z.enum(availableInferenceSteps);
+export type TAvailableInferenceSteps = z.infer<typeof AvailableInferenceStepsSchema>;
 export const inferenceStepsTabs: TTab<TAvailableInferenceSteps>[] = [
 	{ label: '25', value: '25' },
 	{ label: '30', value: '30' },

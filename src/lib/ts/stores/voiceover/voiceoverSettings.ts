@@ -9,8 +9,9 @@ import {
 	voiceoverStabilityDefault
 } from '$ts/constants/voiceover/rest';
 import { writable } from 'svelte/store';
-import { writable as writableLocal } from '@macfja/svelte-persistent-store';
-import type { TVoiceoverLocale } from '$ts/constants/voiceover/locales';
+import { AvailableVoiceoverLocaleSchema } from '$ts/constants/voiceover/locales';
+import { writableLocal } from '$ts/stores/writableLocal';
+import { z } from 'zod';
 
 export const voiceoverPrompt = writable<string | null>(null);
 export const voiceoverStability = writable<number>(voiceoverStabilityDefault);
@@ -19,23 +20,43 @@ export const voiceoverSeed = writable<number | null>(null);
 export const voiceoverDenoiseAudio = writable<boolean>(voiceoverDenoiseAudioDefault);
 export const voiceoverRemoveSilence = writable<boolean>(voiceoverRemoveSilenceDefault);
 
-export const voiceoverPromptLocal = writableLocal<string | null>('voiceoverPrompt', null);
-export const voiceoverStabilityLocal = writableLocal<number | null>('voiceoverStability', null);
-export const voiceoverModelIdLocal = writableLocal<TVoiceoverModelId | null>(
-	'voiceoverModelId',
-	null
-);
-export const voiceoverSpeakerIdLocal = writableLocal<TVoiceoverSpeakerId | null>(
-	'voiceoverSpeakerId',
-	null
-);
-export const voiceoverSeedLocal = writableLocal<number | null>('voiceoverSeed', null);
-export const voiceoverLocaleLocal = writableLocal<TVoiceoverLocale | null>('voiceoverLocale', null);
-export const voiceoverDenoiseAudioLocal = writableLocal<boolean | null>(
-	'voiceoverDenoiseAudio',
-	null
-);
-export const voiceoverRemoveSilenceLocal = writableLocal<boolean | null>(
-	'voiceoverRemoveSilence',
-	null
-);
+export const voiceoverPromptLocal = writableLocal({
+	key: 'voiceoverPrompt',
+	defaultValue: null,
+	schema: z.string().nullable()
+});
+export const voiceoverStabilityLocal = writableLocal({
+	key: 'voiceoverStability',
+	defaultValue: voiceoverStabilityDefault,
+	schema: z.number()
+});
+export const voiceoverModelIdLocal = writableLocal<TVoiceoverModelId | null>({
+	key: 'voiceoverModelId',
+	defaultValue: null,
+	schema: z.string().nullable()
+});
+export const voiceoverSpeakerIdLocal = writableLocal<TVoiceoverSpeakerId | null>({
+	key: 'voiceoverSpeakerId',
+	defaultValue: null,
+	schema: z.string().nullable()
+});
+export const voiceoverSeedLocal = writableLocal({
+	key: 'voiceoverSeed',
+	defaultValue: null,
+	schema: z.number().nullable()
+});
+export const voiceoverLocaleLocal = writableLocal({
+	key: 'voiceoverLocale',
+	defaultValue: null,
+	schema: AvailableVoiceoverLocaleSchema.nullable()
+});
+export const voiceoverDenoiseAudioLocal = writableLocal({
+	key: 'voiceoverDenoiseAudio',
+	defaultValue: null,
+	schema: z.boolean().nullable()
+});
+export const voiceoverRemoveSilenceLocal = writableLocal({
+	key: 'voiceoverRemoveSilence',
+	defaultValue: null,
+	schema: z.boolean().nullable()
+});
