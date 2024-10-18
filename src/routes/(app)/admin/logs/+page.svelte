@@ -161,25 +161,25 @@
 	}
 
 	function scrollToBottom() {
-		if (scrollContainer) {
-			setTimeout(() => {
-				followLogs = true;
-				isAtBottom = true;
-				isAtTop = false;
+		setTimeout(() => {
+			followLogs = true;
+			isAtBottom = true;
+			isAtTop = false;
+			if (scrollContainer) {
 				scrollContainer.scrollToIndex(logRows.length - 1);
-			});
-		}
+			}
+		});
 	}
 
 	function scrollToTop() {
-		if (scrollContainer) {
-			setTimeout(() => {
-				followLogs = false;
-				isAtTop = true;
-				isAtBottom = false;
+		setTimeout(() => {
+			followLogs = false;
+			isAtTop = true;
+			isAtBottom = false;
+			if (scrollContainer) {
 				scrollContainer.scrollToIndex(0);
-			});
-		}
+			}
+		});
 	}
 
 	function getIsAtBottom() {
