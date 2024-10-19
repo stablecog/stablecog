@@ -7,7 +7,7 @@ const config: UserConfig = {
 		sentrySvelteKit({
 			autoUploadSourceMaps: true,
 			sourceMapsUploadOptions: {
-				org: 'stablecog-1',
+				org: 'stablecog',
 				project: 'sveltekit',
 				authToken: process.env.SENTRY_AUTH_TOKEN
 			}
