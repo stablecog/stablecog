@@ -1,6 +1,7 @@
 import { cleanPost } from '$routes/(doc)/blog/helpers';
 import type { TPost, TPostCleaned, TPostCleanedMetadata } from '$routes/(doc)/blog/types';
 import type { Load } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
 
 const getPath = (slug: string | undefined) => `/src/lib/md/blog/${slug}.md`;
 const similarPostCount = 4;
@@ -14,7 +15,12 @@ export const load: Load = async ({ params }) => {
 		const post = (await postImports[path]()) as TPost;
 		otherPosts[path] = cleanPost(post);
 	}
-	const post = (await postImports[getPath(slug)]()) as TPost;
+	const path = getPath(slug);
+	const importFunction = postImports[path];
+	if (!importFunction || typeof importFunction !== 'function') {
+		return error(404, 'Not found');
+	}
+	const post = (await importFunction()) as TPost;
 	const post_cleaned = cleanPost(post);
 	const metadata = post_cleaned.metadata;
 	const orderedOtherPosts = orderPostsBySimilarity(post_cleaned, Object.values(otherPosts));
