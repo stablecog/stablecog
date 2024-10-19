@@ -15,7 +15,11 @@
 	import { navbarStickyType } from '$ts/stores/navbar';
 	import { navbarHeight } from '$ts/stores/navbarHeight';
 
-	$: homeHref = $page.url.pathname.startsWith('/docs/') ? '/docs' : '/generate';
+	$: homeHref = $page.url.pathname.startsWith('/docs/')
+		? '/docs'
+		: $page.url.pathname.startsWith('/blog/')
+			? '/blog'
+			: '/generate';
 </script>
 
 <MetaTag
