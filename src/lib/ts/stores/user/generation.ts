@@ -42,7 +42,7 @@ export const setGenerationToFailed = ({ id, error }: { id: string; error?: strin
 			toast.custom(NsfwWarning, {
 				id,
 				position: 'top-right',
-				duration: 60000,
+				duration: 30000,
 				component: NsfwWarning,
 				componentProps: {
 					id
