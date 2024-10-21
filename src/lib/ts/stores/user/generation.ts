@@ -1,6 +1,6 @@
 import { dataUrltoFile } from '$components/canvas/helpers/exportStage';
 import type { TGenerationImageCardType } from '$components/generationImage/types';
-import NsfwWarning from '$components/NsfwWarning.svelte';
+import NsfwWarning from '$components/NsfwWarningToast.svelte';
 import {
 	newGenerationCompleteAnimation,
 	newGenerationStartAnimation

@@ -8,10 +8,10 @@
 	export let id: string;
 </script>
 
-<div class="font-main flex w-full flex-col gap-1 px-5 pb-4 pt-3.5 text-sm">
-	<div class="flex items-center justify-start gap-1.5 text-lg font-bold text-c-secondary">
+<div class="font-main flex w-full flex-col gap-1 px-5 pb-4 pt-3.5">
+	<div class="flex items-center justify-start gap-1.5 text-c-secondary">
 		<IconWarning class="flex size-4.5 shrink-0 items-center justify-center" />
-		<h3 class="min-w-0 flex-shrink pr-8 text-base">
+		<h3 class="min-w-0 flex-shrink pr-8 text-base font-semibold">
 			{$LL.Error.WarningTitle()}
 		</h3>
 	</div>
