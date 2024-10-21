@@ -50,7 +50,7 @@
 </script>
 
 <MetaTag
-	title="Users | System"
+	title="System | Admin"
 	description="Stablecog admin panel. Free, multilingual and open-source AI image generator using Stable Diffusion, FLUX, and Kandinsky."
 	image_url="{staticAssetBaseUrl}/previews/home-{previewImageVersion}.png"
 />
