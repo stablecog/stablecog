@@ -10,7 +10,7 @@
 	export let target: THrefTarget = undefined;
 	export let noPadding = false;
 	export let disabled = false;
-	export let type: 'on-primary' | 'primary' | 'secondary' = 'primary';
+	export let type: 'on-primary' | 'bg-tertiary' | 'primary' | 'secondary' = 'primary';
 	export let withSpinner = false;
 	export let loading = false;
 	export let hoverFrom: 'left' | 'right' = 'left';
@@ -47,9 +47,11 @@
 					<div
 						class="h-full w-full transform transition ease-out {type === 'on-primary'
 							? 'bg-c-on-primary/15'
-							: type === 'secondary'
-								? 'bg-c-secondary/25'
-								: 'bg-c-primary/25'} 
+							: type === 'bg-tertiary'
+								? 'bg-c-bg-tertiary'
+								: type === 'secondary'
+									? 'bg-c-secondary/25'
+									: 'bg-c-primary/25'} 
 							absolute left-0 top-0 rounded-full {hoverFrom === 'left' ? '-translate-x-full' : 'translate-x-full'}
 							not-touch:group-hover/iconbutton:translate-x-0"
 					/>
@@ -85,9 +87,11 @@
 					<div
 						class="h-full w-full transform transition ease-out {type === 'on-primary'
 							? 'bg-c-on-primary/15'
-							: type === 'secondary'
-								? 'bg-c-secondary/25'
-								: 'bg-c-primary/25'} 
+							: type === 'bg-tertiary'
+								? 'bg-c-bg-tertiary'
+								: type === 'secondary'
+									? 'bg-c-secondary/25'
+									: 'bg-c-primary/25'} 
 							absolute left-0 top-0 rounded-full {hoverFrom === 'left' ? '-translate-x-full' : 'translate-x-full'}
 							not-touch:group-hover/iconbutton:translate-x-0"
 					/>

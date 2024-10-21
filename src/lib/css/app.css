@@ -11,7 +11,7 @@
 	--c-primary: 181 140 255;
 	--c-primary-secondary: 199 158 250;
 	--c-on-primary: 18 18 23;
-	--c-secondary: 245 164 106;
+	--c-secondary: 255 154 96;
 	--c-tertiary: 93 209 202;
 	--c-danger: 249 128 128;
 	--c-danger-secondary: 255 153 153;
@@ -89,6 +89,10 @@ body {
 body {
 	color: rgb(var(--c-on-bg));
 	background: rgb(var(--c-bg));
+	font-family: avenir-next, sans-serif;
+}
+
+.font-main {
 	font-family: avenir-next, sans-serif;
 }
 

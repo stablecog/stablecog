@@ -462,6 +462,9 @@ const tr: Translation = {
 	Error: {
 		SomethingWentWrong: 'Bir şeyler ters gitti :(',
 		PromptWasNSFW: 'Bu komut problemli içerik üretebilir :(',
+		WarningTitle: 'Uyarı',
+		NSFWPromptParagraph:
+			'Problemli içerik üretmek kurallarımıza aykırı. Tekrar tekrar denemek banlanmana yol açar.',
 		ImageWasNSFW: 'Bu fotoğraf müstehcendi :(',
 		NSFW: 'Müstehcen içerik, başka bir komut dene :(',
 		ServerSeemsOffline:

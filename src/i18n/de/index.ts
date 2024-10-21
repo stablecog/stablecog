@@ -437,6 +437,9 @@ const de: Translation = {
 	Error: {
 		SomethingWentWrong: 'Etwas ist schiefgelaufen :(',
 		PromptWasNSFW: 'This prompt might produce sensitive content :(',
+		WarningTitle: 'Warning',
+		NSFWPromptParagraph:
+			'Creating explicit images is not allowed. Repeatedly trying will get you banned.',
 		ImageWasNSFW: 'Dieses Bild war NSFW :(',
 		NSFW: 'NSFW-Inhalt erkannt, versuche andere Eingabewörter :(',
 		ServerSeemsOffline:

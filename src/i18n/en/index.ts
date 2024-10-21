@@ -437,7 +437,10 @@ const en: BaseTranslation = {
 	},
 	Error: {
 		SomethingWentWrong: 'Something went wrong :(',
-		PromptWasNSFW: 'This prompt might produce sensitive content :(',
+		PromptWasNSFW: 'This prompt might produce explicit content :(',
+		WarningTitle: 'Warning',
+		NSFWPromptParagraph:
+			'Creating explicit images is not allowed. Repeatedly trying will get you banned.',
 		ImageWasNSFW: 'This image was NSFW :(',
 		NSFW: 'NSFW content detected, try another prompt :(',
 		ServerSeemsOffline:

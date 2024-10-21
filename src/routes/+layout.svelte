@@ -25,6 +25,7 @@
 	import deepEqual from 'deep-equal';
 	import posthog from 'posthog-js';
 	import { onMount } from 'svelte';
+	import { Toaster } from '$components/ui/sonner';
 
 	export let data;
 
@@ -191,5 +192,7 @@
 	bind:innerWidth={$windowWidth}
 	on:scroll|passive={setNavbarState}
 />
+
+<Toaster />
 
 <slot />

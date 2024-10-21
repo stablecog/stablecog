@@ -455,6 +455,9 @@ const es: Translation = {
 	Error: {
 		SomethingWentWrong: 'Παρουσιάστηκε κάποιο πρόβλημα :(',
 		PromptWasNSFW: 'This prompt might produce sensitive content :(',
+		WarningTitle: 'Warning',
+		NSFWPromptParagraph:
+			'Creating explicit images is not allowed. Repeatedly trying will get you banned.',
 		ImageWasNSFW: 'Αυτή η εικόνα ήταν ακατάλληλη :(',
 		NSFW: 'Ανιχνεύθηκε ένδειξη ακατάλληλου περιεχομένου, δοκιμάστε μια άλλη περιγραφή :(',
 		ServerSeemsOffline:

@@ -1330,9 +1330,17 @@ type RootTranslation = {
 		 */
 		SomethingWentWrong: string
 		/**
-		 * T​h​i​s​ ​p​r​o​m​p​t​ ​m​i​g​h​t​ ​p​r​o​d​u​c​e​ ​s​e​n​s​i​t​i​v​e​ ​c​o​n​t​e​n​t​ ​:​(
+		 * T​h​i​s​ ​p​r​o​m​p​t​ ​m​i​g​h​t​ ​p​r​o​d​u​c​e​ ​e​x​p​l​i​c​i​t​ ​c​o​n​t​e​n​t​ ​:​(
 		 */
 		PromptWasNSFW: string
+		/**
+		 * W​a​r​n​i​n​g
+		 */
+		WarningTitle: string
+		/**
+		 * C​r​e​a​t​i​n​g​ ​e​x​p​l​i​c​i​t​ ​i​m​a​g​e​s​ ​i​s​ ​n​o​t​ ​a​l​l​o​w​e​d​.​ ​R​e​p​e​a​t​e​d​l​y​ ​t​r​y​i​n​g​ ​w​i​l​l​ ​g​e​t​ ​y​o​u​ ​b​a​n​n​e​d​.
+		 */
+		NSFWPromptParagraph: string
 		/**
 		 * T​h​i​s​ ​i​m​a​g​e​ ​w​a​s​ ​N​S​F​W​ ​:​(
 		 */
@@ -4767,9 +4775,17 @@ export type TranslationFunctions = {
 		 */
 		SomethingWentWrong: () => LocalizedString
 		/**
-		 * This prompt might produce sensitive content :(
+		 * This prompt might produce explicit content :(
 		 */
 		PromptWasNSFW: () => LocalizedString
+		/**
+		 * Warning
+		 */
+		WarningTitle: () => LocalizedString
+		/**
+		 * Creating explicit images is not allowed. Repeatedly trying will get you banned.
+		 */
+		NSFWPromptParagraph: () => LocalizedString
 		/**
 		 * This image was NSFW :(
 		 */

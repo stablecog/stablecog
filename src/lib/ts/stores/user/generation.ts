@@ -1,5 +1,6 @@
 import { dataUrltoFile } from '$components/canvas/helpers/exportStage';
 import type { TGenerationImageCardType } from '$components/generationImage/types';
+import NsfwWarning from '$components/NsfwWarning.svelte';
 import {
 	newGenerationCompleteAnimation,
 	newGenerationStartAnimation
@@ -22,6 +23,7 @@ import {
 import type { TQueueItem } from '$ts/stores/user/queue';
 import { addToRecentlyUpdatedOutputIds } from '$ts/stores/user/recentlyUpdatedOutputIds';
 import { userSummary } from '$ts/stores/user/summary';
+import { toast } from 'svelte-sonner';
 import type { Tweened } from 'svelte/motion';
 import { derived, get, writable } from 'svelte/store';
 import { z } from 'zod';
@@ -35,6 +37,18 @@ export const setGenerationToFailed = ({ id, error }: { id: string; error?: strin
 			return $generations;
 		}
 		const genById = $generations.find((g) => g.id === id);
+		if (error === 'NSFW' || error === 'nsfw' || error === 'nsfw_prompt') {
+			const id = generateSSEId();
+			toast.custom(NsfwWarning, {
+				id,
+				position: 'top-right',
+				duration: 60000,
+				component: NsfwWarning,
+				componentProps: {
+					id
+				}
+			});
+		}
 		if (genById) {
 			genById.status = 'failed';
 			genById.outputs = genById.outputs.map((o) => ({

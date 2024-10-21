@@ -439,6 +439,9 @@ const nl: Translation = {
 	Error: {
 		SomethingWentWrong: 'Er is iets mis gegaan :(',
 		PromptWasNSFW: 'This prompt might produce sensitive content :(',
+		WarningTitle: 'Warning',
+		NSFWPromptParagraph:
+			'Creating explicit images is not allowed. Repeatedly trying will get you banned.',
 		ImageWasNSFW: 'Deze afbeelding was NSFW :(',
 		NSFW: 'NSFW inhoud gedetecteerd, probeer een andere prompt :(',
 		ServerSeemsOffline:
