@@ -1,12 +1,11 @@
 <script lang="ts">
-	import type { TAccountDropdownPage } from '$components/accountMenu/types';
-	import AccountPage from '$components/accountMenu/pages/AccountPage.svelte';
-	import SettingsPage from '$components/accountMenu/pages/SettingsPage.svelte';
-	import LanguagePage from '$components/accountMenu/pages/LanguagePage.svelte';
-	import Header from '$components/accountMenu/Header.svelte';
-	import LL from '$i18n/i18n-svelte';
-	import DropdownWrapperTranslate from '$components/primitives/dropdown/DropdownWrapperTranslate.svelte';
 	import AccountPageHeader from '$components/accountMenu/AccountPageHeader.svelte';
+	import Header from '$components/accountMenu/Header.svelte';
+	import AccountPage from '$components/accountMenu/pages/AccountPage.svelte';
+	import LanguagePage from '$components/accountMenu/pages/LanguagePage.svelte';
+	import type { TAccountDropdownPage } from '$components/accountMenu/types';
+	import DropdownWrapperTranslate from '$components/primitives/dropdown/DropdownWrapperTranslate.svelte';
+	import LL from '$i18n/i18n-svelte';
 
 	export let closeMenu: () => void;
 	let currentPage: TAccountDropdownPage = 'account';
@@ -35,7 +34,7 @@
 		},
 		language: {
 			title: $LL.Language(),
-			onBackButtonClicked: () => setAccountMenuDropdownPage('settings'),
+			onBackButtonClicked: () => setAccountMenuDropdownPage('account'),
 			height: 0
 		}
 	};
@@ -62,11 +61,6 @@
 		<AccountPage
 			bind:height={menuPages['account'].height}
 			{closeMenu}
-			{setAccountMenuDropdownPage}
-			{currentPage}
-		/>
-		<SettingsPage
-			bind:height={menuPages['settings'].height}
 			{setAccountMenuDropdownPage}
 			{currentPage}
 		/>

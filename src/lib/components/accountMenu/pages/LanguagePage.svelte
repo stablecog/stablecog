@@ -36,7 +36,7 @@
 				}}
 			>
 				<div class="flex min-w-0 flex-1 items-center gap-3 overflow-hidden">
-					<div class="h-5 w-5 overflow-hidden rounded-sm">
+					<div class="h-5 w-5 shrink-0 overflow-hidden rounded-sm">
 						<IconLocale type={locale} class="h-full w-full" />
 					</div>
 					<p
