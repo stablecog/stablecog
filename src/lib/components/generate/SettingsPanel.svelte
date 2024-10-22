@@ -317,7 +317,7 @@
 								>
 									<div class="flex w-full flex-col justify-start pt-3">
 										<div
-											class="flex w-full items-center justify-start gap-2.5 rounded-lg bg-c-secondary/10
+											class="flex w-full items-center justify-start gap-2 rounded-lg bg-c-secondary/10
 											px-3 py-2 text-sm text-c-secondary"
 										>
 											<IconWarningOutline class="-ml-0.5 h-5 w-5 flex-shrink-0" />

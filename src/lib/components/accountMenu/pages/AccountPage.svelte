@@ -122,7 +122,7 @@
 					<IconLanguage
 						class="text-c-text h-6 w-6 transition not-touch:group-hover:text-c-primary"
 					/>
-					<div class="flex min-w-0 flex-1 items-center gap-2 overflow-hidden">
+					<div class="flex min-w-0 flex-1 items-center gap-2.5 overflow-hidden">
 						<p
 							class="min-w-0 flex-shrink overflow-hidden overflow-ellipsis whitespace-nowrap
 							text-left text-c-on-bg transition not-touch:group-hover:text-c-primary"
