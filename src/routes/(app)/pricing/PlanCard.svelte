@@ -62,7 +62,7 @@
 				{/if}
 				<span class="mb-0.75 self-end font-medium text-c-on-bg/60">{$LL.Pricing.SlashMonth()}</span>
 			</h4>
-			{#if billingType === 'yearly' || billingType === 'monthly'}
+			<!-- {#if billingType === 'yearly' || billingType === 'monthly'}
 				<p
 					class="my-1 rounded-full bg-c-on-bg/8 px-2.5 py-0.5 text-center text-sm font-medium text-c-on-bg/75"
 				>
@@ -72,7 +72,7 @@
 							? $LL.Pricing.BilledYearly()
 							: $LL.Pricing.BilledMonthly()}
 				</p>
-			{/if}
+			{/if} -->
 			{#if discountBadgeText}
 				<div class="mt-2 max-w-full px-2 pb-1">
 					<p

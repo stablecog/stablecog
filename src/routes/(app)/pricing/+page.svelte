@@ -30,7 +30,7 @@
 
 	export let data;
 
-	let selectedBillingType: TBillingType = 'yearly';
+	let selectedBillingType: TBillingType = 'monthly';
 	let billingTypes: TTab<TBillingType>[];
 	$: billingTypes = [
 		{
@@ -521,7 +521,7 @@
 			<p class="mt-3 max-w-xl text-center leading-relaxed text-c-on-bg/75">
 				{$LL.Pricing.PlansParagraph()}
 			</p>
-			<div class="relative mt-6 w-full sm:max-w-sm md:max-w-xs">
+			<!-- <div class="relative mt-6 w-full sm:max-w-sm md:max-w-xs">
 				<TabBar
 					size="sm"
 					class="w-full"
@@ -535,9 +535,9 @@
 				>
 					{$LL.Pricing.Save20Percent()}
 				</p>
-			</div>
+			</div> -->
 			<div
-				class="mt-3 flex w-full max-w-7xl flex-wrap items-stretch justify-center lg:px-5 xl:px-0"
+				class="mt-5 flex w-full max-w-7xl flex-wrap items-stretch justify-center lg:px-5 xl:px-0"
 			>
 				{#each subscriptionCards as card}
 					{@const subscribedPriceId = $userSummary?.price_id}
