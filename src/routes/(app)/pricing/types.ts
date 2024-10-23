@@ -1,5 +1,7 @@
 import type { LocalizedString } from 'typesafe-i18n';
 
+export type TBillingType = 'monthly' | 'yearly' | 'one-time';
+
 export interface TFeature {
 	paragraph: LocalizedString;
 	icon?: ConstructorOfATypedSvelteComponent;
@@ -22,11 +24,12 @@ export interface TCard {
 	ringClass: string;
 	badgeText?: string;
 	badgeClasses?: string;
+	billingType: TBillingType;
 }
 
 export interface TSubscriptionCard extends TCard {
 	id: 'plan-free' | 'plan-starter' | 'plan-pro' | 'plan-ultimate';
-	priceIdMo?: string;
+	priceId?: string;
 	productId?: string;
 	discountRate?: number;
 }

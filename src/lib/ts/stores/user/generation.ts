@@ -9,7 +9,7 @@ import { type TAvailableGenerationModelId } from '$ts/constants/generationModels
 import { getApiUrl } from '$ts/constants/main';
 import type { TAvailableSchedulerId } from '$ts/constants/schedulers';
 import {
-	STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO,
+	STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS,
 	roleToProductId
 } from '$ts/constants/stripePublic';
 import { isSuperAdmin } from '$ts/helpers/admin/roles';
@@ -416,12 +416,12 @@ const productIdToMaxOngoingGenerationsCount = ({
 		for (let i = 0; i < roles.length; i++) {
 			const pId = roleToProductId[roles[i]];
 			if (!pId) continue;
-			const count = STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[pId]?.parallel_generations;
+			const count = STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[pId]?.parallel_generations;
 			if (count) return count;
 		}
 		return baseCount;
 	}
-	const count = STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[productId]?.parallel_generations;
+	const count = STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[productId]?.parallel_generations;
 	if (!count) return baseCount;
 	return count;
 };

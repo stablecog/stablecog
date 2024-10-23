@@ -10,6 +10,12 @@ export const STRIPE_PRICE_IDS_SUBSCRIPTIONS_MO = [
 	env.PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_MO
 ] as const;
 
+export const STRIPE_PRICE_IDS_SUBSCRIPTIONS_YR = [
+	env.PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_YR,
+	env.PUBLIC_STRIPE_PRICE_ID_PRO_SUBSCRIPTION_YR,
+	env.PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_YR
+] as const;
+
 export const STRIPE_PRODUCT_IDS_SUBSCRIPTIONS = [
 	env.PUBLIC_STRIPE_PRODUCT_ID_STARTER_SUBSCRIPTION,
 	env.PUBLIC_STRIPE_PRODUCT_ID_PRO_SUBSCRIPTION,
@@ -39,6 +45,9 @@ export const STRIPE_CURRENCY_TO_SYMBOL: { [currency in TStripeSupportedCurrency]
 export type TStripeSupportedPriceIdSubscriptionsMo =
 	(typeof STRIPE_PRICE_IDS_SUBSCRIPTIONS_MO)[number];
 
+export type TStripeSupportedPriceIdSubscriptionsYr =
+	(typeof STRIPE_PRICE_IDS_SUBSCRIPTIONS_YR)[number];
+
 export type TStripeSupportedProductIdSubscriptions =
 	(typeof STRIPE_PRODUCT_IDS_SUBSCRIPTIONS)[number];
 export type TStripeSupportedCurrency = (typeof STRIPE_CURRENCIES)[number];
@@ -52,18 +61,29 @@ export const roleToProductId: Record<string, string> = {
 	ULTIMATE: env.PUBLIC_STRIPE_PRODUCT_ID_ULTIMATE_SUBSCRIPTION
 };
 
-export const STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO: {
-	[prodcutId in TStripeSupportedProductIdSubscriptions]: {
+export const STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS: {
+	[productId in TStripeSupportedProductIdSubscriptions]: {
 		product_id: TStripeSupportedProductIdSubscriptions;
 		monthly_images: number;
 		parallel_generations: number;
 		parallel_upscales: number;
 		parallel_voiceovers: number;
 		prices: {
-			[priceId in TStripeSupportedPriceIdSubscriptionsMo]: {
-				currencies: {
-					[currency in TStripeSupportedCurrency]: {
-						amount: number;
+			monthly: {
+				[priceId in TStripeSupportedPriceIdSubscriptionsMo]: {
+					currencies: {
+						[currency in TStripeSupportedCurrency]: {
+							amount: number;
+						};
+					};
+				};
+			};
+			yearly: {
+				[priceId in TStripeSupportedPriceIdSubscriptionsYr]: {
+					currencies: {
+						[currency in TStripeSupportedCurrency]: {
+							amount: number;
+						};
 					};
 				};
 			};
@@ -77,13 +97,27 @@ export const STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO: {
 		parallel_upscales: 2,
 		parallel_voiceovers: 1,
 		prices: {
-			[env.PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_MO]: {
-				currencies: {
-					usd: {
-						amount: 10
-					},
-					eur: {
-						amount: 10
+			monthly: {
+				[env.PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_MO]: {
+					currencies: {
+						usd: {
+							amount: 10
+						},
+						eur: {
+							amount: 10
+						}
+					}
+				}
+			},
+			yearly: {
+				[env.PUBLIC_STRIPE_PRICE_ID_STARTER_SUBSCRIPTION_YR]: {
+					currencies: {
+						usd: {
+							amount: 96
+						},
+						eur: {
+							amount: 96
+						}
 					}
 				}
 			}
@@ -96,13 +130,27 @@ export const STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO: {
 		parallel_upscales: 3,
 		parallel_voiceovers: 1,
 		prices: {
-			[env.PUBLIC_STRIPE_PRICE_ID_PRO_SUBSCRIPTION_MO]: {
-				currencies: {
-					usd: {
-						amount: 25
-					},
-					eur: {
-						amount: 25
+			monthly: {
+				[env.PUBLIC_STRIPE_PRICE_ID_PRO_SUBSCRIPTION_MO]: {
+					currencies: {
+						usd: {
+							amount: 25
+						},
+						eur: {
+							amount: 25
+						}
+					}
+				}
+			},
+			yearly: {
+				[env.PUBLIC_STRIPE_PRICE_ID_PRO_SUBSCRIPTION_YR]: {
+					currencies: {
+						usd: {
+							amount: 240
+						},
+						eur: {
+							amount: 240
+						}
 					}
 				}
 			}
@@ -115,13 +163,27 @@ export const STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO: {
 		parallel_upscales: 4,
 		parallel_voiceovers: 1,
 		prices: {
-			[env.PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_MO]: {
-				currencies: {
-					usd: {
-						amount: 50
-					},
-					eur: {
-						amount: 50
+			monthly: {
+				[env.PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_MO]: {
+					currencies: {
+						usd: {
+							amount: 50
+						},
+						eur: {
+							amount: 50
+						}
+					}
+				}
+			},
+			yearly: {
+				[env.PUBLIC_STRIPE_PRICE_ID_ULTIMATE_SUBSCRIPTION_YR]: {
+					currencies: {
+						usd: {
+							amount: 480
+						},
+						eur: {
+							amount: 480
+						}
 					}
 				}
 			}
@@ -195,8 +257,14 @@ export const STRIPE_PRODUCT_ID_OBJECTS_CREDIT_PACKS: {
 } as const;
 
 export const getProductIdFromPriceId = (priceId: string) => {
-	const productId = Object.keys(STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO).find((productId) =>
-		Object.keys(STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[productId].prices).includes(priceId)
+	const productId = Object.keys(STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS).find(
+		(productId) =>
+			Object.keys(STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[productId].prices.monthly).includes(
+				priceId
+			) ||
+			Object.keys(STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[productId].prices.yearly).includes(
+				priceId
+			)
 	);
 	if (productId) {
 		return productId;

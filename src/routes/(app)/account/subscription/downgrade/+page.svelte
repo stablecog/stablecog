@@ -12,10 +12,10 @@
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import {
 		STRIPE_CURRENCY_TO_SYMBOL,
-		STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO
+		STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS
 	} from '$ts/constants/stripePublic';
 	import { sessionStore } from '$ts/constants/supabase';
-	import { getTitleFromProductId } from '$ts/helpers/stripe/plan';
+	import { getTitleFromPriceId, getTitleFromProductId } from '$ts/helpers/stripe/plan';
 	import { getUserSummary } from '$ts/helpers/user/user';
 	import { userSummary } from '$ts/stores/user/summary';
 
@@ -29,24 +29,38 @@
 
 	let changePlanStatus: 'idle' | 'loading' | 'success' = 'idle';
 
+	$: currentPlanBillingInfo = getTitleFromPriceId($LL, currentPriceId);
+	$: targetPlanBillingInfo = getTitleFromPriceId($LL, targetPriceId);
+
 	$: currentPlan = {
-		title: getTitleFromProductId($LL, currentProductId),
+		title: currentPlanBillingInfo.title,
 		amount:
 			currency === 'eur'
-				? STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[currentProductId].prices[currentPriceId]
-						.currencies.eur.amount
-				: STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[currentProductId].prices[currentPriceId]
-						.currencies.usd.amount
+				? currentPlanBillingInfo.billingType === 'yearly'
+					? STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[currentProductId].prices.yearly[currentPriceId]
+							.currencies.eur.amount
+					: STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[currentProductId].prices.monthly[currentPriceId]
+							.currencies.eur.amount
+				: currentPlanBillingInfo.billingType === 'yearly'
+					? STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[currentProductId].prices.yearly[currentPriceId]
+							.currencies.usd.amount
+					: STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[currentProductId].prices.monthly[currentPriceId]
+							.currencies.usd.amount
 	};
 
 	$: targetPlan = {
-		title: getTitleFromProductId($LL, targetProductId),
+		title: targetPlanBillingInfo.title,
 		amount:
 			currency === 'eur'
-				? STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[targetProductId].prices[targetPriceId]
-						.currencies.eur.amount
-				: STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[targetProductId].prices[targetPriceId]
-						.currencies.usd.amount
+				? targetPlanBillingInfo.billingType === 'yearly'
+					? STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[targetProductId].prices.yearly[targetPriceId]
+							.currencies.eur.amount
+					: STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[targetProductId].prices.monthly[targetPriceId]
+							.currencies.eur.amount
+				: targetPlanBillingInfo.billingType === 'yearly'
+					? STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[targetProductId].prices.yearly[targetPriceId]
+							.currencies.usd.amount
+					: 0
 	};
 
 	async function changePlan() {
@@ -115,7 +129,9 @@
 								text-base font-medium text-c-primary"
 								>{STRIPE_CURRENCY_TO_SYMBOL[
 									currency
-								]}{currentPlan.amount}{$LL.Pricing.SlashMonth()}</span
+								]}{currentPlan.amount}{currentPlanBillingInfo.billingType === 'yearly'
+									? $LL.Pricing.SlashYear()
+									: $LL.Pricing.SlashMonth()}</span
 							>
 						</p>
 					</div>
@@ -133,7 +149,9 @@
 								class="rounded-md bg-c-primary/15 px-1.5 py-0.5 text-base font-medium text-c-primary"
 								>{STRIPE_CURRENCY_TO_SYMBOL[
 									currency
-								]}{targetPlan.amount}{$LL.Pricing.SlashMonth()}</span
+								]}{targetPlan.amount}{targetPlanBillingInfo.billingType === 'yearly'
+									? $LL.Pricing.SlashYear()
+									: $LL.Pricing.SlashMonth()}</span
 							>
 						</p>
 					</div>

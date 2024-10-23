@@ -11,7 +11,7 @@ import { userSummary } from '$ts/stores/user/summary';
 import { derived } from 'svelte/store';
 import { convertToDBTimeString } from '$ts/helpers/convertToDBTimeString';
 import {
-	STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO,
+	STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS,
 	roleToProductId
 } from '$ts/constants/stripePublic';
 import type { TVoiceoverSpeakerId, TVoiceoverModelId } from '$ts/constants/voiceover/models';
@@ -272,12 +272,12 @@ const productIdToMaxOngoingVoiceoversCount = ({
 		for (let i = 0; i < roles.length; i++) {
 			const pId = roleToProductId[roles[i]];
 			if (!pId) continue;
-			const count = STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[pId]?.parallel_voiceovers;
+			const count = STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[pId]?.parallel_voiceovers;
 			if (count) return count;
 		}
 		return baseCount;
 	}
-	const count = STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS_MO[productId]?.parallel_voiceovers;
+	const count = STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[productId]?.parallel_voiceovers;
 	if (!count) return baseCount;
 	return count;
 };
