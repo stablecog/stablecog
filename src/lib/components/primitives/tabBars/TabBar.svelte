@@ -27,7 +27,7 @@
 
 <TabBarWrapper {outline} class={classes} {dontScale}>
 	{#if hasTitle}
-		<div class="relative flex self-stretch text-c-on-bg/50">
+		<div class="relative flex self-stretch text-c-on-bg/60">
 			<slot name="title" />
 		</div>
 		<div class="relative -ml-px mr-px w-2px self-stretch">
@@ -93,7 +93,7 @@
 							? 'flex-col gap-0.5'
 							: 'gap-1.5'} items-center justify-center {value === tab.value && !hideSelected
 							? 'text-c-on-bg'
-							: 'text-c-on-bg/50'} {value === tab.value && !hideSelected
+							: 'text-c-on-bg/60'} {value === tab.value && !hideSelected
 							? 'not-touch:group-hover:text-c-primary'
 							: ''}"
 					>
@@ -127,7 +127,7 @@
 							: 'font-medium'} relative z-0 max-w-full transition {value === tab.value &&
 						!hideSelected
 							? 'text-c-on-bg'
-							: 'text-c-on-bg/50'} {value === tab.value && !hideSelected
+							: 'text-c-on-bg/60'} {value === tab.value && !hideSelected
 							? 'not-touch:group-hover:text-c-primary'
 							: ''} {textSizeClass}"
 					>

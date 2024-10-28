@@ -256,6 +256,7 @@ const de: Translation = {
 		UnknownTitle: 'Unbekannt',
 		YesButton: 'Ja',
 		NoButton: 'Nein',
+		SuccessfulButton: 'Successful',
 		EnableButton: 'Aktivieren',
 		DoneButton: 'Done',
 		ReportButton: 'Report',
@@ -663,9 +664,17 @@ const de: Translation = {
 		Subscription: {
 			Status: { ActiveTitle: 'Active', CancellingTitle: 'Cancelling', CancelledTitle: 'Cancelled' },
 			UpdateSubscriptionTitle: 'Abonnement erneuern',
+			CancelPlanTitle: 'Cancel Plan',
+			PlanChangedTitle: 'Plan Changed',
+			SubscriptionCancelledTitle: 'Subscription Cancelled',
+			PlanCancelledTitle: 'Plan Cancelled',
 			ChangePlanTitle: 'Abonnement ändern',
+			CancelSubscriptionTitle: 'Cancel Subscription',
+			CancelSubscriptionButton: 'Cancel Subscription',
 			CurrentPlanTitle: 'Aktuelles Abonnement',
 			NewPlanTitle: 'Neues Abonnement',
+			AmountDueTitle: 'Amount Due',
+			UpcomingChargeTitle: 'Upcoming Charge',
 			Downgrade: {
 				DowngradingToTitle: 'Downgrade auf',
 				Explanation: 'Dein bestehendes Guthaben bleibt erhalten.'

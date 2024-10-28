@@ -264,6 +264,7 @@ const ja: Translation = {
 		UnknownTitle: '不明',
 		YesButton: 'はい',
 		NoButton: 'いいえ',
+		SuccessfulButton: 'Successful',
 		EnableButton: '有効にする',
 		DoneButton: '完了',
 		ReportButton: 'Report',
@@ -676,9 +677,17 @@ const ja: Translation = {
 		Subscription: {
 			Status: { ActiveTitle: 'Active', CancellingTitle: 'Cancelling', CancelledTitle: 'Cancelled' },
 			UpdateSubscriptionTitle: 'サブスクリプションを更新',
+			CancelPlanTitle: 'Cancel Plan',
+			PlanChangedTitle: 'Plan Changed',
+			SubscriptionCancelledTitle: 'Subscription Cancelled',
+			PlanCancelledTitle: 'Plan Cancelled',
 			ChangePlanTitle: 'プランを変更',
+			CancelSubscriptionTitle: 'Cancel Subscription',
+			CancelSubscriptionButton: 'Cancel Subscription',
 			CurrentPlanTitle: '現在のプラン',
 			NewPlanTitle: '新しいプラン',
+			AmountDueTitle: 'Amount Due',
+			UpcomingChargeTitle: 'Upcoming Charge',
 			Downgrade: {
 				DowngradingToTitle: 'ダウングレード先',
 				Explanation: '既存のクレジットは残ります。'

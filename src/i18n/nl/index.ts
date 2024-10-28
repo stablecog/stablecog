@@ -257,6 +257,7 @@ const nl: Translation = {
 		UnknownTitle: 'Onbekend',
 		YesButton: 'Ja',
 		NoButton: 'Nee',
+		SuccessfulButton: 'Successful',
 		EnableButton: 'Activeren',
 		DoneButton: 'Done',
 		ReportButton: 'Report',
@@ -667,9 +668,17 @@ const nl: Translation = {
 		Subscription: {
 			Status: { ActiveTitle: 'Active', CancellingTitle: 'Cancelling', CancelledTitle: 'Cancelled' },
 			UpdateSubscriptionTitle: 'Abonnement bijwerken',
+			CancelPlanTitle: 'Cancel Plan',
+			PlanChangedTitle: 'Plan Changed',
+			SubscriptionCancelledTitle: 'Subscription Cancelled',
+			PlanCancelledTitle: 'Plan Cancelled',
 			ChangePlanTitle: 'Abonnement wijzigen',
+			CancelSubscriptionTitle: 'Cancel Subscription',
+			CancelSubscriptionButton: 'Cancel Subscription',
 			CurrentPlanTitle: 'Huidige abonnement',
 			NewPlanTitle: 'Nieuw abonnement',
+			AmountDueTitle: 'Amount Due',
+			UpcomingChargeTitle: 'Upcoming Charge',
 			Downgrade: {
 				DowngradingToTitle: 'Downgraden naar',
 				Explanation: 'Je bestaande credits blijven bestaan.'

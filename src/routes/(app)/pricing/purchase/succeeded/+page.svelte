@@ -29,10 +29,10 @@
 <PageWrapper>
 	<div class="my-auto flex w-full flex-col items-center justify-start">
 		<IconConfetti class="h-24 w-24 text-c-primary" />
-		<h1 class="mt-4 text-center text-4xl font-bold text-c-primary">
+		<h1 class="mt-4 w-full max-w-md text-balance text-center text-4xl font-bold text-c-primary">
 			{$LL.Pricing.Purchase.Succeeded.PageTitle()}
 		</h1>
-		<p class="mt-4 max-w-xl text-center leading-relaxed text-c-on-bg/75">
+		<p class="mt-4 w-full max-w-md text-balance text-center leading-relaxed text-c-on-bg/75">
 			{@html $LL.Pricing.Purchase.Succeeded.PageParagraph({ platform: '__discord__' }).replace(
 				'__discord__',
 				`<a class="text-c-primary font-bold hover:underline" href="/discord" target="_blank">Discord</a>`

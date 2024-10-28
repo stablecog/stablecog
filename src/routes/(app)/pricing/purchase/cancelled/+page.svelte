@@ -18,10 +18,10 @@
 <PageWrapper>
 	<div class="my-auto flex w-full flex-col items-center justify-start">
 		<IconSadFace class="h-24 w-24 text-c-primary" />
-		<h1 class="mt-4 text-center text-4xl font-bold text-c-primary">
+		<h1 class="mt-4 w-full max-w-md text-center text-4xl font-bold text-c-primary">
 			{$LL.Pricing.Purchase.Cancelled.PageTitle()}
 		</h1>
-		<p class="mt-4 max-w-xl text-center leading-relaxed text-c-on-bg/75">
+		<p class="mt-4 w-full max-w-md text-balance text-center leading-relaxed text-c-on-bg/75">
 			{$LL.Pricing.Purchase.Cancelled.PageParagraph()}
 		</p>
 		<Button href="/pricing" withSpinner class=" mt-6">{$LL.Shared.TryAgainButton()}</Button>

@@ -11,7 +11,7 @@
 		STRIPE_CURRENCY_TO_SYMBOL,
 		STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS
 	} from '$ts/constants/stripePublic';
-	import { getTitleFromPriceId } from '$ts/helpers/stripe/plan';
+	import { getInfoFromPriceId } from '$ts/helpers/stripe/plan';
 	import { userSummary } from '$ts/stores/user/summary';
 
 	export let data;
@@ -20,7 +20,7 @@
 
 	$: billingInfo =
 		$userSummary?.product_id !== undefined && $userSummary?.price_id !== undefined
-			? getTitleFromPriceId($LL, $userSummary.price_id)
+			? getInfoFromPriceId($LL, $userSummary.price_id)
 			: undefined;
 	$: currentPlan =
 		billingInfo && $userSummary?.product_id !== undefined && $userSummary?.price_id !== undefined
@@ -49,7 +49,7 @@
 <MetaTag
 	title="Change Plan | Stablecog"
 	description="Change your Stablecog subscription plan. Free, multilingual and open-source AI image generator using Stable Diffusion, FLUX, and Kandinsky."
-	image_url="{staticAssetBaseUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
+	image_url="{staticAssetBaseUrl}/previews/home-{previewImageVersion}.png"
 />
 
 <PageWrapper>

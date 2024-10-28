@@ -34,6 +34,7 @@
 	export let icon: ConstructorOfATypedSvelteComponent | undefined = undefined;
 	export let iconProps: any | undefined = {};
 	export let iconAlignment: 'left' | 'right' = 'left';
+	export let iconClasses = '-m-1 h-6 w-6 flex-shrink-0';
 	export let label: string | undefined = undefined;
 	export let noRounding = false;
 	export let blurOnClick = false;
@@ -146,7 +147,10 @@
 										? 'bg-c-primary/0'
 										: 'bg-c-primary'} {type === 'bg-secondary'
 			? 'ring-2 ring-c-bg-tertiary'
-			: ''} {classes} {shouldAnimate ? 'scale-animation' : ''}"
+			: ''} {classes} {shouldAnimate ? 'scale-animation' : ''} {disabled ||
+		loadingOrWaitingOrUploading
+			? 'pointer-events-none'
+			: ''}"
 	>
 		{#if !noHoverEffect}
 			<div
@@ -172,13 +176,13 @@
 				/>
 			</div>
 		{/if}
-		<div class="relative flex items-center justify-center gap-3">
+		<div class="relative flex w-full items-center justify-center gap-3">
 			{#if icon && iconAlignment === 'left'}
-				<svelte:component this={icon} {...iconProps} class="-m-1 h-6 w-6 flex-shrink-0" />
+				<svelte:component this={icon} {...iconProps} class={iconClasses} />
 			{/if}
 			{#if withSpinner}
 				<div
-					class="relative transform transition {loadingOrWaitingOrUploading
+					class="relative min-w-0 flex-shrink transform transition {loadingOrWaitingOrUploading
 						? 'scale-0 opacity-0'
 						: 'scale-100 opacity-100'}"
 				>
@@ -221,7 +225,7 @@
 				<slot />
 			{/if}
 			{#if icon && iconAlignment === 'right'}
-				<svelte:component this={icon} {...iconProps} class="-m-1 h-6 w-6 flex-shrink-0" />
+				<svelte:component this={icon} {...iconProps} class={iconClasses} />
 			{/if}
 		</div>
 	</a>
@@ -317,13 +321,13 @@
 				/>
 			</div>
 		{/if}
-		<div class="relative flex items-center justify-center gap-3">
+		<div class="relative flex w-full items-center justify-center gap-3">
 			{#if icon && iconAlignment === 'left'}
-				<svelte:component this={icon} {...iconProps} class="-m-1 h-6 w-6 flex-shrink-0" />
+				<svelte:component this={icon} {...iconProps} class={iconClasses} />
 			{/if}
 			{#if withSpinner}
 				<div
-					class="relative transform transition {loadingOrWaitingOrUploading
+					class="relative min-w-0 flex-shrink transform transition {loadingOrWaitingOrUploading
 						? 'scale-0 opacity-0'
 						: 'scale-100 opacity-100'}"
 				>
@@ -367,7 +371,7 @@
 				<slot />
 			{/if}
 			{#if icon && iconAlignment === 'right'}
-				<svelte:component this={icon} {...iconProps} class="-m-1 h-6 w-6 flex-shrink-0" />
+				<svelte:component this={icon} {...iconProps} class={iconClasses} />
 			{/if}
 		</div>
 	</button>
@@ -462,13 +466,13 @@
 				/>
 			</div>
 		{/if}
-		<div class="relative flex items-center justify-center gap-3">
+		<div class="relative flex w-full items-center justify-center gap-3">
 			{#if icon && iconAlignment === 'left'}
-				<svelte:component this={icon} {...iconProps} class="-m-1 h-6 w-6 flex-shrink-0" />
+				<svelte:component this={icon} {...iconProps} class={iconClasses} />
 			{/if}
 			{#if withSpinner}
 				<div
-					class="relative transform transition {loadingOrWaitingOrUploading
+					class="relative min-w-0 flex-shrink transform transition {loadingOrWaitingOrUploading
 						? 'scale-0 opacity-0'
 						: 'scale-100 opacity-100'}"
 				>
@@ -512,7 +516,7 @@
 				<slot />
 			{/if}
 			{#if icon && iconAlignment === 'right'}
-				<svelte:component this={icon} {...iconProps} class="-m-1 h-6 w-6 flex-shrink-0" />
+				<svelte:component this={icon} {...iconProps} class={iconClasses} />
 			{/if}
 		</div>
 	</button>
@@ -606,13 +610,13 @@
 				/>
 			</div>
 		{/if}
-		<div class="relative flex items-center justify-center gap-3">
+		<div class="relative flex w-full items-center justify-center gap-3">
 			{#if icon && iconAlignment === 'left'}
-				<svelte:component this={icon} {...iconProps} class="-m-1 h-6 w-6 flex-shrink-0" />
+				<svelte:component this={icon} {...iconProps} class={iconClasses} />
 			{/if}
 			{#if withSpinner}
 				<div
-					class="relative transform transition {loadingOrWaitingOrUploading
+					class="relative min-w-0 flex-shrink transform transition {loadingOrWaitingOrUploading
 						? 'scale-0 opacity-0'
 						: 'scale-100 opacity-100'}"
 				>
@@ -656,7 +660,7 @@
 				<slot />
 			{/if}
 			{#if icon && iconAlignment === 'right'}
-				<svelte:component this={icon} {...iconProps} class="-m-1 h-6 w-6 flex-shrink-0" />
+				<svelte:component this={icon} {...iconProps} class={iconClasses} />
 			{/if}
 		</div>
 	</button>

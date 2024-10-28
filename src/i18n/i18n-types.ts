@@ -790,6 +790,10 @@ type RootTranslation = {
 		 */
 		NoButton: string
 		/**
+		 * S​u​c​c​e​s​s​f​u​l
+		 */
+		SuccessfulButton: string
+		/**
 		 * E​n​a​b​l​e
 		 */
 		EnableButton: string
@@ -2060,17 +2064,49 @@ type RootTranslation = {
 			 */
 			UpdateSubscriptionTitle: string
 			/**
+			 * C​a​n​c​e​l​ ​P​l​a​n
+			 */
+			CancelPlanTitle: string
+			/**
+			 * P​l​a​n​ ​C​h​a​n​g​e​d
+			 */
+			PlanChangedTitle: string
+			/**
+			 * S​u​b​s​c​r​i​p​t​i​o​n​ ​C​a​n​c​e​l​l​e​d
+			 */
+			SubscriptionCancelledTitle: string
+			/**
+			 * P​l​a​n​ ​C​a​n​c​e​l​l​e​d
+			 */
+			PlanCancelledTitle: string
+			/**
 			 * C​h​a​n​g​e​ ​P​l​a​n
 			 */
 			ChangePlanTitle: string
+			/**
+			 * C​a​n​c​e​l​ ​S​u​b​s​c​r​i​p​t​i​o​n
+			 */
+			CancelSubscriptionTitle: string
+			/**
+			 * C​a​n​c​e​l​ ​S​u​b​s​c​r​i​p​t​i​o​n
+			 */
+			CancelSubscriptionButton: string
 			/**
 			 * C​u​r​r​e​n​t​ ​P​l​a​n
 			 */
 			CurrentPlanTitle: string
 			/**
-			 * N​e​w​ ​p​l​a​n
+			 * N​e​w​ ​P​l​a​n
 			 */
 			NewPlanTitle: string
+			/**
+			 * A​m​o​u​n​t​ ​D​u​e
+			 */
+			AmountDueTitle: string
+			/**
+			 * U​p​c​o​m​i​n​g​ ​C​h​a​r​g​e
+			 */
+			UpcomingChargeTitle: string
 			Downgrade: {
 				/**
 				 * D​o​w​n​g​r​a​d​i​n​g​ ​t​o
@@ -4291,6 +4327,10 @@ export type TranslationFunctions = {
 		 */
 		NoButton: () => LocalizedString
 		/**
+		 * Successful
+		 */
+		SuccessfulButton: () => LocalizedString
+		/**
 		 * Enable
 		 */
 		EnableButton: () => LocalizedString
@@ -5532,17 +5572,49 @@ export type TranslationFunctions = {
 			 */
 			UpdateSubscriptionTitle: () => LocalizedString
 			/**
+			 * Cancel Plan
+			 */
+			CancelPlanTitle: () => LocalizedString
+			/**
+			 * Plan Changed
+			 */
+			PlanChangedTitle: () => LocalizedString
+			/**
+			 * Subscription Cancelled
+			 */
+			SubscriptionCancelledTitle: () => LocalizedString
+			/**
+			 * Plan Cancelled
+			 */
+			PlanCancelledTitle: () => LocalizedString
+			/**
 			 * Change Plan
 			 */
 			ChangePlanTitle: () => LocalizedString
+			/**
+			 * Cancel Subscription
+			 */
+			CancelSubscriptionTitle: () => LocalizedString
+			/**
+			 * Cancel Subscription
+			 */
+			CancelSubscriptionButton: () => LocalizedString
 			/**
 			 * Current Plan
 			 */
 			CurrentPlanTitle: () => LocalizedString
 			/**
-			 * New plan
+			 * New Plan
 			 */
 			NewPlanTitle: () => LocalizedString
+			/**
+			 * Amount Due
+			 */
+			AmountDueTitle: () => LocalizedString
+			/**
+			 * Upcoming Charge
+			 */
+			UpcomingChargeTitle: () => LocalizedString
 			Downgrade: {
 				/**
 				 * Downgrading to

@@ -264,6 +264,7 @@ const es: Translation = {
 		UnknownTitle: 'Άγνωστο',
 		YesButton: 'Ναι',
 		NoButton: 'Όχι',
+		SuccessfulButton: 'Successful',
 		EnableButton: 'Ενεργοποίηση',
 		DoneButton: 'Τέλος',
 		ReportButton: 'Report',
@@ -686,9 +687,17 @@ const es: Translation = {
 		Subscription: {
 			Status: { ActiveTitle: 'Active', CancellingTitle: 'Cancelling', CancelledTitle: 'Cancelled' },
 			UpdateSubscriptionTitle: 'Ενημέρωση Συνδρομής',
+			CancelPlanTitle: 'Cancel Plan',
+			PlanChangedTitle: 'Plan Changed',
+			SubscriptionCancelledTitle: 'Subscription Cancelled',
+			PlanCancelledTitle: 'Plan Cancelled',
 			ChangePlanTitle: 'Αλλαγή Πλάνου',
+			CancelSubscriptionTitle: 'Cancel Subscription',
+			CancelSubscriptionButton: 'Cancel Subscription',
 			CurrentPlanTitle: 'Τρέχον Πλάνο',
 			NewPlanTitle: 'Νέο πλάνο',
+			AmountDueTitle: 'Amount Due',
+			UpcomingChargeTitle: 'Upcoming Charge',
 			Downgrade: {
 				DowngradingToTitle: 'Υποβάθμιση σε',
 				Explanation: 'Οι υπάρχουσες μονάδες σας θα παραμείνουν.'

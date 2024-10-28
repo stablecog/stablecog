@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
 	import IconArrowRight from '$components/icons/IconArrowRight.svelte';
 	import IconBack from '$components/icons/IconBack.svelte';
 	import Button from '$components/primitives/buttons/Button.svelte';
@@ -8,59 +7,47 @@
 	import MetaTag from '$components/utils/MetaTag.svelte';
 	import PageWrapper from '$components/wrappers/PageWrapper.svelte';
 	import LL from '$i18n/i18n-svelte';
-	import { staticAssetBaseUrl, getApiUrl } from '$ts/constants/main';
+	import { getApiUrl, staticAssetBaseUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import {
 		STRIPE_CURRENCY_TO_SYMBOL,
 		STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS
 	} from '$ts/constants/stripePublic';
 	import { sessionStore } from '$ts/constants/supabase';
-	import { getTitleFromPriceId, getTitleFromProductId } from '$ts/helpers/stripe/plan';
-	import { getUserSummary } from '$ts/helpers/user/user';
+	import { getInfoFromPriceId } from '$ts/helpers/stripe/plan';
 	import { userSummary } from '$ts/stores/user/summary';
 
 	export let data;
 
 	const currentPriceId = data.current_price_id;
 	const targetPriceId = data.target_price_id;
-	const currentProductId = data.current_product_id;
-	const targetProductId = data.target_product_id;
 	const currency = data.currency;
 
 	let changePlanStatus: 'idle' | 'loading' | 'success' = 'idle';
 
-	$: currentPlanBillingInfo = getTitleFromPriceId($LL, currentPriceId);
-	$: targetPlanBillingInfo = getTitleFromPriceId($LL, targetPriceId);
+	$: currentPlanInfo = {
+		...getInfoFromPriceId($LL, currentPriceId),
+		priceId: currentPriceId
+	};
+	$: targetPlanInfo = {
+		...getInfoFromPriceId($LL, targetPriceId),
+		priceId: targetPriceId
+	};
 
 	$: currentPlan = {
-		title: currentPlanBillingInfo.title,
+		title: currentPlanInfo.title,
 		amount:
-			currency === 'eur'
-				? currentPlanBillingInfo.billingType === 'yearly'
-					? STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[currentProductId].prices.yearly[currentPriceId]
-							.currencies.eur.amount
-					: STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[currentProductId].prices.monthly[currentPriceId]
-							.currencies.eur.amount
-				: currentPlanBillingInfo.billingType === 'yearly'
-					? STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[currentProductId].prices.yearly[currentPriceId]
-							.currencies.usd.amount
-					: STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[currentProductId].prices.monthly[currentPriceId]
-							.currencies.usd.amount
+			STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[currentPlanInfo.productId].prices[
+				currentPlanInfo.billingType === 'yearly' ? 'yearly' : 'monthly'
+			][currentPlanInfo.priceId].currencies[currency === 'eur' ? 'eur' : 'usd'].amount
 	};
 
 	$: targetPlan = {
-		title: targetPlanBillingInfo.title,
+		title: targetPlanInfo.title,
 		amount:
-			currency === 'eur'
-				? targetPlanBillingInfo.billingType === 'yearly'
-					? STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[targetProductId].prices.yearly[targetPriceId]
-							.currencies.eur.amount
-					: STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[targetProductId].prices.monthly[targetPriceId]
-							.currencies.eur.amount
-				: targetPlanBillingInfo.billingType === 'yearly'
-					? STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[targetProductId].prices.yearly[targetPriceId]
-							.currencies.usd.amount
-					: 0
+			STRIPE_PRODUCT_ID_OBJECTS_SUBSCRIPTIONS[targetPlanInfo.productId].prices[
+				targetPlanInfo.billingType === 'yearly' ? 'yearly' : 'monthly'
+			][targetPlanInfo.priceId].currencies[currency === 'eur' ? 'eur' : 'usd'].amount
 	};
 
 	async function changePlan() {
@@ -103,7 +90,7 @@
 <MetaTag
 	title="Change Plan | Stablecog"
 	description="Change your Stablecog subscription plan. Free, multilingual and open-source AI image generator using Stable Diffusion, FLUX, and Kandinsky."
-	image_url="{staticAssetBaseUrl}/previews{$page.url.pathname}-{previewImageVersion}.png"
+	image_url="{staticAssetBaseUrl}/previews/home-{previewImageVersion}.png"
 />
 
 <PageWrapper>
@@ -129,7 +116,7 @@
 								text-base font-medium text-c-primary"
 								>{STRIPE_CURRENCY_TO_SYMBOL[
 									currency
-								]}{currentPlan.amount}{currentPlanBillingInfo.billingType === 'yearly'
+								]}{currentPlan.amount}{currentPlanInfo.billingType === 'yearly'
 									? $LL.Pricing.SlashYear()
 									: $LL.Pricing.SlashMonth()}</span
 							>
@@ -149,7 +136,7 @@
 								class="rounded-md bg-c-primary/15 px-1.5 py-0.5 text-base font-medium text-c-primary"
 								>{STRIPE_CURRENCY_TO_SYMBOL[
 									currency
-								]}{targetPlan.amount}{targetPlanBillingInfo.billingType === 'yearly'
+								]}{targetPlan.amount}{targetPlanInfo.billingType === 'yearly'
 									? $LL.Pricing.SlashYear()
 									: $LL.Pricing.SlashMonth()}</span
 							>

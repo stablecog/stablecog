@@ -1,5 +1,5 @@
 import { getApiUrl } from '$ts/constants/main';
-import { redirect, type ServerLoad } from '@sveltejs/kit';
+import { error, redirect, type ServerLoad } from '@sveltejs/kit';
 
 export const load: ServerLoad = async (event) => {
 	const { session } = await event.locals.safeGetSession();
@@ -7,6 +7,7 @@ export const load: ServerLoad = async (event) => {
 		redirect(302, '/sign-in');
 	}
 	const targetPriceId = event.url.searchParams.get('target_price_id');
+	const from = event.url.searchParams.get('from') || '/pricing';
 	const url = `${getApiUrl().origin}/v1/user/subscription/update/preview`;
 	const res = await event.fetch(url, {
 		method: 'POST',
@@ -19,12 +20,34 @@ export const load: ServerLoad = async (event) => {
 		})
 	});
 	if (!res.ok) {
-		console.log(res.statusText);
-		return {
-			previewData: null,
-			error: res.statusText
-		};
+		console.log('Failed to get preview data', res.statusText);
+		error(500, 'Failed to get preview data');
 	}
-	const resJson = await res.json();
+	const resJson: TPreviewRes = await res.json();
+	if (!resJson.success) {
+		error(500, 'Failed to get preview data');
+	}
 	console.log(resJson);
+	const previewData: TPreviewRes['preview'] = {
+		...resJson.preview
+	};
+	return {
+		previewData,
+		from
+	};
+};
+
+type TPreviewRes = {
+	preview: {
+		current_plan: string;
+		new_plan: string;
+		has_proration: boolean;
+		proration_amount: number;
+		proration_date: number;
+		new_amount: number;
+		current_period_end: number;
+		is_annual: boolean;
+		currency: 'usd' | 'eur';
+	};
+	success: true;
 };
