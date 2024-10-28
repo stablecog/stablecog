@@ -1,13 +1,12 @@
 <script lang="ts">
-	import { navigating, page } from '$app/stores';
+	import { page } from '$app/stores';
 	import Button from '$components/primitives/buttons/Button.svelte';
-	import TabBar from '$components/primitives/tabBars/TabBar.svelte';
 	import MetaTag from '$components/utils/MetaTag.svelte';
 	import PageWrapper from '$components/wrappers/PageWrapper.svelte';
 	import LL from '$i18n/i18n-svelte';
 	import DataProvider from '$routes/(app)/pricing/DataProvider.svelte';
 	import PlanCard from '$routes/(app)/pricing/PlanCard.svelte';
-	import type { TBillingType, TCard, TSubscriptionCard } from '$routes/(app)/pricing/types.js';
+	import type { TBillingType, TSubscriptionCard } from '$routes/(app)/pricing/types.js';
 	import { getApiUrl, staticAssetBaseUrl } from '$ts/constants/main';
 	import { previewImageVersion } from '$ts/constants/previewImageVersion';
 	import { socialAppUrls } from '$ts/constants/social';
