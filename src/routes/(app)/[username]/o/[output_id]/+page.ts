@@ -4,7 +4,7 @@ import type { TUserProfileFullOutputsPage } from '$ts/queries/galleryLike/types'
 import { getUserProfileFullOutputs } from '$ts/queries/galleryLike/userProfileOutputs';
 import type { TGenerationFullOutput } from '$ts/stores/user/generation';
 import type { Session } from '@supabase/supabase-js';
-import { error, redirect } from '@sveltejs/kit';
+import { error, redirect, type HttpError } from '@sveltejs/kit';
 import type { QueryClient } from '@tanstack/svelte-query';
 import type { PageLoad } from './$types';
 import { isUUID } from '$ts/helpers/uuid';
@@ -65,8 +65,9 @@ export const load: PageLoad = async ({ params, parent }) => {
 			metadata: data.metadata
 		};
 
-		if (username !== data.metadata.username)
+		if (username !== data.metadata.username) {
 			redirect(302, `/${data.metadata.username}/o/${outputId}`);
+		}
 
 		queryClient.setQueryData(['user_profile_similar_outputs_short', outputId], page);
 
@@ -76,10 +77,9 @@ export const load: PageLoad = async ({ params, parent }) => {
 			username: data.metadata.username
 		};
 	} catch (err) {
-		if (String(err).includes('404')) {
+		if (String(err).includes('404') || (err as HttpError).status === 404) {
 			error(404, 'Output not found');
-		} else {
-			error(500, 'Something went wrong');
 		}
+		error(500, 'Something went wrong');
 	}
 };

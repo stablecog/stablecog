@@ -6,7 +6,7 @@ import type {
 	TGalleryFullOutputsPageShallow
 } from '$ts/queries/galleryLike/types';
 import type { TGenerationFullOutput } from '$ts/stores/user/generation';
-import { error } from '@sveltejs/kit';
+import { error, type HttpError } from '@sveltejs/kit';
 import type { QueryClient } from '@tanstack/svelte-query';
 import type { PageLoad } from './$types';
 import { isUUID } from '$ts/helpers/uuid';
@@ -79,10 +79,9 @@ export const load: PageLoad = async ({ params, parent, fetch }) => {
 			similarGenerationFullOutputs
 		};
 	} catch (err) {
-		if (String(err).includes('404')) {
+		if (String(err).includes('404') || (err as HttpError).status === 404) {
 			error(404, 'Output not found');
-		} else {
-			error(500, 'Something went wrong');
 		}
+		error(500, 'Something went wrong');
 	}
 };
