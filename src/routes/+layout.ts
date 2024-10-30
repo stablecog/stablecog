@@ -34,9 +34,13 @@ export const load: LayoutLoad = async (event) => {
 		data: { session }
 	} = await supabase.auth.getSession();
 
+	const {
+		data: { user }
+	} = await supabase.auth.getUser();
+
 	const startUserSummary = Date.now();
 	let userSummary: TUserSummary | undefined = undefined;
-	if (session && session.access_token && session.expires_in > 3) {
+	if (user && session) {
 		try {
 			const summary = await getUserSummary(session.access_token);
 			if (!browser) {
@@ -57,6 +61,7 @@ export const load: LayoutLoad = async (event) => {
 	return {
 		locale,
 		session,
+		user,
 		supabase,
 		theme,
 		themeStore: writable<TAvailableTheme>('dark'),

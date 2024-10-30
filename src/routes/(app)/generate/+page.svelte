@@ -89,24 +89,22 @@
 		''
 	]);
 
-	$: historyFullOutputsQuery =
-		$sessionStore?.user.id && $userSummary
-			? createInfiniteQuery({
-					queryKey: $generatePageHistoryFullOutputsQueryKey,
-					queryFn: async ({ pageParam }) => {
-						let outputsPage = await getHistoryFullOutputs({
-							access_token: $sessionStore?.access_token || '',
-							cursor: pageParam !== undefined ? String(pageParam) : undefined
-						});
-						return outputsPage;
-					},
-					getNextPageParam: (lastPage: TGalleryFullOutputsPage) => {
-						if (!lastPage.next) return undefined;
-						return lastPage.next;
-					},
-					initialPageParam: undefined
-				})
-			: undefined;
+	$: historyFullOutputsQuery = createInfiniteQuery({
+		queryKey: $generatePageHistoryFullOutputsQueryKey,
+		queryFn: async ({ pageParam }) => {
+			let outputsPage = await getHistoryFullOutputs({
+				access_token: $sessionStore?.access_token || '',
+				cursor: pageParam !== undefined ? String(pageParam) : undefined
+			});
+			return outputsPage;
+		},
+		enabled: $sessionStore?.user.id !== undefined && $userSummary !== null,
+		getNextPageParam: (lastPage: TGalleryFullOutputsPage) => {
+			if (!lastPage.next) return undefined;
+			return lastPage.next;
+		},
+		initialPageParam: undefined
+	});
 
 	$: pinnedFullOutputs = [...$generations]
 		.map((g) => ({
