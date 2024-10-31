@@ -1006,6 +1006,8 @@ const ko: Translation = {
 		Facebook: 'Facebook',
 		ProductHunt: 'Product Hunt',
 		Stablecog: 'Stablecog',
+		Apple: 'Apple',
+		Google: 'Google',
 		Raycast: 'Raycast'
 	},
 	Voiceover: {

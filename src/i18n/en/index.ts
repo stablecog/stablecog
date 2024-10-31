@@ -1004,6 +1004,8 @@ const en: BaseTranslation = {
 		Facebook: 'Facebook',
 		ProductHunt: 'Product Hunt',
 		Stablecog: 'Stablecog',
+		Apple: 'Apple',
+		Google: 'Google',
 		Raycast: 'Raycast'
 	},
 	Voiceover: {

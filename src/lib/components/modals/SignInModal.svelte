@@ -30,7 +30,7 @@
 <div
 	use:portal={'body'}
 	transition:fly={{ duration: 200, y: 50, easing: quadOut }}
-	class="fixed left-0 top-0 z-[10001] flex h-full w-full flex-col items-center overflow-auto px-3 py-20"
+	class="fixed left-0 top-0 z-[10001] flex h-full w-full flex-col items-center overflow-auto px-3 py-16 md:py-12"
 >
 	<div
 		use:clickoutside={{

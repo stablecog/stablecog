@@ -14,6 +14,8 @@
 	export let target: THrefTarget = undefined;
 	export { classes as class };
 	export let provider: Provider = 'google';
+	export let logoPlacement: 'left' | 'center' = 'left';
+
 	let classes = '';
 
 	let width: number;
@@ -88,12 +90,18 @@
 		</div>
 		<div class="relative w-full">
 			{#if withSpinner}
-				<div class="flex max-w-full items-center justify-between gap-2">
+				<div
+					class="flex max-w-full items-center {logoPlacement === 'center'
+						? 'justify-center gap-1'
+						: 'justify-between gap-2'}"
+				>
 					<IconOAuthProvider {provider} class="-my-1 h-7 w-7 flex-shrink-0" />
-					<div class="min-w-0 flex-1 px-1">
+					<div class="min-w-0 {logoPlacement === 'center' ? 'flex-shrink' : 'flex-1'} px-1">
 						<slot />
 					</div>
-					<div class="-my-1 h-7 w-7 flex-shrink-0" />
+					{#if logoPlacement !== 'center'}
+						<div class="-my-1 h-7 w-7 flex-shrink-0" />
+					{/if}
 				</div>
 				<div
 					class="pointer-events-none absolute left-0 top-0 flex h-full w-full items-center justify-center"
@@ -107,12 +115,18 @@
 					</div>
 				</div>
 			{:else}
-				<div class="flex max-w-full items-center justify-between gap-2">
+				<div
+					class="flex max-w-full items-center {logoPlacement === 'center'
+						? 'justify-center gap-1'
+						: 'justify-between gap-2'}"
+				>
 					<IconOAuthProvider {provider} class="-my-1 h-7 w-7 flex-shrink-0" />
-					<div class="min-w-0 flex-1 px-1">
+					<div class="min-w-0 {logoPlacement === 'center' ? 'flex-shrink' : 'flex-1'} px-1">
 						<slot />
 					</div>
-					<div class="-my-1 h-7 w-7 flex-shrink-0" />
+					{#if logoPlacement !== 'center'}
+						<div class="-my-1 h-7 w-7 flex-shrink-0" />
+					{/if}
 				</div>
 			{/if}
 		</div>
@@ -180,12 +194,18 @@
 						? 'scale-0 opacity-0'
 						: 'scale-100 opacity-100'}"
 				>
-					<div class="flex max-w-full items-center justify-between gap-2">
+					<div
+						class="flex max-w-full items-center {logoPlacement === 'center'
+							? 'justify-center gap-1'
+							: 'justify-between gap-2'}"
+					>
 						<IconOAuthProvider {provider} class="-my-1 h-7 w-7 flex-shrink-0" />
-						<div class="min-w-0 flex-1 px-1">
+						<div class="min-w-0 {logoPlacement === 'center' ? 'flex-shrink' : 'flex-1'} px-1">
 							<slot />
 						</div>
-						<div class="-my-1 h-7 w-7 flex-shrink-0" />
+						{#if logoPlacement !== 'center'}
+							<div class="-my-1 h-7 w-7 flex-shrink-0" />
+						{/if}
 					</div>
 				</div>
 				<div
@@ -200,12 +220,18 @@
 					</div>
 				</div>
 			{:else}
-				<div class="flex max-w-full items-center justify-between gap-2">
+				<div
+					class="flex max-w-full items-center {logoPlacement === 'center'
+						? 'justify-center gap-1'
+						: 'justify-between gap-2'}"
+				>
 					<IconOAuthProvider {provider} class="-my-1 h-7 w-7 flex-shrink-0" />
-					<div class="min-w-0 flex-1 px-1">
+					<div class="min-w-0 {logoPlacement === 'center' ? 'flex-shrink' : 'flex-1'} px-1">
 						<slot />
 					</div>
-					<div class="-my-1 h-7 w-7 flex-shrink-0" />
+					{#if logoPlacement !== 'center'}
+						<div class="-my-1 h-7 w-7 flex-shrink-0" />
+					{/if}
 				</div>
 			{/if}
 		</div>

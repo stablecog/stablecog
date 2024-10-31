@@ -3078,6 +3078,14 @@ type RootTranslation = {
 		 */
 		Stablecog: string
 		/**
+		 * A​p​p​l​e
+		 */
+		Apple: string
+		/**
+		 * G​o​o​g​l​e
+		 */
+		Google: string
+		/**
 		 * R​a​y​c​a​s​t
 		 */
 		Raycast: string
@@ -6566,6 +6574,14 @@ export type TranslationFunctions = {
 		 * Stablecog
 		 */
 		Stablecog: () => LocalizedString
+		/**
+		 * Apple
+		 */
+		Apple: () => LocalizedString
+		/**
+		 * Google
+		 */
+		Google: () => LocalizedString
 		/**
 		 * Raycast
 		 */

@@ -198,7 +198,7 @@
 </script>
 
 <div
-	class="relative z-10 flex max-w-full flex-col items-center justify-center overflow-hidden rounded-3xl bg-c-bg px-6 py-4 ring-2 ring-c-bg-secondary md:px-12 md:py-7 {isModal
+	class="relative z-10 flex max-w-full flex-col items-center justify-center overflow-hidden rounded-3xl bg-c-bg px-6 py-4 ring-2 ring-c-bg-secondary md:px-10 md:py-7 {isModal
 		? 'shadow-2xl shadow-c-shadow/[var(--o-shadow-strong)]'
 		: 'shadow-xl shadow-c-shadow/[var(--o-shadow-normal)]'}"
 >
@@ -333,7 +333,7 @@
 							onClick={() => signInWithOAuth('google')}
 							provider="google"
 						>
-							{$LL.SignIn.ContinueWithProviderButton({ provider: 'Google' })}
+							{$LL.SignIn.ContinueWithProviderButton({ provider: $LL.Platform.Google() })}
 						</ButtonOAuth>
 						<ButtonOAuth
 							withSpinner
@@ -344,7 +344,7 @@
 							provider="discord"
 						>
 							<p class="min-w-0 flex-1">
-								{$LL.SignIn.ContinueWithProviderButton({ provider: 'Discord' })}
+								{$LL.SignIn.ContinueWithProviderButton({ provider: $LL.Platform.Discord() })}
 							</p>
 						</ButtonOAuth>
 						<ButtonOAuth
@@ -356,7 +356,7 @@
 							provider="apple"
 						>
 							<p class="min-w-0 flex-1">
-								{$LL.SignIn.ContinueWithProviderButton({ provider: 'Apple' })}
+								{$LL.SignIn.ContinueWithProviderButton({ provider: $LL.Platform.Apple() })}
 							</p>
 						</ButtonOAuth>
 					</div>
