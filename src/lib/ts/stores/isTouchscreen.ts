@@ -1,33 +1,48 @@
 import { browser } from '$app/environment';
 import { readable } from 'svelte/store';
 
-let _isTouchscreen = false;
+function detectTouchDevice() {
+	if (!browser) return false;
+	return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+}
 
-export const isTouchscreen = readable<boolean>(_isTouchscreen, (set) => {
-	if (browser) {
-		document?.body.addEventListener('touchstart', handleTouch);
-		document?.body.addEventListener('mousemove', disableTouch);
-	}
+export const isTouchscreen = readable<boolean>(detectTouchDevice(), (set) => {
+	if (!browser) return;
 
-	function handleTouch() {
-		if (!_isTouchscreen) {
-			_isTouchscreen = true;
+	let _isTouchscreen = detectTouchDevice();
+
+	function handleResize() {
+		const isTouchEnabled = detectTouchDevice();
+		if (_isTouchscreen !== isTouchEnabled) {
+			_isTouchscreen = isTouchEnabled;
 			set(_isTouchscreen);
 		}
+		updateBodyClass(_isTouchscreen);
 	}
 
-	function disableTouch() {
-		const isTouchEnabled = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-		if (_isTouchscreen && !isTouchEnabled) {
-			_isTouchscreen = false;
-			set(_isTouchscreen);
-		}
+	function updateBodyClass(isTouch: boolean) {
+		document.body.classList.toggle('not-touch', !isTouch);
 	}
 
+	// Initial class update
+	updateBodyClass(_isTouchscreen);
+
+	// Debounced resize listener
+	const debounceTimeout = 200;
+	let timeoutId: NodeJS.Timeout | null = null;
+
+	const debouncedResize = () => {
+		if (timeoutId) clearTimeout(timeoutId);
+		timeoutId = setTimeout(() => handleResize(), debounceTimeout);
+	};
+
+	window.addEventListener('resize', debouncedResize);
+
+	// Cleanup function
 	return () => {
 		if (browser) {
-			document?.body.removeEventListener('touchstart', handleTouch);
-			document?.body.removeEventListener('mousemove', disableTouch);
+			if (timeoutId) clearTimeout(timeoutId);
+			window.removeEventListener('resize', debouncedResize);
 		}
 	};
 });
