@@ -1,6 +1,6 @@
 # PRIVACY POLICY
 
-_Last updated March 19, 2023_
+_Last updated December 7, 2024_
 
 This privacy notice for Stablecog, Inc. ("**Company**", "**we**", "**us**", or "**our**"), describes how and why we might collect, store, use, and/or share ("**process**") your information when you use our services ("Services"), such as when you:
 
@@ -9,7 +9,7 @@ This privacy notice for Stablecog, Inc. ("**Company**", "**we**", "**us**", or "
 
 ### Questions or concerns?
 
-Reading this privacy notice will help you understand your privacy rights and choices. If you do not agree with our policies and practices, please do not use our Services. If you still have any questions or concerns, please contact us at hello@stablecog.com.
+Reading this privacy notice will help you understand your privacy rights and choices. If you do not agree with our policies and practices, please do not use our Services. If you still have any questions or concerns, please contact us at privacy@stablecog.com.
 
 ## SUMMARY OF KEY POINTS
 
