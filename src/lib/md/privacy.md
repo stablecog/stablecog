@@ -450,10 +450,10 @@ We may update this privacy notice from time to time. The updated version will be
 
 If you have questions or comments about this notice, you may email us at privacy@stablecog.com or by post to:
 
-**Stablecog, Inc.<br>
-9450 Southwest Gemini Drive<br>
-Beaverton, OR 97008<br>
-United States<br>
+**Stablecog, Inc.<br/>
+9450 Southwest Gemini Drive<br/>
+Beaverton, OR 97008<br/>
+United States<br/>
 hello@stablecog.com**
 
 ## 17. HOW CAN YOU REVIEW, UPDATE, OR DELETE THE DATA WE COLLECT FROM YOU?

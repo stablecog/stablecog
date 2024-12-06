@@ -303,8 +303,8 @@ These Legal Terms and any policies or operating rules posted by us on the Servic
 
 In order to resolve a complaint regarding the Services or to receive further information regarding use of the Services, please contact us at:
 
-**Stablecog, Inc.<br>
-9450 Southwest Gemini Drive<br>
-Beaverton, OR 97008<br>
-United States<br>
+**Stablecog, Inc.<br/>
+9450 Southwest Gemini Drive<br/>
+Beaverton, OR 97008<br/>
+United States<br/>
 hello@stablecog.com**
