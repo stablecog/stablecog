@@ -65,7 +65,7 @@
 			class="shadow-c-shadow/[var(--o-shadow-strong) relative z-0 rounded-lg
 			{caption
 				? 'bg-c-bg-secondary ring-c-bg-secondary'
-				: 'bg-c-bg-tertiary ring-c-bg-tertiary'} shadow-xl ring-2 transition hover:ring-c-primary/75"
+				: 'bg-c-bg-tertiary ring-c-bg-tertiary'} shadow-xl ring-2 transition focus-within:ring-c-primary/75 hover:ring-c-primary/75"
 		>
 			{#if hasCaption}
 				<figure class="flex w-full flex-col">
@@ -104,10 +104,16 @@
 					</figcaption>
 				</figure>
 			{:else}
-				<a class="w-full" {href} aria-label={alt} target="_blank" rel="noopener noreferrer">
+				<a
+					class="w-full focus-visible:outline-none focus-visible:ring-0"
+					{href}
+					aria-label={alt}
+					target="_blank"
+					rel="noopener noreferrer"
+				>
 					<img
 						loading="lazy"
-						class="h-auto w-full"
+						class="h-auto w-full rounded-lg"
 						{sizes}
 						src={_src}
 						{srcset}
