@@ -71,7 +71,6 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@amplitude/analytics-browser": "^2.17.6",
 		"@felte/validator-zod": "^1.0.17",
 		"@floating-ui/core": "^1.6.0",
 		"@melt-ui/svelte": "^0.70.0",
