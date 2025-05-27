@@ -23,9 +23,10 @@
 	import { userSummary } from '$ts/stores/user/summary';
 	import { windowHeight, windowWidth } from '$ts/stores/window';
 	import deepEqual from 'deep-equal';
-	import posthog from 'posthog-js';
 	import { onMount } from 'svelte';
 	import { Toaster } from '$components/ui/sonner';
+	import * as amplitude from '@amplitude/analytics-browser';
+	import { PUBLIC_AMPLITUDE_API_KEY } from '$env/static/public';
 
 	export let data;
 
@@ -74,7 +75,12 @@
 		if (lastIdentityObject !== undefined && deepEqual(indentityObject, lastIdentityObject)) {
 			return;
 		}
-		posthog.identify($sessionStore.user.id, indentityObject);
+		const identifyEvent = new amplitude.Identify();
+		for (const [key, value] of Object.entries(indentityObject)) {
+			identifyEvent.set(key, value);
+		}
+		amplitude.setUserId($sessionStore.user.email);
+		amplitude.identify(identifyEvent);
 		lastIdentityObject = indentityObject;
 	}
 
@@ -118,9 +124,8 @@
 				invalidate('supabase:auth');
 			}
 		});
-		posthog.init(env.PUBLIC_PH_ID || '', {
-			api_host: env.PUBLIC_PH_URL
-		});
+		amplitude.init(env.PUBLIC_AMPLITUDE_API_KEY, { autocapture: true });
+
 		appVersion.set(document.body.getAttribute('app-version') ?? 'unknown');
 		if ($page.url.hash === confirmOtherEmailHash) {
 			goto('/account/change-email?confirm_other_email=true');

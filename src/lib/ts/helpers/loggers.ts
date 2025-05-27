@@ -1,67 +1,67 @@
 import type { TGeneration, TInitialGenerationRequest } from '$userStores/generation';
-import ph from 'posthog-js';
+import * as amplitude from '@amplitude/analytics-browser';
 
 import type { TInitialUpscaleRequest, TUpscale } from '$ts/stores/user/upscale';
 
 export function logGeneration(status: IGenerationStatus, generation: IGenerationMinimal) {
-	ph.capture(`Generation | ${status}`, {
+	amplitude.track(`Generation | ${status}`, {
 		...generation
 	});
 }
 
 export function logUpscale(status: IUpscaleStatus, upscale: IUpscaleMinimal) {
-	ph.capture(`Upscale | ${status}`, { ...upscale });
+	amplitude.track(`Upscale | ${status}`, { ...upscale });
 }
 
 export function logSubmitToGallery(status: IOnOff, props: ISubmitToGalleryToggledMinimal) {
-	ph.capture(`Submit to Gallery | ${status}`, { ...props });
+	amplitude.track(`Submit to Gallery | ${status}`, { ...props });
 }
 
 export function logGalleryGenerationOpened(props: IGalleryGenerationOpenedProps) {
-	ph.capture('Gallery | Generation Opened', { ...props });
+	amplitude.track('Gallery | Generation Opened', { ...props });
 }
 
 export function logGalleryGenerateSimilarClicked(props: IGalleryGenerateClickedProps) {
-	ph.capture('Gallery | Generate Clicked', { ...props });
+	amplitude.track('Gallery | Generate Clicked', { ...props });
 }
 export function logGalleryExploreStyleClicked(props: IGalleryExploreStyleClickedProps) {
-	ph.capture('Gallery | Explore Style Clicked', { ...props });
+	amplitude.track('Gallery | Explore Style Clicked', { ...props });
 }
 
 export function logGalleryExploreSimilarClicked(props: IGalleryExploreSimilarClickedProps) {
-	ph.capture('Gallery | Explore Similar Clicked', { ...props });
+	amplitude.track('Gallery | Explore Similar Clicked', { ...props });
 }
 
 export function logUserProfileExploreSimilarClicked(props: ISimilarClickedProps) {
-	ph.capture('User Profile | Explore Similar Clicked', { ...props });
+	amplitude.track('User Profile | Explore Similar Clicked', { ...props });
 }
 
 export function logGalleryModalSimilarClicked(props: ISimilarClickedProps) {
-	ph.capture('Gallery | Modal Similar Clicked', { ...props });
+	amplitude.track('Gallery | Modal Similar Clicked', { ...props });
 }
 
 export function logShareModalOpened(props: IShareModalOpenedProps) {
-	ph.capture('Share | Modal Opened', { ...props });
+	amplitude.track('Share | Modal Opened', { ...props });
 }
 
 export function logShareButtonClicked(props: IShareButtonClickedProps) {
-	ph.capture('Share | Button Clicked', { ...props });
+	amplitude.track('Share | Button Clicked', { ...props });
 }
 
 export function logUserProfileModalSimilarClicked(props: ISimilarClickedProps) {
-	ph.capture('User Profile | Modal Similar Clicked', { ...props });
+	amplitude.track('User Profile | Modal Similar Clicked', { ...props });
 }
 
 export function logOutputPageSimilarClicked(props: ISimilarClickedProps) {
-	ph.capture('Output Page | Similar Clicked', { ...props });
+	amplitude.track('Output Page | Similar Clicked', { ...props });
 }
 
 export function logAdvancedMode(status: IOnOff, props: IAdvancedModeToggledProps) {
-	ph.capture(`Advanced Mode | ${status}`, { ...props });
+	amplitude.track(`Advanced Mode | ${status}`, { ...props });
 }
 
 export function logPageview(props: IPageviewProps) {
-	ph.capture('$pageview', { ...props });
+	amplitude.track('$pageview', { ...props });
 }
 
 export function logAccountScheduledForDeletion(
@@ -69,51 +69,51 @@ export function logAccountScheduledForDeletion(
 		'SC - Action': 'schedule-for-deletion' | 'cancel-deletion';
 	}
 ) {
-	ph.capture('Account | Schedule for Deletion', { ...props });
+	amplitude.track('Account | Schedule for Deletion', { ...props });
 }
 
 export function logSignIn(props: ISignInProps) {
-	ph.capture('Sign In', { ...props });
+	amplitude.track('Sign In', { ...props });
 }
 
 export function logWantsEmail(props: IWantsEmailProps) {
-	ph.capture(`Wants Email | ${props.wantsEmail ? 'True' : 'False'}`, { ...props });
+	amplitude.track(`Wants Email | ${props.wantsEmail ? 'True' : 'False'}`, { ...props });
 }
 
 export function logSignOut(props: IGeneralLogProps) {
-	ph.capture('Sign Out', { ...props });
+	amplitude.track('Sign Out', { ...props });
 }
 
 export function logGallerySearch(props: IGallerySearchProps) {
-	ph.capture('Gallery Search', { ...props });
+	amplitude.track('Gallery Search', { ...props });
 }
 
 export function logHistorySearch(props: IHistorySearchProps) {
-	ph.capture('History Search', { ...props });
+	amplitude.track('History Search', { ...props });
 }
 
 export function logGenerationOutputDeleted(props: IGenerationOutputActionProps) {
-	ph.capture('Generation Output | Deleted', { ...props });
+	amplitude.track('Generation Output | Deleted', { ...props });
 }
 
 export function logVoiceoverOutputDeleted(props: IVoiceoverOutputActionProps) {
-	ph.capture('Voiceover Output | Deleted', { ...props });
+	amplitude.track('Voiceover Output | Deleted', { ...props });
 }
 
 export function logGenerationOutputMadePublic(props: IGenerationOutputActionProps) {
-	ph.capture('Generation Output | Made Public', { ...props });
+	amplitude.track('Generation Output | Made Public', { ...props });
 }
 
 export function logUsernameChanged(type: 'change' | 'set', props: IUsernameChangedProps) {
 	if (type === 'set') {
-		ph.capture('Username Set', { ...props });
+		amplitude.track('Username Set', { ...props });
 	} else {
-		ph.capture('Username Changed', { ...props });
+		amplitude.track('Username Changed', { ...props });
 	}
 }
 
 export function logGenerationOutputMadePrivate(props: IGenerationOutputActionProps) {
-	ph.capture('Generation Output | Made Private', { ...props });
+	amplitude.track('Generation Output | Made Private', { ...props });
 }
 
 export function logGenerationOutputFavoritedChange(
@@ -121,9 +121,9 @@ export function logGenerationOutputFavoritedChange(
 	props: IGenerationOutputActionProps
 ) {
 	if (action === 'unfavorite') {
-		ph.capture('Generation Output | Unfavorited', { ...props });
+		amplitude.track('Generation Output | Unfavorited', { ...props });
 	} else {
-		ph.capture('Generation Output | Favorited', { ...props });
+		amplitude.track('Generation Output | Favorited', { ...props });
 	}
 }
 
@@ -136,58 +136,58 @@ export function logGenerationOutputLikedChange(
 		'SC - Like Count': likeCount
 	};
 	if (isLiked) {
-		ph.capture('Generation Output | Liked', { ...props, ...extraProps });
+		amplitude.track('Generation Output | Liked', { ...props, ...extraProps });
 	} else {
-		ph.capture('Generation Output | Unliked', { ...props, ...extraProps });
+		amplitude.track('Generation Output | Unliked', { ...props, ...extraProps });
 	}
 }
 
 export function logGenerationOutputSubmittedToGallery(props: IGenerationOutputActionProps) {
-	ph.capture('Generation Output | Submitted to Gallery', { ...props });
+	amplitude.track('Generation Output | Submitted to Gallery', { ...props });
 }
 
 export function logGalleryMainSortChanged(props: IGalleryMainSortChangedProps) {
-	ph.capture('Gallery | Main Sort Changed', { ...props });
+	amplitude.track('Gallery | Main Sort Changed', { ...props });
 }
 
 export function logGenerationOutputDownloaded(props: IGenerationOutputActionProps) {
-	ph.capture('Generation Output | Downloaded', { ...props });
+	amplitude.track('Generation Output | Downloaded', { ...props });
 }
 
 export function logBatchEditActived(props: IGeneralLogProps) {
-	ph.capture('Batch Edit | Activated', { ...props });
+	amplitude.track('Batch Edit | Activated', { ...props });
 }
 
 export function logInitImageAdded(props: IGeneralLogProps) {
-	ph.capture('Init Image | Added', { ...props });
+	amplitude.track('Init Image | Added', { ...props });
 }
 
 export function logInitImageRemoved(props: IGeneralLogProps) {
-	ph.capture('Init Image | Removed', { ...props });
+	amplitude.track('Init Image | Removed', { ...props });
 }
 
 export function logBatchEditDeactivated(props: IGeneralLogProps) {
-	ph.capture('Batch Edit | Deactivated', { ...props });
+	amplitude.track('Batch Edit | Deactivated', { ...props });
 }
 
 export function logLowCreditsCardSeen(props: IGeneralLogProps) {
-	ph.capture('Low Credits Card | Seen', { ...props });
+	amplitude.track('Low Credits Card | Seen', { ...props });
 }
 
 export function logLowCreditsCardDiscord(props: IGeneralLogProps) {
-	ph.capture('Low Credits Card | Discord Clicked', { ...props });
+	amplitude.track('Low Credits Card | Discord Clicked', { ...props });
 }
 export function logLowCreditsCardSubscribe(props: IGeneralLogProps) {
-	ph.capture('Low Credits Card | Subscribe Clicked', { ...props });
+	amplitude.track('Low Credits Card | Subscribe Clicked', { ...props });
 }
 export function logLowCreditsCardBuyCredits(props: IGeneralLogProps) {
-	ph.capture('Low Credits Card | Buy Credits Clicked', { ...props });
+	amplitude.track('Low Credits Card | Buy Credits Clicked', { ...props });
 }
 export function logLowCreditsCardUpgradeClicked(props: IGeneralLogProps) {
-	ph.capture('Low Credits Card | Upgrade Clicked', { ...props });
+	amplitude.track('Low Credits Card | Upgrade Clicked', { ...props });
 }
 export function logSkipTheQueueButtonClicked(props: IGeneralLogProps) {
-	ph.capture('Skip the Queue Button Clicked', { ...props });
+	amplitude.track('Skip the Queue Button Clicked', { ...props });
 }
 
 export function logGenerationFailed({
