@@ -89,7 +89,7 @@
 		"felte": "^1.2.14",
 		"file-saver": "^2.0.5",
 		"konva": "^9.3.1",
-		"posthog-js": "^1.130.2",
+		"posthog-js": "^1.247.0",
 		"radix-svelte": "^0.9.0",
 		"rehype-autolink-headings": "^7.1.0",
 		"rehype-highlight": "^7.0.0",

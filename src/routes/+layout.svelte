@@ -119,7 +119,8 @@
 			}
 		});
 		posthog.init(env.PUBLIC_PH_ID || '', {
-			api_host: env.PUBLIC_PH_URL
+			api_host: env.PUBLIC_PH_URL,
+			person_profiles: 'always'
 		});
 		appVersion.set(document.body.getAttribute('app-version') ?? 'unknown');
 		if ($page.url.hash === confirmOtherEmailHash) {
