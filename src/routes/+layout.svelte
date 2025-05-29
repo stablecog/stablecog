@@ -120,7 +120,10 @@
 		});
 		posthog.init(env.PUBLIC_PH_ID || '', {
 			api_host: env.PUBLIC_PH_URL,
-			person_profiles: 'always'
+			person_profiles: 'always',
+			autocapture: {
+				element_allowlist: ['button', 'a']
+			}
 		});
 		appVersion.set(document.body.getAttribute('app-version') ?? 'unknown');
 		if ($page.url.hash === confirmOtherEmailHash) {
