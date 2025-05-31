@@ -122,7 +122,7 @@
 			api_host: env.PUBLIC_PH_URL,
 			person_profiles: 'always',
 			autocapture: {
-				element_allowlist: ['button', 'a']
+				element_allowlist: ['a']
 			}
 		});
 		appVersion.set(document.body.getAttribute('app-version') ?? 'unknown');
