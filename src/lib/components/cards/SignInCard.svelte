@@ -347,7 +347,7 @@
 								{$LL.SignIn.ContinueWithProviderButton({ provider: $LL.Platform.Discord() })}
 							</p>
 						</ButtonOAuth>
-						<ButtonOAuth
+						<!-- <ButtonOAuth
 							withSpinner
 							disabled={$signInCardStatus === 'loading'}
 							loading={$signInCardStatus === 'loading' && provider === 'apple'}
@@ -358,7 +358,7 @@
 							<p class="min-w-0 flex-1">
 								{$LL.SignIn.ContinueWithProviderButton({ provider: $LL.Platform.Apple() })}
 							</p>
-						</ButtonOAuth>
+						</ButtonOAuth> -->
 					</div>
 				</div>
 				<div
