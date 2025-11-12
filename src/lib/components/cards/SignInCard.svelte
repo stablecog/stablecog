@@ -52,7 +52,7 @@
 		}
 		signInCardStatus.set('loading');
 		provider = 'email';
-		const normalizedEmail = email.toLowerCase();
+		const normalizedEmail = email.toLowerCase().trim();
 
 		try {
 			const res = await fetch(`${getApiUrl().origin}/v1/email/check`, {
