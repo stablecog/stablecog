@@ -50,9 +50,9 @@
 		if ($wantsEmailChecked) {
 			wantsEmail.set(true);
 		}
+
 		signInCardStatus.set('loading');
 		provider = 'email';
-		const normalizedEmail = email.toLowerCase().trim();
 
 		try {
 			const res = await fetch(`${getApiUrl().origin}/v1/email/check`, {
@@ -61,7 +61,7 @@
 					'Content-Type': 'application/json'
 				},
 				body: JSON.stringify({
-					email: normalizedEmail
+					email
 				})
 			});
 			if (!res.ok) {
@@ -77,7 +77,7 @@
 				return;
 			}
 			const { data: sData, error: sError } = await $supabaseStore.auth.signInWithOtp({
-				email: normalizedEmail,
+				email,
 				options: {
 					emailRedirectTo: redirectTo ? encodeURIComponent(redirectTo) : '/'
 				}
