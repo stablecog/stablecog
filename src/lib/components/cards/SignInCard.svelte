@@ -77,7 +77,7 @@
 				return;
 			}
 			const { data: sData, error: sError } = await $supabaseStore.auth.signInWithOtp({
-				email: normalizedEmail,
+				email,
 				options: {
 					emailRedirectTo: redirectTo ? encodeURIComponent(redirectTo) : '/'
 				}
