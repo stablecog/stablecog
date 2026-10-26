@@ -5,7 +5,7 @@ import { detectLocale, isLocale } from '$i18n/i18n-util';
 import { loadAllLocales } from '$i18n/i18n-util.sync';
 import { asTable, isKubeProbe, logger } from '$ts/constants/loggerBrowser';
 import { canonicalUrlObject, getApiUrl } from '$ts/constants/main';
-import { supabaseAnonKey, supabaseUrl } from '$ts/constants/supabase';
+import { supabaseAnonKey, supabaseCookieEncode, supabaseUrl } from '$ts/constants/supabase';
 import { galleryAdminAllowedRoutes, isGalleryAdmin, isSuperAdmin } from '$ts/helpers/admin/roles';
 import { shortenString } from '$ts/helpers/metaTag';
 import type { TAvailableTheme } from '$ts/stores/theme';
@@ -25,11 +25,14 @@ export const handle: Handle = sequence(Sentry.sentryHandle(), async ({ event, re
 	const url = new URL(event.request.url);
 	event.locals.supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
 		cookies: {
+			encode: supabaseCookieEncode,
 			getAll: () => event.cookies.getAll(),
-			setAll: (cookiesToSet) => {
+			setAll: (cookiesToSet, headers) => {
 				cookiesToSet.forEach(({ name, value, options }) => {
 					event.cookies.set(name, value, { ...options, path: '/' });
 				});
+				// Keeps CDNs (Cloudflare) from caching responses that set auth cookies
+				if (Object.keys(headers).length > 0) event.setHeaders(headers);
 			}
 		}
 	});
@@ -45,10 +48,11 @@ export const handle: Handle = sequence(Sentry.sentryHandle(), async ({ event, re
 			data: { user },
 			error
 		} = await event.locals.supabase.auth.getUser();
-		if (error) {
+		if (error || !user) {
 			return { session: null, user: null };
 		}
-		return { session, user };
+		// With tokens-only cookies session.user isn't stored, use the verified user instead
+		return { session: { ...session, user }, user };
 	};
 
 	let preferredLocale = getPreferredLocale(event);
@@ -66,6 +70,8 @@ export const handle: Handle = sequence(Sentry.sentryHandle(), async ({ event, re
 	if (!IP) IP = event.getClientAddress();
 	event.locals.IP = IP;
 	let countryCode = event.request.headers.get('x-vercel-ip-country');
+	// Self-hosted behind Cloudflare
+	if (!countryCode) countryCode = event.request.headers.get('CF-IPCountry');
 	event.locals.countryCode = countryCode;
 
 	const logRequest = (status: number) => {

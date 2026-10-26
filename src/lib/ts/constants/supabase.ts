@@ -15,5 +15,10 @@ export const supabaseAnonKey =
 			? envPublic.PUBLIC_SUPABASE_ANON_KEY
 			: envPublic.PUBLIC_SUPABASE_ANON_KEY) || '';
 
+// Only store the access & refresh tokens in cookies, not the user object.
+// Keeps the auth cookies small enough for Cloudflare & Nginx header limits.
+// Must be the same for createBrowserClient and createServerClient.
+export const supabaseCookieEncode = 'tokens-only' as const;
+
 export const sessionStore = writable<Session | null>(null);
 export const supabaseStore = writable<SupabaseClient | null>(null);
