@@ -18,6 +18,9 @@ runs:
     - name: Set environment variables
       id: set_env
       shell: bash
+      # Passed through env so quotes, $() or backticks in commit messages can't break or run in the script
+      env:
+        HEAD_COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
       run: |
         echo "SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_OUTPUT
         if [ "${{ github.event_name }}" != 'pull_request' ]; then
@@ -25,4 +28,5 @@ runs:
         else
           echo "BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_OUTPUT
         fi
-        echo "COMMIT_MSG=$(echo "${{ github.event.head_commit.message }}" | tr -d \'\\\")" >> $GITHUB_OUTPUT
+        # First line only, multi-line values (squash merge messages) break $GITHUB_OUTPUT
+        echo "COMMIT_MSG=$(printf '%s' "$HEAD_COMMIT_MESSAGE" | head -n 1 | tr -d \'\\\")" >> $GITHUB_OUTPUT
