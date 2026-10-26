@@ -25,23 +25,20 @@ runs:
         embed-title: '[sc-web] ${{ inputs.embed-title }}'
         embed-description: '```Deploy Started```'
 
-    - uses: imranismail/setup-kustomize@v1
-      with:
-        kustomize-version: '3.5.4'
-
-    - name: Set image
-      working-directory: ./k8s
-      shell: bash
-      run: |
-        kustomize edit set image replaceme=${{ inputs.image }}
-        kustomize build . > ci-deployment.yaml
+    - uses: azure/setup-kubectl@v4
 
     - name: Deploy image to k8s cluster
-      uses: bbedward/kubectl@master
+      working-directory: ./k8s
+      shell: bash
       env:
         KUBE_CONFIG_DATA: ${{ inputs.kube_config }}
-      with:
-        args: apply -f ./k8s/ci-deployment.yaml
+      run: |
+        mkdir -p ~/.kube
+        echo "$KUBE_CONFIG_DATA" | base64 -d > ~/.kube/config
+        chmod 600 ~/.kube/config
+        sed -i "s|image: replaceme|image: ${{ inputs.image }}|" deployment.yaml
+        kubectl apply -k .
+        kubectl -n prod-stablecog rollout status deployment/sc-web-deployment --timeout=10m
 
     - name: Send Discord Webhook
       if: ${{ failure() && inputs.embed-title != '' }}
