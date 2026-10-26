@@ -4,7 +4,8 @@ import { writable } from 'svelte/store';
 import type { TAvailableTheme } from '$ts/stores/theme';
 import type { TUserSummary } from '$ts/stores/user/summary';
 import { getUserSummary } from '$ts/helpers/user/user';
-import { supabaseAnonKey, supabaseUrl } from '$ts/constants/supabase';
+import { supabaseAnonKey, supabaseCookieEncode, supabaseUrl } from '$ts/constants/supabase';
+import type { Session } from '@supabase/supabase-js';
 import { createBrowserClient, createServerClient, isBrowser } from '@supabase/ssr';
 import { browser } from '$app/environment';
 import { logger } from '$ts/constants/loggerBrowser';
@@ -17,6 +18,9 @@ export const load: LayoutLoad = async (event) => {
 		? createBrowserClient(supabaseUrl, supabaseAnonKey, {
 				global: {
 					fetch
+				},
+				cookies: {
+					encode: supabaseCookieEncode
 				}
 			})
 		: createServerClient(supabaseUrl, supabaseAnonKey, {
@@ -24,6 +28,7 @@ export const load: LayoutLoad = async (event) => {
 					fetch
 				},
 				cookies: {
+					encode: supabaseCookieEncode,
 					getAll() {
 						return data.cookies;
 					}
@@ -31,12 +36,15 @@ export const load: LayoutLoad = async (event) => {
 			});
 
 	const {
-		data: { session }
+		data: { session: tokensSession }
 	} = await supabase.auth.getSession();
 
 	const {
 		data: { user }
 	} = await supabase.auth.getUser();
+
+	// With tokens-only cookies session.user isn't stored (accessing it throws), use the verified user instead
+	const session: Session | null = tokensSession && user ? { ...tokensSession, user } : null;
 
 	const startUserSummary = Date.now();
 	let userSummary: TUserSummary | undefined = undefined;
