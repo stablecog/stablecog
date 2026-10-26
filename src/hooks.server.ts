@@ -28,11 +28,16 @@ export const handle: Handle = sequence(Sentry.sentryHandle(), async ({ event, re
 			encode: supabaseCookieEncode,
 			getAll: () => event.cookies.getAll(),
 			setAll: (cookiesToSet, headers) => {
-				cookiesToSet.forEach(({ name, value, options }) => {
-					event.cookies.set(name, value, { ...options, path: '/' });
-				});
-				// Keeps CDNs (Cloudflare) from caching responses that set auth cookies
-				if (Object.keys(headers).length > 0) event.setHeaders(headers);
+				try {
+					cookiesToSet.forEach(({ name, value, options }) => {
+						event.cookies.set(name, value, { ...options, path: '/' });
+					});
+					// Keeps CDNs (Cloudflare) from caching responses that set auth cookies
+					if (Object.keys(headers).length > 0) event.setHeaders(headers);
+				} catch {
+					// Supabase can call this after the response is sent (e.g. clearing cookies when a
+					// background refresh fails), SvelteKit throws then. The browser client handles it.
+				}
 			}
 		}
 	});
